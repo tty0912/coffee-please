@@ -1,4 +1,4 @@
-package main.java.model.member;
+package src.main.java.model.member;
 
 import java.sql.*;
 
