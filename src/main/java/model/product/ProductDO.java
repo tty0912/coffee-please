@@ -1,4 +1,4 @@
-package main.java.model.product;
+package model.product;
 
 public class ProductDO {
 }
