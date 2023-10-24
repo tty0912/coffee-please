@@ -1,6 +1,7 @@
-package model.member;
+package main.java.model.member;
 
 import java.sql.*;
+import java.util.Objects;
 
 public class BuyerDAO {
 
@@ -17,7 +18,7 @@ public class BuyerDAO {
 
         try {
             Class.forName(jdbc_driver);
-            conn = DriverManager.getConnection(jdbc_url,"scott","tiger");
+            conn = DriverManager.getConnection(jdbc_url,"coffee","tiger");
         }
         catch (Exception e){
             e.printStackTrace();
@@ -180,6 +181,74 @@ public class BuyerDAO {
         }
 
         return buyer;
+    }
+
+    //아이디 중복확인 - 중복 시 false 중복 아닐 시 true
+    public boolean checkBuyerId(String email){
+        boolean isCheckBuyerId = true;
+
+        this.sql = "select buyer_email from buyer where buyer_email = ?";
+
+        try{
+            this.pstmt = conn.prepareStatement(sql);
+            this.pstmt.setString(1, email);
+            rs = this.pstmt.executeQuery();
+
+            //아이디 중복
+            if(rs.next()){
+                isCheckBuyerId = false;
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if(!pstmt.isClosed()) {
+                    pstmt.close();
+                }
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return isCheckBuyerId;
+    }
+
+    //로그인 - 비밀번호 확인 ,비밀번호 일치 시 true, 불일치 시 false
+    public boolean checkBuyerPasswd(String email, String passwd){
+
+        boolean isCheckBuyerPasswd = false;
+
+        this.sql = "select passwd from buyer where buyer_email = ?";
+
+        try{
+            this.pstmt = conn.prepareStatement(sql);
+            this.pstmt.setString(1, email);
+            rs = this.pstmt.executeQuery();
+
+            if(rs.next()){
+                if(Objects.equals(this.rs.getString("passwd"), passwd)){
+                    isCheckBuyerPasswd = true;
+                }
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if(!pstmt.isClosed()) {
+                    pstmt.close();
+                }
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return isCheckBuyerPasswd;
     }
 
     //conn 종료
