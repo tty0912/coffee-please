@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"
+<%@ page contentType="text/html; charset=UTF-8" 
 	import="java.util.*"
     	  %>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -13,20 +12,20 @@
                 <h2 class="signup__title">Bean2B 신규 회원 가입을 진행합니다.</h2> 
                 <div class="signupSelect__div">
                     <div class="signupSelect__form-div">
-                        <form id="signupSelect__form" action="Controller">
+                        <form id="signupSelect__form" method="post" action="memberController">
                             <div class="signupSelect__seller">
                                 <h4 class="signupSelect__description"><p class="description__accent">Bean2B</p>와 함께 나만의 <p class="description__accent">&nbsp비즈니스</p>를 시작해보세요!</h4>
                                 <img class="signup__img seller__img" src="${pageContext.request.contextPath}/images/buyerSignup.png" alt="Seller" />
-                                <button class="signupSelect__button" id="signup-button" name="action" value="signUppage" type="submit">판매회원 가입하기</button>
+                                <button class="signupSelect__button" id="signup-button" name="action" value="signupSeller" type="submit">판매회원 가입하기</button>
                             </div>
                         </form>
                     </div>
                     <div class="signupSelect__form-div">
-                        <form id="signupSelect__form" action="Controller">
+                        <form id="signupSelect__form" method="post" action="memberController">
                             <div class="signupSelect__seller">
                                 <h4 class="signupSelect__description"><p class="description__accent">Bean2B</p>에서 신선한 <p class="description__accent">&nbsp원두</p>를 만나보세요!</h4>
                                 <img class="signup__img buyer__img" src="${pageContext.request.contextPath}/images/buyerSignup.png" alt="buyer" />
-                                <button class="signupSelect__button" id="signup-button" name="action" value="signUppage" type="submit">구매회원 가입하기</button>
+                                <button class="signupSelect__button" id="signup-button" name="action" value="signupBuyer" type="submit">구매회원 가입하기</button>
                             </div>
                         </form>
                     </div>
@@ -40,4 +39,6 @@
             , <a href="https://kr.freepik.com/free-vector/shop-with-open-sign_8478120.htm#query=seller&position=4&from_view=search&track=sph#position=4&query=seller">Freepik</a>
         </p>
     </div>
+    
+<%@ include file = "/WEB-INF/views/footer.jsp" %>
      
