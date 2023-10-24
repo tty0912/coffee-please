@@ -11,6 +11,7 @@ public class BuyerDAO {
     private String sql;
 
     public BuyerDAO(){
+
         String jdbc_driver = "oracle.jdbc.driver.OracleDriver";
         String jdbc_url = "jdbc:oracle:thin:@localhost:1521:XE";
 
@@ -32,13 +33,13 @@ public class BuyerDAO {
         try{
             this.conn.setAutoCommit(false);
 
-            this.sql = "select buyer_email from seller where buyer_email = ?";
+            this.sql = "select buyer_email from buyer where buyer_email = ?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, buyer.getBuyerEmail());
             this.rs = pstmt.executeQuery();
 
             if(!rs.next()){
-                this.sql = "insert into seller (buyer_email, buyer_name, nickname, passwd, point, tel, adr) values (?, ?, ?, ?, ?, ?, ?)";
+                this.sql = "insert into buyer (buyer_email, buyer_name, nickname, passwd, point, tel, adr) values (?, ?, ?, ?, ?, ?, ?)";
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1, buyer.getBuyerEmail());
                 pstmt.setString(2, buyer.getBuyerName());
@@ -81,6 +82,37 @@ public class BuyerDAO {
     }
 
     //구매자 회원 정보 수정 - 구매자명, 주소, 폰번호, 이미지
+    public int updateBuyer(BuyerDO buyer){
+        int rowCount = 0;
+        this.sql = "update buyer set nickname = ?,  tel = ?, adr = ?, buyer_img = ? where buyer_email = ?";
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, buyer.getNickname());
+            pstmt.setInt(2, buyer.getTel());
+            pstmt.setString(3, buyer.getAddress());
+            pstmt.setString(4, buyer.getBuyerImg());
+            pstmt.setString(5, buyer.getBuyerEmail());
+
+
+            rowCount = pstmt.executeUpdate();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if(!pstmt.isClosed()) {
+                    pstmt.close();
+                }
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return rowCount;
+    }
 
     //구매자 회원 정보 삭제
     public int deleteBuyer(String email){
@@ -112,7 +144,7 @@ public class BuyerDAO {
     //구매자 회원 정보 요청
     public BuyerDO getBuyer(String email){
 
-        BuyerDO buyer = null;
+        BuyerDO buyer = new BuyerDO();
         this.sql = "select buyer_email, buyer_name, nickname, passwd, point, tel, to_char(regdate, 'YYYY-MM-DD HH24:MI:SS') as regdate," +
                 "buyer_img, adr from buyer where buyer_email = ?";
 
