@@ -1,6 +1,7 @@
-package model.member;
+package main.java.model.member;
 
 import java.sql.*;
+import java.util.Objects;
 
 public class SellerDAO {
 
@@ -16,7 +17,7 @@ public class SellerDAO {
 
         try {
             Class.forName(jdbc_driver);
-            conn = DriverManager.getConnection(jdbc_url,"scott","tiger");
+            conn = DriverManager.getConnection(jdbc_url,"coffee","tiger");
         }
         catch (Exception e){
             e.printStackTrace();
@@ -183,9 +184,9 @@ public class SellerDAO {
         return seller;
     }
 
-    //아이디 중복확인
-    public boolean checkId(String email){
-        boolean isCheckId = false;
+    //아이디 중복확인 - 중복 시 false 중복 아닐 시 true
+    public boolean checkSellerId(String email){
+        boolean isCheckSellerId = true;
 
         this.sql = "select seller_email from seller where seller_email = ?";
 
@@ -194,8 +195,9 @@ public class SellerDAO {
             this.pstmt.setString(1, email);
             rs = this.pstmt.executeQuery();
 
+            //아이디 중복
             if(rs.next()){
-                isCheckId = true;
+                isCheckSellerId = false;
             }
         }
         catch(Exception e) {
@@ -212,13 +214,13 @@ public class SellerDAO {
             }
         }
 
-        return isCheckId;
+        return isCheckSellerId;
     }
 
-    //로그인 - 비밀번호 확인
-    public boolean checkPasswd(String email, String passwd){
+    //로그인 - 비밀번호 확인 , 비밀번호 일치 시 true, 불일치 시 false
+    public boolean checkSellerPasswd(String email, String passwd){
 
-        boolean isCheckPasswd = false;
+        boolean isCheckSellerPasswd = false;
 
         this.sql = "select passwd from seller where seller_email = ?";
         try{
@@ -227,8 +229,8 @@ public class SellerDAO {
             rs = this.pstmt.executeQuery();
 
             if(rs.next()){
-                if(this.rs.getString("passwd") == passwd){
-                    isCheckPasswd = true;
+                if(Objects.equals(this.rs.getString("passwd"), passwd)){
+                    isCheckSellerPasswd = true;
                 }
             }
         }
@@ -246,7 +248,7 @@ public class SellerDAO {
             }
         }
 
-        return isCheckPasswd;
+        return isCheckSellerPasswd;
     }
 
     //conn 종료
