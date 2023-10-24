@@ -38,16 +38,15 @@ public class SellerDAO {
             this.rs = pstmt.executeQuery();
 
             if(!rs.next()){
-                this.sql = "insert into seller (seller_email, business_name, business_num, nickname, passwd, point, tel, adr) values (?, ?, ?, ?, ?, ?, ?, ?)";
+                this.sql = "insert into seller (seller_email, business_name, business_num, nickname, passwd, tel, adr) values (?, ?, ?, ?, ?, ?, ?)";
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1, seller.getSellerEmail());
                 pstmt.setString(2, seller.getBusinessName());
                 pstmt.setInt(3, seller.getBusinessNum());
                 pstmt.setString(4, seller.getNickname());
                 pstmt.setString(5, seller.getPasswd());
-                pstmt.setInt(6, seller.getPoint());
-                pstmt.setInt(7, seller.getTel());
-                pstmt.setString(8, seller.getAddress());
+                pstmt.setInt(6, seller.getTel());
+                pstmt.setString(7, seller.getAddress());
 
                 rowCount = pstmt.executeUpdate();
                 this.conn.commit();
@@ -145,7 +144,7 @@ public class SellerDAO {
     //판매자 회원 정보 요청
     public SellerDO getSeller(String email){
 
-        SellerDO seller = null;
+        SellerDO seller = new SellerDO();
         this.sql = "select seller_email, business_name, business_num, nickname, passwd, point, tel, to_char(regdate, 'YYYY-MM-DD HH24:MI:SS') as regdate," +
                 "seller_img, adr from seller where seller_email = ?";
 
@@ -155,7 +154,7 @@ public class SellerDAO {
             rs = this.pstmt.executeQuery();
 
             if(rs.next()){
-                seller.setSellerEmail(this.rs.getString("seller_email"));
+                seller.setSellerEmail(email);
                 seller.setBusinessName(this.rs.getString("business_name"));
                 seller.setBusinessNum(this.rs.getInt("business_num"));
                 seller.setNickname(this.rs.getString("nickname"));
@@ -182,6 +181,72 @@ public class SellerDAO {
         }
 
         return seller;
+    }
+
+    //아이디 중복확인
+    public boolean checkId(String email){
+        boolean isCheckId = false;
+
+        this.sql = "select seller_email from seller where seller_email = ?";
+
+        try{
+            this.pstmt = conn.prepareStatement(sql);
+            this.pstmt.setString(1, email);
+            rs = this.pstmt.executeQuery();
+
+            if(rs.next()){
+                isCheckId = true;
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if(!pstmt.isClosed()) {
+                    pstmt.close();
+                }
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return isCheckId;
+    }
+
+    //로그인 - 비밀번호 확인
+    public boolean checkPasswd(String email, String passwd){
+
+        boolean isCheckPasswd = false;
+
+        this.sql = "select passwd from seller where seller_email = ?";
+        try{
+            this.pstmt = conn.prepareStatement(sql);
+            this.pstmt.setString(1, email);
+            rs = this.pstmt.executeQuery();
+
+            if(rs.next()){
+                if(this.rs.getString("passwd") == passwd){
+                    isCheckPasswd = true;
+                }
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if(!pstmt.isClosed()) {
+                    pstmt.close();
+                }
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return isCheckPasswd;
     }
 
     //conn 종료
