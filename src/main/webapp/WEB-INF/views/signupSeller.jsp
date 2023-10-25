@@ -12,14 +12,14 @@
                 <div class="signup__form-div">
                     <h2 class="signup__title">Bean2B 비즈니스 회원 가입을 진행합니다.</h2> 
                     <h4 class="signup__description">커피도시 부산의 신선하고 맛있는 원두를 공급할 사장님들을 기다리고 있습니다.</h4> 
-                    <form id="signup__form" action="Controller">
+                    <form id="signup__form" method="post" action="memberController">
                         <label for="new-userId" class="signup__label">
                             <i class="fa-regular fa-envelope"></i>
                             <input
                                 class="signup__input"
                                 type="email"
                                 id="new-userId"
-                                name="id"
+                                name="seller_email"
                                 placeholder="email@example.com"
                             />
                         </label> 
@@ -29,7 +29,7 @@
                                 class="signup__input"
                                 type="password"
                                 id="new-password"
-                                name="id"
+                                name="passwd"
                                 placeholder="4자리 이상 입력해주세요."
                             />
                         </label>
@@ -39,7 +39,7 @@
                                 class="signup__input"
                                 type="password"
                                 id="new-passwordConfirm"
-                                name="id"
+                                name="passwdConfirm"
                                 placeholder="비밀번호 확인"
                             />
                         </label>
@@ -49,7 +49,7 @@
                                 class="signup__input"
                                 type="text"
                                 id="new-sellerName"
-                                name="id"
+                                name="nickname"
                                 placeholder="2자리 이상 입력해주세요."
                             />
                         </label>
@@ -59,7 +59,7 @@
                                 class="signup__input"
                                 type="text"
                                 id="new-phoneNumber"
-                                name="id"
+                                name="tel"
                                 placeholder="휴대폰번호를 입력해주세요."
                             />
                         </label>
@@ -70,7 +70,7 @@
                                 class="signup__input"
                                 type="text"
                                 id="new-businessName"
-                                name="id"
+                                name="business_name"
                                 placeholder="상호명을 입력해주세요."
                             />
                         </label>
@@ -80,7 +80,7 @@
                                 class="signup__input"
                                 type="text"
                                 id="new-businessNumber"
-                                name="id"
+                                name="business_num"
                                 placeholder="사업자번호를 입력해주세요."
                             />
                         </label>
@@ -91,7 +91,7 @@
                                 class="signup__input"
                                 type="text"
                                 id="new-address"
-                                name="id"
+                                name="adr"
                                 placeholder="주소를 입력해주세요."
                             />
                         </label>

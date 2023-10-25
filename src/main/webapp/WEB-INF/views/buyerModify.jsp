@@ -18,7 +18,7 @@
                                 class="signup__input"
                                 type="email"
                                 id="new-userId"
-                                name="id"
+                                name="buyer_email"
                                 placeholder="email@example.com"
                                 disabled
                             />
@@ -29,7 +29,7 @@
                                 class="signup__input"
                                 type="text"
                                 id="new-username"
-                                name="id"
+                                name="buyer_name"
                                 placeholder="이름을 입력해주세요."
                                 disabled
                             />
@@ -40,7 +40,7 @@
                                 class="signup__input"
                                 type="text"
                                 id="new-sellerName"
-                                name="id"
+                                name="nickname"
                                 placeholder="2자리 이상 입력해주세요."
                             />
                         </label>
@@ -50,7 +50,7 @@
                                 class="signup__input"
                                 type="text"
                                 id="new-phoneNumber"
-                                name="id"
+                                name="tel"
                                 placeholder="휴대폰번호를 입력해주세요."
                             />
                         </label>
@@ -60,7 +60,7 @@
                                 class="signup__input"
                                 type="text"
                                 id="new-address"
-                                name="id"
+                                name="adr"
                                 placeholder="주소를 입력해주세요."
                             />
                         </label>
