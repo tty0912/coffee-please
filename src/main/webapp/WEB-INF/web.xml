@@ -26,8 +26,8 @@
   		</param-value>
   		-->
   		<param-value>
-  			step2.Step2MvcConfig
-  			step2.Step2ControllerConfig
+  			config.ControllerConfig
+  			config.MvcConfig
   		</param-value>
   	</init-param>
   	<load-on-startup>1</load-on-startup>
