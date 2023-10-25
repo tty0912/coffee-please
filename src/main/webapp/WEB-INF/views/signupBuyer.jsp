@@ -83,7 +83,7 @@
                                 placeholder="주소를 입력해주세요."
                             />
                         </label>
-                        <button class="signup__button" name="action" value="signUppage" type="submit">회원가입</button>
+                        <button class="signup__button" name="action" value="register" type="submit">회원가입</button>
                     </form>
                 </div>
             </div>

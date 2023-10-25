@@ -15,9 +15,9 @@ public class MemberController {
 	
 	public MemberController() {}
 	
-	@GetMapping("/mainView")
-	public String mainView() {
-		return "mainView";
+	@GetMapping("/signup")
+	public String signup() {
+		return "signup";
 	}
 	
 	//http://localhost:8080/coffee/main	
