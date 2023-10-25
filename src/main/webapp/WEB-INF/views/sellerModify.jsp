@@ -11,14 +11,14 @@
             <div class="signup">
                 <div class="signup__form-div">
                     <h2 class="signup__title">Bean2B 비즈니스 회원 정보를 수정해주세요.</h2> 
-                    <form id="signup__form" action="Controller">
+                    <form id="signup__form" method="post" action="memberController">
                         <label for="new-userId" class="signup__label">
                             <i class="fa-regular fa-envelope"></i>
                             <input
                                 class="signup__input"
                                 type="email"
                                 id="new-userId"
-                                name="id"
+                                name="seller_email"
                                 placeholder="email@example.com"
                                 disabled
                             />
@@ -29,7 +29,7 @@
                                 class="signup__input"
                                 type="text"
                                 id="new-sellerName"
-                                name="id"
+                                name="nickname"
                                 placeholder="2자리 이상 입력해주세요."
                             />
                         </label>
@@ -39,7 +39,7 @@
                                 class="signup__input"
                                 type="text"
                                 id="new-phoneNumber"
-                                name="id"
+                                name="tel"
                                 placeholder="휴대폰번호를 입력해주세요."
                             />
                         </label>
@@ -50,7 +50,7 @@
                                 class="signup__input"
                                 type="text"
                                 id="new-businessName"
-                                name="id"
+                                name="business_name"
                                 placeholder="상호명을 입력해주세요."
                                 disabled
                             />
@@ -61,7 +61,7 @@
                                 class="signup__input"
                                 type="text"
                                 id="new-businessNumber"
-                                name="id"
+                                name="business_num"
                                 placeholder="사업자번호를 입력해주세요."
                                 disabled title="입력 폼이 비활성화되었습니다."
                             />
@@ -73,14 +73,14 @@
                                 class="signup__input"
                                 type="text"
                                 id="new-address"
-                                name="id"
+                                name="adr"
                                 placeholder="주소를 입력해주세요."
                             />
                         </label>
                         <input type="file" class="fileInput" />
                         <div class="signup__button-div">
-                            <button class="signup__button" id="signup-button" name="action" value="signUppage" type="submit">취소</button>
-                            <button class="signup__button" id="signup-button" name="action" value="signUppage" type="submit">수정</button>
+                            <button class="signup__button" id="signup-button" name="action" value="mypageSeller" type="submit">취소</button>
+                            <button class="signup__button" id="signup-button" name="action" value="updateMember" type="submit">수정</button>
                         </div>
                     </form>
                 </div>
