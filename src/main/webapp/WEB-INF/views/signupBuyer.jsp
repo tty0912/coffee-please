@@ -82,7 +82,7 @@
                                 type="text"
                                 id="new-address"
                                 name="address"
-                                placeholder="주소를 입력해주세요."
+                                placeholder="테스를 입력해주세요."
                             />
                         </label>
                         <button class="signup__button" name="action" value="register" type="submit">회원가입</button>
