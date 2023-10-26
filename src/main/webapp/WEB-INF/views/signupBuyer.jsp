@@ -93,25 +93,23 @@
     </section>
     <script type="text/javascript">
     const phoneNumber = (target) => {
-        
-    	const tel = target.value.replace(/-/g, '').replace(/[^0-9]/g, '');
-    	let formattedNumber = "";
+        const tel = target.value;
 
-    	if (tel.length >= 4 && tel.length <= 7) {
-    		tel = tel.replace(/(\d{3})(\d{1,4})/g, "$1-$2");
-    	} else if (tel.length > 7) {
-        	formattedNumber = tel.replace(/(\d{3})(\d{4})(\d{0,4})/g, "$1-$2-$3");
-    	} else {
-        	formattedNumber = tel;
-    	}
+        if (!tel) {
+            return "";
+        }
 
-    	target.value = formattedNumber;
+        const number = tel.replace(/[^0-9]/g, "");
 
+        let formattedNumber = "";
 
-
-   
-    	sendDataToServer(tel);
-	}
+        if (number.length >= 4 && number.length <= 7) {
+            formattedNumber = number.replace(/(\d{3})(\d{1,4})/g, "$1-$2");
+        } else if (number.length > 7) {
+            formattedNumber = number.replace(/(\d{3})(\d{4})(\d{0,4})/g, "$1-$2-$3");
+        } else {
+            formattedNumber = number;
+        }
 	</script>
 
 <%@ include file = "footer.jsp" %>
