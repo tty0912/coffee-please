@@ -82,7 +82,7 @@
                                 type="text"
                                 id="new-address"
                                 name="address"
-                                placeholder="테스를 입력해주세요."
+                                placeholder="주소를 입력해주세요."
                             />
                         </label>
                         <button class="signup__button" name="action" value="register" type="submit">회원가입</button>
@@ -94,15 +94,15 @@
     <script type="text/javascript">
     const phoneNumber = (target) => {
         
-    	const phoneNumberValue = target.value.replace(/-/g, '').replace(/[^0-9]/g, '');
+    	const tel = target.value.replace(/-/g, '').replace(/[^0-9]/g, '');
     	let formattedNumber = "";
 
-    	if (phoneNumberValue.length >= 4 && phoneNumberValue.length <= 7) {
-        	formattedNumber = phoneNumberValue.replace(/(\d{3})(\d{1,4})/g, "$1-$2");
-    	} else if (phoneNumberValue.length > 7) {
-        	formattedNumber = phoneNumberValue.replace(/(\d{3})(\d{4})(\d{0,4})/g, "$1-$2-$3");
+    	if (tel.length >= 4 && tel.length <= 7) {
+    		tel = tel.replace(/(\d{3})(\d{1,4})/g, "$1-$2");
+    	} else if (tel.length > 7) {
+        	formattedNumber = tel.replace(/(\d{3})(\d{4})(\d{0,4})/g, "$1-$2-$3");
     	} else {
-        	formattedNumber = phoneNumberValue;
+        	formattedNumber = tel;
     	}
 
     	target.value = formattedNumber;
@@ -110,7 +110,7 @@
 
 
    
-    	sendDataToServer(phoneNumberValue);
+    	sendDataToServer(tel);
 	}
 	</script>
 
