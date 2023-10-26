@@ -34,6 +34,8 @@ public class MemberController {
 		return "signup";
 	}
 	
+	// COMMIT
+	
 	// 구매자 회원가입페이지로 이동
 	@PostMapping("/goSignupBuyer")
 	public String goBuyerSignup(String id, String passwd) {
