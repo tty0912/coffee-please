@@ -2,8 +2,6 @@
 package controller;
 
 
-import main.java.model.member.BuyerDAO;
-import main.java.model.member.SellerDAO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,12 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 //import main.java.model.member.*;
 import model.member.*;
-
-//import main.java.model.member.BuyerDO;
-//import main.java.model.member.SellerDO;
-
-
-
 
 @Controller
 //@RequestMapping()
@@ -35,8 +27,6 @@ public class MemberController {
 	public String signup() {
 		return "signup";
 	}
-	
-	// COMMIT
 	
 	// 구매자 회원가입페이지로 이동
 	@PostMapping("/goSignupBuyer")
@@ -89,18 +79,7 @@ public class MemberController {
 //		
 //		return "buyerModify";
 //	}
-
-		return "signupBuyer";
-	}
-
-	@PostMapping("/singupBuyer")
-	public String buyerSingup2(@ModelAttribute BuyerDO buyer) throws Exception {
-		buyerDAO.insertBuyer(buyer);
-		return "singup";
-	}
-
 	
-		
 //	// 판매자 정보수정
 //	@GetMapping("/views/sellerModify")
 //	public String sellerModify(String id, Model model) {
