@@ -1,5 +1,6 @@
-package main.java.controller;
-//package controller;
+//package main.java.controller;
+package controller;
+
 
 import main.java.model.member.BuyerDAO;
 import main.java.model.member.SellerDAO;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
+//import main.java.model.member.*;
 import model.member.*;
 
 //import main.java.model.member.BuyerDO;
