@@ -1,5 +1,5 @@
-//package main.java.controller;
-package controller;
+package main.java.controller;
+//package controller;
 
 
 import main.java.model.member.BuyerDAO;
@@ -10,14 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
-//import main.java.model.member.*;
-import model.member.*;
-
-//import main.java.model.member.BuyerDO;
-//import main.java.model.member.SellerDO;
-
-
-
+import main.java.model.member.*;
+//import model.member.*;
 
 @Controller
 //@RequestMapping()
@@ -89,17 +83,6 @@ public class MemberController {
 //		
 //		return "buyerModify";
 //	}
-
-		return "signupBuyer";
-	}
-
-	@PostMapping("/singupBuyer")
-	public String buyerSingup2(@ModelAttribute BuyerDO buyer) throws Exception {
-		buyerDAO.insertBuyer(buyer);
-		return "singup";
-	}
-
-	
 		
 //	// 판매자 정보수정
 //	@GetMapping("/views/sellerModify")
