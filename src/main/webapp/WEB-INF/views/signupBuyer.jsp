@@ -70,7 +70,9 @@
                                 type="text"
                                 id="new-phoneNumber"
                                 name="tel"
+                                oninput="phoneNumber(this)"
                                 placeholder="휴대폰번호를 입력해주세요."
+                                maxlength="13"
                             />
                         </label>
                         <label for="new-address" class="signup__label">
@@ -89,5 +91,46 @@
             </div>
         </div>
     </section>
+    <script type="text/javascript">
+    const phoneNumber = (target) => {
+        
+    	const tel = target.value.replace(/-/g, '').replace(/[^0-9]/g, '');
+    	let formattedNumber = "";
 
-<%@ include file = "/WEB-INF/views/footer.jsp" %>
+    	if (tel.length >= 4 && tel.length <= 7) {
+    		tel = tel.replace(/(\d{3})(\d{1,4})/g, "$1-$2");
+    	} else if (tel.length > 7) {
+        	formattedNumber = tel.replace(/(\d{3})(\d{4})(\d{0,4})/g, "$1-$2-$3");
+    	} else {
+        	formattedNumber = tel;
+    	}
+
+    	target.value = formattedNumber;
+
+
+
+   
+    	sendDataToServer(tel);
+	}
+	</script>
+
+<%@ include file = "footer.jsp" %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,20 +1,33 @@
 //package main.java.controller;
 package controller;
 
+
+import main.java.model.member.BuyerDAO;
+import main.java.model.member.SellerDAO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+
 //import main.java.model.member.*;
 import model.member.*;
 
+//import main.java.model.member.BuyerDO;
+//import main.java.model.member.SellerDO;
+
+
+
+
 @Controller
+//@RequestMapping()
 public class MemberController {
 	private BuyerDO buyer;
+
 	private BuyerDAO buyerDAO = new BuyerDAO();
 	private SellerDO seller;
 	private SellerDAO sellerDAO = new SellerDAO();
+
 	
 	public MemberController() {}
 	
@@ -69,12 +82,23 @@ public class MemberController {
 		return "sellerModify";
 	}
 		
+
 //	// 구매자 정보수정
 //	@GetMapping("/views/buyerModify")
 //	public String buyerModify(String id, Model model) {
 //		
 //		return "buyerModify";
 //	}
+
+		return "signupBuyer";
+	}
+
+	@PostMapping("/singupBuyer")
+	public String buyerSingup2(@ModelAttribute BuyerDO buyer) throws Exception {
+		buyerDAO.insertBuyer(buyer);
+		return "singup";
+	}
+
 	
 		
 //	// 판매자 정보수정
