@@ -1,7 +1,7 @@
-package main.java.controller;
+package controller;
 
-import main.java.model.member.BuyerDAO;
-import main.java.model.member.BuyerDO;
+import model.member.BuyerDAO;
+import model.member.BuyerDO;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.*;
