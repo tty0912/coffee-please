@@ -1,4 +1,5 @@
-package model.member;
+//package model.member;
+package main.java.model.member;
 
 public class BuyerDO {
 
