@@ -72,8 +72,8 @@ public class MemberController {
 		
 		return "sellerModify";
 	}
-		
-
+	/*	
+	
 //	// 구매자 정보수정
 //	@GetMapping("/views/buyerModify")
 //	public String buyerModify(String id, Model model) {
@@ -88,7 +88,7 @@ public class MemberController {
 //		return "sellerModify";
 //	}
 
-	/*
+	
 	// 판매자 로그인 
 	@GetMapping("/")
 	public String sellerLogin() {

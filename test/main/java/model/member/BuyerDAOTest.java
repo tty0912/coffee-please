@@ -1,5 +1,6 @@
 package main.java.model.member;
 
+import main.java.model.*;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.*;
