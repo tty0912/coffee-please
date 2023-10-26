@@ -68,9 +68,9 @@
                             <input
                                 class="signup__input"
                                 type="text"
-                                id="new-phoneNumber"
+                                id="tel"
                                 name="tel"
-                                oninput="phoneNumber(this)"
+                                oninput="formatPhoneNumber()"
                                 placeholder="휴대폰번호를 입력해주세요."
                                 maxlength="13"
                             />
@@ -92,7 +92,26 @@
         </div>
     </section>
     <script type="text/javascript">
-    const phoneNumber = (target) => {
+ 
+    	function formatPhoneNumber() {
+        	var input = document.getElementById("tel");
+        	var phoneNumber = input.value.replace(/\D/g, '').replace(/-/g, '').replace(/[^0-9]/g, ''); 
+        	var formattedPhoneNumber = '';
+
+        	if (phoneNumber.length >=4 && phoneNumber.length <= 7) {
+        		formattedPhoneNumber = number.replace(/(\d{3})(\d{1,4})/g, "$1-$2");
+            } else if (phoneNumber.length > 7) {
+            	formattedPhoneNumber = number.replace(/(\d{3})(\d{4})(\d{0,4})/g, "$1-$2-$3");
+            } else {
+            	formattedPhoneNumber = number;
+            }
+       
+
+        	input.value = formattedPhoneNumber;
+    	}
+    
+    
+   /*  const phoneNumber = (target) => {
         const tel = target.value;
 
         if (!tel) {
@@ -110,6 +129,8 @@
         } else {
             formattedNumber = number;
         }
+        
+        target.value = formattedNumber; */
 	</script>
 
 <%@ include file = "footer.jsp" %>
