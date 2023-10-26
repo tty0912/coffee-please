@@ -1,7 +1,5 @@
 package main.java.model.member;
 
-import main.java.model.member.BuyerDAO;
-import main.java.model.member.BuyerDO;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.*;
