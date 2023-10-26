@@ -1,4 +1,4 @@
-package main.java.controller;
+package main.java.model.member;
 
 import main.java.model.member.SellerDAO;
 import main.java.model.member.SellerDO;
