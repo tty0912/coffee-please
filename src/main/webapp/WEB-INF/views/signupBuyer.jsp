@@ -68,9 +68,9 @@
                             <input
                                 class="signup__input"
                                 type="text"
-                                id="new-phoneNumber"
+                                id="tel"
                                 name="tel"
-                                oninput="phoneNumber(this)"
+                                oninput="formatPhoneNumber()"
                                 placeholder="휴대폰번호를 입력해주세요."
                                 maxlength="13"
                             />
@@ -92,26 +92,45 @@
         </div>
     </section>
     <script type="text/javascript">
-    const phoneNumber = (target) => {
-        
-    	const tel = target.value.replace(/-/g, '').replace(/[^0-9]/g, '');
-    	let formattedNumber = "";
+ 
+    	function formatPhoneNumber() {
+        	var input = document.getElementById("tel");
+        	var phoneNumber = input.value.replace(/\D/g, '').replace(/-/g, '').replace(/[^0-9]/g, ''); 
+        	var formattedPhoneNumber = '';
 
-    	if (tel.length >= 4 && tel.length <= 7) {
-    		tel = tel.replace(/(\d{3})(\d{1,4})/g, "$1-$2");
-    	} else if (tel.length > 7) {
-        	formattedNumber = tel.replace(/(\d{3})(\d{4})(\d{0,4})/g, "$1-$2-$3");
-    	} else {
-        	formattedNumber = tel;
+        	if (phoneNumber.length >=4 && phoneNumber.length <= 7) {
+        		formattedPhoneNumber = number.replace(/(\d{3})(\d{1,4})/g, "$1-$2");
+            } else if (phoneNumber.length > 7) {
+            	formattedPhoneNumber = number.replace(/(\d{3})(\d{4})(\d{0,4})/g, "$1-$2-$3");
+            } else {
+            	formattedPhoneNumber = number;
+            }
+       
+
+        	input.value = formattedPhoneNumber;
     	}
+    
+    
+   /*  const phoneNumber = (target) => {
+        const tel = target.value;
 
-    	target.value = formattedNumber;
+        if (!tel) {
+            return "";
+        }
 
+        const number = tel.replace(/[^0-9]/g, "");
 
+        let formattedNumber = "";
 
-   
-    	sendDataToServer(tel);
-	}
+        if (number.length >= 4 && number.length <= 7) {
+            formattedNumber = number.replace(/(\d{3})(\d{1,4})/g, "$1-$2");
+        } else if (number.length > 7) {
+            formattedNumber = number.replace(/(\d{3})(\d{4})(\d{0,4})/g, "$1-$2-$3");
+        } else {
+            formattedNumber = number;
+        }
+        
+        target.value = formattedNumber; */
 	</script>
 
 <%@ include file = "footer.jsp" %>
