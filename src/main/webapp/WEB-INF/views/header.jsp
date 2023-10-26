@@ -17,7 +17,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/signupStyle.css">
     <!-- Javascript -->
-    <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script>
 </head>
 <body>
     <!-- Header -->
