@@ -17,7 +17,7 @@ public class SellerDAO {
 
         try {
             Class.forName(jdbc_driver);
-            conn = DriverManager.getConnection(jdbc_url,"coffee","tiger");
+            conn = DriverManager.getConnection(jdbc_url,"scott","tiger");
         }
         catch (Exception e){
             e.printStackTrace();

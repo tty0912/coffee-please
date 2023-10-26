@@ -12,14 +12,14 @@
                 <div class="signup__form-div">
                     <h2 class="signup__title">Bean2B 비즈니스 회원 가입을 진행합니다.</h2> 
                     <h4 class="signup__description">커피도시 부산의 신선하고 맛있는 원두를 공급할 사장님들을 기다리고 있습니다.</h4> 
-                    <form id="signup__form" method="post" action="memberController">
+                    <form id="signup__form" method="post" action="signupSeller">
                         <label for="new-userId" class="signup__label">
                             <i class="fa-regular fa-envelope"></i>
                             <input
                                 class="signup__input"
                                 type="email"
                                 id="new-userId"
-                                name="seller_email"
+                                name="sellerEmail"
                                 placeholder="email@example.com"
                             />
                         </label> 
@@ -91,7 +91,7 @@
                                 class="signup__input"
                                 type="text"
                                 id="new-address"
-                                name="adr"
+                                name="address"
                                 placeholder="주소를 입력해주세요."
                             />
                         </label>
