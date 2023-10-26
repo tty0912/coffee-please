@@ -1,3 +1,4 @@
+//package main.java.controller;
 package controller;
 
 import org.springframework.stereotype.Controller;
@@ -5,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+//import main.java.model.member.*;
 import model.member.*;
 
 @Controller
