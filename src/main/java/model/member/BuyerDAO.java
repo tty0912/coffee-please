@@ -1,4 +1,4 @@
-package main.java.model.member;
+package model.member;
 
 import java.sql.*;
 import java.util.Objects;
@@ -18,7 +18,7 @@ public class BuyerDAO {
 
         try {
             Class.forName(jdbc_driver);
-            conn = DriverManager.getConnection(jdbc_url,"coffee","tiger");
+            conn = DriverManager.getConnection(jdbc_url,"scott","tiger");
         }
         catch (Exception e){
             e.printStackTrace();

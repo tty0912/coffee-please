@@ -1,4 +1,4 @@
-package main.java.controller;
+package controller;
 
 import main.java.model.member.BuyerDAO;
 import main.java.model.member.SellerDAO;
@@ -7,16 +7,24 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import main.java.model.member.BuyerDO;
 import main.java.model.member.SellerDO;
 
+
+//import model.member.BuyerDAO;
+//import model.member.BuyerDO;
+//import model.member.SellerDO;
+
+
 @Controller
 //@RequestMapping()
 public class MemberController {
 	private BuyerDO buyer;
-	private BuyerDAO buyerDAO;
+
+	private BuyerDAO buyerDAO = new BuyerDAO();
 	private SellerDO seller;
 	private SellerDAO sellerDAO;
 	
@@ -25,6 +33,14 @@ public class MemberController {
 	@GetMapping("/signup")
 	public String signup() {
 		return "signup";
+	}
+	
+	@PostMapping("/signupBuyer2")
+	public String signupBuyer2(@ModelAttribute BuyerDO buyer) throws Exception {
+		buyer.setPoint(10000000);
+	    buyerDAO.insertBuyer(buyer);
+	    
+	    return "signup";
 	}
 	
 	//http://localhost:8080/coffee/main	
@@ -58,7 +74,7 @@ public class MemberController {
 	}
 	
 	// 구매자 회원가입
-	@GetMapping("/signupBuyer")
+	@PostMapping("/signupBuyer")
 	public String buyerSignup(String id, String passwd) {
 		
 		return "signupBuyer";
