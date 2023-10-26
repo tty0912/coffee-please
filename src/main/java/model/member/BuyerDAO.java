@@ -47,7 +47,7 @@ public class BuyerDAO {
                 pstmt.setString(3, buyer.getNickname());
                 pstmt.setString(4, buyer.getPasswd());
                 pstmt.setInt(5, buyer.getPoint());
-                pstmt.setInt(6, buyer.getTel());
+                pstmt.setLong(6, buyer.getTel());
                 pstmt.setString(7, buyer.getAddress());
 
                 rowCount = pstmt.executeUpdate();
@@ -90,7 +90,7 @@ public class BuyerDAO {
         try {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, buyer.getNickname());
-            pstmt.setInt(2, buyer.getTel());
+            pstmt.setLong(2, buyer.getTel());
             pstmt.setString(3, buyer.getAddress());
             pstmt.setString(4, buyer.getBuyerImg());
             pstmt.setString(5, buyer.getBuyerEmail());
@@ -160,7 +160,7 @@ public class BuyerDAO {
                 buyer.setNickname(this.rs.getString("nickname"));
                 buyer.setPasswd(this.rs.getString("passwd"));
                 buyer.setPoint(this.rs.getInt("point"));
-                buyer.setTel(this.rs.getInt("tel"));
+                buyer.setTel(this.rs.getLong("tel"));
                 buyer.setRegdate(this.rs.getString("regdate"));
                 buyer.setBuyerImg(this.rs.getString("buyer_img"));
                 buyer.setAddress(this.rs.getString("adr"));
