@@ -19,7 +19,7 @@
                                 class="signup__input"
                                 type="email"
                                 id="new-userId"
-                                name="seller_email"
+                                name="sellerEmail"
                                 placeholder="email@example.com"
                             />
                         </label> 
@@ -91,7 +91,7 @@
                                 class="signup__input"
                                 type="text"
                                 id="new-address"
-                                name="adr"
+                                name="address"
                                 placeholder="주소를 입력해주세요."
                             />
                         </label>

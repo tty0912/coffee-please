@@ -51,30 +51,12 @@ public class MemberController {
 	    return "redirect:/signup";
 	}
 	
-	//http://localhost:8080/coffee/main	
-	
-//	// 구매자 정보수정
-//	@GetMapping("/views/buyerModify")
-//	public String buyerModify(String id, Model model) {
-//		
-//		return "buyerModify";
-//	}
-	
 	// 구매자 수정 페이지로 이동
 	@GetMapping("/buyerModify")
 	public String goBuyerModify(String id) {
 		
 		return "buyerModify";
 	}
-	
-	
-	
-//	// 판매자 정보수정
-//	@GetMapping("/views/sellerModify")
-//	public String sellerModify(String id, Model model) {
-//		
-//		return "sellerModify";
-//	}
 
 	// 판매자 수정 페이지로 이동
 	@GetMapping("/sellerModify")
@@ -82,10 +64,22 @@ public class MemberController {
 		
 		return "sellerModify";
 	}
+		
+//	// 구매자 정보수정
+//	@GetMapping("/views/buyerModify")
+//	public String buyerModify(String id, Model model) {
+//		
+//		return "buyerModify";
+//	}
 	
-	
-	
-	
+		
+//	// 판매자 정보수정
+//	@GetMapping("/views/sellerModify")
+//	public String sellerModify(String id, Model model) {
+//		
+//		return "sellerModify";
+//	}
+
 	/*
 	// 판매자 로그인 
 	@GetMapping("/")
