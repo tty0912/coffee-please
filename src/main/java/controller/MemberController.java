@@ -1,20 +1,26 @@
-package controller;
+package main.java.controller;
+//package controller;
+
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import model.member.BuyerDAO;
-import model.member.BuyerDO;
-import model.member.SellerDO;
+
+//import main.java.model.member.*;
+import model.member.*;
+
 
 @Controller
+//@RequestMapping()
 public class MemberController {
 	private BuyerDO buyer;
+
 	private BuyerDAO buyerDAO = new BuyerDAO();
 	private SellerDO seller;
+	private SellerDAO sellerDAO = new SellerDAO();
+
 	
 	public MemberController() {}
 	
@@ -23,22 +29,35 @@ public class MemberController {
 		return "signup";
 	}
 	
-	@PostMapping("/signupBuyer2")
-	public String signupBuyer2(@ModelAttribute BuyerDO buyer) throws Exception {
+	// 구매자 회원가입페이지로 이동
+	@PostMapping("/goSignupBuyer")
+	public String goBuyerSignup(String id, String passwd) {
+		
+		return "signupBuyer";
+	}
+	// 판매자 회원가입페이지로 이동
+	@PostMapping("/goSignupSeller")
+	public String goSellerSignup(String id, String passwd) {
+		
+		return "signupSeller";
+	}
+	
+	// 회원가입후 redirect
+	@PostMapping("/signupBuyer")
+	public String signupBuyer(@ModelAttribute BuyerDO buyer) throws Exception {
 		buyer.setPoint(10000000);
 	    buyerDAO.insertBuyer(buyer);
 	    
-	    return "signup";
+	    return "redirect:/signup";
 	}
 	
-	//http://localhost:8080/coffee/main	
-	
-//	// 구매자 정보수정
-//	@GetMapping("/views/buyerModify")
-//	public String buyerModify(String id, Model model) {
-//		
-//		return "buyerModify";
-//	}
+	// 회원가입후 redirect
+	@PostMapping("/signupSeller")
+	public String signupSeller(@ModelAttribute SellerDO seller) throws Exception {
+	    sellerDAO.insertSeller(seller);
+	    
+	    return "redirect:/signup";
+	}
 	
 	// 구매자 수정 페이지로 이동
 	@GetMapping("/buyerModify")
@@ -46,13 +65,6 @@ public class MemberController {
 		
 		return "buyerModify";
 	}
-	
-//	// 판매자 정보수정
-//	@GetMapping("/views/sellerModify")
-//	public String sellerModify(String id, Model model) {
-//		
-//		return "sellerModify";
-//	}
 
 	// 판매자 수정 페이지로 이동
 	@GetMapping("/sellerModify")
@@ -60,23 +72,23 @@ public class MemberController {
 		
 		return "sellerModify";
 	}
+	/*	
 	
-	// 구매자 회원가입
-	@PostMapping("/signupBuyer")
-	public String buyerSignup(String id, String passwd) {
-		
-		return "signupBuyer";
-	}
+//	// 구매자 정보수정
+//	@GetMapping("/views/buyerModify")
+//	public String buyerModify(String id, Model model) {
+//		
+//		return "buyerModify";
+//	}
+
+//	// 판매자 정보수정
+//	@GetMapping("/views/sellerModify")
+//	public String sellerModify(String id, Model model) {
+//		
+//		return "sellerModify";
+//	}
+
 	
-	// 판매자 회원가입
-	@GetMapping("/signupSeller")
-	public String sellerSignup(String id, String passwd) {
-		
-		return "signupSeller";
-	}
-	
-	
-	/*
 	// 판매자 로그인 
 	@GetMapping("/")
 	public String sellerLogin() {

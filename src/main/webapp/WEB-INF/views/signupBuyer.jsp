@@ -12,7 +12,7 @@
                 <div class="signup__form-div">
                     <h2 class="signup__title">Bean2B 구매자 회원 가입을 진행합니다.</h2> 
                     <h4 class="signup__description">맛있는 커피를 찾고 계신가요? 커피도시 부산의 신선한 원두로 여러분을 기다리고 있습니다.</h4> 
-                    <form id="signup__form" method="post" action="signupBuyer2">
+                    <form id="signup__form" method="post" action="signupBuyer">
                         <label for="new-userId" class="signup__label">
                             <i class="fa-regular fa-envelope"></i>
                             <input
@@ -68,9 +68,11 @@
                             <input
                                 class="signup__input"
                                 type="text"
-                                id="new-phoneNumber"
+                                id="tel"
                                 name="tel"
+                                oninput="formatPhoneNumber()"
                                 placeholder="휴대폰번호를 입력해주세요."
+                                maxlength="13"
                             />
                         </label>
                         <label for="new-address" class="signup__label">
@@ -89,5 +91,65 @@
             </div>
         </div>
     </section>
+    <script type="text/javascript">
+ 
+    	function formatPhoneNumber() {
+        	var input = document.getElementById("tel");
+        	var phoneNumber = input.value.replace(/\D/g, '').replace(/-/g, '').replace(/[^0-9]/g, ''); 
+        	var formattedPhoneNumber = '';
 
-<%@ include file = "/WEB-INF/views/footer.jsp" %>
+        	if (phoneNumber.length >=4 && phoneNumber.length <= 7) {
+        		formattedPhoneNumber = number.replace(/(\d{3})(\d{1,4})/g, "$1-$2");
+            } else if (phoneNumber.length > 7) {
+            	formattedPhoneNumber = number.replace(/(\d{3})(\d{4})(\d{0,4})/g, "$1-$2-$3");
+            } else {
+            	formattedPhoneNumber = number;
+            }
+       
+
+        	input.value = formattedPhoneNumber;
+    	}
+    
+    
+   /*  const phoneNumber = (target) => {
+        const tel = target.value;
+
+        if (!tel) {
+            return "";
+        }
+
+        const number = tel.replace(/[^0-9]/g, "");
+
+        let formattedNumber = "";
+
+        if (number.length >= 4 && number.length <= 7) {
+            formattedNumber = number.replace(/(\d{3})(\d{1,4})/g, "$1-$2");
+        } else if (number.length > 7) {
+            formattedNumber = number.replace(/(\d{3})(\d{4})(\d{0,4})/g, "$1-$2-$3");
+        } else {
+            formattedNumber = number;
+        }
+        
+        target.value = formattedNumber; */
+	</script>
+
+<%@ include file = "footer.jsp" %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

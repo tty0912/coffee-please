@@ -1,3 +1,4 @@
+//package main.java.model.member;
 package model.member;
 
 public class SellerDO {
@@ -8,7 +9,7 @@ public class SellerDO {
     private String nickname;
     private String passwd;
     private int point;
-    private int tel;
+    private long tel;
     private String regdate;
     private String sellerImg;
     private String address;
@@ -61,11 +62,11 @@ public class SellerDO {
         this.point = point;
     }
 
-    public int getTel() {
+    public long getTel() {
         return tel;
     }
 
-    public void setTel(int tel) {
+    public void setTel(long tel) {
         this.tel = tel;
     }
 
