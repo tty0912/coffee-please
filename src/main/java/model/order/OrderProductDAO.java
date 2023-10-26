@@ -29,14 +29,13 @@ public class OrderProductDAO {
     public int insertOrderProduct(OrderProductDO orderProduct) throws SQLException {
 
         int rowCount = 0;
-        this.sql = "insert into order_prod (buyer_email, order_datetime, order_total_price, before_order_point) values(?, ?, ?, ?)";
+        this.sql = "insert into order_prod (buyer_email, order_total_price, before_order_point) values( ?, ?, ?)";
 
         try{
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, orderProduct.getBuyerEmail());
-            pstmt.setString(2, orderProduct.getOrderDatetime());
-            pstmt.setLong(3, orderProduct.getOrderTatalPrice());
-            pstmt.setLong(4, orderProduct.getBeforeOrderPoint());
+            pstmt.setLong(2, orderProduct.getOrderTotalPrice());
+            pstmt.setLong(3, orderProduct.getBeforeOrderPoint());
 
             rowCount = pstmt.executeUpdate();
         }

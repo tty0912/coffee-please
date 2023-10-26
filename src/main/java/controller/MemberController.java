@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 //import main.java.model.member.*;
 import model.member.*;
 
+
 @Controller
 //@RequestMapping()
 public class MemberController {
@@ -79,7 +80,7 @@ public class MemberController {
 //		
 //		return "buyerModify";
 //	}
-	
+
 //	// 판매자 정보수정
 //	@GetMapping("/views/sellerModify")
 //	public String sellerModify(String id, Model model) {
