@@ -1,4 +1,5 @@
-package main.java.model.order;
+//package main.java.model.order;
+package model.order;
 
 public class OrderProductDO {
 
@@ -7,12 +8,12 @@ public class OrderProductDO {
     private long orderTotalPrice;
     private long beforeOrderPoint;
 
-    public long getOrderTatalPrice() {
+    public long getOrderTotalPrice() {
         return orderTotalPrice;
     }
 
-    public void setOrderTatalPrice(long orderTatalPrice) {
-        this.orderTotalPrice = orderTatalPrice;
+    public void setOrderTotalPrice(long orderTotalPrice) {
+        this.orderTotalPrice = orderTotalPrice;
     }
 
     public long getBeforeOrderPoint() {

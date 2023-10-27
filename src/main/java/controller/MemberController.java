@@ -1,8 +1,7 @@
-//package main.java.controller;
-package controller;
+package main.java.controller;
+//package controller;
 
-//import main.java.model.member.BuyerDAO;
-//import main.java.model.member.SellerDAO;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -10,19 +9,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+//import main.java.model.member.*;
 import model.member.*;
-
-//import main.java.model.member.BuyerDO;
-//import main.java.model.member.SellerDO;
-
-
 
 
 @Controller
 //@RequestMapping()
 public class MemberController {
 	private BuyerDO buyer;
-
 	private BuyerDAO buyerDAO = new BuyerDAO();
 	private SellerDO seller;
 	private SellerDAO sellerDAO = new SellerDAO();
@@ -37,13 +31,13 @@ public class MemberController {
 	
 	// 구매자 회원가입페이지로 이동
 	@PostMapping("/goSignupBuyer")
-	public String goBuyerSignup(String id, String passwd) {
+	public String goBuyerSignup() {
 		
 		return "signupBuyer";
 	}
 	// 판매자 회원가입페이지로 이동
 	@PostMapping("/goSignupSeller")
-	public String goSellerSignup(String id, String passwd) {
+	public String goSellerSignup() {
 		
 		return "signupSeller";
 	}
@@ -87,34 +81,27 @@ public class MemberController {
 		
 		return "sellerModify";
 	}
-		
-
-//	// 구매자 정보수정
+	/*	
+	
+//	// 구매자 정보수정후 redirect
 //	@GetMapping("/views/buyerModify")
-//	public String buyerModify(String id, Model model) {
+//	public String buyerModify(@ModelAttribute BuyerDO buyer) {
 //		
-//		return "buyerModify";
+//		return "redirect:/signup";
 //	}
 
-//		return "signupBuyer";
-//	}
 
-	@PostMapping("/singupBuyer")
-	public String buyerSingup2(@ModelAttribute BuyerDO buyer) throws Exception {
-		buyerDAO.insertBuyer(buyer);
-		return "singup";
-	}
+
+
+//	// 판매자 정보수정후 redirect
+
+//	@GetMapping("/views/sellerModify")
+//	public String sellerModify(@ModelAttribute SellerDO seller) {
+//		
+//		return "redirect:/signup";
+//	}
 
 	
-		
-//	// 판매자 정보수정
-//	@GetMapping("/views/sellerModify")
-//	public String sellerModify(String id, Model model) {
-//		
-//		return "sellerModify";
-//	}
-
-	/*
 	// 판매자 로그인 
 	@GetMapping("/")
 	public String sellerLogin() {
