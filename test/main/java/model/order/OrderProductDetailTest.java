@@ -11,7 +11,7 @@ public class OrderProductDetailTest {
     OrderProductDetailDAO orderProductDetailDAO = new OrderProductDetailDAO();
 
     @Test
-    public void insertOrderProductDetailTest(){
+    public void insertOrderProductDetailTest() throws SQLException{
         OrderProductDetailDO order = new OrderProductDetailDO();
 
         order.setBuyerEmail("hmson@naver.com");
