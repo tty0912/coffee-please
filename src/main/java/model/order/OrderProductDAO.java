@@ -1,7 +1,8 @@
-//package main.java.model.order;
-package model.order;
+package main.java.model.order;
+//package model.order;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class OrderProductDAO {
 
@@ -56,4 +57,12 @@ public class OrderProductDAO {
         return rowCount;
     }
 
+    //나의 주문내역 확인
+    public ArrayList<OrderProductDO> getOrderList(String buyerEmail){
+
+        ArrayList<OrderProductDO> orderList = new ArrayList<OrderProductDO>();
+        this.sql = "select order_total_price, before_order_price from "
+
+        return null;
+    }
 }
