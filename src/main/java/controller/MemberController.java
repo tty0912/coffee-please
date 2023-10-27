@@ -16,7 +16,6 @@ import model.member.*;
 //@RequestMapping()
 public class MemberController {
 	private BuyerDO buyer;
-
 	private BuyerDAO buyerDAO = new BuyerDAO();
 	private SellerDO seller;
 	private SellerDAO sellerDAO = new SellerDAO();
@@ -31,13 +30,13 @@ public class MemberController {
 	
 	// 구매자 회원가입페이지로 이동
 	@PostMapping("/goSignupBuyer")
-	public String goBuyerSignup(String id, String passwd) {
+	public String goBuyerSignup() {
 		
 		return "signupBuyer";
 	}
 	// 판매자 회원가입페이지로 이동
 	@PostMapping("/goSignupSeller")
-	public String goSellerSignup(String id, String passwd) {
+	public String goSellerSignup() {
 		
 		return "signupSeller";
 	}
@@ -74,18 +73,18 @@ public class MemberController {
 	}
 	/*	
 	
-//	// 구매자 정보수정
+//	// 구매자 정보수정후 redirect
 //	@GetMapping("/views/buyerModify")
-//	public String buyerModify(String id, Model model) {
+//	public String buyerModify(@ModelAttribute BuyerDO buyer) {
 //		
-//		return "buyerModify";
+//		return "redirect:/signup";
 //	}
 
-//	// 판매자 정보수정
+//	// 판매자 정보수정후 redirect
 //	@GetMapping("/views/sellerModify")
-//	public String sellerModify(String id, Model model) {
+//	public String sellerModify(@ModelAttribute SellerDO seller) {
 //		
-//		return "sellerModify";
+//		return "redirect:/signup";
 //	}
 
 	
