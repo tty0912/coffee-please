@@ -7,8 +7,8 @@ public class BuyerDO {
     private String buyerName;
     private String nickname;
     private String passwd;
-    private int point;
-    private long tel;
+    private long point;
+    private String tel;
     private String regdate;
     private String buyerImg;
     private String address;
@@ -45,19 +45,19 @@ public class BuyerDO {
         this.passwd = passwd;
     }
 
-    public int getPoint() {
+    public long getPoint() {
         return point;
     }
 
-    public void setPoint(int point) {
+    public void setPoint(long point) {
         this.point = point;
     }
 
-    public long getTel() {
+    public String getTel() {
         return tel;
     }
 
-    public void setTel(long tel) {
+    public void setTel(String tel) {
         this.tel = tel;
     }
 

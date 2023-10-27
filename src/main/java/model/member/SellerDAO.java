@@ -44,10 +44,10 @@ public class SellerDAO {
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1, seller.getSellerEmail());
                 pstmt.setString(2, seller.getBusinessName());
-                pstmt.setInt(3, seller.getBusinessNum());
+                pstmt.setString(3, seller.getBusinessNum());
                 pstmt.setString(4, seller.getNickname());
                 pstmt.setString(5, seller.getPasswd());
-                pstmt.setLong(6, seller.getTel());
+                pstmt.setString(6, seller.getTel());
                 pstmt.setString(7, seller.getAddress());
 
                 rowCount = pstmt.executeUpdate();
@@ -90,7 +90,7 @@ public class SellerDAO {
         try {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, seller.getNickname());
-            pstmt.setLong(2, seller.getTel());
+            pstmt.setString(2, seller.getTel());
             pstmt.setString(3, seller.getAddress());
             pstmt.setString(4, seller.getSellerImg());
             pstmt.setString(5, seller.getSellerEmail());
@@ -158,11 +158,11 @@ public class SellerDAO {
             if(rs.next()){
                 seller.setSellerEmail(email);
                 seller.setBusinessName(this.rs.getString("business_name"));
-                seller.setBusinessNum(this.rs.getInt("business_num"));
+                seller.setBusinessNum(this.rs.getString("business_num"));
                 seller.setNickname(this.rs.getString("nickname"));
                 seller.setPasswd(this.rs.getString("passwd"));
-                seller.setPoint(this.rs.getInt("point"));
-                seller.setTel(this.rs.getLong("tel"));
+                seller.setPoint(this.rs.getLong("point"));
+                seller.setTel(this.rs.getString("tel"));
                 seller.setRegdate(this.rs.getString("regdate"));
                 seller.setSellerImg(this.rs.getString("seller_img"));
                 seller.setAddress(this.rs.getString("adr"));
@@ -183,6 +183,68 @@ public class SellerDAO {
         }
 
         return seller;
+    }
+
+    //판매자 포인트 확인
+    public long checkSellerPoint(String email){
+        long point = 0;
+        this.sql = "select point from seller where seller_email = ?";
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,email);
+            rs = pstmt.executeQuery();
+
+            rs.next();
+
+            point = rs.getLong("point");
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if(!pstmt.isClosed()) {
+                    pstmt.close();
+                }
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return point;
+    }
+
+    //판매자 결제시 POINT 변경
+    public int sellerPointUpdate(String email, long point){
+        int rowCount = 0;
+        this.sql = "update seller set point = point + ? where seller_email = ?";
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setLong(1, point);
+            pstmt.setString(2,email);
+
+            rowCount = pstmt.executeUpdate();
+
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if(!pstmt.isClosed()) {
+                    pstmt.close();
+                }
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return rowCount;
+
     }
 
     //아이디 중복확인 - 중복 시 false 중복 아닐 시 true

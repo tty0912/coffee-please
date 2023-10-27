@@ -81,7 +81,9 @@
                                 type="text"
                                 id="new-businessNumber"
                                 name="business_num"
+                                oninput="businessNumber(this)"
                                 placeholder="사업자번호를 입력해주세요."
+                                maxlength="13"
                             />
                         </label>
                         
@@ -102,6 +104,44 @@
             </div>
         </div>
     </section>
+    <script type="text/javascript">
+ 	/* /* var input_val=0;
+    $('#btn1').on('click',function(){
+    	$('#tel').val(input_val);
+    	//document.
+    	console.log(input_val);
+    }); */
+    
+    const businessNumber = (target) => {
+        
+        const phoneNumberValue = target.value.replace(/[^0-9]/g, '');
+        let formattedNumber = "";
+		
+        
+        if (phoneNumberValue.length >= 3 && phoneNumberValue.length <= 5) {
+            formattedNumber = phoneNumberValue.replace(/(\d{3})(\d{1,2})/g, "$1-$2");
+        } else if (phoneNumberValue.length > 5) {
+            formattedNumber = phoneNumberValue.replace(/(\d{3})(\d{2})(\d{0,5})/g, "$1-$2-$3");
+        } else {
+            formattedNumber = phoneNumberValue;
+        }
+        
+
+        target.value = formattedNumber;
+        input_val=phoneNumberValue;
+        //target.value=Number(phoneNumberValue);
+    }
+    function uf_aa(){
+    	console.log('input_val',input_val);
+    	console.log('input_val', Number(input_val));
+    }
+    function js_sub(){
+    	$('#tel').value=input_val;
+    	//console.log('input_val',input_val);
+    	
+    } 
+    
+	</script>
 
 
 <%@ include file = "/WEB-INF/views/footer.jsp" %>
