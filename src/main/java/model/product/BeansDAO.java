@@ -22,7 +22,8 @@ public class BeansDAO {
 		try {
 			Class.forName(jdbc_driver);
 			conn = DriverManager.getConnection(jdbc_url, "scott", "tiger");
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -64,16 +65,22 @@ public class BeansDAO {
 		return beans;
 	}
 	
-	// 검색 기능
-	public ArrayList<BeansDO> searchBeans(String beanName) {
+	// 상품 '검색'
+	public ArrayList<BeansDO> searchBeans(String beanName, int page) {
 		ArrayList<BeansDO> searchResult = new ArrayList<BeansDO>();
 
-		this.sql = "select beans_num, bean_name, bean_price, bean_thumbnail " + "from beans "
-				+ "where length(bean_name) >= 2 and bean_name like ?";
+		this.sql = "select beans_num, bean_name, bean_price, bean_thumbnail, beans_regdate " + 
+				"from (select beans_num, bean_name, bean_price, bean_thumbnail, beans_regdate, rownum as rnum " + 
+				"from beans " + 
+				"where length(bean_name) >= 2 and bean_name like ?) " + 
+				"where rnum between ? and ? " + 
+				"ORDER BY beans_regdate desc";
 
 		try {
 			this.pstmt = conn.prepareStatement(this.sql);
 			this.pstmt.setString(1, "%" + beanName + "%");
+			this.pstmt.setInt(2, (page * 15) + 1);
+			this.pstmt.setInt(3, (page * 15) + 14);
 			rs = this.pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -101,4 +108,6 @@ public class BeansDAO {
 		}
 		return searchResult;
 	}
+	
+	
 }
