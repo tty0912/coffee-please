@@ -1,13 +1,14 @@
-package main.java.controller;
-//package controller;
+//package main.java.controller;
+package controller;
 
-import main.java.model.member.BuyerDAO;
-import main.java.model.member.SellerDAO;
+//import main.java.model.member.BuyerDAO;
+//import main.java.model.member.SellerDAO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import model.member.*;
 
@@ -64,6 +65,15 @@ public class MemberController {
 	    return "redirect:/signup";
 	}
 	
+	@PostMapping("/checkIdDuplicate")
+	@ResponseBody
+	public String checkIdDuplicate(@RequestParam String id) {
+	    BuyerDAO buyerDAO = new BuyerDAO();
+	    boolean isIdDuplicate = buyerDAO.checkBuyerId(id);
+	    return isIdDuplicate ? "duplicate" : "unique";
+	}
+
+	
 	// 구매자 수정 페이지로 이동
 	@GetMapping("/buyerModify")
 	public String goBuyerModify(String id) {
@@ -86,8 +96,8 @@ public class MemberController {
 //		return "buyerModify";
 //	}
 
-		return "signupBuyer";
-	}
+//		return "signupBuyer";
+//	}
 
 	@PostMapping("/singupBuyer")
 	public String buyerSingup2(@ModelAttribute BuyerDO buyer) throws Exception {

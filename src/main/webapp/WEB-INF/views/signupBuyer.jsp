@@ -4,6 +4,7 @@
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  
 <%@ include file = "/WEB-INF/views/header.jsp" %>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 <!-- SignupBuyer -->
     <section id="signup" class="section">
@@ -12,7 +13,7 @@
                 <div class="signup__form-div">
                     <h2 class="signup__title">Bean2B 구매자 회원 가입을 진행합니다.</h2> 
                     <h4 class="signup__description">맛있는 커피를 찾고 계신가요? 커피도시 부산의 신선한 원두로 여러분을 기다리고 있습니다.</h4> 
-                    <form id="signup__form" method="post" action="signupBuyer">
+                    <form id="signup__form" method="post" action="signupBuyer" >
                         <label for="new-userId" class="signup__label">
                             <i class="fa-regular fa-envelope"></i>
                             <input
@@ -23,6 +24,7 @@
                                 placeholder="email@example.com"
                             />
                         </label> 
+                        <p id="idCheckMsg"></p>
                         <label for="new-username" class="signup__label">
                             <i class="fa-regular fa-id-card"></i>
                             <input
@@ -38,11 +40,15 @@
                             <input
                                 class="signup__input"
                                 type="password"
-                                id="new-username"
+                                id="new-password"
                                 name="passwd"
                                 placeholder="4자리 이상 입력해주세요."
                             />
                         </label>
+                         <div class="passwdmsg">
+                            <span id="strengthDisp"></span>
+                            <p id="strengthMsg"></p>
+                        </div>
                         <label for="new-passwordConfirm" class="signup__label">
                             <i class="fa-solid fa-check"></i>
                             <input
@@ -53,6 +59,7 @@
                                 placeholder="비밀번호 확인"
                             />
                         </label>
+                        <p id="confirmMsg"></p>
                         <label for="new-sellerName" class="signup__label">
                             <i class="fa-regular fa-circle-user"></i>
                             <input
@@ -70,7 +77,6 @@
                                 type="text"
                                 id="tel"
                                 name="tel"
-                                oninput="formatPhoneNumber()"
                                 placeholder="휴대폰번호를 입력해주세요."
                                 maxlength="13"
                             />
@@ -85,53 +91,14 @@
                                 placeholder="주소를 입력해주세요."
                             />
                         </label>
-                        <button class="signup__button" name="action" value="register" type="submit">회원가입</button>
+                        <button id="btn1" class="signup__button" name="action" value="register" type="submit">회원가입</button>
                     </form>
                 </div>
             </div>
         </div>
     </section>
-    <script type="text/javascript">
- 
-    	function formatPhoneNumber() {
-        	var input = document.getElementById("tel");
-        	var phoneNumber = input.value.replace(/\D/g, '').replace(/-/g, '').replace(/[^0-9]/g, ''); 
-        	var formattedPhoneNumber = '';
-
-        	if (phoneNumber.length >=4 && phoneNumber.length <= 7) {
-        		formattedPhoneNumber = number.replace(/(\d{3})(\d{1,4})/g, "$1-$2");
-            } else if (phoneNumber.length > 7) {
-            	formattedPhoneNumber = number.replace(/(\d{3})(\d{4})(\d{0,4})/g, "$1-$2-$3");
-            } else {
-            	formattedPhoneNumber = number;
-            }
-       
-
-        	input.value = formattedPhoneNumber;
-    	}
     
-    
-   /*  const phoneNumber = (target) => {
-        const tel = target.value;
-
-        if (!tel) {
-            return "";
-        }
-
-        const number = tel.replace(/[^0-9]/g, "");
-
-        let formattedNumber = "";
-
-        if (number.length >= 4 && number.length <= 7) {
-            formattedNumber = number.replace(/(\d{3})(\d{1,4})/g, "$1-$2");
-        } else if (number.length > 7) {
-            formattedNumber = number.replace(/(\d{3})(\d{4})(\d{0,4})/g, "$1-$2-$3");
-        } else {
-            formattedNumber = number;
-        }
-        
-        target.value = formattedNumber; */
-	</script>
+   
 
 <%@ include file = "footer.jsp" %>
 
