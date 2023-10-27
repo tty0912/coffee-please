@@ -3,3 +3,5 @@
 .classpath
 .project
 .settings
+src/main/java/testCodeman.java
+.settings/org.eclipse.wst.common.component
