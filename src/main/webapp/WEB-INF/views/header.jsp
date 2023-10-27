@@ -17,18 +17,18 @@
     <!-- CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/signupStyle.css">
     <!-- Javascript -->
-    <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script>
 </head>
 <body>
     <!-- Header -->
     <header class="header">
         <nav class="header__nav">
             <ul class="header__menu">
-                <li><a class="header__menu__item" href="#about">STORE</a></li>
+                <li><a class="header__menu__item" href="/coffee/sellerModify">STORE</a></li>
                 <div class="header__menu__item header__logo">
-                    <img class="header__logo__img" src="${pageContext.request.contextPath }/images/logoName.png" alt="logo" />
+                    <a href="/coffee/signup"><img class="header__logo__img" src="${pageContext.request.contextPath }/images/logoName.png" alt="logo" /></a>
                 </div>
-                <li><a class="header__menu__item" href="#about">GROUP</a></li>
+                <li><a class="header__menu__item" href="/coffee/buyerModify">GROUP</a></li>
             </ul>
         </nav>
     </header>

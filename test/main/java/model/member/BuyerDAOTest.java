@@ -1,7 +1,6 @@
-package main.java.controller;
+package main.java.model.member;
 
-import main.java.model.member.BuyerDAO;
-import main.java.model.member.BuyerDO;
+//import main.java.model.*;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -18,7 +17,7 @@ public class BuyerDAOTest {
         buyer.setBuyerName("손흥민");
         buyer.setNickname("흥민흥민");
         buyer.setPasswd("qqqqwwww");
-        buyer.setTel(111222);
+        buyer.setTel("111222");
         buyer.setAddress("부산시 남구");
         buyer.setPoint(1000000);
 
@@ -31,7 +30,7 @@ public class BuyerDAOTest {
         BuyerDO buyer = new BuyerDO();
 
         buyer.setNickname("흥민흥민흥민");
-        buyer.setTel(777777);
+        buyer.setTel("777777");
         buyer.setAddress("부산시 부산진구");
         buyer.setBuyerImg("buyerImg-url");
         buyer.setBuyerEmail("hmson@naver.com");
@@ -49,7 +48,7 @@ public class BuyerDAOTest {
         assertThat(buyer.getNickname()).isEqualTo("흥민흥민흥민");
         assertThat(buyer.getPasswd()).isEqualTo("qqqqwwww");
         assertThat(buyer.getPoint()).isEqualTo(1000000);
-        assertThat(buyer.getTel()).isEqualTo(777777);
+        assertThat(buyer.getTel()).isEqualTo("777777");
         assertThat(buyer.getBuyerImg()).isEqualTo("buyerImg-url");
         assertThat(buyer.getAddress()).isEqualTo("부산시 부산진구");
 
@@ -74,6 +73,11 @@ public class BuyerDAOTest {
         //passwd 불일치
         assertThat(buyerDAO.checkBuyerPasswd("hmson@naver.com","12341234")).isEqualTo(false);
 
+    }
+
+    @Test
+    public void checkBuyerPointTest(){
+        assertThat(buyerDAO.checkBuyerPoint("hmson@naver.com")).isEqualTo(1000000);
     }
 
     @Test
