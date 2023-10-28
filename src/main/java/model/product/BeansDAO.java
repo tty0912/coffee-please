@@ -58,14 +58,15 @@ public class BeansDAO {
 				if (!this.pstmt.isClosed()) {
 					this.pstmt.close();
 				}
-			} catch (Exception e) {
+			} 
+			catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		return beans;
 	}
 	
-	// 상품 '검색'
+	// 상품 '검색' 및 페이징 처리
 	public ArrayList<BeansDO> searchBeans(String beanName, int page) {
 		ArrayList<BeansDO> searchResult = new ArrayList<BeansDO>();
 
@@ -79,8 +80,9 @@ public class BeansDAO {
 		try {
 			this.pstmt = conn.prepareStatement(this.sql);
 			this.pstmt.setString(1, "%" + beanName + "%");
+			// 0페이지 1 - 15 / 1페이지 15 - 30 ...
 			this.pstmt.setInt(2, (page * 15) + 1);
-			this.pstmt.setInt(3, (page * 15) + 14);
+			this.pstmt.setInt(3, (page + 1) * 15);
 			rs = this.pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -102,12 +104,48 @@ public class BeansDAO {
 				if (!this.pstmt.isClosed()) {
 					this.pstmt.close();
 				}
-			} catch (Exception e) {
+			} 
+			catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		return searchResult;
 	}
-	
+	// 검색 후 마지막 페이지 처리
+	public int getLastPage(String beanName) {
+		int result = 0;
+		
+		sql = "select count(beans_num) as count from beans where bean_name like ?";
+		
+		try {
+			this.pstmt = conn.prepareStatement(this.sql);
+			this.pstmt.setString(1, "%" + beanName + "%");
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				int count = rs.getInt("count");
+				
+				result = count / 15;
+				if(count % 15 != 0) {
+					result++;
+				}
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		} 
+		finally {
+			try {
+				if (!this.pstmt.isClosed()) {
+					this.pstmt.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}
 	
 }
