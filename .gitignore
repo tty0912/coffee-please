@@ -3,4 +3,6 @@
 .classpath
 .project
 .settings
+src/main/java/testCodeman.java
 pom.xml
+
