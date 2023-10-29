@@ -348,6 +348,75 @@ public class BeansDAO {
     	return beanList;
 	}
 	
-	//나머지 정렬작업
+	//좋아요 많은 순 정렬
+	public ArrayList<BeansDO> arrayLikeCount()  {
+    	ArrayList<BeansDO> beanList = new ArrayList<BeansDO>();
+    	this.sql = "select bean_name, bean_img, like_count from beans order by like_count desc";
+    	try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			BeansDO beansDO = null;
+			
+			while(rs.next()) {
+				beansDO = new BeansDO();
+				
+				beansDO.setBeanName(rs.getString("bean_name"));
+				beansDO.setBeanImg(rs.getString("bean_img"));
+				beansDO.setLikeCount(rs.getInt("like_count"));
+				
+				beanList.add(beansDO);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {			
+			try {
+				if(!stmt.isClosed()) {
+					stmt.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+    	return beanList;
+    }
+	public ArrayList<BeansDO> arrayRecent()  {
+    	ArrayList<BeansDO> beanList = new ArrayList<BeansDO>();
+    	this.sql = "select bean_name, bean_img, like_count from beans order by beans_regdate desc";
+    	try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			BeansDO beansDO = null;
+			
+			while(rs.next()) {
+				beansDO = new BeansDO();
+				
+				beansDO.setBeanName(rs.getString("bean_name"));
+				beansDO.setBeanImg(rs.getString("bean_img"));
+				beansDO.setLikeCount(rs.getInt("like_count"));
+				
+				beanList.add(beansDO);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {			
+			try {
+				if(!stmt.isClosed()) {
+					stmt.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+    	return beanList;
+    }
+	
 	
 }
