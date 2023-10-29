@@ -31,7 +31,7 @@ public class BeansDAO {
 		}
     }
     
-    //상품 상세보기  --수량집어넣기
+    //상품 상세보기
     public BeansDO getBeansDO(int beanNum) {
     	BeansDO bean = null;
     	this.sql = "select bean_img, bean_name, delivery_charge, bean_price, like_count, descript from beans where beans_num = ?";
@@ -67,10 +67,7 @@ public class BeansDAO {
 		}		
     	return bean;
     }
-    
-    
-    
-    
+   
     //상품 목록 페이지 내용
     public ArrayList<BeansDO> getAllBeans()  {
     	ArrayList<BeansDO> beanList = new ArrayList<BeansDO>();
@@ -233,7 +230,8 @@ public class BeansDAO {
 		return rowCount;
 	}
 	
-	//일반 상품 판매 정보 수정 - sql2개 잠깐보류
+	//일반 상품 판매 정보 수정 - 컨트롤러 에서 해결하면 될듯함
+	/*
 	public int modifyBeans(BeansDO beansDO) {
 		int rowCount = 0;
 		
@@ -273,8 +271,43 @@ public class BeansDAO {
 		
 		return rowCount;
 	}
+	*/
 	
-	//카테고리 번호목록(국기 리스트)가져오기
+	//상품 정보 수정하기
+	public int modifyBeans(BeansDO beansDO) {
+		int rowCount = 0;
+		this.sql = "update beans set bean_name = ?, bean_price = ?, "
+				+ "delivery_charge =?, bean_img = ?, descript = ?, bean_thumbnail = ? where beans_num = ?";
+		try {
+ 
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, beansDO.getBeanName());
+			pstmt.setInt(2, beansDO.getBeanPrice());
+			pstmt.setInt(3, beansDO.getDeliveryCharge());
+			pstmt.setString(4, beansDO.getBeanImg());
+			pstmt.setString(5, beansDO.getDescript());
+			pstmt.setString(6, beansDO.getBeanThumbnail());
+			pstmt.setInt(7, beansDO.getBeansNum());
+			rowCount = pstmt.executeUpdate(); 
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(!pstmt.isClosed()) {
+					pstmt.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return rowCount;
+	}
+	//카테고리 번호목록(국기 리스트)가져오기 - 카테고리 컬럼에 이미지로 대체할듯
 	public ArrayList<CategoryDO> getAllCategory()  {
     	ArrayList<CategoryDO> categoryList = new ArrayList<CategoryDO>();
     	this.sql = "select c_name from category";
@@ -311,7 +344,7 @@ public class BeansDAO {
 	
 	//원두 정렬하기 - 원산지별
 	
-	public ArrayList<BeansDO> arrayOrigin(String c_name){
+	public ArrayList<BeansDO> arrayOrigin(String cName){
 		ArrayList<BeansDO> beanList = new ArrayList<BeansDO>();
 	
 	   	this.sql = "select beans.bean_name, beans.bean_img, beans.like_count  "
@@ -320,7 +353,7 @@ public class BeansDAO {
 	   	try {
 			this.pstmt = conn.prepareStatement(sql);
 			
-			this.pstmt.setString(1, c_name);
+			this.pstmt.setString(1, cName);
 			rs = this.pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -417,6 +450,125 @@ public class BeansDAO {
 		
     	return beanList;
     }
+	//선택 물품 장바구니에 넣기
+	public int insertCart(CartDO cartDO) {
+		int rowCount = 0;
+		try {
+			this.conn.setAutoCommit(false);
+				
+			if(!rs.next()) {
+				this.sql = "INSERT INTO cart (BEANS_NUM, BUYER_EMAIL, qty)"
+						+ "VALUES (?, ? ,?)";
+				pstmt = conn.prepareStatement(sql);			
+				pstmt.setString(1, cartDO.getBuyerEmail());
+				pstmt.setInt(2, cartDO.getBeansNum());
+				pstmt.setInt(3, cartDO.getQty());
+					
+				rowCount = pstmt.executeUpdate();
+				this.conn.commit();
+			}
+			else {
+				this.conn.rollback();
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {			
+			try {
+				this.conn.setAutoCommit(true);
+				
+				if(!pstmt.isClosed()) {
+					pstmt.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return rowCount;
+	}
+	
+	//장바구니 속 상품을 장바구니에서 삭제하기
+	public int deleteCart(int beans_num) {
+		int rowCount = 0;
+		CartDO cart = new CartDO();
+		try {
+			this.conn.setAutoCommit(false);
+				
+			if(!rs.next()) {
+				this.sql = "delete from cart where cart.beans_num = ?";
+				pstmt = conn.prepareStatement(sql);			
+				pstmt.setInt(1, cart.getBeansNum());
+				rowCount = pstmt.executeUpdate();
+				this.conn.commit();
+			}
+			else {
+				this.conn.rollback();
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {			
+			try {
+				this.conn.setAutoCommit(true);
+				
+				if(!pstmt.isClosed()) {
+					pstmt.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return rowCount;
+	}
+	
+	//장바구니 보이기
+	public ArrayList<CartDO> getCartList(String buyerEmail){
+		ArrayList<CartDO> cartList = new ArrayList<CartDO>();
+	
+	   	this.sql = "select beans.bean_name, beans.bean_price, beans.bean_img, cart.qty "+
+	   			"from cart " + 
+	   			"join buyer on cart.buyer_email = buyer.buyer_email " +
+	   			"join beans on cart.beans_num = beans.beans_num " +
+	   			"where cart.buyer_email = ?";
+	   	try {
+			this.pstmt = conn.prepareStatement(sql);
+			
+			this.pstmt.setString(1, buyerEmail);
+			rs = this.pstmt.executeQuery();
+			
+			while(rs.next()) {
+				CartDO cart = new CartDO();
+				cart.setBeanName(rs.getString("bean_name"));
+				cart.setBeanPrice(rs.getInt("bean_price"));
+				cart.setBeanImg(rs.getString("bean_img"));
+				cart.setQty(rs.getInt("qty"));
+				
+				cartList.add(cart);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(!pstmt.isClosed()) {
+					pstmt.close();					
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}		
+    	return cartList;
+	}
 	
 	
 }
