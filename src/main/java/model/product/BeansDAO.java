@@ -148,4 +148,40 @@ public class BeansDAO {
 		return result;
 	}
 	
+	// 공동구매 상품 조회 (추가 수정 필요)
+		public BeansDO getGroupBean(int beansNum) {
+			BeansDO beans = new BeansDO();
+			sql = "select bean_name, bean_price, bean_img, descript, delivery_charge, bean_thumbnail, deadline, goal_qty, goal_price "
+					+ "from beans where deadline is not null and beans_num = ?";
+
+			try {
+				this.pstmt = conn.prepareStatement(this.sql);
+				this.pstmt.setInt(1, beansNum);
+				rs = this.pstmt.executeQuery();
+
+				if (rs.next()) {
+					beans.setBeanName(rs.getString("bean_name"));
+					beans.setBeanPrice(rs.getInt("bean_price"));
+					beans.setBeanImg(rs.getString("bean_img"));
+					beans.setDescript(rs.getString("descript"));
+					beans.setDeliveryCharge(rs.getInt("delivery_charge"));
+					beans.setBeanThumbnail(rs.getString("bean_thumbnail"));
+					beans.setDeadline(rs.getString("deadline"));
+					beans.setGoalQty(rs.getInt("goal_qty"));
+					beans.setGoalPrice(rs.getInt("goal_price"));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (!this.pstmt.isClosed()) {
+						this.pstmt.close();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return beans;
+		}
+	
 }
