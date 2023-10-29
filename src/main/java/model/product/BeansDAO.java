@@ -569,6 +569,5 @@ public class BeansDAO {
 		}		
     	return cartList;
 	}
-	
-	
+	//커밋, 푸시, 머시 테스트용 
 }
