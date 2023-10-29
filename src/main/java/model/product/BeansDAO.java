@@ -70,7 +70,7 @@ public class BeansDAO {
 	public ArrayList<BeansDO> searchBeans(String beanName, int page) {
 		ArrayList<BeansDO> searchResult = new ArrayList<BeansDO>();
 
-		this.sql = "select beans_num, bean_name, bean_price, bean_thumbnail, beans_regdate " + 
+		sql = "select beans_num, bean_name, bean_price, bean_thumbnail, beans_regdate " + 
 				"from (select beans_num, bean_name, bean_price, bean_thumbnail, beans_regdate, rownum as rnum " + 
 				"from beans " + 
 				"where length(bean_name) >= 2 and bean_name like ?) " + 
@@ -149,39 +149,84 @@ public class BeansDAO {
 	}
 	
 	// 공동구매 상품 조회 (추가 수정 필요)
-		public BeansDO getGroupBean(int beansNum) {
-			BeansDO beans = new BeansDO();
-			sql = "select bean_name, bean_price, bean_img, descript, delivery_charge, bean_thumbnail, deadline, goal_qty, goal_price "
-					+ "from beans where deadline is not null and beans_num = ?";
+	public BeansDO getGroupBean(int beansNum) {
+		BeansDO beans = new BeansDO();
+		
+		sql = "select bean_name, bean_price, bean_img, descript, delivery_charge, bean_thumbnail, deadline, goal_qty, goal_price "
+			+ "from beans where deadline is not null and beans_num = ?";
 
-			try {
-				this.pstmt = conn.prepareStatement(this.sql);
-				this.pstmt.setInt(1, beansNum);
-				rs = this.pstmt.executeQuery();
+		try {
+			this.pstmt = conn.prepareStatement(this.sql);
+			this.pstmt.setInt(1, beansNum);
+			rs = this.pstmt.executeQuery();
 
-				if (rs.next()) {
-					beans.setBeanName(rs.getString("bean_name"));
-					beans.setBeanPrice(rs.getInt("bean_price"));
-					beans.setBeanImg(rs.getString("bean_img"));
-					beans.setDescript(rs.getString("descript"));
-					beans.setDeliveryCharge(rs.getInt("delivery_charge"));
-					beans.setBeanThumbnail(rs.getString("bean_thumbnail"));
-					beans.setDeadline(rs.getString("deadline"));
-					beans.setGoalQty(rs.getInt("goal_qty"));
-					beans.setGoalPrice(rs.getInt("goal_price"));
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (!this.pstmt.isClosed()) {
-						this.pstmt.close();
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+			if (rs.next()) {
+				beans.setBeanName(rs.getString("bean_name"));
+				beans.setBeanPrice(rs.getInt("bean_price"));
+				beans.setBeanImg(rs.getString("bean_img"));
+				beans.setDescript(rs.getString("descript"));
+				beans.setDeliveryCharge(rs.getInt("delivery_charge"));
+				beans.setBeanThumbnail(rs.getString("bean_thumbnail"));
+				beans.setDeadline(rs.getString("deadline"));
+				beans.setGoalQty(rs.getInt("goal_qty"));
+				beans.setGoalPrice(rs.getInt("goal_price"));
 			}
-			return beans;
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		} 
+		finally {
+			try {
+				if (!this.pstmt.isClosed()) {
+					this.pstmt.close();
+				}
+			} 
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
+		return beans;
+	}
 	
+	// 베스트 원두 5개
+	public ArrayList<BeansDO> bestBeanArray() {
+		ArrayList<BeansDO> bestBeans = new ArrayList<BeansDO>();
+		
+		sql = "select beans_num, bean_name, bean_price, bean_thumbnail, like_count from " +
+			  "(select beans_num, bean_name, bean_price, bean_thumbnail, like_count, rownum as rnum from beans)" + 
+			  "where rnum between ? and ? " +
+			  "order by like_count desc"; 
+		
+		try {
+			this.pstmt = conn.prepareStatement(this.sql);
+			this.pstmt.setInt(1, 1);
+			this.pstmt.setInt(2, 5);
+			rs = this.pstmt.executeQuery();
+			
+			while (rs.next()) {
+				BeansDO beans = new BeansDO();
+				
+				beans.setBeanName(rs.getString("bean_name"));
+				beans.setBeanPrice(rs.getInt("bean_price"));
+				beans.setBeanThumbnail(rs.getString("bean_thumbnail"));
+				beans.setLikeCount(rs.getInt("like_count"));
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (!this.pstmt.isClosed()) {
+					this.pstmt.close();
+				}
+			} 
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return bestBeans;
+	}
+	
+
 }
