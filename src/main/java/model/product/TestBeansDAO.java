@@ -7,8 +7,8 @@ public class TestBeansDAO {
 	public static void main(String[] args) {
 		BeansDAO beansDAO = new BeansDAO();
 		
-		/*
-		//상품 전체 목록 가져오기 테스트
+		/* 
+		//상품 전체 목록 가져오기 테스트.
 		ArrayList<BeansDO> beanList = beansDAO.getAllBeans();
 		
 		for(BeansDO beans : beanList) {
