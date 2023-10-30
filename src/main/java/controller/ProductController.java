@@ -1,14 +1,17 @@
 package main.java.controller;
 //package controller;
 
+import main.java.model.product.BeansDAO;
+import main.java.model.product.BeansDO;
+import main.java.model.product.SearchList;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import model.product.BeansDAO;
-import model.product.BeansDO;
-import model.product.SearchList;
+//import model.product.BeansDAO;
+//import model.product.BeansDO;
+//import model.product.SearchList;
 
 @Controller
 public class ProductController {
