@@ -1,5 +1,5 @@
-package main.java.controller;
-//package controller;
+//package main.java.controller;
+package controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +26,24 @@ public class ProductController {
 	@GetMapping("/main")
 	public String main() {
 		return "main";
+	}
+	//구매자 로그인 - 메인 페이지로 이동, 세션에서 받아오기 하고, css일부 수정, 베스트 상품 게시 숫자는 쿼리나 자바스크립트??
+	@GetMapping("/buyerMain")
+	public String buyerMain(Model model) {
+		
+		model.addAttribute("categoryList", beansDAO.getAllCategory());
+		model.addAttribute("bestBean", beansDAO.arrayLikeCount());
+		return "MainLoginBuyer";
+	}
+	
+	
+	//판매자 로그인 - 메인페이지, 세션에서 계정 정보 가져오기, 연결되는 페이지 설정하기//
+	@GetMapping("/sellerMain")
+	public String sellerMain(Model model) {
+		model.addAttribute("categoryList", beansDAO.getAllCategory());
+		model.addAttribute("bestBean", beansDAO.arrayLikeCount());
+		
+		return "MainLoginSeller";
 	}
 	
 	// 상품 목록 페이지로 이동
