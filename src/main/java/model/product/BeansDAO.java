@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import model.member.BuyerDO;
+import model.member.SellerDO;
+
 public class BeansDAO {
 
 	private Connection conn;
@@ -604,7 +607,7 @@ public class BeansDAO {
     	return beanList;
     }
 	//선택 물품 장바구니에 넣기
-	public int insertCart(CartDO cartDO) {
+	public int insertCart(CartDO cartDO, String buyerEmail) {
 		int rowCount = 0;
 		try {
 			this.conn.setAutoCommit(false);
@@ -645,7 +648,7 @@ public class BeansDAO {
 	}
 	
 	//장바구니 속 상품을 장바구니에서 삭제하기
-	public int deleteCart(int beans_num) {
+	public int deleteItem(BuyerDO buyerDO, int beansNum) {
 		int rowCount = 0;
 		CartDO cart = new CartDO();
 		try {
@@ -722,7 +725,7 @@ public class BeansDAO {
 		}		
     	return cartList;
 	}
-
+	//
 
 }
 
