@@ -5,7 +5,7 @@ public class OrderProductDetailDO {
 
     private String buyerEmail;
     private String orderDatetime;
-    private long beansNum;
+    private int beansNum;
     private int qty;
 
     public String getBuyerEmail() {
@@ -24,11 +24,11 @@ public class OrderProductDetailDO {
         this.orderDatetime = orderDatetime;
     }
 
-    public long getBeansNum() {
+    public int getBeansNum() {
         return beansNum;
     }
 
-    public void setBeansNum(long beansNum) {
+    public void setBeansNum(int beansNum) {
         this.beansNum = beansNum;
     }
 
