@@ -87,6 +87,10 @@ public class SellerDAOTest {
     }
 
     @Test
+    public void sellerPointUpdateTest(){
+        assertThat(sellerDAO.sellerPointUpdate("longlee@daum.net", 10)).isEqualTo(1);
+    }
+    @Test
     public void deleteSellerTest(){
 
         assertThat(sellerDAO.deleteSeller("longlee@daum.net")).isEqualTo(1);
