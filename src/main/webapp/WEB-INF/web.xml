@@ -26,12 +26,8 @@
             </param-value>
             -->
 			<param-value>
-
-			<!--
 				main.java.config.ControllerConfig
 				main.java.config.MvcConfig
-			-->
-
 				config.ControllerConfig
 				config.MvcConfig
 			</param-value>

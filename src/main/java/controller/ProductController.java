@@ -1,5 +1,5 @@
-//package main.java.controller;
-package controller;
+package main.java.controller;
+//package controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

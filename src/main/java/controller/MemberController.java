@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-//import main.java.model.member.*;
-import model.member.*;
+import main.java.model.member.*;
+//import model.member.*;
 
 
 @Controller
