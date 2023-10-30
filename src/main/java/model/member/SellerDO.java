@@ -1,15 +1,15 @@
-//package main.java.model.member;
 package model.member;
+//package model.member;
 
 public class SellerDO {
 
     private String sellerEmail;
     private String businessName;
-    private int businessNum;
+    private String businessNum;
     private String nickname;
     private String passwd;
-    private int point;
-    private long tel;
+    private long point;
+    private String tel;
     private String regdate;
     private String sellerImg;
     private String address;
@@ -30,11 +30,11 @@ public class SellerDO {
         this.businessName = businessName;
     }
 
-    public int getBusinessNum() {
+    public String getBusinessNum() {
         return businessNum;
     }
 
-    public void setBusinessNum(int businessNum) {
+    public void setBusinessNum(String businessNum) {
         this.businessNum = businessNum;
     }
 
@@ -54,19 +54,19 @@ public class SellerDO {
         this.passwd = passwd;
     }
 
-    public int getPoint() {
+    public long getPoint() {
         return point;
     }
 
-    public void setPoint(int point) {
+    public void setPoint(long point) {
         this.point = point;
     }
 
-    public long getTel() {
+    public String getTel() {
         return tel;
     }
 
-    public void setTel(long tel) {
+    public void setTel(String tel) {
         this.tel = tel;
     }
 

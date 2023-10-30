@@ -1,7 +1,10 @@
-//package main.java.model.order;
-package model.order;
+package main.java.model.order;
+//package model.order;
+
+import main.java.model.member.BuyerDO;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class OrderProductDAO {
 
@@ -56,4 +59,44 @@ public class OrderProductDAO {
         return rowCount;
     }
 
+    //나의 주문내역 목록 요청
+    public ArrayList<OrderProductDO> getBuyerOrderList(String email){
+
+        ArrayList<OrderProductDO> buyerOrderList = new ArrayList<OrderProductDO>();
+        this.sql = "select order_total_price, before_order_point,to_char(order_datetime, 'YYYY-MM-DD HH24:MI:SS') as regdate" +
+                " from order_prod where buyer_email = ? order by order_datetime";
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, email);
+            rs = pstmt.executeQuery();
+
+            OrderProductDO order = null;
+
+            while (rs.next()) {
+                order = new OrderProductDO();
+                order.setBuyerEmail(email);
+                order.setOrderDatetime(rs.getString("regdate"));
+                order.setOrderTotalPrice(rs.getLong("order_total_price"));
+                order.setBeforeOrderPoint(rs.getLong("before_order_point"));
+
+                buyerOrderList.add(order);
+            }
+        }
+       catch(Exception e) {
+                e.printStackTrace();
+            }
+        finally {
+                try {
+                    if(!pstmt.isClosed()) {
+                        pstmt.close();
+                    }
+                }
+                catch(Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return buyerOrderList;
+    }
 }
