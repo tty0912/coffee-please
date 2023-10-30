@@ -1,4 +1,4 @@
-package main.java.model.service;
+package model.service;
 
 public class OrderService {
 

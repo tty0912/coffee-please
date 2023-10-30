@@ -33,8 +33,7 @@ public class BeansDAO {
 
 		BeansDO beans = new BeansDO();
 
-		sql = "select bean_name, bean_price, bean_img, descript, delivery_charge, bean_thumbnail " + 
-			  "from beans where beans_num = ?";
+		this.sql = "select * from beans where beans_num = ?";
 
 		try {
 			this.pstmt = conn.prepareStatement(this.sql);
@@ -48,6 +47,7 @@ public class BeansDAO {
 				beans.setDescript(rs.getString("descript"));
 				beans.setDeliveryCharge(rs.getInt("delivery_charge"));
 				beans.setBeanThumbnail(rs.getString("bean_thumbnail"));
+				beans.setLikeCount(rs.getInt("like_count"));
 			}
 		} 
 		catch (Exception e) {
@@ -70,7 +70,7 @@ public class BeansDAO {
 	public ArrayList<BeansDO> searchBeans(String beanName, int page) {
 		ArrayList<BeansDO> searchResult = new ArrayList<BeansDO>();
 
-		sql = "select beans_num, bean_name, bean_price, bean_thumbnail, beans_regdate " + 
+		this.sql = "select * " + 
 				"from (select beans_num, bean_name, bean_price, bean_thumbnail, beans_regdate, rownum as rnum " + 
 				"from beans " + 
 				"where length(bean_name) >= 2 and bean_name like ?) " + 
@@ -115,7 +115,7 @@ public class BeansDAO {
 	public int getLastPage(String beanName) {
 		int result = 0;
 		
-		sql = "select count(beans_num) as count from beans where bean_name like ?";
+		this.sql = "select count(beans_num) as count from beans where bean_name like ?";
 		
 		try {
 			this.pstmt = conn.prepareStatement(this.sql);
@@ -152,7 +152,7 @@ public class BeansDAO {
 	public BeansDO getGroupBean(int beansNum) {
 		BeansDO beans = new BeansDO();
 		
-		sql = "select bean_name, bean_price, bean_img, descript, delivery_charge, bean_thumbnail, deadline, goal_qty, goal_price "
+		this.sql = "select bean_name, bean_price, bean_img, descript, delivery_charge, bean_thumbnail, deadline, goal_qty, goal_price "
 			+ "from beans where deadline is not null and beans_num = ?";
 
 		try {
@@ -192,7 +192,7 @@ public class BeansDAO {
 	public ArrayList<BeansDO> bestBeanArray() {
 		ArrayList<BeansDO> bestBeans = new ArrayList<BeansDO>();
 		
-		sql = "select beans_num, bean_name, bean_price, bean_thumbnail, like_count from " +
+		this.sql = "select beans_num, bean_name, bean_price, bean_thumbnail, like_count from " +
 			  "(select beans_num, bean_name, bean_price, bean_thumbnail, like_count, rownum as rnum from beans)" + 
 			  "where rnum between ? and ? " +
 			  "order by like_count desc"; 
