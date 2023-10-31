@@ -1,12 +1,16 @@
 //package main.java.controller;
 package controller;
 
+import main.java.model.product.BeansDAO;
+import main.java.model.product.BeansDO;
+import main.java.model.product.SearchList;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 import model.member.SellerDO;
 import model.product.BeansDAO;
