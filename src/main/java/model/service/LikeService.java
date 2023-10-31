@@ -11,8 +11,10 @@ public class LikeService {
     public void clickLike(String email, int beanNum) throws SQLException {
         if(checkLike(email,beanNum)){
             likeDAO.insertLike(email,beanNum);
+
         }
         else likeDAO.deleteLike(email, beanNum);
+
     }
 
     //이미 좋아요 -> false , 좋아요X -> TRUE

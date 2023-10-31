@@ -1,4 +1,5 @@
-package model.cart;
+package main.java.model.cart;
+//package model.cart;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,8 +8,11 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import model.member.BuyerDO;
-import model.product.BeansDO;
+import main.java.model.member.*;
+import main.java.model.product.*;
+
+//import model.member.BuyerDO;
+//import model.product.BeansDO;
 
 public class CartDAO {
 	

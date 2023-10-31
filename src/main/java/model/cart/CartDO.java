@@ -1,7 +1,8 @@
-package model.cart;
+package main.java.model.cart;
+//package model.cart;
 
-import model.member.BuyerDO;
-import model.product.BeansDO;
+import main.java.model.member.BuyerDO;
+import main.java.model.product.BeansDO;
 
 public class CartDO {
 

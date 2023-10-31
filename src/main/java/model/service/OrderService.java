@@ -1,4 +1,4 @@
-package model.service;
+package main.java.model.service;
 
 import main.java.model.member.BuyerDAO;
 import main.java.model.member.SellerDAO;

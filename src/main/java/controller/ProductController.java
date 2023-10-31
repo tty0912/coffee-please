@@ -1,5 +1,5 @@
-//package main.java.controller;
-package controller;
+package main.java.controller;
+//package controller;
 
 import main.java.model.product.BeansDAO;
 import main.java.model.product.BeansDO;
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-import model.member.SellerDO;
-import model.product.BeansDAO;
-import model.product.BeansDO;
-import model.product.SearchList;
+//import model.member.SellerDO;
+//import model.product.BeansDAO;
+//import model.product.BeansDO;
+//import model.product.SearchList;
 
 @Controller
 public class ProductController {
