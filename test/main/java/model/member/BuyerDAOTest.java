@@ -13,12 +13,12 @@ public class BuyerDAOTest {
 
         BuyerDO buyer = new BuyerDO();
 
-        buyer.setBuyerEmail("hmson@naver.com");
-        buyer.setBuyerName("손흥민");
-        buyer.setNickname("흥민흥민");
+        buyer.setBuyerEmail("hjjang@naver.com");
+        buyer.setBuyerName("장현준");
+        buyer.setNickname("현준현준");
         buyer.setPasswd("qqqqwwww");
         buyer.setTel("111222");
-        buyer.setAddress("부산시 남구");
+        buyer.setAddress("통영");
         buyer.setPoint(1000000);
 
         assertThat(buyerDAO.insertBuyer(buyer)).isEqualTo(1);
@@ -42,15 +42,14 @@ public class BuyerDAOTest {
     @Test
     public void getBuyerTest(){
 
-        BuyerDO buyer = buyerDAO.getBuyer("hmson@naver.com");
+        BuyerDO buyer = buyerDAO.getBuyer("kilee@naver.com");
 
-        assertThat(buyer.getBuyerName()).isEqualTo("손흥민");
-        assertThat(buyer.getNickname()).isEqualTo("흥민흥민흥민");
+        assertThat(buyer.getBuyerName()).isEqualTo("이강인");
+        assertThat(buyer.getNickname()).isEqualTo("강인강인");
         assertThat(buyer.getPasswd()).isEqualTo("qqqqwwww");
         assertThat(buyer.getPoint()).isEqualTo(1000000);
-        assertThat(buyer.getTel()).isEqualTo("777777");
-        assertThat(buyer.getBuyerImg()).isEqualTo("buyerImg-url");
-        assertThat(buyer.getAddress()).isEqualTo("부산시 부산진구");
+        assertThat(buyer.getTel()).isEqualTo("123123");
+        assertThat(buyer.getAddress()).isEqualTo("부산시 중구");
 
     }
 
@@ -83,7 +82,7 @@ public class BuyerDAOTest {
     @Test
     public void deleteBuyerTest(){
 
-        assertThat(buyerDAO.deleteBuyer("hmson@naver.com")).isEqualTo(1);
+        assertThat(buyerDAO.deleteBuyer("mjkim@naver.com")).isEqualTo(1);
     }
 
 }

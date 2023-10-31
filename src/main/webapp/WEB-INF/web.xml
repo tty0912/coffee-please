@@ -26,14 +26,10 @@
             </param-value>
             -->
 			<param-value>
-
-			<!--
 				main.java.config.ControllerConfig
 				main.java.config.MvcConfig
-			-->
-
-				config.ControllerConfig
-				config.MvcConfig
+<!--				config.ControllerConfig-->
+<!--				config.MvcConfig-->
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>

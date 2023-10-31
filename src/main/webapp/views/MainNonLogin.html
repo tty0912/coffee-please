@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" goehd>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bean 2 B</title>
+
+    <!--favicon-->
+    <link rel="icon" href="coffee/images/logo/logoCircle.png" type="image/x-icon" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap"
+            rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <script
+            src="https://kit.fontawesome.com/98a796a30f.js"
+            crossorigin="anonymous"
+    ></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/src/CSS/MainNonLogin.css" />
+    <!-- Javascript -->
+    <script type="text/javascript" src="../JS/coffee.js"></script>
+</head>
+
+<body>
+<!-- Header -->
+<header class="header">
+    <nav class="header__nav">
+        <ul class="header__menu">
+            <li><a class="header__menu__item" href="#about">STORE</a></li>
+            <div class="header__logo">
+                <img
+                        class="header__logo__img"
+                        src="/coffee/images/logo/logoName.png"
+                        alt="logo"
+                />
+            </div>
+            <li><a class="header__menu__item" href="#about">GROUP</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- main -->
+<main class="main-container">
+    <div class="banner-container">
+        <img class="banner-img" src="/coffee/images/logo/MainSetMeUp.png">
+        <form class="login-container">
+            <input class="login-id" placeholder="아이디를 입력해주세요"></input>
+            <input class="login-pwd" placeholder="비밀번호를 입력해주세요"></input>
+            <div class="btn-container">
+                <button class="login-btn btn-item">로그인 하기</button>
+                <a class="register-btn btn-item" href="#">회원가입 하기</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- 나라별 카테고리 -->
+    <div class="country-container">
+        <div class="country-category">원두 나라별 카테고리</div>
+    </div>
+
+    <!-- 나라별 국기 , 국기 이름-->
+    <div class="flag-container">
+        <div class="flag-item">
+            <span class="flag-name">브라질</span>
+            <img src="../images/flag/brazil.png">
+        </div>
+        <div class="flag-item">
+            <span class="flag-name">베트남</span>
+            <img src="../images/flag/vietnam.png" >
+        </div>
+        <div class="flag-item">
+            <span class="flag-name">콜롬비아</span>
+            <img src="../images/flag/Columbia.png" >
+        </div>
+        <div class="flag-item">
+            <span class="flag-name">인도네시아</span>
+            <img src="../images/flag/Indonesia.png" >
+        </div>
+        <div class="flag-item">
+            <span class="flag-name">에티오피아</span>
+            <img src="../images/flag/Ethiopia.png" >
+        </div>
+        <div class="flag-item">
+            <span class="flag-name">온두라스</span>
+            <img src="../images/flag/Honduras.png" >
+        </div>
+        <div class="flag-item">
+            <span class="flag-name">인도</span>
+            <img src="../images/flag/India.png" >
+        </div>
+        <div class="flag-item">
+            <span class="flag-name">우간다</span>
+            <img src="../images/flag/uganda.png" >
+        </div>
+        <div class="flag-item">
+            <span class="flag-name">멕시코</span>
+            <img src="../images/flag/Mexico.png" >
+        </div>
+        <div class="flag-item">
+            <span class="flag-name">페루</span>
+            <img src="../images/flag/Peru.png" >
+        </div>
+    </div>
+
+    <!-- 원두 베스트 상품 제목-->
+    <div class="bestProductName-container">
+        <div class="bestProductName">원두 베스트 상품</div>
+    </div>
+
+    <!-- 베스트 상품 -->
+    <div class="product-container">
+        <img src="../images/coffeebeans/Marquee.png" >
+        <img src="../images/coffeebeans/Classicespresso.png" >
+        <img src="../images/coffeebeans/Aachen.png" >
+        <img src="../images/coffeebeans/Jinyangjo.png" >
+    </div>
+
+    <!-- 상품 찜하기기능 -->
+    <div class="Steamed-container">
+        <div id='result'>0</div>
+    <input class="plus-button" type='button'
+           onclick='count("plus")'
+           value='+'/>
+    </div>
+
+    <!-- 상품 더보기 기능 -->
+    <div class="seemore-container">
+        <botton class="seemore">상품 목록 페이지로 이동</botton>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer id="contact" class="section">
+    <div class="max-container">
+        <p>©Ga young Yu - All rights reserved</p>
+    </div>
+</footer>
+</body>
+</html>

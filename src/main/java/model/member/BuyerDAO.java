@@ -19,7 +19,7 @@ public class BuyerDAO {
 
         try {
             Class.forName(jdbc_driver);
-            conn = DriverManager.getConnection(jdbc_url,"final","final");
+            conn = DriverManager.getConnection(jdbc_url,"scott","tiger");
         }
         catch (Exception e){
             e.printStackTrace();

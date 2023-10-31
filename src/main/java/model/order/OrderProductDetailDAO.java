@@ -1,4 +1,4 @@
-package main.java.model.order;
+package model.order;
 //package model.order;
 
 import java.sql.*;
@@ -12,7 +12,7 @@ public class OrderProductDetailDAO {
     private ResultSet rs;
     private String sql;
 
-    OrderProductDetailDAO(){
+    public OrderProductDetailDAO(){
         String jdbc_driver = "oracle.jdbc.driver.OracleDriver";
         String jdbc_url = "jdbc:oracle:thin:@localhost:1521:XE";
 
@@ -33,8 +33,8 @@ public class OrderProductDetailDAO {
         try{
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, orderProductDetail.getBuyerEmail());
-            pstmt.setLong(2, orderProductDetail.getBeansNum());
-            pstmt.setLong(3, orderProductDetail.getQty());
+            pstmt.setInt(2, orderProductDetail.getBeansNum());
+            pstmt.setInt(3, orderProductDetail.getQty());
 
             rowCount = pstmt.executeUpdate();
         }
