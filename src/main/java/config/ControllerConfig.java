@@ -1,4 +1,4 @@
-package main.java.config;
+package config;
 //package config;
 
 import org.springframework.context.annotation.Bean;

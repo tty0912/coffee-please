@@ -6,3 +6,5 @@
 src/main/java/testCodeman.java
 pom.xml
 
+src/main/java/testCart.java
+src/main/java/model/product/TestBeansDAO.java
