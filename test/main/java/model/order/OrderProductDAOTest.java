@@ -23,8 +23,8 @@ public class OrderProductDAOTest {
     @Test
     public void getBuyerOrderListTest() throws SQLException{
 
-        ArrayList<OrderProductDO> buyerOrderList = orderProductDAO.getBuyerOrderList("hmson@naver.com");
-        long[] strings = new long[6];
+        ArrayList<OrderProductDO> buyerOrderList = orderProductDAO.getBuyerOrderList("kilee@naver.com");
+        long[] strings = new long[2];
         int i = 0;
 
         for(OrderProductDO s : buyerOrderList){
@@ -32,6 +32,6 @@ public class OrderProductDAOTest {
             i += 1;
         }
 
-        assertThat(strings).isEqualTo(new long[]{1000000, 1000000, 1000000, 3000000, 2000000,2000000});
+        assertThat(strings).isEqualTo(new long[]{2000000, 1800000});
     }
 }

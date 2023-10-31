@@ -1,4 +1,5 @@
-package model.product;
+package main.java.model.product;
+//package model.product;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
