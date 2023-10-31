@@ -14,7 +14,7 @@
                     <h4 class="signup__description">맛있는 원두를 등록해주세요!</h4> 
                     <form id="signup__form" action="Controller">
                         <label for="new-beanName" class="signup__label">
-                            <img src="images/bean.png" alt="" class="bean__img">
+                            <img src="${pageContext.request.contextPath}/images/bean.png" alt="" class="bean__img">
                             <input
                                 class="signup__input"
                                 type="text"
@@ -34,7 +34,7 @@
                             />
                         </label>
                         <label for="new-goalPrice" class="signup__label">
-                            <img src="images/sale.png" alt="" class="bean__img">
+                            <img src="${pageContext.request.contextPath}/images/sale.png" alt="" class="sale__img">
                             <input
                                 class="signup__input"
                                 type="text"

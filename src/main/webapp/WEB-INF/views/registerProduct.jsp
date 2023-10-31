@@ -12,7 +12,7 @@
                 <div class="signup__form-div">
                     <h2 class="signup__title">Bean2B 일반 상품 등록을 진행합니다.</h2> 
                     <h4 class="signup__description">맛있는 원두를 등록해주세요!</h4> 
-                    <form id="signup__form" action="Controller">
+                    <form id="signup__form" method="post" action="registerProduct">
                         <label for="new-beanName" class="signup__label">
                             <img src="${pageContext.request.contextPath}/images/bean.png" alt="" class="bean__img">
                             <input
