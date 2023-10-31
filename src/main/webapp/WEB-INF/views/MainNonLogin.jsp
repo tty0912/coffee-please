@@ -2,6 +2,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +11,7 @@
     <title>Bean 2 B</title>
 
     <!--favicon-->
-    <link rel="icon" href="../images/logo/logoCircle.png" type="image/x-icon" />
+    <link rel="icon" href="coffee/images/logo/logoCircle.png" type="image/x-icon" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -27,8 +28,7 @@
     ></script>
 
     <!-- CSS -->
-      <link rel="stylesheet" href="/coffee/css/MainLoginBuyer.css" />
-
+    <link rel="stylesheet" href="/coffee/css/MainNonLogin.css" />
     <!-- Javascript -->
     <script type="text/javascript" src="../JS/coffee.js"></script>
 </head>
@@ -47,8 +47,6 @@
                 />
             </div>
             <li><a class="header__menu__item" href="#about">GROUP</a></li>
-            <img class="seller-img" src="/coffee/images/logo/seller.png">
-            <img class="shoppingBasket-img" src="/coffee/images/logo/shoppingBasket.png"">
         </ul>
     </nav>
 </header>
@@ -58,25 +56,21 @@
     <div class="banner-container">
         <img class="banner-img" src="/coffee/images/logo/MainSetMeUp.png">
         <form class="login-container">
-            <div class="logout-container">
-                <div class="logout">로그아웃</div>
+            <input class="login-id" placeholder="아이디를 입력해주세요"></input>
+            <input class="login-pwd" placeholder="비밀번호를 입력해주세요"></input>
+            <div class="btn-container">
+                <button class="login-btn btn-item">로그인 하기</button>
+                <a class="register-btn btn-item" href="#">회원가입 하기</a>
             </div>
-            <div class="memberImg-container">
-                <img class="member-img" src="/coffee/images/logo/member.png">
-                <div class="Profile">잔여 포인트</div>
-                <div class="Profiles">${sessionScope.point}</div>
-            </div>
-              </form>
+        </form>
     </div>
-    <div class="member">${sessionScope.nickname}</div>
-
 
     <!-- 나라별 카테고리 -->
     <div class="country-container">
         <div class="country-category">원두 나라별 카테고리</div>
     </div>
 
-    <!-- 나라별 국기 , 국기 이름-->
+   <!-- 나라별 국기 , 국기 이름-->
     <div class="flag-container">
     <c:forEach items="${categoryList}" var="categoryDO" >
         <div class="flag-item">
@@ -98,16 +92,17 @@
     </c:forEach>
     </div>
 
-    <!-- 상품 찜하기기능 자바스크립트?-->
+    <!-- 상품 찜하기기능 -->
     <div class="Steamed-container">
         <div id='result'>0</div>
-        <input class="plus-button" type='button'
-               onclick='count("plus")'
-               value='+'/>
+    <input class="plus-button" type='button'
+           onclick='count("plus")'
+           value='+'/>
     </div>
 
+    <!-- 상품 더보기 기능 -->
     <div class="seemore-container">
-        <div class="seemore">상품 목록 페이지로 이동</div>
+        <botton class="seemore">상품 목록 페이지로 이동</botton>
     </div>
 </main>
 

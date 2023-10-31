@@ -45,7 +45,7 @@
         />
       </div>
       <li><a class="header__menu__item" href="#about">GROUP</a></li>
-      <img class="seller-img" src="../images/logo/seller.png">
+      <img class="seller-img" src="/coffee/images/logo/seller.png">
     </ul>
   </nav>
 </header>
@@ -53,13 +53,13 @@
 <!-- main -->
 <main class="main-container">
   <div class="banner-container">
-    <img class="banner-img" src="../images/logo/MainSetMeUp.png">
+    <img class="banner-img" src="/coffee/images/logo/MainSetMeUp.png">
     <form class="login-container">
       <div class="logout-container">
         <div class="logout">로그아웃</div>
       </div>
       <div class="memberImg-container">
-      <img class="member-img" src="../images/logo/member.png">
+      <img class="member-img" src="/coffee/images/logo/member.png">
         <div class="Profile">잔여 포인트</div>
         <div class="Profiles">${ sessionScope.point}</div>
           </div>

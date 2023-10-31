@@ -193,43 +193,40 @@ public class BeansDAO {
 	
 	// 베스트 원두 5개
 	public ArrayList<BeansDO> bestBeanArray() {
-		ArrayList<BeansDO> bestBeans = new ArrayList<BeansDO>();
-		
-		sql = "select beans_num, bean_name, bean_price, bean_thumbnail, like_count from " +
-			  "(select beans_num, bean_name, bean_price, bean_thumbnail, like_count, rownum as rnum from beans)" + 
-			  "where rnum between ? and ? " +
-			  "order by like_count desc"; 
-		
-		try {
-			this.pstmt = conn.prepareStatement(this.sql);
-			this.pstmt.setInt(1, 1);
-			this.pstmt.setInt(2, 5);
-			rs = this.pstmt.executeQuery();
+		ArrayList<BeansDO> beanList = new ArrayList<BeansDO>();
+		sql = "select bean_img, like_count, rownum from" +
+				"(select bean_img, like_count, rownum from beans order by like_count desc)" +
+				"where rownum between 1 and 5"; 
+    	try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			BeansDO beansDO = null;
 			
-			while (rs.next()) {
-				BeansDO beans = new BeansDO();
+			while(rs.next()) {
+				beansDO = new BeansDO();
 				
-				beans.setBeanName(rs.getString("bean_name"));
-				beans.setBeanPrice(rs.getInt("bean_price"));
-				beans.setBeanThumbnail(rs.getString("bean_thumbnail"));
-				beans.setLikeCount(rs.getInt("like_count"));
+				beansDO.setBeanImg(rs.getString("bean_img"));
+				beansDO.setLikeCount(rs.getInt("like_count"));
+				
+				beanList.add(beansDO);
 			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		finally {
+		finally {			
 			try {
-				if (!this.pstmt.isClosed()) {
-					this.pstmt.close();
+				if(!stmt.isClosed()) {
+					stmt.close();
 				}
-			} 
-			catch (Exception e) {
+			}
+			catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
-		return bestBeans;
-	}
+		
+    	return beanList;
+    }
 	 //상품 상세보기
     public BeansDO getBeansDO(int beanNum) {
     	BeansDO bean = null;
