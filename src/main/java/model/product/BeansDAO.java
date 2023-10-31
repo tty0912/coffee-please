@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import model.member.BuyerDO;
+import model.member.SellerDO;
+
 public class BeansDAO {
 
 	private Connection conn;
@@ -33,7 +36,8 @@ public class BeansDAO {
 
 		BeansDO beans = new BeansDO();
 
-		this.sql = "select * from beans where beans_num = ?";
+		sql = "select bean_name, bean_price, bean_img, descript, delivery_charge, bean_thumbnail " + 
+			  "from beans where beans_num = ?";
 
 		try {
 			this.pstmt = conn.prepareStatement(this.sql);
@@ -47,7 +51,6 @@ public class BeansDAO {
 				beans.setDescript(rs.getString("descript"));
 				beans.setDeliveryCharge(rs.getInt("delivery_charge"));
 				beans.setBeanThumbnail(rs.getString("bean_thumbnail"));
-				beans.setLikeCount(rs.getInt("like_count"));
 			}
 		} 
 		catch (Exception e) {
@@ -70,7 +73,7 @@ public class BeansDAO {
 	public ArrayList<BeansDO> searchBeans(String beanName, int page) {
 		ArrayList<BeansDO> searchResult = new ArrayList<BeansDO>();
 
-		this.sql = "select * " + 
+		sql = "select beans_num, bean_name, bean_price, bean_thumbnail, beans_regdate " + 
 				"from (select beans_num, bean_name, bean_price, bean_thumbnail, beans_regdate, rownum as rnum " + 
 				"from beans " + 
 				"where length(bean_name) >= 2 and bean_name like ?) " + 
@@ -115,7 +118,7 @@ public class BeansDAO {
 	public int getLastPage(String beanName) {
 		int result = 0;
 		
-		this.sql = "select count(beans_num) as count from beans where bean_name like ?";
+		sql = "select count(beans_num) as count from beans where bean_name like ?";
 		
 		try {
 			this.pstmt = conn.prepareStatement(this.sql);
@@ -152,7 +155,7 @@ public class BeansDAO {
 	public BeansDO getGroupBean(int beansNum) {
 		BeansDO beans = new BeansDO();
 		
-		this.sql = "select bean_name, bean_price, bean_img, descript, delivery_charge, bean_thumbnail, deadline, goal_qty, goal_price "
+		sql = "select bean_name, bean_price, bean_img, descript, delivery_charge, bean_thumbnail, deadline, goal_qty, goal_price "
 			+ "from beans where deadline is not null and beans_num = ?";
 
 		try {
@@ -190,43 +193,40 @@ public class BeansDAO {
 	
 	// 베스트 원두 5개
 	public ArrayList<BeansDO> bestBeanArray() {
-		ArrayList<BeansDO> bestBeans = new ArrayList<BeansDO>();
-		
-		this.sql = "select beans_num, bean_name, bean_price, bean_thumbnail, like_count from " +
-			  "(select beans_num, bean_name, bean_price, bean_thumbnail, like_count, rownum as rnum from beans)" + 
-			  "where rnum between ? and ? " +
-			  "order by like_count desc"; 
-		
-		try {
-			this.pstmt = conn.prepareStatement(this.sql);
-			this.pstmt.setInt(1, 1);
-			this.pstmt.setInt(2, 5);
-			rs = this.pstmt.executeQuery();
+		ArrayList<BeansDO> beanList = new ArrayList<BeansDO>();
+		sql = "select bean_img, like_count, rownum from" +
+				"(select bean_img, like_count, rownum from beans order by like_count desc)" +
+				"where rownum between 1 and 5"; 
+    	try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			BeansDO beansDO = null;
 			
-			while (rs.next()) {
-				BeansDO beans = new BeansDO();
+			while(rs.next()) {
+				beansDO = new BeansDO();
 				
-				beans.setBeanName(rs.getString("bean_name"));
-				beans.setBeanPrice(rs.getInt("bean_price"));
-				beans.setBeanThumbnail(rs.getString("bean_thumbnail"));
-				beans.setLikeCount(rs.getInt("like_count"));
+				beansDO.setBeanImg(rs.getString("bean_img"));
+				beansDO.setLikeCount(rs.getInt("like_count"));
+				
+				beanList.add(beansDO);
 			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		finally {
+		finally {			
 			try {
-				if (!this.pstmt.isClosed()) {
-					this.pstmt.close();
+				if(!stmt.isClosed()) {
+					stmt.close();
 				}
-			} 
-			catch (Exception e) {
+			}
+			catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
-		return bestBeans;
-	}
+		
+    	return beanList;
+    }
 	 //상품 상세보기
     public BeansDO getBeansDO(int beanNum) {
     	BeansDO bean = null;
@@ -603,5 +603,126 @@ public class BeansDAO {
 		
     	return beanList;
     }
+	//선택 물품 장바구니에 넣기
+	public int insertCart(CartDO cartDO, String buyerEmail) {
+		int rowCount = 0;
+		try {
+			this.conn.setAutoCommit(false);
+				
+			if(!rs.next()) {
+				this.sql = "INSERT INTO cart (BEANS_NUM, BUYER_EMAIL, qty)"
+						+ "VALUES (?, ? ,?)";
+				pstmt = conn.prepareStatement(sql);			
+				pstmt.setString(1, cartDO.getBuyerEmail());
+				pstmt.setInt(2, cartDO.getBeansNum());
+				pstmt.setInt(3, cartDO.getQty());
+					
+				rowCount = pstmt.executeUpdate();
+				this.conn.commit();
+			}
+			else {
+				this.conn.rollback();
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {			
+			try {
+				this.conn.setAutoCommit(true);
+				
+				if(!pstmt.isClosed()) {
+					pstmt.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return rowCount;
+	}
+	
+	//장바구니 속 상품을 장바구니에서 삭제하기
+	public int deleteItem(BuyerDO buyerDO, int beansNum) {
+		int rowCount = 0;
+		CartDO cart = new CartDO();
+		try {
+			this.conn.setAutoCommit(false);
+				
+			if(!rs.next()) {
+				this.sql = "delete from cart where cart.beans_num = ?";
+				pstmt = conn.prepareStatement(sql);			
+				pstmt.setInt(1, cart.getBeansNum());
+				rowCount = pstmt.executeUpdate();
+				this.conn.commit();
+			}
+			else {
+				this.conn.rollback();
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {			
+			try {
+				this.conn.setAutoCommit(true);
+				
+				if(!pstmt.isClosed()) {
+					pstmt.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return rowCount;
+	}
+	
+	//장바구니 보이기
+	public ArrayList<CartDO> getCartList(String buyerEmail){
+		ArrayList<CartDO> cartList = new ArrayList<CartDO>();
+	
+	   	this.sql = "select beans.bean_name, beans.bean_price, beans.bean_img, cart.qty "+
+	   			"from cart " + 
+	   			"join buyer on cart.buyer_email = buyer.buyer_email " +
+	   			"join beans on cart.beans_num = beans.beans_num " +
+	   			"where cart.buyer_email = ?";
+	   	try {
+			this.pstmt = conn.prepareStatement(sql);
+			
+			this.pstmt.setString(1, buyerEmail);
+			rs = this.pstmt.executeQuery();
+			
+			while(rs.next()) {
+				CartDO cart = new CartDO();
+				cart.setBeanName(rs.getString("bean_name"));
+				cart.setBeanPrice(rs.getInt("bean_price"));
+				cart.setBeanImg(rs.getString("bean_img"));
+				cart.setQty(rs.getInt("qty"));
+				
+				cartList.add(cart);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(!pstmt.isClosed()) {
+					pstmt.close();					
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}		
+    	return cartList;
+	}
+	//
+
 }
 
