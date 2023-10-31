@@ -16,6 +16,8 @@
     <script src="https://kit.fontawesome.com/98a796a30f.js" crossorigin="anonymous"></script>
     <!-- CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/signupStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/productStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/myPageStyle.css">
     <!-- Javascript -->
     <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script>
 </head>
