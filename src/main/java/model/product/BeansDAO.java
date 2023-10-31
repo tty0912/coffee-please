@@ -74,8 +74,8 @@ public class BeansDAO {
 	public ArrayList<BeansDO> searchBeans(String beanName, int page) {
 		ArrayList<BeansDO> searchResult = new ArrayList<BeansDO>();
 
-		sql = "select beans_num, bean_name, bean_price, bean_thumbnail, beans_regdate " + 
-				"from (select beans_num, bean_name, bean_price, bean_thumbnail, beans_regdate, rownum as rnum " + 
+		this.sql = "select * " + 
+				"from (select beans_num, bean_name, bean_price, bean_img, beans_regdate, rownum as rnum " + 
 				"from beans " + 
 				"where length(bean_name) >= 2 and bean_name like ?) " + 
 				"where rnum between ? and ? " + 
@@ -95,7 +95,7 @@ public class BeansDAO {
 				beans.setBeansNum(rs.getInt("beans_num"));
 				beans.setBeanName(rs.getString("bean_name"));
 				beans.setBeanPrice(rs.getInt("bean_price"));
-				beans.setBeanThumbnail(rs.getString("bean_thumbnail"));
+				beans.setBeanImg(rs.getString("bean_img"));
 
 				searchResult.add(beans);
 			}
@@ -116,7 +116,7 @@ public class BeansDAO {
 		return searchResult;
 	}
 	// 검색 후 마지막 페이지 처리
-	public int getLastPage(String beanName) {
+	public int SearchLastPage(String beanName) {
 		int result = 0;
 		
 		sql = "select count(beans_num) as count from beans where bean_name like ?";
@@ -156,8 +156,7 @@ public class BeansDAO {
 	public BeansDO getGroupBean(int beansNum) {
 		BeansDO beans = new BeansDO();
 		
-		sql = "select bean_name, bean_price, bean_img, descript, delivery_charge, bean_thumbnail, deadline, goal_qty, goal_price "
-			+ "from beans where deadline is not null and beans_num = ?";
+		this.sql = "select * from beans where deadline is not null and beans_num = ?";
 
 		try {
 			this.pstmt = conn.prepareStatement(this.sql);
@@ -236,70 +235,86 @@ public class BeansDAO {
 			this.pstmt = conn.prepareStatement(sql);
 			
 			this.pstmt.setInt(1, beanNum);
+		return bestBeans;
+	}
+	
+	// 상품 목록 페이지 -테스트
+	public ArrayList<BeansDO> getBeansList(int page, int pageSize) {
+
+		ArrayList<BeansDO> resultList = new ArrayList<BeansDO>();
+		
+		int startRow = 1 + (page-1)*15; // 1, 16, 31, 46, 61
+		int endRow = 15*page; // 15, 30, 45, 60
+
+		sql = "select * from ("
+				+ "	select rownum rnum, b.* from ("
+				+ "		select * from beans order by beans_num desc"
+				+ "	) b "
+				+ ") "
+				+ "where rnum between ? and ?";
+
+		try {
+			this.pstmt = conn.prepareStatement(this.sql);
+	        this.pstmt.setInt(1, startRow);
+	        this.pstmt.setInt(2, endRow);
 			rs = this.pstmt.executeQuery();
-			
-			if(this.rs.next()) {
-				bean = new BeansDO();
-				
-				bean.setBeanImg(this.rs.getString("bean_img"));
-				bean.setBeanName(this.rs.getString("bean_name"));
-				bean.setDeliveryCharge(this.rs.getInt("delivery_charge"));
-				bean.setBeanPrice(this.rs.getInt("bean_price"));
-				bean.setLikeCount(this.rs.getInt("like_count"));
-				bean.setDescript(this.rs.getString("descript"));
+
+			while (rs.next()) {
+				BeansDO beans = new BeansDO();
+
+				beans.setBeansNum(rs.getInt("beans_num"));
+				beans.setBeanName(rs.getString("bean_name"));
+				beans.setBeanPrice(rs.getInt("bean_price"));
+				beans.setBeanImg(rs.getString("bean_img"));
+				beans.setLikeCount(rs.getInt("like_count"));
+
+				resultList.add(beans);
 			}
-		}
-		catch(Exception e) {
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
-		}
+		} 
 		finally {
 			try {
-				if(!pstmt.isClosed()) {
-					pstmt.close();					
+				if (this.pstmt != null && !this.pstmt.isClosed()) {
+					this.pstmt.close();
 				}
-			}
-			catch(Exception e) {
-				e.printStackTrace();
-			}
-		}		
-    	return bean;
-    }
-   
-    //상품 목록 페이지 내용
-    public ArrayList<BeansDO> getAllBeans()  {
-    	ArrayList<BeansDO> beanList = new ArrayList<BeansDO>();
-    	this.sql = "select category_num, bean_img, like_count from beans order by beans_regdate desc";
-    	try {
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery(sql);
-			BeansDO beansDO = null;
-			
-			while(rs.next()) {
-				beansDO = new BeansDO();
-				
-				beansDO.setCategoryNum(rs.getInt("category_num"));
-				beansDO.setBeanImg(rs.getString("bean_img"));
-				beansDO.setLikeCount(rs.getInt("like_count"));
-				
-				beanList.add(beansDO);
-			}
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		finally {			
-			try {
-				if(!stmt.isClosed()) {
-					stmt.close();
-				}
-			}
-			catch(Exception e) {
+			} 
+			catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
-    	return beanList;
-    }
+		return resultList;
+	}
+	
+	// 총 행 수를 구하는 메서드
+	public int getTotalRows() {
+	    int totalRows = 0;
+	    sql = "select count(*) from beans";
+	    
+	    try {
+	        this.pstmt = conn.prepareStatement(this.sql);
+	        rs = this.pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            totalRows = rs.getInt(1);
+	        }
+	    } 
+	    catch (Exception e) {
+	        e.printStackTrace();
+	    } 
+	    finally {
+	        try {
+	            if (!this.pstmt.isClosed()) {
+	                this.pstmt.close();
+	            }
+	        } 
+	        catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return totalRows;
+	}
 	
     //일반 판매 상품 등록하기
     //beans_num : 자동
@@ -309,9 +324,9 @@ public class BeansDAO {
 		try {
 			this.conn.setAutoCommit(false);
 				
-			if(!rs.next()) {
-				this.sql = "INSERT INTO BEANS (BEANS_NUM, SELLER_EMAIL, CATEGORY_NUM, BEAN_NAME, BEAN_PRICE, BEAN_IMG, DESCRIPT, DELIVERY_CHARGE, BEAN_THUMNAIL)"
-						+ "VALUES ((select nvl(max(beans_num), 0) + 1 from beans), ?, ?, ?, ?, ?, ?, ?, ?)";
+				this.sql = "INSERT INTO BEANS (BEANS_NUM, SELLER_EMAIL, CATEGORY_NUM, BEAN_NAME, BEAN_PRICE, "
+						+ "BEAN_IMG, DESCRIPT, DELIVERY_CHARGE)"
+						+ "VALUES (seq_beans_beans_num.nextval, ?, ?, ?, ?, ?, ?, ?)";
 				pstmt = conn.prepareStatement(sql);			
 				pstmt.setString(1, beansDO.getSellerEmail());
 				pstmt.setInt(2, beansDO.getCategoryNum());
@@ -320,15 +335,9 @@ public class BeansDAO {
 				pstmt.setString(5, beansDO.getBeanImg());
 				pstmt.setString(6, beansDO.getDescript());
 				pstmt.setInt(7, beansDO.getDeliveryCharge());
-				pstmt.setString(8, beansDO.getBeanThumbnail());
 					
 				rowCount = pstmt.executeUpdate();
-				this.conn.commit();
-			}
-			else {
-				this.conn.rollback();
-			}
-			
+				this.conn.commit();			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -358,7 +367,7 @@ public class BeansDAO {
 				
 			if(!rs.next()) {
 				this.sql = "insert into beans (beans_num, seller_email, bean_name, bean_price, goal_price, category_num, goal_qty, deadline, delivery_charge, bean_thumnail, descript, bean_img)"
-						 + "values ((select nvl(max(beans_num), 0) + 1 from beans), ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?)";
+						 + "values (seq_beans_beans_num.nextval, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				pstmt = conn.prepareStatement(sql);			
 				pstmt.setString(1, beansDO.getSellerEmail());
 				pstmt.setString(2, beansDO.getBeanName());

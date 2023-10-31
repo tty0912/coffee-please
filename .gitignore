@@ -8,3 +8,4 @@ pom.xml
 
 src/main/java/testCart.java
 src/main/java/model/product/TestBeansDAO.java
+src/main/webapp/WEB-INF/views/beansList.jsp
