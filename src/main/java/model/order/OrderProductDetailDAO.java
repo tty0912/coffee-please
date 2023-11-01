@@ -1,8 +1,9 @@
 //package main.java.model.order;
 package model.order;
 
-import main.java.model.product.BeansDO;
-import main.java.model.product.OrderBeans;
+import model.product.BeansDO;
+import model.product.OrderBeans;
+
 
 import java.sql.*;
 import java.util.ArrayList;

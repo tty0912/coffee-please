@@ -1,7 +1,7 @@
 //package main.java.model.product;
-package model.product;
+package model.product
 
-import main.java.model.cart.CartDO;
+import model.cart.*;
 
 public class CartBeans {
     private CartDO cartDO;
