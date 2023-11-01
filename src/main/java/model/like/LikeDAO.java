@@ -1,7 +1,10 @@
-package main.java.model.like;
+//package main.java.model.like;
+package model.like;
 
-import main.java.model.product.BeansDO;
-import main.java.model.product.CartDO;
+//import main.java.model.product.BeansDO;
+//import main.java.model.product.CartDO;
+import model.product.BeansDO;
+import model.product.CartDO;
 
 import java.sql.*;
 import java.util.ArrayList;

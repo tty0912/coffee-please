@@ -1,4 +1,5 @@
-package main.java.model.like;
+//package main.java.model.like;
+package model.like;
 
 public class LikeDO {
     String buyerEmail;

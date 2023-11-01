@@ -1,5 +1,5 @@
-package main.java.controller;
-//package controller;
+//package main.java.controller;
+package controller;
 
 import java.util.ArrayList;
 
