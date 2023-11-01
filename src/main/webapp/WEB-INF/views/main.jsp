@@ -10,10 +10,10 @@
         <div class="max-container">
             <div class="mainIntro">
                 <div class="mainIntro__intro">
-                    <img src="images/mainTest1.gif" alt="">
+                    <img src="${pageContext.request.contextPath }/images/mainTest1.gif" alt="">
                 </div>
                 <div class="mainIntro__login">
-                    <form id="mainIntro__loginForm" action="Controller">
+                    <form id="mainIntro__loginForm" method="post" action="mainLogin">
                         <label><input type="radio" name="login" value="buyer"/>구매자</label>
                         <label><input type="radio" name="login" value="seller"/>판매자</label>
                         <label for="id" class="login__label">
@@ -36,8 +36,8 @@
                                 placeholder="비밀번호 입력"
                             />
                         </label>
-                        <button class="mainIntro__loginButton">로그인</button>
-                        <button class="mainIntro__loginButton">회원가입</button>
+                        <button name="command" value="login" class="mainIntro__loginButton">로그인</button>
+                        <button name="command" value="signup" class="mainIntro__loginButton">회원가입</button>
                     </form>
                 </div>
             </div>
@@ -48,7 +48,7 @@
     <section id="mainCategory">
         <div class="max-container">
             <div class="mainCategory__detail">
-                <img src="images/categoryTest1.jpg" alt="" class="mainCategory__detailImg" />
+                <img src="${pageContext.request.contextPath }/images/categoryTest1.jpg" alt="" class="mainCategory__detailImg" />
                 <p class="mainCategory__detailTitle">영국</p>
             </div>
         </div>
