@@ -12,14 +12,13 @@ import static org.assertj.core.api.Assertions.*;
 public class LikeTest {
 
     LikeService likeService = new LikeService();
-    LikeDAO likeDAO = new LikeDAO();
 
     @Test
     public void insertLikeTest() throws SQLException {
 
         likeService.clickLike("kilee@naver.com", 0);
 
-        ArrayList<BeansDO> likeList = likeDAO.getLikeList("kilee@naver.com");
+        ArrayList<BeansDO> likeList = likeService.getLikeList("kilee@naver.com");
         for (BeansDO e : likeList) {
             String beanName = e.getBeanName();
             int likeCount = e.getLikeCount();

@@ -1,8 +1,10 @@
 package main.java.model.service;
 
 import main.java.model.like.LikeDAO;
+import main.java.model.product.BeansDO;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class LikeService {
 
@@ -11,6 +13,7 @@ public class LikeService {
     public void clickLike(String email, int beanNum) throws SQLException {
         if(checkLike(email,beanNum)){
             likeDAO.insertLike(email,beanNum);
+
 
         }
         else likeDAO.deleteLike(email, beanNum);
@@ -23,5 +26,8 @@ public class LikeService {
     }
 
     //내가 찜한 목록 불러오기
+    public ArrayList<BeansDO> getLikeList(String email){
+        return likeDAO.getLikeList(email);
+    }
 
 }
