@@ -1,6 +1,8 @@
 package main.java.model.product;
 //package model.product;
 
+import main.java.model.member.BuyerDO;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,8 +10,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import model.member.BuyerDO;
-import model.member.SellerDO;
+//import model.member.BuyerDO;
+//import model.member.SellerDO;
 
 public class BeansDAO {
 

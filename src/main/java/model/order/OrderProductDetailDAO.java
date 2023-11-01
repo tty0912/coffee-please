@@ -1,4 +1,4 @@
-package model.order;
+package main.java.model.order;
 //package model.order;
 
 import java.sql.*;
@@ -59,7 +59,9 @@ public class OrderProductDetailDAO {
     public ArrayList<OrderProductDetailDO> getOrderProductList(String email, String sysdate){
 
         ArrayList<OrderProductDetailDO> buyerOrderProductList = new ArrayList<>();
-        this.sql = "select beans_num, qty from order_prod_detail where to_char(order_datetime, 'yyyy-mm-dd hh24:mi:ss' = ? " +
+        this.sql = "select beans_num, qty " +
+                "from order_prod_detail " +
+                "where to_char(order_datetime, 'yyyy-mm-dd hh24:mi:ss' = ? " +
                 "and buyer_email = ?";
 
         try{
