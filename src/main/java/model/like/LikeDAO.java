@@ -1,7 +1,6 @@
 package main.java.model.like;
 
 import main.java.model.product.BeansDO;
-import main.java.model.product.CartDO;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -134,7 +133,6 @@ public class LikeDAO {
             while(rs.next()) {
                 beansDO = new BeansDO();
                 beansDO.setBeanName(rs.getString("bean_name"));
-                System.out.println(beansDO.getBeanName());
                 beansDO.setLikeCount(rs.getInt("like_count"));
                 beansDO.setBeanImg(rs.getString("bean_img"));
                 beansDO.setBeanPrice(rs.getInt("bean_price"));
