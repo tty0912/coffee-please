@@ -17,11 +17,6 @@ public class ControllerConfig {
 	public MemberController memberController() {
 		return new MemberController();
 	}
-
-	@Bean
-	public BeansDAO beansDAO() {
-		return new BeansDAO();
-	}
 	
 	@Bean
 	public ProductController productController() {
