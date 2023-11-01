@@ -44,6 +44,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
-	<classpathentry kind="lib" path="C:/Users/은식/Desktop/coffee-please/src/main/webapp/WEB-INF/lib/ojdbc6.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
