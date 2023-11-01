@@ -1,4 +1,7 @@
+//package main.java.model.product;
 package model.product;
+
+//import main.java.model.member.BuyerDO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,6 +11,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import model.member.BuyerDO;
+//import model.member.SellerDO;
 
 public class BeansDAO {
 
@@ -34,7 +40,8 @@ public class BeansDAO {
 
 		BeansDO beans = new BeansDO();
 
-		this.sql = "select * from beans where beans_num = ?";
+		sql = "select bean_name, bean_price, bean_img, descript, delivery_charge, bean_thumbnail " + 
+			  "from beans where beans_num = ?";
 
 		try {
 			this.pstmt = conn.prepareStatement(this.sql);
@@ -48,7 +55,6 @@ public class BeansDAO {
 				beans.setDescript(rs.getString("descript"));
 				beans.setDeliveryCharge(rs.getInt("delivery_charge"));
 				beans.setBeanThumbnail(rs.getString("bean_thumbnail"));
-				beans.setLikeCount(rs.getInt("like_count"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -173,32 +179,32 @@ public class BeansDAO {
 
 	// 베스트 원두 5개
 	public ArrayList<BeansDO> bestBeanArray() {
-		ArrayList<BeansDO> bestBeans = new ArrayList<BeansDO>();
 
-		this.sql = "select beans_num, bean_name, bean_price, bean_thumbnail, like_count from "
-				+ "(select beans_num, bean_name, bean_price, bean_thumbnail, like_count, rownum as rnum from beans)"
-				+ "where rnum between ? and ? " + "order by like_count desc";
+		ArrayList<BeansDO> beanList = new ArrayList<BeansDO>();
+		sql = "select bean_img, like_count, rownum from" +
+				"(select bean_img, like_count, rownum from beans order by like_count desc)" +
+				"where rownum between 1 and 5"; 
+    	try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			BeansDO beansDO = null;
+			
+			while(rs.next()) {
+				beansDO = new BeansDO();
+				
+				beansDO.setBeanImg(rs.getString("bean_img"));
+				beansDO.setLikeCount(rs.getInt("like_count"));
+				
+				beanList.add(beansDO);
 
-		try {
-			this.pstmt = conn.prepareStatement(this.sql);
-			this.pstmt.setInt(1, 1);
-			this.pstmt.setInt(2, 5);
-			rs = this.pstmt.executeQuery();
-
-			while (rs.next()) {
-				BeansDO beans = new BeansDO();
-
-				beans.setBeanName(rs.getString("bean_name"));
-				beans.setBeanPrice(rs.getInt("bean_price"));
-				beans.setBeanThumbnail(rs.getString("bean_thumbnail"));
-				beans.setLikeCount(rs.getInt("like_count"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
+		}
+		finally {			
 			try {
-				if (!this.pstmt.isClosed()) {
-					this.pstmt.close();
+				if(!stmt.isClosed()) {
+					stmt.close();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -209,6 +215,7 @@ public class BeansDAO {
 
 	// 모든 일반 상품 목록 정보 가져오기
 	public ArrayList<BeansDO> getBeansList() {
+
 
 		ArrayList<BeansDO> resultList = new ArrayList<BeansDO>();
 
@@ -698,7 +705,43 @@ public class BeansDAO {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}		
+    	return beanList;
+    }
+
+	//likeCount 수정하기
+	public int beansLikeCountUpdate(int beansNum, boolean bl){
+		int rowCount = 0;
+		if(bl){
+			this.sql = "update beans set like_count = like_count + 1 where beans_num = ?";
 		}
+		else{
+			this.sql = "update beans set like_count = like_count - 1 where beans_num = ?";
+		}
+
+		try{
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, beansNum);
+
+			rowCount = pstmt.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(!pstmt.isClosed()) {
+					pstmt.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return rowCount;
+	}
+}
 
 		return beanList;
 	}

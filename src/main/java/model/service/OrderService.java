@@ -1,13 +1,19 @@
+//package main.java.model.service;
 package model.service;
 
-import main.java.model.member.BuyerDAO;
-import main.java.model.member.SellerDAO;
-import main.java.model.order.OrderProductDAO;
-import main.java.model.order.OrderProductDO;
-import main.java.model.order.OrderProductDetailDAO;
-import main.java.model.order.OrderProductDetailDO;
-import main.java.model.product.BeansDAO;
-import main.java.model.product.BeansDO;
+import model.member.*;
+import model.order.*;
+import model.product.*;
+
+
+//import main.java.model.member.BuyerDAO;
+//import main.java.model.member.SellerDAO;
+//import main.java.model.order.OrderProductDAO;
+//import main.java.model.order.OrderProductDO;
+//import main.java.model.order.OrderProductDetailDAO;
+//import main.java.model.order.OrderProductDetailDO;
+//import main.java.model.product.BeansDAO;
+//import main.java.model.product.BeansDO;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;

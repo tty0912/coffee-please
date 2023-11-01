@@ -33,6 +33,7 @@
                 </div>
             </div>
         </div>
+        <button class="signupSelect__button" id="signup-button" type="submit">테스트 판매등</button>
         
     </section>
     <div class="sources">

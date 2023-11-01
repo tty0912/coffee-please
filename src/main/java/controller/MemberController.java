@@ -1,16 +1,19 @@
+//package main.java.controller;
 package controller;
-//package controller;
 
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+//import main.java.model.member.*;
 import model.member.*;
-//import model.member.*;
 
 
 @Controller
@@ -21,12 +24,67 @@ public class MemberController {
 	private SellerDO seller;
 	private SellerDAO sellerDAO = new SellerDAO();
 
+	public String sessionBuyer = "";
 	
 	public MemberController() {}
 	
-	@GetMapping("/signup")
-	public String signup() {
-		return "signup";
+	
+	
+	@GetMapping("/main")
+	public String main() {
+		return "main";
+	}
+	
+	@PostMapping("/mainLogin")
+	public String mainLogin(String id, String passwd, HttpSession session, String command, Model model) {
+		
+		BuyerDO buyer = buyerDAO.getBuyer(id);
+		
+		
+		if(command.equals("login")) {
+			if(buyerDAO.checkBuyerId(id) == true) {
+				return "redirect:/main";
+			}
+			else { //id는 맞음
+				if(!buyer.getPasswd().equals(passwd)) { //비밀번호는 틀림
+					 return "redirect:/main";
+				}else { //비밀번호도 맞음
+					model.addAttribute("Buyer", buyerDAO.getBuyer(id));
+					session.setAttribute("BUYER", buyer);
+					
+					sessionBuyer = String.valueOf(session.getAttribute("BUYER"));
+					
+					System.out.printf(sessionBuyer);
+					
+					return "mainLoginBuyer";
+				}
+			}
+		} else if (command.equals("signup")){
+			
+			return "signup";
+		}
+		else {
+			return "redirect:/main";
+		}
+		
+	}
+	
+	@PostMapping("/mainLoginBuyer")
+	public String logout(HttpSession session, String command, Model model) {
+		
+		if(command.equals("logout")) {
+			session.invalidate();
+			return "redirect:/main";
+		} else if(command.equals("myPageBuyer")) {
+			session.getAttribute("BUYER");
+			System.out.printf(String.valueOf(session.getAttribute("BUYER")));
+//			model.addAttribute("Buyer", buyerDAO.getBuyer());
+			
+			return "myPageBuyer";
+		}
+		
+		
+		return "redirect:/main";
 	}
 	
 	// 구매자 회원가입페이지로 이동

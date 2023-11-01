@@ -1,5 +1,9 @@
+//package main.java.model.order;
 package model.order;
-//package model.order;
+
+import model.product.BeansDO;
+import model.product.OrderBeans;
+
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -56,10 +60,14 @@ public class OrderProductDetailDAO {
     }
 
     //나의 주문에 해당하는 상품 전체 조회
-    public ArrayList<OrderProductDetailDO> getOrderProductList(String email, String sysdate){
+    public ArrayList<OrderBeans> getOrderProductDetailList(String email, String sysdate){
 
-        ArrayList<OrderProductDetailDO> buyerOrderProductList = new ArrayList<>();
-        this.sql = "select beans_num, qty from order_prod_detail where to_char(order_datetime, 'yyyy-mm-dd hh24:mi:ss' = ? " +
+        ArrayList<OrderBeans> buyerOrderProductList = new ArrayList<>();
+        this.sql = "select order_prod_detail.beans_num, order_prod_detail.qty, " +
+                "beans.bean_img, beans.bean_price, beans.bean_name " +
+                "from order_prod_detail " +
+                "join beans on order_prod_detail.beans_num = beans.beans_num " +
+                "where to_char(order_datetime, 'yyyy-mm-dd hh24:mi:ss') = ? " +
                 "and buyer_email = ?";
 
         try{
@@ -68,14 +76,25 @@ public class OrderProductDetailDAO {
             pstmt.setString(2, email);
             rs = pstmt.executeQuery();
 
-            OrderProductDetailDO orderProduct = null;
+            OrderBeans orderBeans = null;
+            OrderProductDetailDO orderProduct;
+            BeansDO beansDO;
 
             while (rs.next()){
+                orderBeans = new OrderBeans();
                 orderProduct = new OrderProductDetailDO();
+                beansDO = new BeansDO();
+
                 orderProduct.setQty(rs.getInt("qty"));
                 orderProduct.setBeansNum(rs.getInt("beans_num"));
+                beansDO.setBeanPrice(rs.getInt("bean_price"));
+                beansDO.setBeanName(rs.getString("bean_name"));
+                beansDO.setBeanImg(rs.getString("bean_img"));
 
-                buyerOrderProductList.add(orderProduct);
+                orderBeans.setBeansDO(beansDO);
+                orderBeans.setOrderProductDetailDO(orderProduct);
+
+                buyerOrderProductList.add(orderBeans);
             }
 
         }

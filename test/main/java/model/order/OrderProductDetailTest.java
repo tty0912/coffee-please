@@ -1,8 +1,10 @@
 package main.java.model.order;
 
+import main.java.model.product.OrderBeans;
 import org.junit.Test;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -19,5 +21,16 @@ public class OrderProductDetailTest {
         order.setQty(3);
 
         assertThat(orderProductDetailDAO.insertOrderProductDetail(order)).isEqualTo(1);
+    }
+
+    @Test
+    public void getOrderProdDetailListTest() {
+        ArrayList<OrderBeans> list = orderProductDetailDAO.getOrderProductDetailList("hmson@naver.com", "2023-11-01 14:06:03");
+        for(OrderBeans i : list){
+            assertThat(i.getOrderProductDetailDO().getBeansNum()).isEqualTo(0);
+            assertThat(i.getOrderProductDetailDO().getQty()).isEqualTo(3);
+            assertThat(i.getBeansDO().getBeanPrice()).isEqualTo(9999);
+
+        }
     }
 }
