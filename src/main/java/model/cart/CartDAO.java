@@ -98,8 +98,8 @@ public class CartDAO {
 	}
 	
 	// 장바구니 모든 상품 조회
-	public ArrayList<CartDO> getCartList(String buyerEmail) {
-		ArrayList<CartDO> cartList = new ArrayList<CartDO>();
+	public ArrayList<CartBeans> getCartList(String buyerEmail) {
+		ArrayList<CartBeans> cartList = new ArrayList<CartBeans>();
 		
 		this.sql = "select beans.bean_name, beans.bean_price, beans.bean_img, cart.qty "+
 	   			"from cart " + 
@@ -111,11 +111,16 @@ public class CartDAO {
 			this.pstmt = conn.prepareStatement(this.sql);
 			this.pstmt.setString(1, buyerEmail);
 			rs = this.pstmt.executeQuery();
-			
+
+			CartBeans cartBeans;
+			CartDO cart;
+			BeansDO beansDO;
+
 			while(rs.next()) {
-				CartDO cart = new CartDO();
-				BeansDO beansDO = new BeansDO();
-				
+				cartBeans = new CartBeans();
+				cart = new CartDO();
+				beansDO = new BeansDO();
+
 				beansDO.setBeanName(rs.getString("bean_name"));
 	            beansDO.setBeanPrice(rs.getInt("bean_price"));
 	            beansDO.setBeanImg(rs.getString("bean_img"));
@@ -123,7 +128,10 @@ public class CartDAO {
 	            cart.setBeansDO(beansDO);
 	            cart.setQty(rs.getInt("qty"));
 
-				cartList.add(cart);
+				cartBeans.setCartDO(cart);
+				cartBeans.setBeansDO(beansDO);
+
+				cartList.add(cartBeans);
 			}
 		}
 		catch(Exception e) {
@@ -145,13 +153,14 @@ public class CartDAO {
 	
 	// 장바구니 상품 총 금액
 	public int totalPrice(String buyerEmail) {
-		ArrayList<CartDO> cartList = getCartList(buyerEmail);
+		ArrayList<CartBeans> cartList = getCartList(buyerEmail);
 		
 		int total = 0;
 		
-		 for (CartDO cart : cartList) {
+		 for (CartBeans cart : cartList) {
 		        BeansDO beansDO = cart.getBeansDO();
-		        int qty = cart.getQty();
+				CartDO cartDO = cart.getCartDO();
+		        int qty = cartDO.getQty();
 		        double price = beansDO.getBeanPrice();
 
 		        total += price * qty;

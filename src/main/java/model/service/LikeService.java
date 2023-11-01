@@ -1,10 +1,12 @@
 //package main.java.model.service;
 package model.service;
 
+
+
 //import main.java.model.like.LikeDAO;
 //import main.java.model.product.BeansDO;
 import model.like.LikeDAO;
-import model.product.BeansDO;
+import model.product.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,14 +14,18 @@ import java.util.ArrayList;
 public class LikeService {
 
     LikeDAO likeDAO = new LikeDAO();
+    BeansDAO beansDAO = new BeansDAO();
 
     public void clickLike(String email, int beanNum) throws SQLException {
         if(checkLike(email,beanNum)){
             likeDAO.insertLike(email,beanNum);
-
+            beansDAO.beansLikeCountUpdate(beanNum, true);
 
         }
-        else likeDAO.deleteLike(email, beanNum);
+        else {
+            likeDAO.deleteLike(email, beanNum);
+            beansDAO.beansLikeCountUpdate(beanNum, false);
+        }
 
     }
 

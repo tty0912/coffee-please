@@ -229,17 +229,7 @@ public class BeansDAO {
 		
     	return beanList;
     }
-	 //상품 상세보기
-    public BeansDO getBeansDO(int beanNum) {
-    	BeansDO bean = null;
-    	this.sql = "select bean_img, bean_name, delivery_charge, bean_price, like_count, descript from beans where beans_num = ?";
-    	try {
-			this.pstmt = conn.prepareStatement(sql);
-			
-			this.pstmt.setInt(1, beanNum);
-		return bestBeans;
-	}
-	
+
 	// 상품 목록 페이지 -테스트
 	public ArrayList<BeansDO> getBeansList(int page, int pageSize) {
 
@@ -615,109 +605,22 @@ public class BeansDAO {
 		
     	return beanList;
     }
-	//선택 물품 장바구니에 넣기
-	public int insertCart(CartDO cartDO, String buyerEmail) {
+
+	//likeCount 수정하기
+	public int beansLikeCountUpdate(int beansNum, boolean bl){
 		int rowCount = 0;
-		try {
-			this.conn.setAutoCommit(false);
-				
-			if(!rs.next()) {
-				this.sql = "INSERT INTO cart (BEANS_NUM, BUYER_EMAIL, qty)"
-						+ "VALUES (?, ? ,?)";
-				pstmt = conn.prepareStatement(sql);			
-				pstmt.setString(1, cartDO.getBuyerEmail());
-				pstmt.setInt(2, cartDO.getBeansNum());
-				pstmt.setInt(3, cartDO.getQty());
-					
-				rowCount = pstmt.executeUpdate();
-				this.conn.commit();
-			}
-			else {
-				this.conn.rollback();
-			}
-			
+		if(bl){
+			this.sql = "update beans set like_count = like_count + 1 where beans_num = ?";
 		}
-		catch(Exception e) {
-			e.printStackTrace();
+		else{
+			this.sql = "update beans set like_count = like_count - 1 where beans_num = ?";
 		}
-		finally {			
-			try {
-				this.conn.setAutoCommit(true);
-				
-				if(!pstmt.isClosed()) {
-					pstmt.close();
-				}
-			}
-			catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return rowCount;
-	}
-	
-	//장바구니 속 상품을 장바구니에서 삭제하기
-	public int deleteItem(BuyerDO buyerDO, int beansNum) {
-		int rowCount = 0;
-		CartDO cart = new CartDO();
-		try {
-			this.conn.setAutoCommit(false);
-				
-			if(!rs.next()) {
-				this.sql = "delete from cart where cart.beans_num = ?";
-				pstmt = conn.prepareStatement(sql);			
-				pstmt.setInt(1, cart.getBeansNum());
-				rowCount = pstmt.executeUpdate();
-				this.conn.commit();
-			}
-			else {
-				this.conn.rollback();
-			}
-			
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		finally {			
-			try {
-				this.conn.setAutoCommit(true);
-				
-				if(!pstmt.isClosed()) {
-					pstmt.close();
-				}
-			}
-			catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return rowCount;
-	}
-	
-	//장바구니 보이기
-	public ArrayList<CartDO> getCartList(String buyerEmail){
-		ArrayList<CartDO> cartList = new ArrayList<CartDO>();
-	
-	   	this.sql = "select beans.bean_name, beans.bean_price, beans.bean_img, cart.qty "+
-	   			"from cart " + 
-	   			"join buyer on cart.buyer_email = buyer.buyer_email " +
-	   			"join beans on cart.beans_num = beans.beans_num " +
-	   			"where cart.buyer_email = ?";
-	   	try {
-			this.pstmt = conn.prepareStatement(sql);
-			
-			this.pstmt.setString(1, buyerEmail);
-			rs = this.pstmt.executeQuery();
-			
-			while(rs.next()) {
-				CartDO cart = new CartDO();
-				cart.setBeanName(rs.getString("bean_name"));
-				cart.setBeanPrice(rs.getInt("bean_price"));
-				cart.setBeanImg(rs.getString("bean_img"));
-				cart.setQty(rs.getInt("qty"));
-				
-				cartList.add(cart);
-			}
+
+		try{
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, beansNum);
+
+			rowCount = pstmt.executeUpdate();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -725,16 +628,15 @@ public class BeansDAO {
 		finally {
 			try {
 				if(!pstmt.isClosed()) {
-					pstmt.close();					
+					pstmt.close();
 				}
 			}
 			catch(Exception e) {
 				e.printStackTrace();
 			}
-		}		
-    	return cartList;
-	}
-	//
+		}
 
+		return rowCount;
+	}
 }
 
