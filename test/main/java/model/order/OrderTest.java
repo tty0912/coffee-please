@@ -12,7 +12,7 @@ public class OrderTest {
 
     @Test
     public void onlyOnePaymentTest() throws SQLException {
-        boolean result = orderService.onlyOnePayment(1, 3, "hmson@naver.com");
+        boolean result = orderService.onlyOnePayment(0, 3, "hmson@naver.com");
         assertThat(result).isEqualTo(true);
     }
 
