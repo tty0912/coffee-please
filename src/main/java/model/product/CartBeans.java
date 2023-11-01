@@ -1,5 +1,7 @@
 package main.java.model.product;
 
+import main.java.model.cart.CartDO;
+
 public class CartBeans {
     private CartDO cartDO;
     private BeansDO beansDO;
