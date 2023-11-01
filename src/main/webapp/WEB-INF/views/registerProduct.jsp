@@ -12,43 +12,43 @@
                 <div class="signup__form-div">
                     <h2 class="signup__title">Bean2B 일반 상품 등록을 진행합니다.</h2> 
                     <h4 class="signup__description">맛있는 원두를 등록해주세요!</h4> 
-                    <form id="signup__form" action="Controller">
-                        <label for="new-beanName" class="signup__label">
+                    <form id="signup__form" action="registerProduct" method="POST">
+                        <label for="beanName" class="signup__label">
                             <img src="${pageContext.request.contextPath}/images/bean.png" alt="" class="bean__img">
                             <input
                                 class="signup__input"
                                 type="text"
-                                id="new-beanName"
+                                id="beanName"
                                 name="beanName"
                                 placeholder="상품 이름 입력"
                             />
                         </label> 
-                        <label for="new-beanPrice" class="signup__label">
+                        <label for="beanPrice" class="signup__label">
                             <i class="fa-solid fa-tags"></i>
                             <input
                                 class="signup__input"
                                 type="text"
-                                id="new-beanPrice"
+                                id="beanPrice"
                                 name="beanPrice"
                                 placeholder="상품 가격 입력"
                             />
                         </label>
-                        <label for="new-cName" class="signup__label">
+                        <label for="cName" class="signup__label">
                             <i class="fa-solid fa-flag-checkered"></i>
                             <input
                                 class="signup__input"
                                 type="text"
-                                id="new-cName"
+                                id="cName"
                                 name="cName"
                                 placeholder="원산지 입력"
                             />
                         </label>
-                        <label for="new-deliveryCharge" class="signup__label">
+                        <label for="deliveryCharge" class="signup__label">
                             <i class="fa-solid fa-truck-fast"></i>
                             <input
                                 class="signup__input"
                                 type="text"
-                                id="new-deliveryCharge"
+                                id="deliveryCharge"
                                 name="deliveryCharge"
                                 placeholder="배송료 입력"
                             />
@@ -56,8 +56,8 @@
                         <input type="file" class="fileInput" name="beanImg" />
                         <input type="file" class="fileInput" name="descript" />
                         <div class="signup__button-div">
-                            <button class="signup__button" id="signup-button" name="action" value="signUppage" type="submit">취소</button>
-                            <button class="signup__button" id="signup-button" name="action" value="signUppage" type="submit">등록</button>
+                            <button class="signup__button" id="signup-button" name="action" value="cancel" type="submit">취소</button>
+                            <button class="signup__button" id="signup-button" name="action" value="register" type="submit">등록</button>
                         </div>
                     </form>
                 </div>
