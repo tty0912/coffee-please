@@ -1,8 +1,12 @@
-package main.java.model.service;
+//package main.java.model.service;
+package model.service;
 
-import main.java.model.like.LikeDAO;
-import main.java.model.product.BeansDAO;
-import main.java.model.product.BeansDO;
+
+//import main.java.model.like.LikeDAO;
+//import main.java.model.product.BeansDO;
+import model.like.LikeDAO;
+import model.product.*;
+
 
 import java.sql.SQLException;
 import java.util.ArrayList;

@@ -25,12 +25,6 @@
 	</dependency>
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
 
-
-		<dependency>
-			<groupId>fullstack_busan</groupId>
-			<artifactId>myProject</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
    </dependencies>
   
   

@@ -1,5 +1,5 @@
-package main.java.model.order;
-//package model.order;
+//package main.java.model.order;
+package model.order;
 
 import main.java.model.product.BeansDO;
 import main.java.model.product.OrderBeans;
