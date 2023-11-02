@@ -70,77 +70,6 @@ public class BeansDAO {
 		return beans;
 	}
 
-	// 검색 처리
-	public ArrayList<BeansDO> searchBeans(String beanName) {
-		ArrayList<BeansDO> searchResult = new ArrayList<BeansDO>();
-
-		this.sql = "select * from beans where bean_name like ?";
-
-		try {
-			this.pstmt = conn.prepareStatement(this.sql);
-			this.pstmt.setString(1, "%" + beanName + "%");
-			rs = this.pstmt.executeQuery();
-
-			while (rs.next()) {
-				BeansDO beans = new BeansDO();
-
-				beans.setBeansNum(rs.getInt("beans_num"));
-				beans.setBeanName(rs.getString("bean_name"));
-				beans.setBeanPrice(rs.getInt("bean_price"));
-				beans.setBeanImg(rs.getString("bean_img"));
-				beans.setLikeCount(rs.getInt("like_count"));
-
-				searchResult.add(beans);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (!this.pstmt.isClosed()) {
-					this.pstmt.close();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return searchResult;
-	}
-
-	// 검색 후 마지막 페이지 처리
-	public int SearchLastPage(String beanName) {
-		int result = 0;
-
-		this.sql = "select count(beans_num) as count from beans where bean_name like ?";
-
-		try {
-			this.pstmt = conn.prepareStatement(this.sql);
-			this.pstmt.setString(1, "%" + beanName + "%");
-
-			rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				int count = rs.getInt("count");
-
-				result = count / 15;
-				if (count % 15 != 0) {
-					result++;
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (!this.pstmt.isClosed()) {
-					this.pstmt.close();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-		return result;
-	}
-
 	// 공동구매 상품 조회 (추가 수정 필요)
 	public BeansDO getGroupBean(int beansNum) {
 		BeansDO beans = new BeansDO();
@@ -210,11 +139,11 @@ public class BeansDAO {
 				e.printStackTrace();
 			}
 		}
-		return bestBeans;
+		return beanList;
 	}
 
-	// 모든 일반 상품 목록 정보 가져오기
-	public ArrayList<BeansDO> getBeansList() {
+	// 일반 상품 목록 정보 가져오기
+	public ArrayList<BeansDO> getBeansList(String str) {
 
 
 		ArrayList<BeansDO> resultList = new ArrayList<BeansDO>();
@@ -236,9 +165,12 @@ public class BeansDAO {
 				beans.setDeadline(rs.getString("deadline"));
 				beans.setGoalQty(rs.getInt("goal_qty"));
 				beans.setGoalPrice(rs.getInt("goal_price"));
-
-				resultList.add(beans);
+				
+				if (str == null || beans.getBeanName().contains(str)) {
+	                resultList.add(beans);
+				}
 			}
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -253,8 +185,8 @@ public class BeansDAO {
 		return resultList;
 	}
 
-	// 모든 공동구매 상품만 가져오기
-	public ArrayList<BeansDO> getGroupBeansList() {
+	// 공동구매 상품만 가져오기
+	public ArrayList<BeansDO> getGroupBeansList(String str) {
 
 		ArrayList<BeansDO> resultList = new ArrayList<BeansDO>();
 
@@ -276,7 +208,9 @@ public class BeansDAO {
 				beans.setGoalQty(rs.getInt("goal_qty"));
 				beans.setGoalPrice(rs.getInt("goal_price"));
 
-				resultList.add(beans);
+				if (str == null || beans.getBeanName().contains(str)) {
+	                resultList.add(beans);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -293,68 +227,60 @@ public class BeansDAO {
 	}
 
 	// 일반 상품 페이징 정렬
-	public ArrayList<BeansDO> sortedPage(String sort) {
-		ArrayList<BeansDO> allBeanList = getBeansList();
+	public ArrayList<BeansDO> sortedPage(String sort, String str) {
+	    ArrayList<BeansDO> allBeanList = getBeansList(str);
 
-		// 정렬
-		if (sort != null && !sort.equals("default")) {
-			if (sort.equals("bestSelling")) {
-				// 판매량 순 정렬(판매량 수가 같을시 좋아요 순, 좋아요 순도 같을 시 최신 상품 순)
-				Collections.sort(allBeanList, new Comparator<BeansDO>() {
-					@Override
-					public int compare(BeansDO sc1, BeansDO sc2) {
-						Integer sellCount1 = sc1.getBeanTotalSellCount();
-						Integer sellCount2 = sc2.getBeanTotalSellCount();
-						if (sellCount1 != sellCount2) {
-							return sellCount2.compareTo(sellCount1);
-						} else if (sellCount1 == sellCount2) {
-							Integer likeCount1 = sc1.getLikeCount();
-							Integer likeCount2 = sc2.getLikeCount();
-							return likeCount2.compareTo(likeCount1);
-						} else {
-							Integer beansNum1 = sc1.getBeansNum();
-							Integer beansNum2 = sc2.getBeansNum();
-							return beansNum2.compareTo(beansNum1);
-						}
-					}
-				});
-			} else if (sort.equals("mostLiked")) {
-				// 좋아요 순 정렬 (좋아요 수가 같을시 판매량 순, 판매량 순도 같을 시 최신 상품 순)
-				Collections.sort(allBeanList, new Comparator<BeansDO>() {
-					public int compare(BeansDO lc1, BeansDO lc2) {
-						Integer likeCount1 = lc1.getLikeCount();
-						Integer likeCount2 = lc2.getLikeCount();
-						if (likeCount1 != likeCount2) {
-							return likeCount2.compareTo(likeCount1);
-						} else if (likeCount1 == likeCount2) {
-							Integer sellCount1 = lc1.getBeanTotalSellCount();
-							Integer sellCount2 = lc2.getBeanTotalSellCount();
-							return sellCount2.compareTo(sellCount1);
-						} else {
-							Integer beansNum1 = lc1.getBeansNum();
-							Integer beansNum2 = lc2.getBeansNum();
-							return beansNum2.compareTo(beansNum1);
-						}
-					}
-				});
-			}
-		} else {
-			// 기본 정렬: 최신 등록 순
-			Collections.sort(allBeanList, new Comparator<BeansDO>() {
-				@Override
-				public int compare(BeansDO bn1, BeansDO bn2) {
-					Integer beansNum1 = bn1.getBeansNum();
-					Integer beansNum2 = bn2.getBeansNum();
-					return beansNum2.compareTo(beansNum1);
-				}
-			});
-		}
-		return allBeanList;
+	    // 정렬
+	    if (sort != null && !sort.equals("default")) {
+	        if (sort.equals("bestSelling")) {
+	            // 판매량 순 정렬(판매량 수가 같을시 좋아요 순, 좋아요 순도 같을 시 최신 상품 순)
+	            Collections.sort(allBeanList, new Comparator<BeansDO>() {
+	                @Override
+	                public int compare(BeansDO sc1, BeansDO sc2) {
+	                    Integer sellCount1 = sc1.getBeanTotalSellCount();
+	                    Integer sellCount2 = sc2.getBeanTotalSellCount();
+	                    if (sellCount1 != sellCount2) {
+	                        return sellCount2.compareTo(sellCount1);
+	                    } else {
+	                        Integer beansNum1 = sc1.getBeansNum();
+	                        Integer beansNum2 = sc2.getBeansNum();
+	                        return beansNum2.compareTo(beansNum1);
+	                    }
+	                }
+	            });
+	        } else if (sort.equals("mostLiked")) {
+	            // 좋아요 순 정렬 (좋아요 수가 같을 시 최신 상품 순)
+	            Collections.sort(allBeanList, new Comparator<BeansDO>() {
+	                public int compare(BeansDO lc1, BeansDO lc2) {
+	                    Integer likeCount1 = lc1.getLikeCount();
+	                    Integer likeCount2 = lc2.getLikeCount();
+	                    if (likeCount1 != likeCount2) {
+	                        return likeCount2.compareTo(likeCount1);
+	                    } else {
+	                        Integer beansNum1 = lc1.getBeansNum();
+	                        Integer beansNum2 = lc2.getBeansNum();
+	                        return beansNum2.compareTo(beansNum1);
+	                    }
+	                }
+	            });
+	        }
+	    } else {
+	        // 기본 정렬: 최신 등록 순
+	        Collections.sort(allBeanList, new Comparator<BeansDO>() {
+	            @Override
+	            public int compare(BeansDO bn1, BeansDO bn2) {
+	                Integer beansNum1 = bn1.getBeansNum();
+	                Integer beansNum2 = bn2.getBeansNum();
+	                return beansNum2.compareTo(beansNum1);
+	            }
+	        });
+	    }
+	    return allBeanList;
 	}
 
 	// 공동 구매 상품 페이징 정렬
-	public ArrayList<BeansDO> sortedPage2(String sort) {
-		ArrayList<BeansDO> allBeanList = getGroupBeansList();
+	public ArrayList<BeansDO> sortedPage2(String sort, String str) {
+		ArrayList<BeansDO> allBeanList = getGroupBeansList(str);
 
 		// 정렬
 		if (sort != null && !sort.equals("default")) {
@@ -740,9 +666,5 @@ public class BeansDAO {
 		}
 
 		return rowCount;
-	}
-}
-
-		return beanList;
 	}
 }
