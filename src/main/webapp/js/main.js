@@ -1,4 +1,5 @@
 
+
 function nextBtnHandler(){
 	
 	let categoryList = document.querySelector('#categoryList');
@@ -8,23 +9,23 @@ function nextBtnHandler(){
 	categoryList.appendChild(categoryName);
 	}
 	
-function prevBtnHandler(){
-	
-	let categoryList = document.querySelector('#categoryList');
-	let categoryName = document.querySelector('#categoryName');
-	
-	categoryList.removeChild(categoryName);
-	categoryList.appendChild(categoryName);
-	
+
+function prevBtnHandler() {
+    let categoryList = document.querySelector('#categoryList');
+    let lastChild = categoryList.lastElementChild;
+    let firstChild = categoryList.firstElementChild;
+
+    categoryList.insertBefore(lastChild, firstChild);
 }
+
 
 function autoCycleCategoryListHandler(){
 	
 	let categoryList = document.querySelector('#categoryList');
 	let categoryName = document.querySelector('#categoryName');
 	
+	categoryList.removeChild(categoryName);
 	categoryList.appendChild(categoryName);
-
 }
 	
 	
@@ -58,7 +59,7 @@ function init(){
 	/*
 	seeMore.addEventListener('click', seeMoreHandler);
 	*/
-}
-
+		}
+		
 window.addEventListener('load', init);
-setInterval(autoCycleCategoryListHandler, 4000);
+setInterval(autoCycleCategoryListHandler, 8000);
