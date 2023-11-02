@@ -6,7 +6,7 @@
 <%@ include file = "/WEB-INF/views/header.jsp" %>
 
     <!-- Category -->
-    <section id="mainCategory">
+    <section id="mainCategory" class="section">
         <div class="max-container">
             <div class="mainCategory__detail">
                 <img src="images/categoryTest1.jpg" alt="" class="mainCategory__detailImg" />
@@ -15,7 +15,7 @@
         </div>
     </section>
     <!-- productList -->
-    <section id="productList">
+    <section id="productList" class="section">
         <div class="max-container">
             <div class="productList">
                 <div class="productList__sortSerch">

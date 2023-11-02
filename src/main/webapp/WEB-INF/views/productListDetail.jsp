@@ -6,7 +6,7 @@
 <%@ include file = "/WEB-INF/views/header.jsp" %>
 
     <!-- productListDetail -->
-    <section id="productListDetail">
+    <section id="productListDetail" class="section">
         <div class="max-container">
             <div class="productListDetail__top">
                 <div class="productListDetail__topLeft">

@@ -5,48 +5,99 @@
  
 <%@ include file = "/WEB-INF/views/header.jsp" %>
 
-    <!-- Main -->
-    <section id="mainIntro">
-        <div class="max-container">
-            <div class="mainIntro">
-                <div class="mainIntro__intro">
-                    <img class="mainIntro__introImg" src="${pageContext.request.contextPath }/images/mainTest1.gif" alt="">
-                </div>
-                <div class="mainIntro__loginbuyer">
-                    <img class="mainIntro__loginbuyerImg src="images/userImginit.png" alt="">
-                    <p class="mainIntro__loginbuyerId">${Buyer.nickname }</p>
-                    <form method="post" action="mainLoginBuyer" class="mainIntro__buyer">
-                        <button type="submit" name="command" value="logout" class="mainIntro__logoutButton">로그아웃</button>
-                        <button type="submit" name="command" value="myPageBuyer" class="mainIntro__myPageButton">마이페이지</button>
-                    </form>
-                </div>  
-            </div>
-        </div>
-    </section>
+     <!-- Main -->
+     <section id="mainIntro" class="section">
+       <div class="max-container">
+             <div class="mainIntro">
+                 <div class="mainIntro__intro">
+                     <img class="mainIntro__introImg" src="images/mainTest1.gif" alt="">
+                 </div>
+                 <div class="mainIntro__loginAll">
+                     <div class="mainIntro__loginAfter">
+                            <div class="user">
+                             <img class="mainIntro__loginImg" src="images/userImginit.png" alt="">
+                             <p class="mainIntro__loginId">빈투비 <span class="mainIntro__loginIdText">님</span></p>
+                         </div>
+                         <div class="mainIntro__buyer">
+                             <p class="mainIntro__loginPoint">100,000 <span class="mainIntro__loginPointText"> point</span></p>
+                             <div class="mainIntro__button">
+                                 <button class="mainIntro__AfterButton">로그아웃</button>
+                                 <button class="mainIntro__AfterButton">마이페이지</button>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </section>
     <!-- Category -->
-    <section id="mainCategory">
+    <section id="mainCategory" class="section">
         <div class="max-container">
-            <div class="mainCategory__detail">
-                <img src="${pageContext.request.contextPath }/images/categoryTest1.jpg" alt="" class="mainCategory__detailImg" />
-                <p class="mainCategory__detailTitle">영국</p>
+            <h1 class="mainCategory__title">Category</h1>
+            <div class="mainCategory">
+                <div class="mainCategory__detail">
+                    <img src="images/categoryTest1.jpg" alt="" class="mainCategory__detailImg" />
+                    <p class="mainCategory__detailTitle">영국</p>
+                </div>
             </div>
         </div>
     </section>
     <!-- BeanBest -->
-    <section id="mainBeanBest">
+    <section id="mainBeanBest" class="section">
         <div class="max-container">
+            <h1 class="mainBeanBest__title">Best</h1>
             <div class="mainBeanBest">
                 <div class="mainBeanBest__product">
-                    <p class="mainBeanBest__productTitle">1위</p>
-                    <img src="${pageContext.request.contextPath }/images/test1.jpg" alt="" class="mainBeanBest__productImg" />
-                    <p class="mainBeanBest__productLikeCount">30</p>
+                    <img src="images/number1.png" alt="" class="beanBest__number">
+                    <img src="images/test1.jpg" alt="" class="mainBeanBest__productImg" />
+                    <div class="likeButton">
+                        <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                        <p class="mainBeanBest__productLikeCount">30</p>
+                    </div>
                 </div>
-                <div class="mainBeanBest__button">
-                    <button class="mainBeanBest__plusButton">더보기</button>
+                <div class="mainBeanBest__product">
+                    <img src="images/number2.png" alt="" class="beanBest__number">
+                    <img src="images/test1.jpg" alt="" class="mainBeanBest__productImg" />
+                    <div class="likeButton">
+                        <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                        <p class="mainBeanBest__productLikeCount">30</p>
+                    </div>
                 </div>
+                <div class="mainBeanBest__product">
+                    <img src="images/number3.png" alt="" class="beanBest__number">
+                    <img src="images/test1.jpg" alt="" class="mainBeanBest__productImg" />
+                    <div class="likeButton">
+                        <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                        <p class="mainBeanBest__productLikeCount">30</p>
+                    </div>
+                </div>
+                <div class="mainBeanBest__product">
+                    <img src="images/number4.png" alt="" class="beanBest__number">
+                    <img src="images/test1.jpg" alt="" class="mainBeanBest__productImg" />
+                    <div class="likeButton">
+                        <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                        <p class="mainBeanBest__productLikeCount">30</p>
+                    </div>
+                </div>
+                <div class="mainBeanBest__product">
+                    <img src="images/number5.png" alt="" class="beanBest__number">
+                    <img src="images/test1.jpg" alt="" class="mainBeanBest__productImg" />
+                    <div class="likeButton">
+                        <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                        <p class="mainBeanBest__productLikeCount">30</p>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="mainBeanBest__button">
+                <h2 class="mainBeanBest__buttonTitle">더 많은 원두를 보려면?</h2>
+                <button class="mainBeanBest__plusButton"><i class="fa-solid fa-angles-right"></i></button>
             </div>
         </div>
     </section>
+    <div class="sources">
+        출처 <a href="https://kr.freepik.com/free-vector/number-collection-with-golden-style_2304153.htm#query=%EC%88%9C%EC%9C%84&from_query=%EB%93%B1%EC%88%98&position=7&from_view=search&track=sph">Freepik</a>
+    </div>
 
 
 

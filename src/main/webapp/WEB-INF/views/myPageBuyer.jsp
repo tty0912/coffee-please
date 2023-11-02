@@ -27,7 +27,7 @@
         </div>
     </section>
     <!-- nav -->
-    <section id="myPageNav">
+    <section id="myPageNav" class="section">
         <div class="max-container">
             <div class="myPageNav">
                 <button id="myPageNav__likeButton" class="myPageNav__button" >찜 내역</button>
