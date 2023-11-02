@@ -11,14 +11,13 @@
 <body>
 	<h1>Group Beans List</h1>
 
-	<form action="/coffee/beansList" method="GET">
-    	<button type="submit" name="sort" value="bestSelling">판매량 높은 순</button>
+	<form action="/coffee/groupBeansList" method="GET">
+		<button type="submit" name="sort" value="bestSelling">판매량 높은 순</button>
+		<button type="submit" name="sort" value="mostLiked">좋아요 높은 순</button>
+		<input type="text" name="search" placeholder="검색어 입력">
 	</form>
-	<form action="/coffee/beansList" method="GET">
-	    <button type="submit" name="sort" value="mostLiked">좋아요 높은 순</button>
-	</form>
-	
-    <p>현재 정렬 옵션: ${sortOption}</p>
+
+	<p>현재 정렬 옵션: ${sortOption}</p>
 	<table border="1">
 		<tr>
 			<th>상품번호</th>
@@ -44,10 +43,22 @@
 		</c:forEach>
 	</table>
 	<c:if test="${currentPage > 1}">
-		<a href="<c:url value='/groupBeansList?page=${currentPage - 1}' />">Prev</a>
+		<c:url var="prevUrl" value="/groupBeansList">
+			<c:param name="page" value="${currentPage - 1}" />
+			<c:if test="${not empty search}">
+				<c:param name="search" value="${search}" />
+			</c:if>
+		</c:url>
+		<a href="<c:out value='${prevUrl}'/>">Prev</a>
 	</c:if>
 	<c:if test="${currentPage < totalPages}">
-		<a href="<c:url value='/groupBeansList?page=${currentPage + 1}' />">Next</a>
+		<c:url var="nextUrl" value="/groupBeansList">
+			<c:param name="page" value="${currentPage + 1}" />
+			<c:if test="${not empty search}">
+				<c:param name="search" value="${search}" />
+			</c:if>
+		</c:url>
+		<a href="<c:out value='${nextUrl}'/>">Next</a>
 	</c:if>
 
 </body>

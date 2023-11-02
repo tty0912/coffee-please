@@ -69,12 +69,13 @@ public class ProductController {
 	public String beansList(Model model, 
 	            @RequestParam(value = "page", required = false, defaultValue = "1") int page, 
 	            @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize,
-	            @RequestParam(value = "sort", required = false, defaultValue = "default") String sort) {
+	            @RequestParam(value = "sort", required = false, defaultValue = "default") String sort,
+	            @RequestParam(value = "search", required = false) String search) {
 		// 상품 목록을 가져오는 기본 메서드
         ArrayList<BeansDO> beansList;
 
         // 정렬 필요한 경우 sortedPage 메서드 호출
-        beansList = beansDAO.sortedPage(sort);
+        beansList = beansDAO.sortedPage(sort, search);
         
         // 페이징 처리를 위한 전체 상품 수 계산
         int totalRows = beansList.size();
@@ -98,6 +99,7 @@ public class ProductController {
         model.addAttribute("beansList", pagedBeansList);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("currentPage", page);
+        model.addAttribute("search", search);
 
         return "beansList";
 	}
@@ -107,16 +109,12 @@ public class ProductController {
 	public String groupBeansList(Model model, 
 	            @RequestParam(value = "page", required = false, defaultValue = "1") int page, 
 	            @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize,
-	            @RequestParam(value = "sort", required = false, defaultValue = "default") String sort) {
+	            @RequestParam(value = "sort", required = false, defaultValue = "default") String sort, 
+	            @RequestParam(value = "search", required = false) String search) {
 	    
 	    ArrayList<BeansDO> groupBeansList;
-
-	    if (sort != null || !sort.equals("default")) {
-	        groupBeansList = beansDAO.sortedPage2(sort);
-	    } 
-	    else {
-	        groupBeansList = beansDAO.getGroupBeansList();
-	    }
+	    
+        groupBeansList = beansDAO.sortedPage2(sort, search);
 	    
 	    int totalRows = groupBeansList.size();
 	    int totalPages = (int) Math.ceil((double) totalRows / pageSize);
@@ -132,62 +130,28 @@ public class ProductController {
 	    ArrayList<BeansDO> pagedGroupBeansList = new ArrayList<>(groupBeansList.subList(
 	            Math.max(startRow - 1, 0), Math.min(endRow, totalRows))); 
 
+	    model.addAttribute("sortOption", sort);
 	    model.addAttribute("groupBeansList", pagedGroupBeansList);
 	    model.addAttribute("totalPages", totalPages);
 	    model.addAttribute("currentPage", page);
+	    model.addAttribute("search", search);
 
 	    return "groupBeansList";
-	}
-	
-	// 검색 결과 목록 페이지
-	@GetMapping("/searchList")
-	public String searchList(Model model, 
-	            @RequestParam(value = "page", required = false, defaultValue = "1") int page, 
-	            @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize,
-	            @RequestParam(value = "sort", required = false, defaultValue = "default") String sort) {
-	    
-	    ArrayList<BeansDO> searchList;
-
-	    if (sort != null || !sort.equals("default")) {
-	    	searchList = beansDAO.sortedPage(sort);
-	    } 
-	    else {
-	    	searchList = beansDAO.getBeansList();
-	    }
-	    
-	    int totalRows = searchList.size();
-	    int totalPages = (int) Math.ceil((double) totalRows / pageSize);
-
-	    if (page < 1) {
-	        page = 1;
-	    } else if (page > totalPages) {
-	        page = totalPages;
-	    }
-
-	    int startRow = 1 + (page - 1) * pageSize;
-	    int endRow = pageSize * page;
-	    ArrayList<BeansDO> pagedSearchList = new ArrayList<>(searchList.subList(
-	            Math.max(startRow - 1, 0), Math.min(endRow, totalRows))); 
-
-	    model.addAttribute("searchList", pagedSearchList);
-	    model.addAttribute("totalPages", totalPages);
-	    model.addAttribute("currentPage", page);
-
-	    return "searchList";
 	}
 	
 	// 이전, 다음 페이지 처리
 	@GetMapping("/navigatePage")
 	public String navigatePage(@RequestParam("currentPage") int currentPage, 
 	                            @RequestParam("totalPages") int totalPages,
-	                            @RequestParam("direction") String direction,
+	                            @RequestParam("direction") String direction, 
+	                            @RequestParam("search") String search,
 	                            @RequestParam("redirectPath") String redirectPath) {
 	    if ("previous".equals(direction) && currentPage > 1) {
-	        return "redirect:" + redirectPath + "?page=" + (currentPage - 1);
+	        return "redirect:" + redirectPath + "?page=" + (currentPage - 1) + "&search=" + search;
 	    } else if ("next".equals(direction) && currentPage < totalPages) {
-	        return "redirect:" + redirectPath + "?page=" + (currentPage + 1);
+	        return "redirect:" + redirectPath + "?page=" + (currentPage + 1) + "&search=" + search;
 	    }
-	    return "redirect:" + redirectPath + "?page=" + currentPage;
+	    return "redirect:" + redirectPath + "?page=" + currentPage + "&search=" + search;
 	}
 	
 	// 상품 상세 페이지로 이동
