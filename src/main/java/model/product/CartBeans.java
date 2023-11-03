@@ -1,6 +1,7 @@
-package main.java.model.product;
+//package main.java.model.product;
+package model.product;
 
-import main.java.model.cart.CartDO;
+import model.cart.CartDO;
 
 public class CartBeans {
     private CartDO cartDO;

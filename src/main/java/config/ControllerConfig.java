@@ -1,5 +1,5 @@
-package main.java.config;
-//package config;
+//package main.java.config;
+package config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,11 +18,6 @@ public class ControllerConfig {
 	@Bean
 	public MemberController memberController() {
 		return new MemberController();
-	}
-
-	@Bean
-	public BeansDAO beansDAO() {
-		return new BeansDAO();
 	}
 	
 	@Bean

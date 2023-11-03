@@ -1,6 +1,8 @@
-package main.java.model.product;
+//package main.java.model.product;
+package model.product;
 
-import main.java.model.order.OrderProductDetailDO;
+//import main.java.model.order.OrderProductDetailDO;
+import model.order.OrderProductDetailDO;
 
 public class OrderBeans {
     private BeansDO beansDO;

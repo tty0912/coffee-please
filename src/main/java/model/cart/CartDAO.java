@@ -1,5 +1,5 @@
-package main.java.model.cart;
-//package model.cart;
+//package main.java.model.cart;
+package model.cart;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,11 +8,13 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import main.java.model.member.*;
-import main.java.model.product.*;
+//import main.java.model.member.*;
+//import main.java.model.product.*;
 
-//import model.member.BuyerDO;
-//import model.product.BeansDO;
+import model.member.BuyerDO;
+import model.product.BeansDO;
+import model.product.*;
+import model.cart.*;
 
 public class CartDAO {
 	
@@ -152,21 +154,21 @@ public class CartDAO {
 	}
 	
 	// 장바구니 상품 총 금액
-	public int totalPrice(String buyerEmail) {
-		ArrayList<CartBeans> cartList = getCartList(buyerEmail);
-		
-		int total = 0;
-		
-		 for (CartBeans cart : cartList) {
-		        BeansDO beansDO = cart.getBeansDO();
-				CartDO cartDO = cart.getCartDO();
-		        int qty = cartDO.getQty();
-		        double price = beansDO.getBeanPrice();
-
-		        total += price * qty;
-		    }
-		return total;
-	}
+//	public int totalPrice(String buyerEmail) {
+//		ArrayList<CartBeans> cartList = getCartList(buyerEmail);
+//		
+//		int total = 0;
+//		
+//		 for (CartBeans cart : cartList) {
+//		        BeansDO beansDO = cart.getBeansDO();
+//				CartDO cartDO = cart.getCartDO();
+//		        int qty = cartDO.getQty();
+//		        double price = beansDO.getBeanPrice();
+//
+//		        total += price * qty;
+//		    }
+//		return total;
+//	}
 	
 	// 결제 후 장바구니 비우기 (결제 완료에서 메서드 호출)
 	public int clearCart(String buyerEmail) {

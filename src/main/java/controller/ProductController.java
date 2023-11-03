@@ -1,5 +1,5 @@
-package main.java.controller;
-//package controller;
+//package main.java.controller;
+package controller;
 
 import java.util.ArrayList;
 
@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -48,6 +49,7 @@ public class ProductController {
 		model.addAttribute("bestBean", beansDAO.bestBeanArray());
 		
 		return "MainLoginSeller";
+	}
 //	상품 등록
 	@PostMapping("/goRegisterProduct")
 	public String goRegisterProduct() {
@@ -61,54 +63,96 @@ public class ProductController {
 			beansDAO.insertBean(beansDO);		
 			return "redirect:/signup";
 	}
-	
-	// 상품 목록 페이지로 이동
+
+	// 상품 목록 페이지
 	@GetMapping("/beansList")
 	public String beansList(Model model, 
 	            @RequestParam(value = "page", required = false, defaultValue = "1") int page, 
-	            @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
-	int totalRows = beansDAO.getTotalRows();
-	int totalPages = (int) Math.ceil((double) totalRows / pageSize);
-	
-	// 페이지 범위를 벗어나는 페이지 번호를 조정
-	if (page < 1) {
-	page = 1;
-	} else if (page > totalPages) {
-	page = totalPages;
-	}
-	
-	ArrayList<BeansDO> beansList = beansDAO.getBeansList(page, pageSize);
-	
-	model.addAttribute("beansList", beansList);
-	model.addAttribute("totalPages", totalPages);
-	model.addAttribute("currentPage", page);
-	
-	return "beansList";
-	}
-		
-	//이전 페이지
-	@GetMapping("/previousPage")
-	public String previousPage(@RequestParam("currentPage") int currentPage) {
-	    if (currentPage > 1) {
-	        // 현재 페이지가 1보다 크다면 이전 페이지로 이동
-	        return "redirect:/beansList?page=" + (currentPage - 1);
-	    }
-	    // 현재 페이지가 1인 경우, 동일 페이지로 유지
-	    return "redirect:/beansList?page=" + currentPage;
-	}
-	
-	// 다음 페이지
-	@GetMapping("/nextPage")
-	public String nextPage(@RequestParam("currentPage") int currentPage, 
-	                       @RequestParam("totalPages") int totalPages) {
-	    if (currentPage < totalPages) {
-	        // 현재 페이지가 총 페이지 수보다 작다면 다음 페이지로 이동
-	        return "redirect:/beansList?page=" + (currentPage + 1);
-	    }
-	    // 현재 페이지가 마지막 페이지인 경우, 동일 페이지로 유지
-	    return "redirect:/beansList?page=" + currentPage;
-	}
+	            @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize,
+	            @RequestParam(value = "sort", required = false, defaultValue = "default") String sort,
+	            @RequestParam(value = "search", required = false) String search) {
+		// 상품 목록을 가져오는 기본 메서드
+        ArrayList<BeansDO> beansList;
 
+        // 정렬 필요한 경우 sortedPage 메서드 호출
+        beansList = beansDAO.sortedPage(sort, search);
+        
+        // 페이징 처리를 위한 전체 상품 수 계산
+        int totalRows = beansList.size();
+        int totalPages = (int) Math.ceil((double) totalRows / pageSize);
+
+        // 페이지 범위를 조정
+        if (page < 1) {
+            page = 1;
+        } else if (page > totalPages) {
+            page = totalPages;
+        }
+
+        // 페이징 처리를 위해 부분 리스트 선택
+        int startRow = 1 + (page - 1) * pageSize;
+        int endRow = pageSize * page;
+        ArrayList<BeansDO> pagedBeansList = new ArrayList<>(beansList.subList(
+        	    Math.max(startRow - 1, 0), Math.min(endRow, totalRows))); 
+
+        // 모델에 데이터 추가
+        model.addAttribute("sortOption", sort);
+        model.addAttribute("beansList", pagedBeansList);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("search", search);
+
+        return "beansList";
+	}
+	
+	// 공동 구매 상품 목록 페이지
+	@GetMapping("/groupBeansList")
+	public String groupBeansList(Model model, 
+	            @RequestParam(value = "page", required = false, defaultValue = "1") int page, 
+	            @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize,
+	            @RequestParam(value = "sort", required = false, defaultValue = "default") String sort, 
+	            @RequestParam(value = "search", required = false) String search) {
+	    
+	    ArrayList<BeansDO> groupBeansList;
+	    
+        groupBeansList = beansDAO.sortedPage2(sort, search);
+	    
+	    int totalRows = groupBeansList.size();
+	    int totalPages = (int) Math.ceil((double) totalRows / pageSize);
+
+	    if (page < 1) {
+	        page = 1;
+	    } else if (page > totalPages) {
+	        page = totalPages;
+	    }
+
+	    int startRow = 1 + (page - 1) * pageSize;
+	    int endRow = pageSize * page;
+	    ArrayList<BeansDO> pagedGroupBeansList = new ArrayList<>(groupBeansList.subList(
+	            Math.max(startRow - 1, 0), Math.min(endRow, totalRows))); 
+
+	    model.addAttribute("sortOption", sort);
+	    model.addAttribute("groupBeansList", pagedGroupBeansList);
+	    model.addAttribute("totalPages", totalPages);
+	    model.addAttribute("currentPage", page);
+	    model.addAttribute("search", search);
+
+	    return "groupBeansList";
+	}
+	
+	// 이전, 다음 페이지 처리
+	@GetMapping("/navigatePage")
+	public String navigatePage(@RequestParam("currentPage") int currentPage, 
+	                            @RequestParam("totalPages") int totalPages,
+	                            @RequestParam("direction") String direction, 
+	                            @RequestParam("search") String search,
+	                            @RequestParam("redirectPath") String redirectPath) {
+	    if ("previous".equals(direction) && currentPage > 1) {
+	        return "redirect:" + redirectPath + "?page=" + (currentPage - 1) + "&search=" + search;
+	    } else if ("next".equals(direction) && currentPage < totalPages) {
+	        return "redirect:" + redirectPath + "?page=" + (currentPage + 1) + "&search=" + search;
+	    }
+	    return "redirect:" + redirectPath + "?page=" + currentPage + "&search=" + search;
+	}
 	
 	// 상품 상세 페이지로 이동
 	@GetMapping("/beanDetail")
@@ -138,64 +182,64 @@ public class ProductController {
 		}
 	}
 
-	//상품 등록 후 상품 목록 페이지로 이동
-	@PostMapping("/insertBeans")
-	public String insertBeans(@ModelAttribute BeansDO command, Model model) {
-		String viewName = "";
-		try {
-			beansDAO.insertBean(command);
-			viewName = "redirect:/beansList";
-		}
-		catch(Exception e) {
-			model.addAttribute("msg", e.getMessage());
-			model.addAttribute("beansList", beansDAO.getAllBeans());
-			
-			viewName = "memberList";
-		}
-		return viewName;
-	}
-	//공동 상품 등록 후 상품 목록 페이지로 이동
-		
-	@PostMapping("/insertGroupBeans")
-	public String insertGroupBeans(@ModelAttribute BeansDO command, Model model) {
-		String viewName = "";
-		
-		try {
-			beansDAO.insertGroupBean(command);
-			viewName = "redirect:/beansList";
-		}
-		catch(Exception e) {
-			model.addAttribute("msg", e.getMessage());
-			model.addAttribute("beansList", beansDAO.getAllBeans());
-			
-			viewName = "memberList";
-		}
-		return viewName;
-	}
-	/*
-	//판매자 마이페이지 이동 - 판매중 게시물 이동 미완성
-	@PostMapping("/sellerMyPage/sellingBean")
-	public String SellingBean(@ModelAttribute SellerDO command, Model model) {
-		
-	}
-	*/
-	// 상품 정보 수정 하기, 수정한 후 마이페이지로 돌아오기 - 미완성
-	@PostMapping("/modifyBeans")
-	public String modifyBeans(@RequestParam("beansNum") int beansNum, Model model) {
-		String viewName;
-		try {
-			model.addAttribute("beans", beansDAO.getBeansDO(beansNum));
-			viewName = "redirect:/판매자 마이페이지";
-		}
-		catch(Exception e) {
-			model.addAttribute("msg", e.getMessage());
-			model.addAttribute("판매자 마이페이지", beansDAO.getAllBeans());
-			
-			viewName = "memberList";
-		}
-		
-		return viewName;
-	}
+//	//상품 등록 후 상품 목록 페이지로 이동
+//	@PostMapping("/insertBeans")
+//	public String insertBeans(@ModelAttribute BeansDO command, Model model) {
+//		String viewName = "";
+//		try {
+//			beansDAO.insertBean(command);
+//			viewName = "redirect:/beansList";
+//		}
+//		catch(Exception e) {
+//			model.addAttribute("msg", e.getMessage());
+//			model.addAttribute("beansList", beansDAO.getAllBeans());
+//			
+//			viewName = "memberList";
+//		}
+//		return viewName;
+//	}
+//	//공동 상품 등록 후 상품 목록 페이지로 이동
+//		
+//	@PostMapping("/insertGroupBeans")
+//	public String insertGroupBeans(@ModelAttribute BeansDO command, Model model) {
+//		String viewName = "";
+//		
+//		try {
+//			beansDAO.insertGroupBean(command);
+//			viewName = "redirect:/beansList";
+//		}
+//		catch(Exception e) {
+//			model.addAttribute("msg", e.getMessage());
+//			model.addAttribute("beansList", beansDAO.getAllBeans());
+//			
+//			viewName = "memberList";
+//		}
+//		return viewName;
+//	}
+//	/*
+//	//판매자 마이페이지 이동 - 판매중 게시물 이동 미완성
+//	@PostMapping("/sellerMyPage/sellingBean")
+//	public String SellingBean(@ModelAttribute SellerDO command, Model model) {
+//		
+//	}
+//	*/
+//	// 상품 정보 수정 하기, 수정한 후 마이페이지로 돌아오기 - 미완성
+//	@PostMapping("/modifyBeans")
+//	public String modifyBeans(@RequestParam("beansNum") int beansNum, Model model) {
+//		String viewName;
+//		try {
+//			model.addAttribute("beans", beansDAO.getBeansDO(beansNum));
+//			viewName = "redirect:/판매자 마이페이지";
+//		}
+//		catch(Exception e) {
+//			model.addAttribute("msg", e.getMessage());
+//			model.addAttribute("판매자 마이페이지", beansDAO.getAllBeans());
+//			
+//			viewName = "memberList";
+//		}
+//		
+//		return viewName;
+//	}
 	
 }
 

@@ -6,7 +6,7 @@
 <%@ include file = "/WEB-INF/views/header.jsp" %>
 
 <<!-- Cart -->
-    <section id="cart">
+    <section id="cart" class="section">
         <div class="max-container">
             <div class="cart">
                 <h2 class="signup__title">${buyerDO.buyerName}님의 구매 내역</h2>

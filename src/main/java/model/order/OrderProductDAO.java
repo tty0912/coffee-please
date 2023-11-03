@@ -1,8 +1,8 @@
-package main.java.model.order;
-//package model.order;
+//package main.java.model.order;
+package model.order;
 
-import main.java.model.member.BuyerDO;
-//import model.member.BuyerDO;
+//import main.java.model.member.BuyerDO;
+import model.member.BuyerDO;
 
 import java.sql.*;
 import java.util.ArrayList;

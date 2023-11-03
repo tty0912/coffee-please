@@ -5,29 +5,17 @@
  
 <%@ include file = "/WEB-INF/views/header.jsp" %>
 
-<!-- Header -->
-    <header class="header">
-        <nav class="header__nav">
-            <ul class="header__menu">
-                <li><a class="header__menu__item" href="#about">STORE</a></li>
-                <div class="header__menu__item header__logo">
-                    <img class="header__logo__img" src="${pageContext.request.contextPath}images/logoName.png" alt="logo" />
-                </div>
-                <li><a class="header__menu__item" href="#about">GROUP</a></li>
-            </ul>
-        </nav>
-    </header>
     <!-- myPageInfo -->
     <section id="myPageInfo" class="section">
         <div class="max-container">
             <div class="myPageInfo">
                 <div class="myPageInfo__info">
                     <img src="${pageContext.request.contextPath}/images/userImginit.png" alt="" class="myPageInfo__img">
-                    <p class="myPageInfo__id">${buyerDO.buyerName}</p>
+                    <p class="myPageInfo__id">${Buyer.buyerName}</p>
                 </div>
                 <div class="myPageInfo__po-mo">
                     <div class="myPageInfo__pointDiv">
-                        <p class="myPageInfo__balance">${buyerDO.point}</p>
+                        <p class="myPageInfo__balance">${Buyer.point}</p>
                         <p class="myPageInfo__point">point</p>
                     </div>
                     <div class="myPageInfo__button">
@@ -39,7 +27,7 @@
         </div>
     </section>
     <!-- nav -->
-    <section id="myPageNav">
+    <section id="myPageNav" class="section">
         <div class="max-container">
             <div class="myPageNav">
                 <button id="myPageNav__likeButton" class="myPageNav__button" >찜 내역</button>
