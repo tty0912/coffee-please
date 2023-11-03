@@ -638,5 +638,34 @@ public class BeansDAO {
 
 		return rowCount;
 	}
+
+	//판매량 수정하기
+	public int updateBeanTotalSellCount(int beansNum, int qty){
+		int rowCount = 0;
+		this.sql = "update beans set bean_total_selcount = bean_total_selcount + ? " +
+				"where beans_num = ?";
+		try{
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, qty);
+			pstmt.setInt(2, beansNum);
+
+			rowCount = pstmt.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(!pstmt.isClosed()) {
+					pstmt.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return rowCount;
+	}
 }
 
