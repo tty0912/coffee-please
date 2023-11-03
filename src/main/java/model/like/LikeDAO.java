@@ -1,6 +1,14 @@
-package main.java.model.like;
+//package main.java.model.like;
+package model.like;
+
+//import main.java.model.product.BeansDO;
+//import main.java.model.product.CartDO;
+import model.product.BeansDO;
+import model.product.CartDO;
+
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class LikeDAO {
     private Connection conn;
@@ -28,12 +36,15 @@ public class LikeDAO {
 
         this.sql = "select buyer_email from bean_like where buyer_email = ? and " +
                 "beans_num = ?";
+        boolean result= false;
 
         try{
         pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, email);
         pstmt.setInt(2,beanNum);
         this.rs = pstmt.executeQuery();
+        result = !rs.next();
+
 
         }catch(Exception e) {
             e.printStackTrace();
@@ -48,14 +59,14 @@ public class LikeDAO {
                 e.printStackTrace();
             }
         }
-        return !rs.next();
+        return result;
     }
 
     //Like 테이블 등록
     public int insertLike(String email, int beanNum) {
         int rowCount = 0;
         try {
-            this.sql = "insert into bean_like (buyer_email, beans_num) value (? , ?)";
+            this.sql = "insert into bean_like (buyer_email, beans_num) values (? , ?)";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, email);
             pstmt.setInt(2, beanNum);
@@ -81,8 +92,8 @@ public class LikeDAO {
     //Like 테이블 삭제
     public int deleteLike(String email, int beanNum){
         int rowCount = 0;
-        this.sql = "delete from bean_like where buyer_email = ? and" +
-                "beans_num = ?";
+        this.sql = "delete from bean_like where buyer_email = ? " +
+                "and beans_num = ?";
         try{
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, email);
@@ -104,5 +115,50 @@ public class LikeDAO {
         }
 
         return rowCount;
+    }
+
+    //내가 찜한 목록 불러오기
+    public ArrayList<BeansDO> getLikeList(String email){
+
+        ArrayList<BeansDO> likeBeansList = new ArrayList<>();
+
+        this.sql = "select beans.bean_name, beans.bean_price, " +
+                "beans.bean_img, beans.like_count " +
+                "from bean_like " +
+                "join beans on bean_like.beans_num = beans.beans_num " +
+                "where bean_like.buyer_email = ?";
+
+        try {
+            this.pstmt = conn.prepareStatement(sql);
+            this.pstmt.setString(1, email);
+            rs = pstmt.executeQuery();
+
+            BeansDO beansDO;
+
+            while(rs.next()) {
+                beansDO = new BeansDO();
+                beansDO.setBeanName(rs.getString("bean_name"));
+                beansDO.setLikeCount(rs.getInt("like_count"));
+                beansDO.setBeanImg(rs.getString("bean_img"));
+                beansDO.setBeanPrice(rs.getInt("bean_price"));
+
+                likeBeansList.add(beansDO);
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if(!pstmt.isClosed()) {
+                    pstmt.close();
+                }
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return likeBeansList;
     }
 }

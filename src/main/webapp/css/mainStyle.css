@@ -376,6 +376,7 @@ input[type='radio']:checked {
     
 }
 
+
 /* productList */
 
 #listCategory {
@@ -545,3 +546,4 @@ input[type='radio']:checked {
 .productListDetail__bottom {
     margin-top: 3rem;
 }
+

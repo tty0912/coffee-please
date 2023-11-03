@@ -40,7 +40,6 @@
                     <p class="mainCategory__detailTitle">영국</p>
                 </div>
             </div>
-
         </div>
     </section>
     <!-- BeanBest -->

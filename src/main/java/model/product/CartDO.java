@@ -1,4 +1,6 @@
-package main.java.model.product;
+
+//package main.java.model.product;
+package model.product;
 
 public class CartDO {
 

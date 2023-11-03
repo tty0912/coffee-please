@@ -11,11 +11,11 @@
             <div class="myPageInfo">
                 <div class="myPageInfo__info">
                     <img src="${pageContext.request.contextPath}/images/userImginit.png" alt="" class="myPageInfo__img">
-                    <p class="myPageInfo__id">${buyerDO.buyerName}</p>
+                    <p class="myPageInfo__id">${Buyer.buyerName}</p>
                 </div>
                 <div class="myPageInfo__po-mo">
                     <div class="myPageInfo__pointDiv">
-                        <p class="myPageInfo__balance">${buyerDO.point}</p>
+                        <p class="myPageInfo__balance">${Buyer.point}</p>
                         <p class="myPageInfo__point">point</p>
                     </div>
                     <div class="myPageInfo__button">

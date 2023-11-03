@@ -1,3 +1,4 @@
+//package main.java.model.cart;
 package model.cart;
 
 import java.sql.Connection;
@@ -7,8 +8,13 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+//import main.java.model.member.*;
+//import main.java.model.product.*;
+
 import model.member.BuyerDO;
 import model.product.BeansDO;
+import model.product.*;
+import model.cart.*;
 
 public class CartDAO {
 	
@@ -94,8 +100,8 @@ public class CartDAO {
 	}
 	
 	// 장바구니 모든 상품 조회
-	public ArrayList<CartDO> getCartList(String buyerEmail) {
-		ArrayList<CartDO> cartList = new ArrayList<CartDO>();
+	public ArrayList<CartBeans> getCartList(String buyerEmail) {
+		ArrayList<CartBeans> cartList = new ArrayList<CartBeans>();
 		
 		this.sql = "select beans.bean_name, beans.bean_price, beans.bean_img, cart.qty "+
 	   			"from cart " + 
@@ -107,11 +113,16 @@ public class CartDAO {
 			this.pstmt = conn.prepareStatement(this.sql);
 			this.pstmt.setString(1, buyerEmail);
 			rs = this.pstmt.executeQuery();
-			
+
+			CartBeans cartBeans;
+			CartDO cart;
+			BeansDO beansDO;
+
 			while(rs.next()) {
-				CartDO cart = new CartDO();
-				BeansDO beansDO = new BeansDO();
-				
+				cartBeans = new CartBeans();
+				cart = new CartDO();
+				beansDO = new BeansDO();
+
 				beansDO.setBeanName(rs.getString("bean_name"));
 	            beansDO.setBeanPrice(rs.getInt("bean_price"));
 	            beansDO.setBeanImg(rs.getString("bean_img"));
@@ -119,7 +130,10 @@ public class CartDAO {
 	            cart.setBeansDO(beansDO);
 	            cart.setQty(rs.getInt("qty"));
 
-				cartList.add(cart);
+				cartBeans.setCartDO(cart);
+				cartBeans.setBeansDO(beansDO);
+
+				cartList.add(cartBeans);
 			}
 		}
 		catch(Exception e) {
@@ -140,20 +154,21 @@ public class CartDAO {
 	}
 	
 	// 장바구니 상품 총 금액
-	public int totalPrice(String buyerEmail) {
-		ArrayList<CartDO> cartList = getCartList(buyerEmail);
-		
-		int total = 0;
-		
-		 for (CartDO cart : cartList) {
-		        BeansDO beansDO = cart.getBeansDO();
-		        int qty = cart.getQty();
-		        double price = beansDO.getBeanPrice();
-
-		        total += price * qty;
-		    }
-		return total;
-	}
+//	public int totalPrice(String buyerEmail) {
+//		ArrayList<CartBeans> cartList = getCartList(buyerEmail);
+//		
+//		int total = 0;
+//		
+//		 for (CartBeans cart : cartList) {
+//		        BeansDO beansDO = cart.getBeansDO();
+//				CartDO cartDO = cart.getCartDO();
+//		        int qty = cartDO.getQty();
+//		        double price = beansDO.getBeanPrice();
+//
+//		        total += price * qty;
+//		    }
+//		return total;
+//	}
 	
 	// 결제 후 장바구니 비우기 (결제 완료에서 메서드 호출)
 	public int clearCart(String buyerEmail) {
