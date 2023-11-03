@@ -10,14 +10,19 @@
         <div class="max-container">
             <div class="mainIntro">
                 <div class="mainIntro__intro">
-                    <img class="mainIntro__introImg" src="images/mainTest1.gif" alt="">
+                    <img class="mainIntro__introImg" src="${pageContext.request.contextPath }/images/mainTest1.gif" alt="">
                 </div>
+                <!-- 수정필요 -->
                 <div class="mainIntro__loginbuyer">
                     <img class="mainIntro__loginbuyerImg src="images/userImginit.png" alt="">
-                    <p class="mainIntro__loginbuyerId"></p>
+                    <p class="mainIntro__loginbuyerId">${ seller.nickname }</p>
                     <div class="mainIntro__buyer">
-                        <button class="mainIntro__logoutButton">로그아웃</button>
-                        <button class="mainIntro__myPageButton">마이페이지</button>
+                    	<form method="get" action="logout">
+	                        <button class="mainIntro__logoutButton">로그아웃</button>
+                    	</form>
+                    	<form method="get" action="myPageSeller">
+	                        <button class="mainIntro__myPageButton">마이페이지</button>
+                    	</form>
                     </div>
                 </div>
             </div>

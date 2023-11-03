@@ -36,8 +36,11 @@
                                 placeholder="비밀번호 입력"
                             />
                         </label>
-                        <button name="command" value="login" class="mainIntro__loginButton">로그인</button>
-                        <button name="command" value="signup" class="mainIntro__loginButton">회원가입</button>
+                        <button type="submit" class="mainIntro__loginButton">로그인</button>
+                    </form>
+                    <!-- form 분할해서 action 다른걸로 지정 -->
+                    <form id="mainIntro__loginForm" method="get" action="signup">
+                        <button class="mainIntro__loginButton">회원가입</button>
                     </form>
                 </div>
             </div>

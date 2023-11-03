@@ -14,10 +14,13 @@
                 </div>
                 <div class="mainIntro__loginbuyer">
                     <img class="mainIntro__loginbuyerImg src="images/userImginit.png" alt="">
-                    <p class="mainIntro__loginbuyerId">${Buyer.nickname }</p>
-                    <form method="post" action="mainLoginBuyer" class="mainIntro__buyer">
-                        <button type="submit" name="command" value="logout" class="mainIntro__logoutButton">로그아웃</button>
-                        <button type="submit" name="command" value="myPageBuyer" class="mainIntro__myPageButton">마이페이지</button>
+                    <p class="mainIntro__loginbuyerId">${buyer.nickname }</p>
+                    <!-- 수정부분 -->
+                    <form method="Get" action="logout" class="mainIntro__buyer">
+                        <button class="mainIntro__logoutButton">로그아웃</button>
+                    </form>
+                    <form method="Get" action="myPageBuyer" class="mainIntro__buyer">
+                        <button class="mainIntro__myPageButton">마이페이지</button>
                     </form>
                 </div>  
             </div>

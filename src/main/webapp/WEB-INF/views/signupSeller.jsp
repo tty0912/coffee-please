@@ -70,7 +70,7 @@
                                 class="signup__input"
                                 type="text"
                                 id="new-businessName"
-                                name="business_name"
+                                name="businessName"
                                 placeholder="상호명을 입력해주세요."
                             />
                         </label>
@@ -80,7 +80,7 @@
                                 class="signup__input"
                                 type="text"
                                 id="new-businessNumber"
-                                name="business_num"
+                                name="businessNum"
                                 oninput="businessNumber(this)"
                                 placeholder="사업자번호를 입력해주세요."
                                 maxlength="13"
@@ -97,7 +97,7 @@
                                 placeholder="주소를 입력해주세요."
                             />
                         </label>
-                        <button class="signup__button" id="signup-button" name="action" value="signUppage" type="submit">회원가입</button>
+                        <button class="signup__button" id="signup-button" type="submit">회원가입</button>
                       
                     </form>
                 </div>
