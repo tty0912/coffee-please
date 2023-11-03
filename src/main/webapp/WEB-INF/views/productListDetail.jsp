@@ -6,16 +6,19 @@
 <%@ include file = "/WEB-INF/views/header.jsp" %>
 
     <!-- productListDetail -->
-    <section id="productListDetail">
+    <section id="productListDetail" class="section">
         <div class="max-container">
             <div class="productListDetail__top">
                 <div class="productListDetail__topLeft">
                     <img src="images/test1.jpg" alt="" class="productListDetail__img">
-                    <p class="mainBeanBest__productLikeCount"></p>
+                    <div class="productListDetail__likeButton">
+                        <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                        <p class="mainBeanBest__productLikeCount">30</p>
+                    </div>
                 </div>
                 <div class="productListDetail__topRight">
-                    <p class="productListDetail__beanName"></p>
-                    <p class="productListDetail__deliveryPrice"></p>
+                    <p class="productListDetail__beanName">원두</p>
+                    <p class="productListDetail__deliveryPrice">12,000원</p>
                     <div class="cartProductInfo__QtyDiv">
                         <button class="cartProductInfo__QtyButton"><i class="fa-solid fa-plus"></i></button>
                         <input type="text" class="cartProductInfo__QtyText" />
@@ -27,6 +30,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+    <section id="productListDetail__bottom" class="section">
+        <div class="max-container">
+            <h2 class="productListDetail__bottomTitle">상세설명</h2>
             <div class="productListDetail__bottom">
                 <img src="images/test1.jpg" alt="" class="productListDetail__bottomImg">
             </div>

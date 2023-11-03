@@ -1,3 +1,4 @@
+
 //package main.java.model.service;
 package model.service;
 
@@ -14,15 +15,19 @@ import model.product.*;
 //import main.java.model.order.OrderProductDetailDO;
 //import main.java.model.product.BeansDAO;
 //import main.java.model.product.BeansDO;
+
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class OrderService {
 
     BuyerDAO buyerDAO = new BuyerDAO();
     SellerDAO sellerDAO = new SellerDAO();
     BeansDAO beansDAO = new BeansDAO();
+    CartDAO cartDAO = new CartDAO();
     OrderProductDAO orderProductDAO = new OrderProductDAO();
     OrderProductDetailDAO orderProductDetailDAO = new OrderProductDetailDAO();
 
@@ -31,7 +36,16 @@ public class OrderService {
     public boolean onlyOnePayment(int beansNum, int qty, String buyerEmail) throws SQLException {
 
         BeansDO bean = beansDAO.getBean(beansNum);
-        long totalPrice = (long) bean.getBeanPrice() * qty;
+        long totalPrice = 0;
+
+        // 일반 상품 구매 시
+        if(bean.getDeadline().isEmpty()){
+            totalPrice = (long) bean.getBeanPrice() * qty;
+        }
+        // 공동 구매 상품 구매시
+        else {
+            totalPrice = (long) bean.getGoalPrice() * qty;
+        }
         long buyerPoint = checkPoint(buyerEmail);
 
         if(buyerPoint >= totalPrice){
@@ -45,9 +59,28 @@ public class OrderService {
         else return false;
     }
 
-    //장바구니 결제
-    public boolean cartPayment(){
+    //여러상품  결제
+    public boolean cartPayment(ArrayList<CartBeans> cartBeans, String email){
 
+        long totalPrice = 0;
+
+        for(CartBeans c : cartBeans){
+            long l = (long) c.getCartDO().getQty() * c.getBeansDO().getBeanPrice();
+            totalPrice += l;
+        }
+        if(checkPoint(email)>=totalPrice){
+            for(CartBeans c : cartBeans) {
+                BeansDO beansDO = c.getBeansDO();
+                CartDO cartDO = c.getCartDO();
+
+                cartDAO.deleteItem(email, beansDO);
+
+                String sellerEmail = beansDAO.getBean(beansDO.getBeansNum()).getSellerEmail();
+                long price = (long) beansDO.getBeanPrice() * cartDO.getQty();
+                movePoint(sellerEmail, email, price);
+            }
+            //잔액부족
+        } else return false;
         return true;
     }
 
