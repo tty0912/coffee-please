@@ -91,7 +91,7 @@
                                 placeholder="주소를 입력해주세요."
                             />
                         </label>
-                        <button id="btn1" class="signup__button" name="action" value="register" type="submit">회원가입</button>
+                        <button id="btn1" class="signup__button" type="submit">회원가입</button>
                     </form>
                 </div>
             </div>

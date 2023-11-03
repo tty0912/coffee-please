@@ -15,7 +15,7 @@
                 <div class="mainIntro__loginAll">
                     <h2 class="mainIntro__loginTitle">Login</h2>
                     <div class="mainIntro__login">
-                        <form class="mainIntro__loginForm" action="Controller">
+                        <form class="mainIntro__loginForm" method="post" action="mainLogin">
                             <div class="loginRadio">
                                 <input type="radio" name="login" value="buyer" /><label class="radioLabel">구매자</label>
                                 <input type="radio" name="login" value="seller" /><label class="radioLabel">판매자</label>
@@ -43,8 +43,10 @@
                             </label>
                             <div class="mainIntro__loginFormButton">
                                 <button class="mainIntro__loginButton">로그인</button>
-                                <button class="mainIntro__loginButton">회원가입</button>
                             </div>
+                        </form>
+                        <form id="mainIntro__loginForm" method="get" action="signup">
+                          <button class="mainIntro__loginButton">회원가입</button>
                         </form>
                     </div>
                     <h4 class="loginErrorMsg">로그인에러입니다.</h4>

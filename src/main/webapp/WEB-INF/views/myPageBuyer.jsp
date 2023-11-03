@@ -11,16 +11,29 @@
             <div class="myPageInfo">
                 <div class="myPageInfo__info">
                     <img src="${pageContext.request.contextPath}/images/userImginit.png" alt="" class="myPageInfo__img">
-                    <p class="myPageInfo__id">${Buyer.buyerName}</p>
+                    <p class="myPageInfo__id">${buyer.nickname}</p>
                 </div>
                 <div class="myPageInfo__po-mo">
                     <div class="myPageInfo__pointDiv">
-                        <p class="myPageInfo__balance">${Buyer.point}</p>
+                        <p class="myPageInfo__balance">${buyer.point}</p>
                         <p class="myPageInfo__point">point</p>
                     </div>
                     <div class="myPageInfo__button">
+                    
+                    <form method="get" action="buyerModify">
                         <button class="myPageInfo__modify"><i class="fa-solid fa-gear"></i></button>
-                        <button class="myPageInfo__logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+                    </form>
+                    <!-- 수정 부분 -->
+                    <form method="get" action="logout">
+	                    <button class="myPageInfo__logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+                    </form>
+                     
+                          <!-- 
+                     	<a href="/myPageBuyer"><button class="myPageInfo__modify"><i class="fa-solid fa-gear"></i></button></a>
+                     	<form method="post" action="buyerModify">
+                     	<button type="submit" name="command" value="logout" class="myPageInfo__logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+                     	</form>
+                     	    -->
                     </div>
                 </div>
             </div>
@@ -55,14 +68,14 @@
             	</div>
         	</div>
         	<div>
-        		<h2 class="myPagePurchase__title">내가 찜한 목록을 확인해보세요!</h2> 
+        		<h2 class="myPagePurchase__title">내가 구매한 내역을 확인해보세요!</h2> 
             	<div class="myPagePurchase">
-            		<c:forEach items="${likeList}" var="beansDO">
+            		<c:forEach items="${orderList}" var="OrderProductDO">
                 		<div class="myPagePurchase__product">
-                    		<img class="myPagePurchase__productImg" src="${beansDO.beanImg}" alt="buyerImg" />
+                    		
                     		<div class="myPagePurchase__productInfo">
-                        		<p class="myPagePurchase__productName">${beansDO.beanName}</p>
-                        		<p class="myPagePurchase__productPrice">${beansDO.beanPrice}</p>
+                        		<p class="myPagePurchase__productName">${OrderProductDO.orderDatetime}</p>
+                        		<p class="myPagePurchase__productPrice">${OrderProductDO.orderTotalPrice}</p>
                     		</div>
                     		<button class="myPagePurchase__detail"><i class="fa-solid fa-heart"></i></button>
                 		</div>
