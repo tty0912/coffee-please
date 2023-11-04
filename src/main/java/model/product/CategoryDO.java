@@ -5,6 +5,7 @@ public class CategoryDO {
 
 		private int categoryNum;
 		private String categoryName;
+		private String categoryImg;
 		
 		CategoryDO(){
 			
@@ -16,6 +17,14 @@ public class CategoryDO {
 
 		public void setCategoryNum(int categoryNum) {
 			this.categoryNum = categoryNum;
+		}
+
+		public String getCategoryImg() {
+			return categoryImg;
+		}
+
+		public void setCategoryImg(String categoryImg) {
+			this.categoryImg = categoryImg;
 		}
 
 		public String getCategoryName() {

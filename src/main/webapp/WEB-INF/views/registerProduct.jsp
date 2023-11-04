@@ -12,7 +12,7 @@
                 <div class="signup__form-div">
                     <h2 class="signup__title">Bean2B 일반 상품 등록을 진행합니다.</h2> 
                     <h4 class="signup__description">맛있는 원두를 등록해주세요!</h4> 
-                    <form id="signup__form" action="registerProduct" method="POST">
+                    <form id="signup__form" action="registerProduct" method="post"> <!-- 테스트를 위해 잠시 get으로 변경 -->
                         <label for="beanName" class="signup__label">
                             <img src="${pageContext.request.contextPath}/images/bean.png" alt="" class="bean__img">
                             <input
@@ -38,8 +38,8 @@
                             <input
                                 class="signup__input"
                                 type="text"
-                                id="cName"
-                                name="cName"
+                                id="categoryName"
+                                name="categoryName"
                                 placeholder="원산지 입력"
                             />
                         </label>
@@ -57,7 +57,7 @@
                         <input type="file" class="fileInput" name="descript" />
                         <div class="signup__button-div">
                             <button class="signup__button" id="signup-button" name="action" value="cancel" type="submit">취소</button>
-                            <button class="signup__button" id="signup-button" name="action" value="register" type="submit">등록</button>
+                            <button class="signup__button" id="signup-button" type="submit">등록</button>
                         </div>
                     </form>
                 </div>
