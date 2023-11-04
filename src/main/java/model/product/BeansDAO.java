@@ -1,19 +1,19 @@
-//package main.java.model.product;
 package model.product;
-
-//import main.java.model.member.BuyerDO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import javax.servlet.http.HttpSession;
+
 import model.member.BuyerDO;
-//import model.member.SellerDO;
+import model.member.SellerDO;
 
 public class BeansDAO {
 
@@ -33,6 +33,36 @@ public class BeansDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	//이미지업로드 테스트
+	public void insertBeans(BeansDO newBeans) {
+	    try {
+            sql = "INSERT INTO beans (beans_num, seller_email, category_num, bean_name, bean_price, bean_img, descript, delivery_charge) " +
+                  "VALUES (sq_beans_num.nextval, ?, ?, ?, ?, ?, ?, ?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, newBeans.getSellerEmail());
+            pstmt.setInt(2, newBeans.getCategoryNum());
+            pstmt.setString(3, newBeans.getBeanName());
+            pstmt.setInt(4, newBeans.getBeanPrice());
+            pstmt.setString(5, newBeans.getBeanImg());
+            pstmt.setString(6, newBeans.getDescript());
+            pstmt.setInt(7, newBeans.getDeliveryCharge());
+            System.out.println(newBeans+"-1");
+            pstmt.executeUpdate();
+            // 파일을 실제로 업로드하고 저장 경로를 데이터베이스에 저장해야 합니다.
+	    	} catch (SQLException e) {
+	    		e.printStackTrace();
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+	    	} finally {
+	    		if (pstmt != null) {
+	    			try {
+	    				pstmt.close();
+	    			} catch (SQLException e) {
+	    				e.printStackTrace();
+	    			}
+	    		}
+	    	}
 	}
 
 	// 상품 '정보' 조회
@@ -367,22 +397,26 @@ public class BeansDAO {
 	// 일반 판매 상품 등록하기
 	// beans_num : 자동
 	// 판매자 이메일, 카테고리 번호, 원두 이름, 원두 가격, 원두 이미지, 원두 상세설명(이미지), 배송비, 원두 썸네일
-	public int insertBean(BeansDO beansDO) {
+	public int insertBean(BeansDO beansDO, HttpSession session) {
 		int rowCount = 0;
+		String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
 		try {
 			this.conn.setAutoCommit(false);
 
-			this.sql = "INSERT INTO BEANS (BEANS_NUM, SELLER_EMAIL, CATEGORY_NUM, BEAN_NAME, BEAN_PRICE, "
-					+ "BEAN_IMG, DESCRIPT, DELIVERY_CHARGE)"
-					+ "VALUES (seq_beans_beans_num.nextval, ?, ?, ?, ?, ?, ?, ?)";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, beansDO.getSellerEmail());
-			pstmt.setInt(2, beansDO.getCategoryNum());
-			pstmt.setString(3, beansDO.getBeanName());
-			pstmt.setInt(4, beansDO.getBeanPrice());
-			pstmt.setString(5, beansDO.getBeanImg());
-			pstmt.setString(6, beansDO.getDescript());
-			pstmt.setInt(7, beansDO.getDeliveryCharge());
+			this.sql =  "INSERT INTO BEANS (seller_email, beans_num, BEAN_name, BEAN_PRICE," +
+				 	"category_name, DELIVERY_CHARGE) "
+				 	+ //"bean_img, descript)" +
+				 	"VALUES (?, sq_beans_num.nextval, ?, ?, ?, ?)";
+				 	 //", ?, ?
+		pstmt = conn.prepareStatement(sql);	
+		pstmt.setString(1, sessionSeller);
+		pstmt.setString(2, beansDO.getBeanName());
+		pstmt.setInt(3, beansDO.getBeanPrice());
+		pstmt.setString(4, beansDO.getCategoryName());
+		pstmt.setInt(5, beansDO.getDeliveryCharge());
+		//pstmt.setString(5, beansDO.getBeanImg());
+		//pstmt.setString(6, beansDO.getDescript());
+			
 
 			rowCount = pstmt.executeUpdate();
 			this.conn.commit();

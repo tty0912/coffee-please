@@ -1,4 +1,4 @@
-package main.java.model.member;
+package model.member;
 
 //import main.java.model.*;
 import org.junit.Test;

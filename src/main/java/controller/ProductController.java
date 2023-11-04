@@ -1,68 +1,71 @@
-//package main.java.controller;
 package controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Enumeration;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-import model.member.SellerDO;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 import model.product.BeansDAO;
 import model.product.BeansDO;
+import model.member.SellerDAO;
+import model.product.*;
+
+
+/*
+ * 	1) GET	|	/
+ */
+
 
 @Controller
 public class ProductController {
 	
 	private BeansDO beans;
 	private BeansDAO beansDAO = new BeansDAO();
+	private SellerDAO sellerDAO = new SellerDAO();
 	
 	public ProductController() {
 	}
 	
-	//비회원 접속 페이지 - 사이트 처음 들어갔을때 보이는 페이지
-	@GetMapping("/mainFirst")
-	public String mainFrist(Model model) {
-		model.addAttribute("categoryList", beansDAO.getAllCategory());
-		model.addAttribute("bestBean", beansDAO.bestBeanArray());
-		return "MainNonLogin";
-	}
-	//구매자 로그인 - 메인 페이지로 이동, 세션에서 받아오기 하고, css일부 수정, 베스트 상품 게시 숫자는 쿼리나 자바스크립트??
-	@GetMapping("/buyerMain")
-	public String buyerMain(Model model) {
-		
-		model.addAttribute("categoryList", beansDAO.getAllCategory());
-		model.addAttribute("bestBean", beansDAO.bestBeanArray());
-		return "MainLoginBuyer";
-	}
+
 	
-	
-	//판매자 로그인 - 메인페이지, 세션에서 계정 정보 가져오기, 연결되는 페이지 설정하기//
-	@GetMapping("/sellerMain")
-	public String sellerMain(Model model) {
-		model.addAttribute("categoryList", beansDAO.getAllCategory());
-		model.addAttribute("bestBean", beansDAO.bestBeanArray());
-		
-		return "MainLoginSeller";
-	}
 //	상품 등록
-	@PostMapping("/goRegisterProduct")
+	@GetMapping("/goRegisterProduct")
 	public String goRegisterProduct() {
 		
 		return "registerProduct";
 	}
 	
+
 	@PostMapping("/registerProduct")
-	public String registerProduct(@ModelAttribute BeansDO beansDO) throws Exception {
-			BeansDAO beansDAO = new BeansDAO();
-			beansDAO.insertBean(beansDO);		
-			return "redirect:/signup";
+	public String registerProduct(@ModelAttribute BeansDO beansDO, HttpSession session, Model model) throws Exception {
+		
+		String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
+		model.addAttribute("seller", sellerDAO.getSeller(sessionSeller));
+		
+		BeansDAO beansDAO = new BeansDAO();
+		beansDAO.insertBean(beansDO, session);	
+		return "redirect:/signup";
 	}
+
 
 	// 상품 목록 페이지
 	@GetMapping("/beansList")
@@ -241,5 +244,91 @@ public class ProductController {
 //		return viewName;
 //	}
 	
-}
+	@GetMapping("/registerProductPage")
+	public String resisterProduct(HttpSession session, Model model) {
+		
+		String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
+		model.addAttribute("seller", sellerDAO.getSeller(sessionSeller));
+	
+		return "registerProduct";
+	}
+	@GetMapping("/registerProductGroup")
+	public String resisterProductGroup(HttpSession session, Model model) {
+		
+		String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
+		model.addAttribute("seller", sellerDAO.getSeller(sessionSeller));
+	
+		return "registerProductGroup";
+	}
+	
+	@PostMapping("/registerProduct")
+	public String resisterProduct(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+		
+        String directory = "C:\\\\Users\\Jun\\Desktop\\finalproject\\coffee-please\\src\\main\\webapp\\uploadTest";
+        
+        int sizeLimit = 1024 * 1024 * 5;
+        MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
+                "UTF-8", new DefaultFileRenamePolicy());
+    	
+    	String action = multi.getParameter("action");
+        if (action != null && action.equals("register")) {
+            // 파일 업로드 액션
+            System.out.println(directory);
+            // 디렉토리 생성w
+            File uploadDir = new File(directory);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs();
+            }
+            String savedName = "";
+            String savedName1 = "";
+            @SuppressWarnings("unchecked")
+            Enumeration<String> fileNames = multi.getFileNames();
+            if (fileNames.hasMoreElements()) {
+                String paramName = fileNames.nextElement();
+                savedName = multi.getFilesystemName(paramName);
+            }
+            if (fileNames.hasMoreElements()) {
+            	String paramName = fileNames.nextElement();
+            	savedName1 = multi.getFilesystemName(paramName);
+            }
+            // 파일 정보를 photo 변수에 저장
+            String beanImg = "\\finalProject\\uploadTest" + savedName; // 웹 경로로 수정
+            String descript = "\\finalProject\\uploadTest" + savedName1; // 웹 경로로 수정
+            String sellerEmail = "longlee@daum.net";
+            String beanName = multi.getParameter("beanName");
+            int beanPrice = Integer.parseInt(multi.getParameter("beanPrice"));
+            int categoryNum = 1;
+            int deliveryCharge = Integer.parseInt(multi.getParameter("deliveryCharge"));
+
+            // 게시물 생성
+            BeansDO newBeans = new BeansDO();
+            newBeans.setBeanImg(beanImg);
+            newBeans.setDescript(descript);
+            newBeans.setSellerEmail(sellerEmail);
+            newBeans.setBeanName(beanName);
+            newBeans.setBeanPrice(beanPrice);
+            newBeans.setCategoryNum(categoryNum);
+            newBeans.setDeliveryCharge(deliveryCharge);
+            // id 설정 - 필요한 경우 수정
+//            newBeans.setId((String)request.getSession().getAttribute("userId"));
+            // 데이터베이스에 새 게시물 추가
+            beansDAO.insertBeans(newBeans);
+//            request.setAttribute("uploadedPhoto", photo);
+        }
+        // 업로드 후 다시 갤러리 페이지로 리다이렉트 또는 원하는 페이지로 이동
+//        response.sendRedirect("BoardController");
+        return "main";
+    }
+   }
+
+
+
+
+
+
+
+
+
+
+
 

@@ -1,18 +1,16 @@
-<%@ page contentType="text/html; charset=UTF-8" 
+<%@ page contentType="text/html; charset=UTF-8"
 	import="java.util.*"
     	  %>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
- 
 <%@ include file = "/WEB-INF/views/header.jsp" %>
-
  <!-- registerProduct -->
    <section id="signup" class="section">
         <div class="max-<div class="max-container">">
             <div class="signup">
                 <div class="signup__form-div">
-                    <h2 class="signup__title">Bean2B 일반 상품 등록을 진행합니다.</h2> 
-                    <h4 class="signup__description">맛있는 원두를 등록해주세요!</h4> 
-                    <form id="signup__form" action="registerProduct" method="POST">
+                    <h2 class="signup__title">Bean2B 일반 상품 등록을 진행합니다.</h2>
+                    <h4 class="signup__description">맛있는 원두를 등록해주세요!</h4>
+                    <form id="signup__form" enctype="multipart/form-data" method="post" action="registerProduct">
                         <label for="beanName" class="signup__label">
                             <img src="${pageContext.request.contextPath}/images/bean.png" alt="" class="bean__img">
                             <input
@@ -22,7 +20,7 @@
                                 name="beanName"
                                 placeholder="상품 이름 입력"
                             />
-                        </label> 
+                        </label>
                         <label for="beanPrice" class="signup__label">
                             <i class="fa-solid fa-tags"></i>
                             <input
@@ -38,8 +36,10 @@
                             <input
                                 class="signup__input"
                                 type="text"
+
                                 id="cName"
-                                name="cName"
+                                name="categoryNum"
+
                                 placeholder="원산지 입력"
                             />
                         </label>

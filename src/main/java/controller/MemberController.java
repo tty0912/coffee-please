@@ -1,4 +1,3 @@
-//package main.java.controller;
 package controller;
 
 
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-//import main.java.model.member.*;
 import model.member.*;
 import model.product.BeansDAO;
 import model.product.BeansDO;
@@ -65,6 +63,7 @@ public class MemberController {
 	//메인
 	@GetMapping("/main")
 	public String main(HttpSession session) {
+		
 		
 		if (session.getAttribute("buyerEmail") != null) {
 			
@@ -238,11 +237,13 @@ public class MemberController {
 		return "signup";
 	}
 	
+	// 판매자 회원가입화면으로 이동
 	@GetMapping("/goSignupSeller")
 	public String goSignupSeller() {
 		return "signupSeller";
 	}
 	
+	// 판매자 회원가입후 메인으로 이동
 	@PostMapping("/signupSeller")
 	public String signupSeller(@ModelAttribute SellerDO seller) throws Exception {
 		sellerDAO.insertSeller(seller);
@@ -261,7 +262,6 @@ public class MemberController {
 		buyerDAO.insertBuyer(buyer);
 		return "redirect:/main";
 	}
-	
 	
 	// 로그아웃
 	@GetMapping("/logout")
