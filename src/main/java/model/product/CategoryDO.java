@@ -5,7 +5,7 @@ public class CategoryDO {
 
 		private int categoryNum;
 		private String categoryName;
-		
+	
 		CategoryDO(){
 			
 		}

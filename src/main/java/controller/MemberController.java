@@ -66,6 +66,7 @@ public class MemberController {
 	@GetMapping("/main")
 	public String main(HttpSession session) {
 		
+		
 		if (session.getAttribute("buyerEmail") != null) {
 			
 			return "mainLoginBuyer";
