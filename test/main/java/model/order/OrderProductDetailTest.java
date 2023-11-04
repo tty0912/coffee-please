@@ -1,6 +1,6 @@
-package main.java.model.order;
+package model.order;
 
-import main.java.model.product.OrderBeans;
+import model.product.OrderBeans;
 import org.junit.Test;
 
 import java.sql.SQLException;

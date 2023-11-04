@@ -1,4 +1,3 @@
-//package main.java.controller;
 package controller;
 
 
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-//import main.java.model.member.*;
 import model.member.*;
 import model.product.BeansDAO;
 import model.product.BeansDO;
