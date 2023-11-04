@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +36,36 @@ public class BeansDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	//이미지업로드 테스트
+	public void insertBeans(BeansDO newBeans) {
+	    try {
+            sql = "INSERT INTO beans (beans_num, seller_email, category_num, bean_name, bean_price, bean_img, descript, delivery_charge) " +
+                  "VALUES (sq_beans_num.nextval, ?, ?, ?, ?, ?, ?, ?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, newBeans.getSellerEmail());
+            pstmt.setInt(2, newBeans.getCategoryNum());
+            pstmt.setString(3, newBeans.getBeanName());
+            pstmt.setInt(4, newBeans.getBeanPrice());
+            pstmt.setString(5, newBeans.getBeanImg());
+            pstmt.setString(6, newBeans.getDescript());
+            pstmt.setInt(7, newBeans.getDeliveryCharge());
+            System.out.println(newBeans+"-1");
+            pstmt.executeUpdate();
+            // 파일을 실제로 업로드하고 저장 경로를 데이터베이스에 저장해야 합니다.
+	    	} catch (SQLException e) {
+	    		e.printStackTrace();
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+	    	} finally {
+	    		if (pstmt != null) {
+	    			try {
+	    				pstmt.close();
+	    			} catch (SQLException e) {
+	    				e.printStackTrace();
+	    			}
+	    		}
+	    	}
 	}
 
 	// 상품 '정보' 조회
