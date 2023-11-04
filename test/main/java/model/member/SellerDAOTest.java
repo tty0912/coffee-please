@@ -1,7 +1,7 @@
-package main.java.model.member;
+package model.member;
 
-import main.java.model.member.SellerDAO;
-import main.java.model.member.SellerDO;
+import model.member.SellerDAO;
+import model.member.SellerDO;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.*;

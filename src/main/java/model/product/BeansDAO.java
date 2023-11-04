@@ -1,7 +1,4 @@
-//package main.java.model.product;
 package model.product;
-
-//import main.java.model.member.BuyerDO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

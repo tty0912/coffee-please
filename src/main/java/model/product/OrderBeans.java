@@ -1,7 +1,5 @@
-//package main.java.model.product;
 package model.product;
 
-//import main.java.model.order.OrderProductDetailDO;
 import model.order.OrderProductDetailDO;
 
 public class OrderBeans {
