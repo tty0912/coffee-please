@@ -38,8 +38,8 @@
                             <input
                                 class="signup__input"
                                 type="text"
-                                id="cName"
-                                name="cName"
+                                id="categoryName"
+                                name="categoryName"
                                 placeholder="원산지 입력"
                             />
                         </label>

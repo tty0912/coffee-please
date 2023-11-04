@@ -3,65 +3,47 @@ package controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
-import model.member.SellerDO;
 import model.product.BeansDAO;
 import model.product.BeansDO;
+import model.member.*;
 
 @Controller
 public class ProductController {
 	
 	private BeansDO beans;
 	private BeansDAO beansDAO = new BeansDAO();
+	private SellerDAO sellerDAO = new SellerDAO();
 	
 	public ProductController() {
 	}
 	
-	//비회원 접속 페이지 - 사이트 처음 들어갔을때 보이는 페이지
-	@GetMapping("/mainFirst")
-	public String mainFrist(Model model) {
-		model.addAttribute("categoryList", beansDAO.getAllCategory());
-		model.addAttribute("bestBean", beansDAO.bestBeanArray());
-		return "MainNonLogin";
-	}
-	//구매자 로그인 - 메인 페이지로 이동, 세션에서 받아오기 하고, css일부 수정, 베스트 상품 게시 숫자는 쿼리나 자바스크립트??
-	@GetMapping("/buyerMain")
-	public String buyerMain(Model model) {
-		
-		model.addAttribute("categoryList", beansDAO.getAllCategory());
-		model.addAttribute("bestBean", beansDAO.bestBeanArray());
-		return "MainLoginBuyer";
-	}
+
 	
-	
-	//판매자 로그인 - 메인페이지, 세션에서 계정 정보 가져오기, 연결되는 페이지 설정하기//
-	@GetMapping("/sellerMain")
-	public String sellerMain(Model model) {
-		model.addAttribute("categoryList", beansDAO.getAllCategory());
-		model.addAttribute("bestBean", beansDAO.bestBeanArray());
-		
-		return "MainLoginSeller";
-	}
 //	상품 등록
-	@PostMapping("/goRegisterProduct")
+	@GetMapping("/goRegisterProduct")
 	public String goRegisterProduct() {
 		
 		return "registerProduct";
 	}
 	
 	@PostMapping("/registerProduct")
-	public String registerProduct(@ModelAttribute BeansDO beansDO) throws Exception {
-			BeansDAO beansDAO = new BeansDAO();
-			beansDAO.insertBean(beansDO);		
-			return "redirect:/signup";
+	public String registerProduct(@ModelAttribute BeansDO beansDO, HttpSession session, Model model) throws Exception {
+		
+		String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
+		model.addAttribute("seller", sellerDAO.getSeller(sessionSeller));
+		
+		BeansDAO beansDAO = new BeansDAO();
+		beansDAO.insertBean(beansDO, session);	
+		return "redirect:/signup";
 	}
 
 	// 상품 목록 페이지
