@@ -238,11 +238,13 @@ public class MemberController {
 		return "signup";
 	}
 	
+	// 판매자 회원가입화면으로 이동
 	@GetMapping("/goSignupSeller")
 	public String goSignupSeller() {
 		return "signupSeller";
 	}
 	
+	// 판매자 회원가입후 메인으로 이동
 	@PostMapping("/signupSeller")
 	public String signupSeller(@ModelAttribute SellerDO seller) throws Exception {
 		sellerDAO.insertSeller(seller);
@@ -261,7 +263,6 @@ public class MemberController {
 		buyerDAO.insertBuyer(buyer);
 		return "redirect:/main";
 	}
-	
 	
 	// 로그아웃
 	@GetMapping("/logout")
