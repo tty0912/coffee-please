@@ -541,7 +541,7 @@ public class BeansDAO {
 	// 카테고리 번호목록(국기 리스트)가져오기 - 카테고리 컬럼에 이미지로 대체할듯
 	public ArrayList<CategoryDO> getAllCategory() {
 		ArrayList<CategoryDO> categoryList = new ArrayList<CategoryDO>();
-		this.sql = "select c_name from category";
+		this.sql = "select category_name, category_img from category";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
@@ -550,7 +550,8 @@ public class BeansDAO {
 			while (rs.next()) {
 				category = new CategoryDO();
 
-				category.setCategoryName(rs.getString("c_name"));
+				category.setCategoryName(rs.getString("category_name"));
+				category.setCategoryImg(rs.getString("category_img"));
 
 				categoryList.add(category);
 			}
@@ -568,19 +569,44 @@ public class BeansDAO {
 
 		return categoryList;
 	}
+	//개별 상품 카테고리 이름 가져오기
+	public String getCategoryName(int categoryNum) {
+		String categoryName = "";
+		this.sql = "select category_name from category where category_num = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, categoryNum);
+			rs = pstmt.executeQuery();
 
+			while (rs.next()) {
+				categoryName = rs.getString("category_name");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (!pstmt.isClosed()) {
+					pstmt.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return categoryName;
+	}
 	// 원두 정렬하기 - 원산지별
 
-	public ArrayList<BeansDO> arrayOrigin(String cName) {
+	public ArrayList<BeansDO> arrayOrigin(int categoryNum) {
 		ArrayList<BeansDO> beanList = new ArrayList<BeansDO>();
 
 		this.sql = "select beans.bean_name, beans.bean_img, beans.like_count  "
-				+ "from beans join category on category.category_num = beans.category_num where c_name = ?"
+				+ "from beans join category on category.category_num = beans.category_num where category_num = ?"
 				+ "order by beans.beans_regdate desc";
 		try {
 			this.pstmt = conn.prepareStatement(sql);
 
-			this.pstmt.setString(1, cName);
+			this.pstmt.setInt(1, categoryNum);
 			rs = this.pstmt.executeQuery();
 
 			while (rs.next()) {
