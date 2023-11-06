@@ -1,19 +1,14 @@
 package model.product;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import javax.servlet.http.HttpSession;
-
 import model.member.BuyerDO;
-import model.member.SellerDO;
+
+import javax.servlet.http.HttpSession;
+//import model.member.SellerDO;
 
 
 public class BeansDAO {
@@ -531,7 +526,7 @@ public class BeansDAO {
 				 	+ //"bean_img, descript)" +
 				 	"VALUES (?, sq_beans_num.nextval, ?, ?, ?, ?)";
 				 	 //", ?, ?
-		pstmt = conn.prepareStatement(sql);	
+		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, sessionSeller);
 		pstmt.setString(2, beansDO.getBeanName());
 		pstmt.setInt(3, beansDO.getBeanPrice());
@@ -539,7 +534,7 @@ public class BeansDAO {
 		pstmt.setInt(5, beansDO.getDeliveryCharge());
 		//pstmt.setString(5, beansDO.getBeanImg());
 		//pstmt.setString(6, beansDO.getDescript());
-			
+
 
 			rowCount = pstmt.executeUpdate();
 			this.conn.commit();
@@ -875,4 +870,70 @@ public class BeansDAO {
 
 		return rowCount;
 	}
+
+	//판매 내역 조회
+	public ArrayList<BeansDO> getSellList(String sellerEmail, int statusNum, String groupOrOther) {
+
+		ArrayList<BeansDO> sellList = new ArrayList<>();
+
+		//statusNum 판매종료 - 1, 판매중 - 0
+		//groupOrOther 공동구매 - "group", 일반구매 - other
+		if (statusNum == 0) {
+            //공동구매 판매중
+            if (groupOrOther.equals("group")) {
+				this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount " +
+						"from beans where seller_email = ? " +
+						"and status_num = 0 " +
+						"and deadline is not null " +
+						"order by beans_num desc";
+			}
+			else {
+				//일반구매 판매중
+				this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount " +
+						"from beans where seller_email = ? and status_num = 0 and deadline is null " +
+						"order by beans_num desc";
+			}
+		} else {
+			if (groupOrOther.equals("group")) {
+				//공동구매 판매종료
+				this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount " +
+						"from beans where seller_email = ? and status_num = 1 and deadline is not null " +
+						"order by beans_num desc";
+			} else {
+				//일반구매 판매종료
+				this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount " +
+						"from beans where seller_email = ? and status_num = 1 and deadline is null " +
+						"order by beans_num desc";
+			}
+		}
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, sellerEmail);
+				rs = pstmt.executeQuery();
+
+				BeansDO beans = null;
+
+				while (rs.next()) {
+					beans = new BeansDO();
+					beans.setBeansNum(rs.getInt("beans_num"));
+					beans.setBeanName(rs.getString("bean_name"));
+					beans.setBeanPrice(rs.getInt("bean_price"));
+					beans.setBeanImg(rs.getString("bean_img"));
+					beans.setBeanTotalSellCount(rs.getInt("bean_total_selcount"));
+
+					sellList.add(beans);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (!pstmt.isClosed()) {
+						pstmt.close();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return sellList;
+		}
 }

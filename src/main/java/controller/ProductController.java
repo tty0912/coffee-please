@@ -15,6 +15,8 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSession;
 
 
+import model.service.ImgUpload;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,8 +45,9 @@ import model.product.*;
 public class ProductController {
 	
 	private BeansDO beans;
-	private BeansDAO beansDAO = new BeansDAO();
-	private SellerDAO sellerDAO = new SellerDAO();
+	private final BeansDAO beansDAO = new BeansDAO();
+	private final SellerDAO sellerDAO = new SellerDAO();
+	private final ImgUpload imgUpload = new ImgUpload();
 	
 	public ProductController() {
 	}
@@ -422,36 +425,21 @@ public class ProductController {
     	
     	String action = multi.getParameter("action");
         if (action != null && action.equals("register")) {
-            // 파일 업로드 액션
-            System.out.println(directory);
-            // 디렉토리 생성w
-            File uploadDir = new File(directory);
-            if (!uploadDir.exists()) {
-                uploadDir.mkdirs();
-            }
-            String savedName = "";
-            String savedName1 = "";
-            
-            @SuppressWarnings("unchecked")
-            Enumeration<String> fileNames = multi.getFileNames();
-            if (fileNames.hasMoreElements()) {
-                String paramName = fileNames.nextElement();
-                savedName = multi.getFilesystemName(paramName);
-                
-            }
-            if (fileNames.hasMoreElements()) {
-            	String paramName = fileNames.nextElement();
-            	savedName1 = multi.getFilesystemName(paramName);
-            }
-            
-            // 파일 정보를 photo 변수에 저장
-            //String beanImg = "\\finalProject\\uploadTest" + savedName; // 웹 경로로 수정
-            //String descript = "\\finalProject\\uploadTest" + savedName1; // 웹 경로로 수정
-            
+
+			String[] img = imgUpload.saveImg(multi);
+
+			// 파일 정보를 photo 변수에 저장
+            String beanImg = "\\finalProject\\uploadTest" + img[0]; // 웹 경로로 수정
+            String descript = "\\finalProject\\uploadTest" + img[1]; // 웹 경로로 수정
+
+			//세션 이메일로 수정필요
+
             String sellerEmail = "longlee@daum.net";
+
             String beanName = multi.getParameter("beanName");
             int beanPrice = Integer.parseInt(multi.getParameter("beanPrice"));
-            //int categoryNum = 1;
+            int categoryNum = Integer.parseInt(multi.getParameter("categoryNum"));;
+
             int deliveryCharge = Integer.parseInt(multi.getParameter("deliveryCharge"));
             
             String beanImg = "/coffee/registerData/sellerData/beans/" + categoryName + "/" + savedName; // 웹 경로로 수정
