@@ -538,7 +538,7 @@ public class BeansDAO {
 		return rowCount;
 	}
 
-	// 카테고리 번호목록(국기 리스트)가져오기 - 카테고리 컬럼에 이미지로 대체할듯
+	// 카테고리 번호목록(국기 리스트)가져오기 
 	public ArrayList<CategoryDO> getAllCategory() {
 		ArrayList<CategoryDO> categoryList = new ArrayList<CategoryDO>();
 		this.sql = "select category_name, category_img from category";
