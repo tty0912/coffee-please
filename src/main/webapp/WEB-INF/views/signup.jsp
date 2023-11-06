@@ -12,17 +12,17 @@
                 <h2 class="signup__title">Bean2B 신규 회원 가입을 진행합니다.</h2> 
                 <div class="signupSelect__div">
                     <div class="signupSelect__form-div">
-                        <form id="signupSelect__form" method="post" action="goSignupSeller">
+                        <form id="signupSelect__form" method="get" action="goSignupSeller">
                             <div class="signupSelect__seller">
                                 <h4 class="signupSelect__description"><p class="description__accent">Bean2B</p>와 함께 나만의 <p class="description__accent">&nbsp비즈니스</p>를 시작해보세요!</h4>
-                                <img class="signup__img seller__img" src="${pageContext.request.contextPath}/images/sellerSignup.png" alt="Seller" />
+                                <img class="signup__img seller__img" src="/images/sellerSignup.png" alt="Seller" />
                                 <button class="signupSelect__button" id="signup-button" type="submit">판매회원 가입하기</button>
                             </div>
                         </form>
                     </div>
                     <div class="signupSelect__form-div">
 
-                        <form id="signupSelect__form" method="post" action="goSignupBuyer">
+                        <form id="signupSelect__form" method="get" action="goSignupBuyer">
                             <div class="signupSelect__seller">
                   <h4 class="signupSelect__description"><p class="description__accent">Bean2B</p>에서 신선한 <p class="description__accent">&nbsp원두</p>를 만나보세요!</h4>
                                 <img class="signup__img buyer__img" src="${pageContext.request.contextPath}/images/buyerSignup.png" alt="buyer" />

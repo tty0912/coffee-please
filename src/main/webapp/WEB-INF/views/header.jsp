@@ -23,6 +23,7 @@
     <!-- Javascript -->
     <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script>
 </head>
 <body>
     <!-- Header -->

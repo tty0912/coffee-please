@@ -11,15 +11,16 @@
             <div class="signup__buyerModify">
                 <div class="signup__form-div">
                     <h2 class="signup__title">Bean2B 구매자 회원 정보를 수정해주세요.</h2> 
-                    <form id="signup__form" action="Controller">
+                    <!-- 수정부분 form에서 method, action, input name속성 수정 -->
+                    <form id="signup__form" method="post" action="buyerModifyChange">
                         <label for="new-userId" class="signup__label">
                             <i class="fa-regular fa-envelope"></i>
                             <input
                                 class="signup__input"
                                 type="email"
                                 id="new-userId"
-                                name="buyer_email"
-                                placeholder="email@example.com"
+                                name="buyerEmail"
+                                value="${ buyer.buyerEmail }"
                                 disabled
                             />
                         </label> 
@@ -29,8 +30,8 @@
                                 class="signup__input"
                                 type="text"
                                 id="new-username"
-                                name="buyer_name"
-                                placeholder="이름을 입력해주세요."
+                                name="buyerName"
+                                value="${ buyer.buyerName }"
                                 disabled
                             />
                         </label>
@@ -41,6 +42,7 @@
                                 type="text"
                                 id="new-sellerName"
                                 name="nickname"
+                                value="${ buyer.nickname }"
                                 placeholder="2자리 이상 입력해주세요."
                             />
                         </label>
@@ -51,6 +53,7 @@
                                 type="text"
                                 id="new-phoneNumber"
                                 name="tel"
+                                value="${ buyer.tel }"
                                 placeholder="휴대폰번호를 입력해주세요."
                             />
                         </label>
@@ -60,15 +63,18 @@
                                 class="signup__input"
                                 type="text"
                                 id="new-address"
-                                name="adr"
+                                name="address"
+                                value="${ buyer.address }"
                                 placeholder="주소를 입력해주세요."
                             />
                         </label>
                         <input type="file" class="fileInput" />
                         <div class="signup__button-div">
-                            <button class="signup__button" id="signup-button" name="action" value="mypageBuyer" type="submit">취소</button>
-                            <button class="signup__button" id="signup-button" name="action" value="UpdateMember" type="submit">수정</button>
+                            <button class="signup__button" id="signup-button" type="submit">수정</button>
                         </div>
+                    </form>
+                    <form method="get" action="myPageBuyer">
+	                    <button class="signup__button" id="signup-button" >취소</button>
                     </form>
                 </div>
             </div>

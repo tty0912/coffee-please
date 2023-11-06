@@ -1,17 +1,20 @@
-//package main.java.model.product;
 package model.product;
-
-//import main.java.model.member.BuyerDO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Optional;
+
+import javax.servlet.http.HttpSession;
+
+import model.member.BuyerDO;
+import model.member.SellerDO;
+
 
 public class BeansDAO {
 
@@ -31,6 +34,36 @@ public class BeansDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	//이미지업로드 테스트
+	public void insertBeans(BeansDO newBeans) {
+	    try {
+            sql = "INSERT INTO beans (beans_num, seller_email, category_num, bean_name, bean_price, bean_img, descript, delivery_charge) " +
+                  "VALUES (sq_beans_num.nextval, ?, ?, ?, ?, ?, ?, ?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, newBeans.getSellerEmail());
+            pstmt.setInt(2, newBeans.getCategoryNum());
+            pstmt.setString(3, newBeans.getBeanName());
+            pstmt.setInt(4, newBeans.getBeanPrice());
+            pstmt.setString(5, newBeans.getBeanImg());
+            pstmt.setString(6, newBeans.getDescript());
+            pstmt.setInt(7, newBeans.getDeliveryCharge());
+            System.out.println(newBeans+"-1");
+            pstmt.executeUpdate();
+            // 파일을 실제로 업로드하고 저장 경로를 데이터베이스에 저장해야 합니다.
+	    	} catch (SQLException e) {
+	    		e.printStackTrace();
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+	    	} finally {
+	    		if (pstmt != null) {
+	    			try {
+	    				pstmt.close();
+	    			} catch (SQLException e) {
+	    				e.printStackTrace();
+	    			}
+	    		}
+	    	}
 	}
 
 	// 상품 '정보' 조회
@@ -487,22 +520,26 @@ public class BeansDAO {
 	// 일반 판매 상품 등록하기
 	// beans_num : 자동
 	// 판매자 이메일, 카테고리 번호, 원두 이름, 원두 가격, 원두 이미지, 원두 상세설명(이미지), 배송비, 원두 썸네일
-	public int insertBean(BeansDO beansDO) {
+	public int insertBean(BeansDO beansDO, HttpSession session) {
 		int rowCount = 0;
+		String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
 		try {
 			this.conn.setAutoCommit(false);
 
-			this.sql = "INSERT INTO BEANS (BEANS_NUM, SELLER_EMAIL, CATEGORY_NUM, BEAN_NAME, BEAN_PRICE, "
-					+ "BEAN_IMG, DESCRIPT, DELIVERY_CHARGE)"
-					+ "VALUES (seq_beans_beans_num.nextval, ?, ?, ?, ?, ?, ?, ?)";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, beansDO.getSellerEmail());
-			pstmt.setInt(2, beansDO.getCategoryNum());
-			pstmt.setString(3, beansDO.getBeanName());
-			pstmt.setInt(4, beansDO.getBeanPrice());
-			pstmt.setString(5, beansDO.getBeanImg());
-			pstmt.setString(6, beansDO.getDescript());
-			pstmt.setInt(7, beansDO.getDeliveryCharge());
+			this.sql =  "INSERT INTO BEANS (seller_email, beans_num, BEAN_name, BEAN_PRICE," +
+				 	"category_name, DELIVERY_CHARGE) "
+				 	+ //"bean_img, descript)" +
+				 	"VALUES (?, sq_beans_num.nextval, ?, ?, ?, ?)";
+				 	 //", ?, ?
+		pstmt = conn.prepareStatement(sql);	
+		pstmt.setString(1, sessionSeller);
+		pstmt.setString(2, beansDO.getBeanName());
+		pstmt.setInt(3, beansDO.getBeanPrice());
+		pstmt.setString(4, beansDO.getCategoryName());
+		pstmt.setInt(5, beansDO.getDeliveryCharge());
+		//pstmt.setString(5, beansDO.getBeanImg());
+		//pstmt.setString(6, beansDO.getDescript());
+			
 
 			rowCount = pstmt.executeUpdate();
 			this.conn.commit();
@@ -624,10 +661,10 @@ public class BeansDAO {
 		return rowCount;
 	}
 
-	// 카테고리 번호목록(국기 리스트)가져오기 - 카테고리 컬럼에 이미지로 대체할듯
+	// 카테고리 번호목록(국기 리스트)가져오기 
 	public ArrayList<CategoryDO> getAllCategory() {
 		ArrayList<CategoryDO> categoryList = new ArrayList<CategoryDO>();
-		this.sql = "select c_name from category";
+		this.sql = "select category_name, category_img from category";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
@@ -636,7 +673,8 @@ public class BeansDAO {
 			while (rs.next()) {
 				category = new CategoryDO();
 
-				category.setCategoryName(rs.getString("c_name"));
+				category.setCategoryName(rs.getString("category_name"));
+				category.setCategoryImg(rs.getString("category_img"));
 
 				categoryList.add(category);
 			}
@@ -654,19 +692,44 @@ public class BeansDAO {
 
 		return categoryList;
 	}
+	//개별 상품 카테고리 이름 가져오기
+	public String getCategoryName(int categoryNum) {
+		String categoryName = "";
+		this.sql = "select category_name from category where category_num = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, categoryNum);
+			rs = pstmt.executeQuery();
 
+			while (rs.next()) {
+				categoryName = rs.getString("category_name");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (!pstmt.isClosed()) {
+					pstmt.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return categoryName;
+	}
 	// 원두 정렬하기 - 원산지별
 
-	public ArrayList<BeansDO> arrayOrigin(String cName) {
+	public ArrayList<BeansDO> arrayOrigin(int categoryNum) {
 		ArrayList<BeansDO> beanList = new ArrayList<BeansDO>();
 
 		this.sql = "select beans.bean_name, beans.bean_img, beans.like_count  "
-				+ "from beans join category on category.category_num = beans.category_num where c_name = ?"
+				+ "from beans join category on category.category_num = beans.category_num where category_num = ?"
 				+ "order by beans.beans_regdate desc";
 		try {
 			this.pstmt = conn.prepareStatement(sql);
 
-			this.pstmt.setString(1, cName);
+			this.pstmt.setInt(1, categoryNum);
 			rs = this.pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -777,6 +840,35 @@ public class BeansDAO {
 					pstmt.close();
 				}
 			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return rowCount;
+	}
+
+	//판매량 수정하기
+	public int updateBeanTotalSellCount(int beansNum, int qty){
+		int rowCount = 0;
+		this.sql = "update beans set bean_total_selcount = bean_total_selcount + ? " +
+				"where beans_num = ?";
+		try{
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, qty);
+			pstmt.setInt(2, beansNum);
+
+			rowCount = pstmt.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if(!pstmt.isClosed()) {
+					pstmt.close();
+				}
+			}
+			catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
