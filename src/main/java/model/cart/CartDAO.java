@@ -1,4 +1,3 @@
-//package main.java.model.cart;
 package model.cart;
 
 import java.sql.Connection;
@@ -8,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-//import main.java.model.member.*;
-//import main.java.model.product.*;
 
 import model.member.BuyerDO;
 import model.product.BeansDO;

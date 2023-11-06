@@ -1,4 +1,3 @@
-//package main.java.model.order;
 package model.order;
 
 import model.product.BeansDO;

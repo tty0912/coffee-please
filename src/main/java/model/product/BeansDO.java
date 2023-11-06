@@ -1,4 +1,3 @@
-//package main.java.model.product;
 package model.product;
 
 public class BeansDO {
@@ -19,7 +18,14 @@ public class BeansDO {
 	private int statusNumber;
 	private int beanTotalSellCount;
 	private String beanThumbnail;
+	private String categoryName;
 	
+	public String getCategoryName() {
+		return categoryName;
+	}
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
 	public int getBeansNum() {
 		return beansNum;
 	}

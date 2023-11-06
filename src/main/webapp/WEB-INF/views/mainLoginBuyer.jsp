@@ -10,19 +10,23 @@
        <div class="max-container">
              <div class="mainIntro">
                  <div class="mainIntro__intro">
-                     <img class="mainIntro__introImg" src="images/mainTest1.gif" alt="">
+                     <img class="mainIntro__introImg" src="${pageContext.request.contextPath }/images/mainTest1.gif" alt="">
                  </div>
                  <div class="mainIntro__loginAll">
                      <div class="mainIntro__loginAfter">
                             <div class="user">
-                             <img class="mainIntro__loginImg" src="images/userImginit.png" alt="">
-                             <p class="mainIntro__loginId">빈투비 <span class="mainIntro__loginIdText">님</span></p>
+                             <img class="mainIntro__loginImg" src="${pageContext.request.contextPath }/images/userImginit.png" alt="">
+                             <p class="mainIntro__loginId">${buyer.nickname } <span class="mainIntro__loginIdText">님</span></p>
                          </div>
                          <div class="mainIntro__buyer">
-                             <p class="mainIntro__loginPoint">100,000 <span class="mainIntro__loginPointText"> point</span></p>
+                             <p class="mainIntro__loginPoint">${buyer.point} <span class="mainIntro__loginPointText"> point</span></p>
                              <div class="mainIntro__button">
-                                 <button class="mainIntro__AfterButton">로그아웃</button>
-                                 <button class="mainIntro__AfterButton">마이페이지</button>
+                                 <form method="Get" action="logout" class="mainIntro__buyer">
+                                  <button class="mainIntro__AfterButton">로그아웃</button>
+                                  </form>
+                                  <form method="Get" action="myPageBuyer" class="mainIntro__buyer">
+                                    <button class="mainIntro__AfterButton">마이페이지</button>
+                                   </form>
                              </div>
                          </div>
                      </div>
