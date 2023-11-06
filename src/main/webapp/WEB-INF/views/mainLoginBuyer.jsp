@@ -15,7 +15,8 @@
                  <div class="mainIntro__loginAll">
                      <div class="mainIntro__loginAfter">
                             <div class="user">
-                             <img class="mainIntro__loginImg" src="${pageContext.request.contextPath }/images/userImginit.png" alt="">
+                          <!--<img class="mainIntro__loginImg" src="${pageContext.request.contextPath }/images/userImginit.png" alt="">--> 
+                           <img class="mainIntro__loginImg" src="${buyer.buyerImg}" alt="">
                              <p class="mainIntro__loginId">${buyer.nickname } <span class="mainIntro__loginIdText">님</span></p>
                          </div>
                          <div class="mainIntro__buyer">

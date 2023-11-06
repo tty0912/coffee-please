@@ -67,8 +67,9 @@ public class MemberController {
 	
 	//메인
 	@GetMapping("/main")
-	public String main(HttpSession session) {
-		
+	public String main(HttpSession session, Model model) {
+		model.addAttribute("categoryList", beansDAO.getAllCategory());
+		model.addAttribute("bestBean", beansDAO.bestBeanArray());
 		
 		if (session.getAttribute("buyerEmail") != null) {
 			

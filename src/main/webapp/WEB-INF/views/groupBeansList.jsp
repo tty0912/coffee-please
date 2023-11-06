@@ -28,6 +28,7 @@
 			<th>마감 기한</th>
 			<th>목표 kg</th>
 			<th>할인 된 가격</th>
+			<th>판매량</th>
 		</tr>
 		<c:forEach items="${groupBeansList}" var="bean">
 			<tr>
@@ -39,6 +40,7 @@
 				<td>${bean.deadline}</td>
 				<td>${bean.goalQty}</td>
 				<td>${bean.goalPrice}</td>
+				<td>${bean.beanTotalSellCount}</td>
 			</tr>
 		</c:forEach>
 	</table>
@@ -48,6 +50,8 @@
 			<c:if test="${not empty search}">
 				<c:param name="search" value="${search}" />
 			</c:if>
+			<c:param name="sort" value="${sortOption}" />
+        	<c:param name="category" value="${categoryNum}" />
 		</c:url>
 		<a href="<c:out value='${prevUrl}'/>">Prev</a>
 	</c:if>
@@ -57,6 +61,8 @@
 			<c:if test="${not empty search}">
 				<c:param name="search" value="${search}" />
 			</c:if>
+			<c:param name="sort" value="${sortOption}" />
+        	<c:param name="category" value="${categoryNum}" />
 		</c:url>
 		<a href="<c:out value='${nextUrl}'/>">Next</a>
 	</c:if>
