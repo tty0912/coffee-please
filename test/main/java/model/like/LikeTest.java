@@ -1,8 +1,8 @@
-package main.java.model.like;
+package model.like;
 
-import main.java.model.product.BeansDAO;
-import main.java.model.product.BeansDO;
-import main.java.model.service.LikeService;
+import model.product.BeansDAO;
+import model.product.BeansDO;
+import model.service.LikeService;
 import org.junit.Test;
 
 import java.sql.SQLException;

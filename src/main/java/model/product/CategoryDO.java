@@ -1,11 +1,19 @@
-//package main.java.model.product;
 package model.product;
 
 public class CategoryDO {
 
 		private int categoryNum;
 		private String categoryName;
+		private String categoryImg;
 	
+		public String getCategoryImg() {
+			return categoryImg;
+		}
+
+		public void setCategoryImg(String categoryImg) {
+			this.categoryImg = categoryImg;
+		}
+
 		CategoryDO(){
 			
 		}
