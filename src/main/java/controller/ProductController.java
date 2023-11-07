@@ -71,54 +71,72 @@ public class ProductController {
 	
 	public ProductController() {
 	}
-
+		
+	// 이전, 다음 페이지 처리
+	@GetMapping("/navigatePage")
+	public String navigatePage(@RequestParam("currentPage") int currentPage, 
+	                            @RequestParam("totalPages") int totalPages,
+	                            @RequestParam("direction") String direction, 
+	                            @RequestParam("category") int categoryNum, 
+	                            @RequestParam("search") String search,
+	                            @RequestParam("sort") String sort) {
+		
+		
+		String category = "&category=" + categoryNum;
+		
+		if (!"recent".equals(sort)) {
+	        return "?page=" + currentPage + 
+	        		"&search=" + search + 
+	        		"&sort=" + sort + category;
+	    }
+		
+	    if ("previous".equals(direction) && currentPage > 1) {
+	        return "?page=" + (currentPage - 1) + 
+	        		"&search=" + search + 
+	        		"&sort=" + sort + category;
+	    } else if ("next".equals(direction) && currentPage < totalPages) {
+	        return "?page=" + (currentPage + 1) + 
+	        		"&search=" + search + 
+	        		"&sort=" + sort + category;
+	    }
+	    return "?page=" + currentPage + "&search=" + search + category;
 
 // 상품 목록 페이지로 이동
 	@GetMapping("/goProductList")
 	public String goProductList(Model model,
-							  @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-							  @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize,
-							  @RequestParam(value = "category", required = false, defaultValue = "0") int categoryNum,
-							  @RequestParam(value = "sort", required = false, defaultValue = "recent") String sort,
-							  @RequestParam(value = "search", required = false) String search) {
-
-		System.out.println("==========================");
+							  @RequestParam(value = "page", required = false, defaultValue = "1") int page, 
+		            @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize,
+		            @RequestParam(value = "category", required = false, defaultValue = "0") String categoryNum,
+		            @RequestParam(value = "sort", required = false, defaultValue = "recent") String sort,
+		            @RequestParam(value = "search", required = false , defaultValue = "") String search) {
 		// 상품 목록을 가져오는 기본 메서드
-		ArrayList<BeansDO> beansList;
+		System.out.println(sort + ":" + search + ":" + categoryNum);
+        ArrayList<BeansDO> beansList = beansDAO.sortedPage(sort, search, Integer.parseInt(categoryNum));
+                            
+        // 페이징 처리를 위한 전체 상품 수 계산
+        int totalRows = beansList.size();
+        int totalPages = (int) Math.ceil((double) totalRows / pageSize);
 
-		// 카테고리 번호 0 일 경우 모든 상품 불러오기, 카테고리 선택 시 해당 카테고리에 맞는 상품 정보 제공
-		if(categoryNum == 0) {
-			beansList = beansDAO.getAllBeans(search);
-		}
-		else {
-			beansList = beansDAO.sortedPage(sort, search, categoryNum);
-		}
+        // 페이지 범위를 조정
+        if (page < 1) {
+            page = 1;
+        } else if (page > totalPages) {
+            page = totalPages;
+        }
 
+        // 페이징 처리를 위해 부분 리스트 선택
+        int startRow = 1 + (page - 1) * pageSize;
+        int endRow = pageSize * page;
+        ArrayList<BeansDO> pagedBeansList = new ArrayList<>(beansList.subList(
+        	    Math.max(startRow - 1, 0), Math.min(endRow, totalRows))); 
 
-		// 페이징 처리를 위한 전체 상품 수 계산
-		int totalRows = beansList.size();
-		int totalPages = (int) Math.ceil((double) totalRows / pageSize);
-
-		// 페이지 범위를 조정
-		if (page < 1) {
-			page = 1;
-		} else if (page > totalPages) {
-			page = totalPages;
-		}
-
-		// 페이징 처리를 위해 부분 리스트 선택
-		int startRow = 1 + (page - 1) * pageSize;
-		int endRow = pageSize * page;
-		ArrayList<BeansDO> pagedBeansList = new ArrayList<>(beansList.subList(
-				Math.max(startRow - 1, 0), Math.min(endRow, totalRows)));
-
-		// 모델에 데이터 추가
-		model.addAttribute("categoryNum", categoryNum);
-		model.addAttribute("sortOption", sort);
-		model.addAttribute("beansList", pagedBeansList);
-		model.addAttribute("totalPages", totalPages);
-		model.addAttribute("currentPage", page);
-		model.addAttribute("search", search);
+        // 모델에 데이터 추가
+        model.addAttribute("categoryNum", categoryNum);
+        model.addAttribute("sortOption", sort);
+        model.addAttribute("beansList", pagedBeansList);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("search", search);
 
 		return "productList";
 	}
@@ -178,6 +196,8 @@ public class ProductController {
 			return "error";
 		}
 	}
+	
+	// 
 
 
 // 일반 상품 등록

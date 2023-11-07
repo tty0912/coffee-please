@@ -57,6 +57,7 @@
                                 <p class="mainBeanBest__productLikeCount">${bean.likeCount}</p>
                             </div>
                         </div>
+                        <button class="productList__button" id="${bean.beansNum}">상세보기</button>
                     </div>
                     </c:forEach>
                 </div>
