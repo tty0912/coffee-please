@@ -72,7 +72,7 @@ public class ProductController {
 	public ProductController() {
 	}
 		
-	// 이전, 다음 페이지 처리
+// 이전, 다음 페이지 처리
 	@GetMapping("/navigatePage")
 	public String navigatePage(@RequestParam("currentPage") int currentPage, 
 	                            @RequestParam("totalPages") int totalPages,
@@ -100,6 +100,7 @@ public class ProductController {
 	        		"&sort=" + sort + category;
 	    }
 	    return "?page=" + currentPage + "&search=" + search + category;
+	}
 
 // 상품 목록 페이지로 이동
 	@GetMapping("/goProductList")
@@ -141,8 +142,41 @@ public class ProductController {
 		return "productList";
 	}
 
-// *  2) GET	|	/goProdcutListGroup ->	productListGroup.jsp
+// 공동 구매 상품 페이지로 이동	
+	@GetMapping("/goProductListGroup")
+	public String goProductListGroup(Model model, 
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page, 
+            @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize,
+            @RequestParam(value = "category", required = false, defaultValue = "0") String categoryNum,
+            @RequestParam(value = "sort", required = false, defaultValue = "recent") String sort, 
+            @RequestParam(value = "search", required = false) String search) {
+    
+    ArrayList<BeansDO> groupBeansList;
+    groupBeansList = beansDAO.sortedPage2(sort, search, Integer.parseInt(categoryNum));     	
+    
+    
+    int totalRows = groupBeansList.size();
+    int totalPages = (int) Math.ceil((double) totalRows / pageSize);
 
+    if (page < 1) {
+        page = 1;
+    } else if (page > totalPages) {
+        page = totalPages;
+    }
+
+    int startRow = 1 + (page - 1) * pageSize;
+    int endRow = pageSize * page;
+    ArrayList<BeansDO> pagedGroupBeansList = new ArrayList<>(groupBeansList.subList(
+            Math.max(startRow - 1, 0), Math.min(endRow, totalRows))); 
+
+    model.addAttribute("sortOption", sort);
+    model.addAttribute("groupBeansList", pagedGroupBeansList);
+    model.addAttribute("totalPages", totalPages);
+    model.addAttribute("currentPage", page);
+    model.addAttribute("search", search);
+
+    return "productListGroup";
+}
 
 // 일반 상품 상세페이지로 이동
 	@GetMapping("/goListDetail")
@@ -158,7 +192,7 @@ public class ProductController {
 		beans = beansDAO.getBean(beansNum);
 
 
-			model.addAttribute("beans", beans);
+			model.addAttribute("beans", beansDAO.getGroupBean(beansNum));
 			return "productListDetailGroup";
 	}
 
