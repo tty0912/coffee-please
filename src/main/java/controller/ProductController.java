@@ -245,6 +245,23 @@ public class ProductController {
 //		return viewName;
 //	}
 	
+	
+	@GetMapping("/productListDetail")
+	public String productListDetail(@RequestParam("beansNum") int beansNum, Model model) {
+		beans = beansDAO.getBean(beansNum);
+		
+		if(beans != null) {
+			model.addAttribute("productListDetail", beansDAO.getBean(beansNum));
+			return "productListDetail";
+		}
+		else {
+			return "redirect:/productListDetail";
+		}
+	}
+
+	
+	
+	//상품등록
 	@GetMapping("/registerProductPage")
 	public String resisterProduct(HttpSession session, Model model) {
 		
@@ -321,6 +338,8 @@ public class ProductController {
         return "main";
     }
    }
+
+
 
 
 

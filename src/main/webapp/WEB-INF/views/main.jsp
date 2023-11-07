@@ -80,12 +80,12 @@
   
                     <c:forEach items="${bestBean}" var="beansDO" >
                     <div class="mainBeanBest__product">
-                    <img src="" alt="" class="beanBest__number">
-        			<img src="${beansDO.beanImg}"  alt="" class="mainBeanBest__productImg" >
-        			<div class="likeButton">
-                        <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
-                        <p class="mainBeanBest__productLikeCount">${beansDO.likeCount}</p>
-                    </div>
+                    	<img src="" alt="" class="beanBest__number">
+        				<img src="${beansDO.beanImg}"  alt="" class="mainBeanBest__productImg" >
+        				<div class="likeButton">
+                        	<button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                        	<p class="mainBeanBest__productLikeCount">${beansDO.likeCount}</p>
+                    	</div>
                     </div>
     				</c:forEach>
     				

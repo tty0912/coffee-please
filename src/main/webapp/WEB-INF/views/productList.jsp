@@ -30,9 +30,11 @@
                 <div class="productList__sortSerch">
                     <div class="productList__sortDiv">
                         <span class="productList__sortText">정렬</span>
-                        <button class="productList__sort">최신순</button>
-                        <button class="productList__sort">인기순</button>
-                        <button class="productList__sort">판매량순</button>
+                        <form action="/coffee/beansList" method="GET" id="sorting">
+                        	<button class="productList__sort" type="submit" name="sort" value="recent">최신순</button>
+                        	<button class="productList__sort" type="submit" name="sort" value="bestSelling">인기순</button>
+                        	<button class="productList__sort" type="submit" name="sort" value="mostLiked">판매량순</button>
+                        </form>
                     </div>
                     <form class="productList__search">
                         <input type="text" class="productList__searchInput" id="searchInput" />
