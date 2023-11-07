@@ -12,6 +12,11 @@
 	<h1>Group Beans List</h1>
 
 	<form action="/coffee/groupBeansList" method="GET">
+		<select id="category" name="category">
+		           	<option value="0" ${param.category == '0' ? 'selected' : '' }>전체</option>      	
+		           	<option value="1" ${param.category == '1' ? 'selected' : '' }>코스타리카</option>      	
+		           	<option value="2" ${param.category == '2' ? 'selected' : '' }>케냐</option>
+		    </select>
 		<button type="submit" name="sort" value="bestSelling">판매량 높은 순</button>
 		<button type="submit" name="sort" value="mostLiked">좋아요 높은 순</button>
 		<input type="text" name="search" placeholder="검색어 입력">
@@ -66,6 +71,30 @@
 		</c:url>
 		<a href="<c:out value='${nextUrl}'/>">Next</a>
 	</c:if>
+	
+	<script>	
+	function categoryHandler () {
+		document.querySelector('#sorting').submit();
+	}
+	
+	function prodDetailHandler(event) {
+		let beans = event.target.getAttribute('id');
+		
+		let beansNum = parseInt(beans, 10);
+		
+		let url = '/coffee/productListDetail?groupProductListDetail&beansNum=' + beansNum;
+		
+		location.href = url;
+	}
+
+	function init() {
+		document.querySelector('#category').addEventListener('change', categoryHandler);
+		document.querySelector('#beansTable1').addEventListener('click', prodDetailHandler);
+		
+	}
+
+	window.addEventListener('load', init);
+	</script>
 
 </body>
 </html>
