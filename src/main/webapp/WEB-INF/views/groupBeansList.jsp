@@ -11,7 +11,7 @@
 <body>
 	<h1>Group Beans List</h1>
 
-	<form action="/coffee/groupBeansList" method="GET">
+	<form action="/coffee/goProductListGroup" method="GET">
 		<select id="category" name="category">
 		           	<option value="0" ${param.category == '0' ? 'selected' : '' }>전체</option>      	
 		           	<option value="1" ${param.category == '1' ? 'selected' : '' }>코스타리카</option>      	
@@ -50,7 +50,7 @@
 		</c:forEach>
 	</table>
 	<c:if test="${currentPage > 1}">
-		<c:url var="prevUrl" value="/groupBeansList">
+		<c:url var="prevUrl" value="/goProductListGroup">
 			<c:param name="page" value="${currentPage - 1}" />
 			<c:if test="${not empty search}">
 				<c:param name="search" value="${search}" />
@@ -61,7 +61,7 @@
 		<a href="<c:out value='${prevUrl}'/>">Prev</a>
 	</c:if>
 	<c:if test="${currentPage < totalPages}">
-		<c:url var="nextUrl" value="/groupBeansList">
+		<c:url var="nextUrl" value="/goProductListGroup">
 			<c:param name="page" value="${currentPage + 1}" />
 			<c:if test="${not empty search}">
 				<c:param name="search" value="${search}" />
@@ -82,14 +82,14 @@
 		
 		let beansNum = parseInt(beans, 10);
 		
-		let url = '/coffee/productListDetail?groupProductListDetail&beansNum=' + beansNum;
+		let url = '/coffee/goListDetailGroup?beansNum=' + beans;
 		
 		location.href = url;
 	}
 
 	function init() {
 		document.querySelector('#category').addEventListener('change', categoryHandler);
-		document.querySelector('#beansTable1').addEventListener('click', prodDetailHandler);
+		document.querySelector('#beansTable').addEventListener('click', prodDetailHandler);
 		
 	}
 
