@@ -29,10 +29,16 @@
                     <div class="productList__sortDiv">
                         <span class="productList__sortText">정렬</span>
 
-                        <form action="/coffee/productList" method="GET" id="sorting">
-	                        <button class="productList__sort" value="recent" type="submit">최신순</button>
-	                        <button class="productList__sort" value="mostLiked" type="submit">인기순</button>
-	                        <button class="productList__sort" value="bestSelling" type="submit">판매량순</button>
+                        <form action="/coffee/goProductList" method="GET" id="sorting">
+                        <label for="category">카테고리:</label>	
+							<select id="category" name="category">
+					            	<option value="0" ${param.category == '0' ? 'selected' : '' }>전체</option>      	
+					            	<option value="1" ${param.category == '1' ? 'selected' : '' }>코스타리카</option>      	
+					            	<option value="2" ${param.category == '2' ? 'selected' : '' }>케냐</option>
+						    </select>
+	                        <button class="productList__sort" name="sort" value="recent" type="submit">최신순</button>
+	                        <button class="productList__sort" name="sort" value="mostLiked" type="submit">인기순</button>
+	                        <button class="productList__sort" name="sort" value="bestSelling" type="submit">판매량순</button>
                         </form>
                     </div>
                     <form class="productList__search">
@@ -51,7 +57,6 @@
                             <p class="productList__productTitle">${bean.beanName}</p>
                             <p class="productList__productPrice">${bean.beanPrice}원</p>
                             <p class="productList__productCategory">케냐</p>
-                            <button class="productList__button" id="${bean.beansNum}" type="button">상세보기</button>
                             <div class="productList__likeButton">
                                 <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
                                 <p class="mainBeanBest__productLikeCount">${bean.likeCount}</p>
@@ -62,9 +67,9 @@
                     </c:forEach>
                 </div>
                 <div class="productList__buttonDiv">
-                    <button class="productList__button"><i class="fa-solid fa-angles-left"></i></button>
+                    <%--<button class="productList__button"><i class="fa-solid fa-angles-left"></i></button>--%>
                     <c:if test="${currentPage > 1}">
-					    <c:url var="prevUrl" value="/productList">
+					    <c:url var="prevUrl" value="/goProductList">
 					        <c:param name="page" value="${currentPage - 1}" />
 					        <c:if test="${not empty search}">
 					            <c:param name="search" value="${search}" />
@@ -72,21 +77,20 @@
 					        <c:param name="sort" value="${sortOption}" />
 					        <c:param name="category" value="${categoryNum}" />
 					    </c:url>
-					    <a href="${prevUrl}">Previous</a>
+					    <a class="productList__button" href="${prevUrl}"><i class="fa-solid fa-angles-left"></i></a>
 					</c:if>
 
-                    <button class="productList__button"><i class="fa-solid fa-angles-right"></i></button>
+                    <%-- <button class="productList__button"><i class="fa-solid fa-angles-right"></i></button> --%>
                     <c:if test="${currentPage < totalPages}">
-					    <c:url var="nextUrl" value="/productList">
+					    <c:url var="nextUrl" value="/goProductList">
 					        <c:param name="page" value="${currentPage + 1}" />
-					        <c:param name="category" value="${categoryNum}" />
 					        <c:if test="${not empty search}">
 					            <c:param name="search" value="${search}" />
 					        </c:if>
 					        <c:param name="sort" value="${sortOption}" />
 					        <c:param name="category" value="${categoryNum}" />
 					    </c:url>
-					    <a href="${nextUrl}">Next</a>
+					    <a class="productList__button" href="${nextUrl}"><i class="fa-solid fa-angles-right"></i></a>
 					</c:if>
                 </div>
             </div>
@@ -106,7 +110,7 @@
         location.href = url;
     }
     function init() {
-        //document.querySelector('#category').addEventListener('change', categoryHandler);
+        document.querySelector('#category').addEventListener('change', categoryHandler);
         document.querySelector('#beansTable').addEventListener('click', prodDetailHandler);
 
     }
