@@ -124,52 +124,52 @@ public class ProductController {
 	
 	
 	// 상품 목록 페이지
-//		@GetMapping("/productList")
-//		public String productList(Model model, 
-//		            @RequestParam(value = "page", required = false, defaultValue = "1") int page, 
-//		            @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize,
-//		            @RequestParam(value = "category", required = false, defaultValue = "0") int categoryNum,
-//		            @RequestParam(value = "sort", required = false, defaultValue = "recent") String sort,
-//		            @RequestParam(value = "search", required = false) String search) {
-//			// 상품 목록을 가져오는 기본 메서드
-//	        ArrayList<BeansDO> beansList;
-//	        
-//	        // 카테고리 번호 0 일 경우 모든 상품 불러오기, 카테고리 선택 시 해당 카테고리에 맞는 상품 정보 제공
-//	        if(categoryNum == 0) {
-//	        	beansList = beansDAO.getAllBeans(search);
-//	        }
-//	        else {
-//	        	beansList = beansDAO.sortedPage(sort, search, categoryNum); 	
-//	        }
-//	       
-//	              
-//	        // 페이징 처리를 위한 전체 상품 수 계산
-//	        int totalRows = beansList.size();
-//	        int totalPages = (int) Math.ceil((double) totalRows / pageSize);
-//
-//	        // 페이지 범위를 조정
-//	        if (page < 1) {
-//	            page = 1;
-//	        } else if (page > totalPages) {
-//	            page = totalPages;
-//	        }
-//
-//	        // 페이징 처리를 위해 부분 리스트 선택
-//	        int startRow = 1 + (page - 1) * pageSize;
-//	        int endRow = pageSize * page;
-//	        ArrayList<BeansDO> pagedBeansList = new ArrayList<>(beansList.subList(
-//	        	    Math.max(startRow - 1, 0), Math.min(endRow, totalRows))); 
-//
-//	        // 모델에 데이터 추가
-//	        model.addAttribute("categoryNum", categoryNum);
-//	        model.addAttribute("sortOption", sort);
-//	        model.addAttribute("beansList", pagedBeansList);
-//	        model.addAttribute("totalPages", totalPages);
-//	        model.addAttribute("currentPage", page);
-//	        model.addAttribute("search", search);
-//
-//	        return "productList";
-//		}
+		@GetMapping("/productList")
+		public String productList(Model model, 
+		            @RequestParam(value = "page", required = false, defaultValue = "1") int page, 
+		            @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize,
+		            @RequestParam(value = "category", required = false, defaultValue = "0") int categoryNum,
+		            @RequestParam(value = "sort", required = false, defaultValue = "recent") String sort,
+		            @RequestParam(value = "search", required = false) String search) {
+			// 상품 목록을 가져오는 기본 메서드
+	        ArrayList<BeansDO> beansList;
+	        
+	        // 카테고리 번호 0 일 경우 모든 상품 불러오기, 카테고리 선택 시 해당 카테고리에 맞는 상품 정보 제공
+	        if(categoryNum == 0) {
+	        	beansList = beansDAO.getAllBeans(search);
+	        }
+	        else {
+	        	beansList = beansDAO.sortedPage(sort, search, categoryNum); 	
+	        }
+	       
+	              
+	        // 페이징 처리를 위한 전체 상품 수 계산
+	        int totalRows = beansList.size();
+	        int totalPages = (int) Math.ceil((double) totalRows / pageSize);
+
+	        // 페이지 범위를 조정
+	        if (page < 1) {
+	            page = 1;
+	        } else if (page > totalPages) {
+	            page = totalPages;
+	        }
+
+	        // 페이징 처리를 위해 부분 리스트 선택
+	        int startRow = 1 + (page - 1) * pageSize;
+	        int endRow = pageSize * page;
+	        ArrayList<BeansDO> pagedBeansList = new ArrayList<>(beansList.subList(
+	        	    Math.max(startRow - 1, 0), Math.min(endRow, totalRows))); 
+
+	        // 모델에 데이터 추가
+	        model.addAttribute("categoryNum", categoryNum);
+	        model.addAttribute("sortOption", sort);
+	        model.addAttribute("beansList", pagedBeansList);
+	        model.addAttribute("totalPages", totalPages);
+	        model.addAttribute("currentPage", page);
+	        model.addAttribute("search", search);
+
+	        return "productList";
+		}
 
 		// 상품 목록 페이지
 		@GetMapping("/beansList")
@@ -215,7 +215,7 @@ public class ProductController {
         model.addAttribute("currentPage", page);
         model.addAttribute("search", search);
 
-        return "productList";
+        return "beansList";
 	}
 	
 	// 공동 구매 상품 목록 페이지
