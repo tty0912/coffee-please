@@ -28,6 +28,7 @@
                 <div class="productList__sortSerch">
                     <div class="productList__sortDiv">
                         <span class="productList__sortText">정렬</span>
+
                         <form action="/coffee/productList" method="GET" id="sorting">
 	                        <button class="productList__sort" value="recent" type="submit">최신순</button>
 	                        <button class="productList__sort" value="mostLiked" type="submit">인기순</button>
@@ -41,14 +42,16 @@
                         </button> 
                     </form>
                 </div>
-                <div class="productList__productDiv">
+                <div id="beansTable" class="productList__productDiv">
                 <c:forEach items="${beansList}" var="bean">
-                    <div class="productList__product">
+                    <div  class="productList__product">
                         <img class="productList__productImg" src="images/test2.jpg" alt="">
                         <div class="productList__productText">
+
                             <p class="productList__productTitle">${bean.beanName}</p>
                             <p class="productList__productPrice">${bean.beanPrice}원</p>
                             <p class="productList__productCategory">케냐</p>
+                            <button class="productList__button" id="${bean.beansNum}" type="button">상세보기</button>
                             <div class="productList__likeButton">
                                 <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
                                 <p class="mainBeanBest__productLikeCount">${bean.likeCount}</p>
@@ -89,27 +92,24 @@
             </div>
         </div>
     </section>
-<script>	
-	function categoryHandler () {
-		document.querySelector('#sorting').submit();
-	}
-	
-	function prodDetailHandler(event) {
-		let beans = event.target.getAttribute('id');
-		
-		let beansNum = parseInt(beans, 10);
-		
-		let url = '/coffee/productListDetail?productListDetail&beansNum=' + beansNum;
-		
-		location.href = url;
-	}
 
-	function init() {
-		document.querySelector('#category').addEventListener('change', categoryHandler);
-		document.querySelector('#productList').addEventListener('click', prodDetailHandler);
-		
-	}
+<script>
+    function categoryHandler () {
+        document.querySelector('#sorting').submit();
+    }
 
-	window.addEventListener('load', init);
-	</script>
+    function prodDetailHandler(event) {
+        let beans = event.target.getAttribute('id');
+        //alert(beans);
+
+        let url = '/coffee/goListDetail?beansNum=' + beans;
+        location.href = url;
+    }
+    function init() {
+        //document.querySelector('#category').addEventListener('change', categoryHandler);
+        document.querySelector('#beansTable').addEventListener('click', prodDetailHandler);
+
+    }
+    window.addEventListener('load', init);
+</script>
 <%@ include file="/WEB-INF/views/footer.jsp"%>

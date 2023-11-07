@@ -1,19 +1,15 @@
 package model.product;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import javax.servlet.http.HttpSession;
-
 import model.member.BuyerDO;
-import model.member.SellerDO;
+
+import javax.servlet.http.HttpSession;
+//import model.member.SellerDO;
+
 
 public class BeansDAO {
 
@@ -37,33 +33,34 @@ public class BeansDAO {
 
 	// 이미지업로드 테스트
 	public void insertBeans(BeansDO newBeans) {
-		try {
-			sql = "INSERT INTO beans (beans_num, seller_email, category_num, bean_name, bean_price, bean_img, descript, delivery_charge) "
-					+ "VALUES (sq_beans_num.nextval, ?, ?, ?, ?, ?, ?, ?)";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, newBeans.getSellerEmail());
-			pstmt.setInt(2, newBeans.getCategoryNum());
-			pstmt.setString(3, newBeans.getBeanName());
-			pstmt.setInt(4, newBeans.getBeanPrice());
-			pstmt.setString(5, newBeans.getBeanImg());
-			pstmt.setString(6, newBeans.getDescript());
-			pstmt.setInt(7, newBeans.getDeliveryCharge());
-			System.out.println(newBeans + "-1");
-			pstmt.executeUpdate();
-			// 파일을 실제로 업로드하고 저장 경로를 데이터베이스에 저장해야 합니다.
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+
+	    try {
+            sql = "INSERT INTO beans (beans_num, seller_email, category_num, bean_name, bean_price, bean_img, descript, delivery_charge) " +
+                  "VALUES (sq_beans_num.nextval, ?, ?, ?, ?, ?, ?, ?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, newBeans.getSellerEmail());
+            pstmt.setInt(2, newBeans.getCategoryNum());
+            pstmt.setString(3, newBeans.getBeanName());
+            pstmt.setLong(4, newBeans.getBeanPrice());
+            pstmt.setString(5, newBeans.getBeanImg());
+            pstmt.setString(6, newBeans.getDescript());
+            pstmt.setLong(7, newBeans.getDeliveryCharge());
+            System.out.println(newBeans+"-1");
+            pstmt.executeUpdate();
+            // 파일을 실제로 업로드하고 저장 경로를 데이터베이스에 저장해야 합니다.
+	    	} catch (SQLException e) {
+	    		e.printStackTrace();
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+	    	} finally {
+	    		if (pstmt != null) {
+	    			try {
+	    				pstmt.close();
+	    			} catch (SQLException e) {
+	    				e.printStackTrace();
+	    			}
+	    		}
+	    	}
 	}
 
 	// 상품 '정보' 조회
@@ -71,8 +68,10 @@ public class BeansDAO {
 
 		BeansDO beans = new BeansDO();
 
-		sql = "select bean_name, bean_price, bean_img, descript, delivery_charge, bean_thumbnail "
-				+ "from beans where beans_num = ?";
+
+		sql = "select bean_name, bean_price, bean_img, descript, delivery_charge" + 
+			  "from beans where beans_num = ?";
+
 
 		try {
 			this.pstmt = conn.prepareStatement(this.sql);
@@ -81,11 +80,10 @@ public class BeansDAO {
 
 			if (rs.next()) {
 				beans.setBeanName(rs.getString("bean_name"));
-				beans.setBeanPrice(rs.getInt("bean_price"));
+				beans.setBeanPrice(rs.getLong("bean_price"));
 				beans.setBeanImg(rs.getString("bean_img"));
 				beans.setDescript(rs.getString("descript"));
 				beans.setDeliveryCharge(rs.getInt("delivery_charge"));
-				beans.setBeanThumbnail(rs.getString("bean_thumbnail"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -118,7 +116,6 @@ public class BeansDAO {
 				beans.setBeanImg(rs.getString("bean_img"));
 				beans.setDescript(rs.getString("descript"));
 				beans.setDeliveryCharge(rs.getInt("delivery_charge"));
-				beans.setBeanThumbnail(rs.getString("bean_thumbnail"));
 				beans.setDeadline(rs.getString("deadline"));
 				beans.setGoalQty(rs.getInt("goal_qty"));
 				beans.setGoalPrice(rs.getInt("goal_price"));
@@ -468,18 +465,19 @@ public class BeansDAO {
 		try {
 			this.conn.setAutoCommit(false);
 
-			this.sql = "INSERT INTO BEANS (seller_email, beans_num, BEAN_name, BEAN_PRICE,"
-					+ "category_name, DELIVERY_CHARGE) " + // "bean_img, descript)" +
-					"VALUES (?, sq_beans_num.nextval, ?, ?, ?, ?)";
-			// ", ?, ?
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, sessionSeller);
-			pstmt.setString(2, beansDO.getBeanName());
-			pstmt.setInt(3, beansDO.getBeanPrice());
-			pstmt.setString(4, beansDO.getCategoryName());
-			pstmt.setInt(5, beansDO.getDeliveryCharge());
-			// pstmt.setString(5, beansDO.getBeanImg());
-			// pstmt.setString(6, beansDO.getDescript());
+			this.sql =  "INSERT INTO BEANS (seller_email, beans_num, BEAN_name, BEAN_PRICE," +
+				 	"category_num, DELIVERY_CHARGE) "
+				 	+ //"bean_img, descript)" +
+				 	"VALUES (?, sq_beans_num.nextval, ?, ?, ?, ?)";
+				 	 //", ?, ?
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, sessionSeller);
+		pstmt.setString(2, beansDO.getBeanName());
+		pstmt.setLong(3, beansDO.getBeanPrice());
+		pstmt.setInt(4, beansDO.getCategoryNum());
+		pstmt.setLong(5, beansDO.getDeliveryCharge());
+		//pstmt.setString(5, beansDO.getBeanImg());
+		//pstmt.setString(6, beansDO.getDescript());
 
 			rowCount = pstmt.executeUpdate();
 			this.conn.commit();
@@ -513,12 +511,12 @@ public class BeansDAO {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, beansDO.getSellerEmail());
 				pstmt.setString(2, beansDO.getBeanName());
-				pstmt.setInt(3, beansDO.getBeanPrice());
-				pstmt.setInt(4, beansDO.getGoalPrice());
+				pstmt.setLong(3, beansDO.getBeanPrice());
+				pstmt.setLong(4, beansDO.getGoalPrice());
 				pstmt.setInt(5, beansDO.getCategoryNum());
 				pstmt.setInt(6, beansDO.getGoalQty());
 				pstmt.setString(7, beansDO.getDeadline());
-				pstmt.setInt(8, beansDO.getDeliveryCharge());
+				pstmt.setLong(8, beansDO.getDeliveryCharge());
 				pstmt.setString(10, beansDO.getDescript());
 				pstmt.setString(11, beansDO.getBeanImg());
 
@@ -579,8 +577,8 @@ public class BeansDAO {
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, beansDO.getBeanName());
-			pstmt.setInt(2, beansDO.getBeanPrice());
-			pstmt.setInt(3, beansDO.getDeliveryCharge());
+			pstmt.setLong(2, beansDO.getBeanPrice());
+			pstmt.setLong(3, beansDO.getDeliveryCharge());
 			pstmt.setString(4, beansDO.getBeanImg());
 			pstmt.setString(5, beansDO.getDescript());
 			pstmt.setInt(7, beansDO.getBeansNum());
@@ -812,4 +810,70 @@ public class BeansDAO {
 
 		return rowCount;
 	}
+
+	//판매 내역 조회
+	public ArrayList<BeansDO> getSellList(String sellerEmail, int statusNum, String groupOrOther) {
+
+		ArrayList<BeansDO> sellList = new ArrayList<>();
+
+		//statusNum 판매종료 - 1, 판매중 - 0
+		//groupOrOther 공동구매 - "group", 일반구매 - other
+		if (statusNum == 0) {
+            //공동구매 판매중
+            if (groupOrOther.equals("group")) {
+				this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount " +
+						"from beans where seller_email = ? " +
+						"and status_num = 0 " +
+						"and deadline is not null " +
+						"order by beans_num desc";
+			}
+			else {
+				//일반구매 판매중
+				this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount " +
+						"from beans where seller_email = ? and status_num = 0 and deadline is null " +
+						"order by beans_num desc";
+			}
+		} else {
+			if (groupOrOther.equals("group")) {
+				//공동구매 판매종료
+				this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount " +
+						"from beans where seller_email = ? and status_num = 1 and deadline is not null " +
+						"order by beans_num desc";
+			} else {
+				//일반구매 판매종료
+				this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount " +
+						"from beans where seller_email = ? and status_num = 1 and deadline is null " +
+						"order by beans_num desc";
+			}
+		}
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, sellerEmail);
+				rs = pstmt.executeQuery();
+
+				BeansDO beans = null;
+
+				while (rs.next()) {
+					beans = new BeansDO();
+					beans.setBeansNum(rs.getInt("beans_num"));
+					beans.setBeanName(rs.getString("bean_name"));
+					beans.setBeanPrice(rs.getInt("bean_price"));
+					beans.setBeanImg(rs.getString("bean_img"));
+					beans.setBeanTotalSellCount(rs.getInt("bean_total_selcount"));
+
+					sellList.add(beans);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (!pstmt.isClosed()) {
+						pstmt.close();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return sellList;
+		}
 }
