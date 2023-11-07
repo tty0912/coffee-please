@@ -1,7 +1,7 @@
-//package main.java.controller;
 package controller;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import model.service.ImgUpload;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +24,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-//import main.java.model.member.*;
 import model.member.*;
 import model.product.BeansDAO;
 import model.product.BeansDO;
@@ -52,20 +54,22 @@ import model.order.*;
 //@RequestMapping()
 public class MemberController {
 	private BuyerDO buyer;
-	private BuyerDAO buyerDAO = new BuyerDAO();
+	private final BuyerDAO buyerDAO = new BuyerDAO();
 	private SellerDO seller;
-	private SellerDAO sellerDAO = new SellerDAO();
+	private final SellerDAO sellerDAO = new SellerDAO();
 	private BeansDO beansDO;
-	private BeansDAO beansDAO = new BeansDAO();
-	private LikeDAO likeDAO = new LikeDAO();
-	private OrderProductDAO orderProductDAO = new OrderProductDAO();
+	private final BeansDAO beansDAO = new BeansDAO();
+	private final LikeDAO likeDAO = new LikeDAO();
+	private final OrderProductDAO orderProductDAO = new OrderProductDAO();
+	private final ImgUpload imgUpload = new ImgUpload();
 	
 	public MemberController() {}
 	
 	//메인
 	@GetMapping("/main")
-	public String main(HttpSession session) {
-		
+	public String main(HttpSession session, Model model) {
+		model.addAttribute("categoryList", beansDAO.getAllCategory());
+		model.addAttribute("bestBean", beansDAO.bestBeanArray());
 		
 		if (session.getAttribute("buyerEmail") != null) {
 			
@@ -195,11 +199,21 @@ public class MemberController {
 	
 	// 구매자 회원정보 수정
 	@PostMapping("/buyerModifyChange")
-	public String buyerModifyChange(@ModelAttribute BuyerDO buyer, HttpSession session, Model model) {
+	public String buyerModifyChange(@ModelAttribute BuyerDO buyer, HttpServletRequest request, HttpSession session, Model model) throws IOException {
+
+		String directory = "";
+
+		int sizeLimit = 1024 * 1024 * 5;
+		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
+				"UTF-8", new DefaultFileRenamePolicy());
+
+
+		String[] img = imgUpload.saveImg(multi);
+
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 		buyer.setBuyerEmail(sessionBuyer);
+		buyer.setBuyerImg(img[0]);
 		buyerDAO.updateBuyer(buyer);
-		
 		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
 		return "myPageBuyer";
 	}
@@ -236,7 +250,17 @@ public class MemberController {
 	
 	// 판매자 정보수정
 	@PostMapping("/sellerModifyChange")
-	public String sellerModifyChange(@ModelAttribute SellerDO seller, HttpSession session, Model model) {
+	public String sellerModifyChange(@ModelAttribute SellerDO seller,HttpServletRequest request, HttpSession session, Model model) throws IOException {
+
+		String directory = "";
+
+		int sizeLimit = 1024 * 1024 * 5;
+		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
+				"UTF-8", new DefaultFileRenamePolicy());
+
+
+		String[] img = imgUpload.saveImg(multi);
+
 		String sessionBuyer = String.valueOf(session.getAttribute("sellerEmail"));
 		seller.setSellerEmail(sessionBuyer);
 		sellerDAO.updateSeller(seller);

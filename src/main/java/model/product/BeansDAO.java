@@ -1,22 +1,15 @@
-//package main.java.model.product;
 package model.product;
 
-//import main.java.model.member.BuyerDO;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import javax.servlet.http.HttpSession;
-
 import model.member.BuyerDO;
-import model.member.SellerDO;
+
+import javax.servlet.http.HttpSession;
+//import model.member.SellerDO;
+
 
 
 public class BeansDAO {
@@ -74,8 +67,10 @@ public class BeansDAO {
 
 		BeansDO beans = new BeansDO();
 
+
 		sql = "select bean_name, bean_price, bean_img, descript, delivery_charge" + 
 			  "from beans where beans_num = ?";
+
 
 		try {
 			this.pstmt = conn.prepareStatement(this.sql);
@@ -142,29 +137,28 @@ public class BeansDAO {
 	public ArrayList<BeansDO> bestBeanArray() {
 
 		ArrayList<BeansDO> beanList = new ArrayList<BeansDO>();
-		sql = "select bean_img, like_count, rownum from" +
-				"(select bean_img, like_count, rownum from beans order by like_count desc)" +
-				"where rownum between 1 and 5"; 
-    	try {
+		sql = "select bean_img, like_count, rownum from"
+				+ "(select bean_img, like_count, rownum from beans order by like_count desc)"
+				+ "where rownum between 1 and 5";
+		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			BeansDO beansDO = null;
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				beansDO = new BeansDO();
-				
+
 				beansDO.setBeanImg(rs.getString("bean_img"));
 				beansDO.setLikeCount(rs.getInt("like_count"));
-				
+
 				beanList.add(beansDO);
 
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		finally {			
+		} finally {
 			try {
-				if(!stmt.isClosed()) {
+				if (!stmt.isClosed()) {
 					stmt.close();
 				}
 			} catch (Exception e) {
@@ -174,13 +168,11 @@ public class BeansDAO {
 		return beanList;
 	}
 
-	// 일반 상품 목록 정보 가져오기
-	public ArrayList<BeansDO> getBeansList(String str) {
-
-
+	// 모든 상품 가져오기
+	public ArrayList<BeansDO> getAllBeans(String str) {
 		ArrayList<BeansDO> resultList = new ArrayList<BeansDO>();
 
-		sql = "select * from beans where deadline is null";
+		sql = "select * from beans where deadline is null order by beans_num desc";
 
 		try {
 			this.pstmt = conn.prepareStatement(this.sql);
@@ -197,12 +189,13 @@ public class BeansDAO {
 				beans.setDeadline(rs.getString("deadline"));
 				beans.setGoalQty(rs.getInt("goal_qty"));
 				beans.setGoalPrice(rs.getInt("goal_price"));
-				
+				beans.setBeanTotalSellCount(rs.getInt("bean_total_selcount"));
+
 				if (str == null || beans.getBeanName().contains(str)) {
-	                resultList.add(beans);
+					resultList.add(beans);
 				}
 			}
-		
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -214,18 +207,147 @@ public class BeansDAO {
 				e.printStackTrace();
 			}
 		}
+
+		return resultList;
+	}
+
+	// 일반 상품 목록 정보 가져오기
+	public ArrayList<BeansDO> getBeansList(int categoryNum, String str) {
+
+		ArrayList<BeansDO> resultList = new ArrayList<BeansDO>();
+
+		sql = "select * from beans where category_num = ? and deadline is null";
+
+		try {
+			this.pstmt = conn.prepareStatement(this.sql);
+			this.pstmt.setInt(1, categoryNum);
+			rs = this.pstmt.executeQuery();
+
+			while (rs.next()) {
+				BeansDO beans = new BeansDO();
+
+				beans.setBeansNum(rs.getInt("beans_num"));
+				beans.setBeanName(rs.getString("bean_name"));
+				beans.setBeanPrice(rs.getInt("bean_price"));
+				beans.setBeanImg(rs.getString("bean_img"));
+				beans.setLikeCount(rs.getInt("like_count"));
+				beans.setDeadline(rs.getString("deadline"));
+				beans.setGoalQty(rs.getInt("goal_qty"));
+				beans.setGoalPrice(rs.getInt("goal_price"));
+				beans.setBeanTotalSellCount(rs.getInt("bean_total_selcount"));
+
+				if (str == null || beans.getBeanName().contains(str)) {
+					resultList.add(beans);
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (this.pstmt != null && !this.pstmt.isClosed()) {
+					this.pstmt.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return resultList;
+	}
+
+	/*
+	 * // - 테스트 public ArrayList<BeansDO> getBeansList(int categoryNum, String
+	 * sortCol, String str, boolean desc) { ArrayList<BeansDO> resultList = new
+	 * ArrayList<BeansDO>();
+	 * 
+	 * String where = "";
+	 * 
+	 * if(categoryNum != 0) { where = "where category_num = ? and "; } else { where
+	 * = "where "; }
+	 * 
+	 * String orderBy = "";
+	 * 
+	 * if(desc) { orderBy = "order by " + sortCol + " desc"; } else { orderBy =
+	 * "order by " + sortCol; }
+	 * 
+	 * this.sql = "select * from beans " + where + "deadline is null " + orderBy;
+	 * 
+	 * try { this.pstmt = conn.prepareStatement(this.sql); this.pstmt.setInt(1,
+	 * categoryNum); rs = this.pstmt.executeQuery();
+	 * 
+	 * while (rs.next()) { BeansDO beans = new BeansDO();
+	 * 
+	 * beans.setBeansNum(rs.getInt("beans_num"));
+	 * beans.setBeanName(rs.getString("bean_name"));
+	 * beans.setBeanPrice(rs.getInt("bean_price"));
+	 * beans.setBeanImg(rs.getString("bean_img"));
+	 * beans.setLikeCount(rs.getInt("like_count"));
+	 * beans.setDeadline(rs.getString("deadline"));
+	 * beans.setGoalQty(rs.getInt("goal_qty"));
+	 * beans.setGoalPrice(rs.getInt("goal_price"));
+	 * beans.setBeanTotalSellCount(rs.getInt("bean_total_selcount"));
+	 * 
+	 * if (str == null || beans.getBeanName().contains(str)) {
+	 * resultList.add(beans); } }
+	 * 
+	 * } catch (Exception e) { e.printStackTrace(); } finally { try { if (this.pstmt
+	 * != null && !this.pstmt.isClosed()) { this.pstmt.close(); } } catch (Exception
+	 * e) { e.printStackTrace(); } } return resultList; }
+	 */
+
+	// 모든 공동 구매 상품 가져오기
+	public ArrayList<BeansDO> getAllGroupBeans(String str) {
+		ArrayList<BeansDO> resultList = new ArrayList<BeansDO>();
+
+		sql = "select * from beans where deadline is not null order by beans_num desc";
+
+		try {
+			this.pstmt = conn.prepareStatement(this.sql);
+			rs = this.pstmt.executeQuery();
+
+			while (rs.next()) {
+				BeansDO beans = new BeansDO();
+
+				beans.setBeansNum(rs.getInt("beans_num"));
+				beans.setBeanName(rs.getString("bean_name"));
+				beans.setBeanPrice(rs.getInt("bean_price"));
+				beans.setBeanImg(rs.getString("bean_img"));
+				beans.setLikeCount(rs.getInt("like_count"));
+				beans.setDeadline(rs.getString("deadline"));
+				beans.setGoalQty(rs.getInt("goal_qty"));
+				beans.setGoalPrice(rs.getInt("goal_price"));
+				beans.setBeanTotalSellCount(rs.getInt("bean_total_selcount"));
+
+				if (str == null || beans.getBeanName().contains(str)) {
+					resultList.add(beans);
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (this.pstmt != null && !this.pstmt.isClosed()) {
+					this.pstmt.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
 		return resultList;
 	}
 
 	// 공동구매 상품만 가져오기
-	public ArrayList<BeansDO> getGroupBeansList(String str) {
+	public ArrayList<BeansDO> getGroupBeansList(String str, int categoryNum) {
 
 		ArrayList<BeansDO> resultList = new ArrayList<BeansDO>();
 
-		sql = "select * from beans where deadline is not null";
+		sql = "select * from beans where category_num = ? and deadline is not null";
 
 		try {
 			this.pstmt = conn.prepareStatement(this.sql);
+			this.pstmt.setInt(1, categoryNum);
 			rs = this.pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -239,9 +361,10 @@ public class BeansDAO {
 				beans.setDeadline(rs.getString("deadline"));
 				beans.setGoalQty(rs.getInt("goal_qty"));
 				beans.setGoalPrice(rs.getInt("goal_price"));
+				beans.setBeanTotalSellCount(rs.getInt("bean_total_selcount"));
 
 				if (str == null || beans.getBeanName().contains(str)) {
-	                resultList.add(beans);
+					resultList.add(beans);
 				}
 			}
 		} catch (Exception e) {
@@ -258,114 +381,108 @@ public class BeansDAO {
 		return resultList;
 	}
 
-	// 일반 상품 페이징 정렬
-	public ArrayList<BeansDO> sortedPage(String sort, String str) {
-	    ArrayList<BeansDO> allBeanList = getBeansList(str);
-
-	    // 정렬
-	    if (sort != null && !sort.equals("default")) {
-	        if (sort.equals("bestSelling")) {
-	            // 판매량 순 정렬(판매량 수가 같을시 좋아요 순, 좋아요 순도 같을 시 최신 상품 순)
-	            Collections.sort(allBeanList, new Comparator<BeansDO>() {
-	                @Override
-	                public int compare(BeansDO sc1, BeansDO sc2) {
-	                    Integer sellCount1 = sc1.getBeanTotalSellCount();
-	                    Integer sellCount2 = sc2.getBeanTotalSellCount();
-	                    if (sellCount1 != sellCount2) {
-	                        return sellCount2.compareTo(sellCount1);
-	                    } else {
-	                        Integer beansNum1 = sc1.getBeansNum();
-	                        Integer beansNum2 = sc2.getBeansNum();
-	                        return beansNum2.compareTo(beansNum1);
-	                    }
-	                }
-	            });
-	        } else if (sort.equals("mostLiked")) {
-	            // 좋아요 순 정렬 (좋아요 수가 같을 시 최신 상품 순)
-	            Collections.sort(allBeanList, new Comparator<BeansDO>() {
-	                public int compare(BeansDO lc1, BeansDO lc2) {
-	                    Integer likeCount1 = lc1.getLikeCount();
-	                    Integer likeCount2 = lc2.getLikeCount();
-	                    if (likeCount1 != likeCount2) {
-	                        return likeCount2.compareTo(likeCount1);
-	                    } else {
-	                        Integer beansNum1 = lc1.getBeansNum();
-	                        Integer beansNum2 = lc2.getBeansNum();
-	                        return beansNum2.compareTo(beansNum1);
-	                    }
-	                }
-	            });
-	        }
-	    } else {
-	        // 기본 정렬: 최신 등록 순
-	        Collections.sort(allBeanList, new Comparator<BeansDO>() {
-	            @Override
-	            public int compare(BeansDO bn1, BeansDO bn2) {
-	                Integer beansNum1 = bn1.getBeansNum();
-	                Integer beansNum2 = bn2.getBeansNum();
-	                return beansNum2.compareTo(beansNum1);
-	            }
-	        });
-	    }
-	    return allBeanList;
-	}
-
-	// 공동 구매 상품 페이징 정렬
-	public ArrayList<BeansDO> sortedPage2(String sort, String str) {
-		ArrayList<BeansDO> allBeanList = getGroupBeansList(str);
-
-		// 정렬
-		if (sort != null && !sort.equals("default")) {
-			if (sort.equals("bestSelling")) {
-				// 판매량 순 정렬
+	// 일반 상품 정렬
+	public ArrayList<BeansDO> sortedPage(String sort, String str, int categoryNum) {
+		ArrayList<BeansDO> allBeanList = getBeansList(categoryNum, str);
+		if (categoryNum != 0) {
+			if (sort != null && !sort.equals("recent")) {
+				if (sort.equals("bestSelling")) {
+					// 판매량 순 정렬
+					Collections.sort(allBeanList, new Comparator<BeansDO>() {
+						@Override
+						public int compare(BeansDO sc1, BeansDO sc2) {
+							Integer sellCount1 = sc1.getBeanTotalSellCount();
+							Integer sellCount2 = sc2.getBeanTotalSellCount();
+							if (sellCount1 != sellCount2) {
+								return sellCount2.compareTo(sellCount1);
+							} else {
+								Integer beansNum1 = sc1.getBeansNum();
+								Integer beansNum2 = sc2.getBeansNum();
+								return beansNum2.compareTo(beansNum1);
+							}
+						}
+					});
+				} else if (sort.equals("mostLiked")) {
+					// 좋아요 순 정렬
+					Collections.sort(allBeanList, new Comparator<BeansDO>() {
+						public int compare(BeansDO lc1, BeansDO lc2) {
+							Integer likeCount1 = lc1.getLikeCount();
+							Integer likeCount2 = lc2.getLikeCount();
+							if (likeCount1 != likeCount2) {
+								return likeCount2.compareTo(likeCount1);
+							} else {
+								Integer beansNum1 = lc1.getBeansNum();
+								Integer beansNum2 = lc2.getBeansNum();
+								return beansNum2.compareTo(beansNum1);
+							}
+						}
+					});
+				}
+			} else {
+				// 기본 정렬: 최신 등록 순
 				Collections.sort(allBeanList, new Comparator<BeansDO>() {
 					@Override
-					public int compare(BeansDO sc1, BeansDO sc2) {
-						Integer sellCount1 = sc1.getBeanTotalSellCount();
-						Integer sellCount2 = sc2.getBeanTotalSellCount();
-						if (sellCount1 != sellCount2) {
-							return sellCount2.compareTo(sellCount1);
-						} else if (sellCount1 == sellCount2) {
-							Integer likeCount1 = sc1.getLikeCount();
-							Integer likeCount2 = sc2.getLikeCount();
-							return likeCount2.compareTo(likeCount1);
-						} else {
-							Integer beansNum1 = sc1.getBeansNum();
-							Integer beansNum2 = sc2.getBeansNum();
-							return beansNum2.compareTo(beansNum1);
-						}
-					}
-				});
-			} else if (sort.equals("mostLiked")) {
-				// 좋아요 순 정렬 (수가 같을시 판매량 순
-				Collections.sort(allBeanList, new Comparator<BeansDO>() {
-					public int compare(BeansDO lc1, BeansDO lc2) {
-						Integer likeCount1 = lc1.getLikeCount();
-						Integer likeCount2 = lc2.getLikeCount();
-						if (likeCount1 != likeCount2) {
-							return likeCount2.compareTo(likeCount1);
-						} else if (likeCount1 == likeCount2) {
-							Integer sellCount1 = lc1.getBeanTotalSellCount();
-							Integer sellCount2 = lc2.getBeanTotalSellCount();
-							return sellCount2.compareTo(sellCount1);
-						} else {
-							Integer beansNum1 = lc1.getBeansNum();
-							Integer beansNum2 = lc2.getBeansNum();
-							return beansNum2.compareTo(beansNum1);
-						}
+					public int compare(BeansDO bn1, BeansDO bn2) {
+						Integer beansNum1 = bn1.getBeansNum();
+						Integer beansNum2 = bn2.getBeansNum();
+						return beansNum2.compareTo(beansNum1);
 					}
 				});
 			}
-		} else {
-			// 기본 정렬: 최신 등록 순
-			Collections.sort(allBeanList, new Comparator<BeansDO>() {
-				@Override
-				public int compare(BeansDO bn1, BeansDO bn2) {
-					Integer beansNum1 = bn1.getBeansNum();
-					Integer beansNum2 = bn2.getBeansNum();
-					return beansNum2.compareTo(beansNum1);
+		}
+		return allBeanList;
+	}
+
+	// 공동 구매 상품 페이징 정렬
+	public ArrayList<BeansDO> sortedPage2(String sort, String str, int categoryNum) {
+		ArrayList<BeansDO> allBeanList = getGroupBeansList(str, categoryNum);
+
+		// 정렬
+		if (categoryNum != 0) {
+			if (sort != null && !sort.equals("recent")) {
+				if (sort.equals("bestSelling")) {
+					// 판매량 순 정렬
+					Collections.sort(allBeanList, new Comparator<BeansDO>() {
+						@Override
+						public int compare(BeansDO sc1, BeansDO sc2) {
+							Integer sellCount1 = sc1.getBeanTotalSellCount();
+							Integer sellCount2 = sc2.getBeanTotalSellCount();
+							if (sellCount1 != sellCount2) {
+								return sellCount2.compareTo(sellCount1);
+							} else {
+								Integer beansNum1 = sc1.getBeansNum();
+								Integer beansNum2 = sc2.getBeansNum();
+								return beansNum2.compareTo(beansNum1);
+							}
+						}
+					});
+				} else if (sort.equals("mostLiked")) {
+					// 좋아요 순 정렬
+					Collections.sort(allBeanList, new Comparator<BeansDO>() {
+						public int compare(BeansDO lc1, BeansDO lc2) {
+							Integer likeCount1 = lc1.getLikeCount();
+							Integer likeCount2 = lc2.getLikeCount();
+							if (likeCount1 != likeCount2) {
+								return likeCount2.compareTo(likeCount1);
+							} else {
+								Integer beansNum1 = lc1.getBeansNum();
+								Integer beansNum2 = lc2.getBeansNum();
+								return beansNum2.compareTo(beansNum1);
+							}
+						}
+					});
 				}
-			});
+			} else {
+				// 기본 정렬: 최신 등록 순
+				Collections.sort(allBeanList, new Comparator<BeansDO>() {
+					@Override
+					public int compare(BeansDO bn1, BeansDO bn2) {
+						Integer beansNum1 = bn1.getBeansNum();
+						Integer beansNum2 = bn2.getBeansNum();
+						return beansNum2.compareTo(beansNum1);
+					}
+				});
+			}
 		}
 		return allBeanList;
 	}
@@ -410,7 +527,7 @@ public class BeansDAO {
 				 	+ //"bean_img, descript)" +
 				 	"VALUES (?, sq_beans_num.nextval, ?, ?, ?, ?)";
 				 	 //", ?, ?
-		pstmt = conn.prepareStatement(sql);	
+		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, sessionSeller);
 		pstmt.setString(2, beansDO.getBeanName());
 		pstmt.setLong(3, beansDO.getBeanPrice());
@@ -418,7 +535,7 @@ public class BeansDAO {
 		pstmt.setLong(5, beansDO.getDeliveryCharge());
 		//pstmt.setString(5, beansDO.getBeanImg());
 		//pstmt.setString(6, beansDO.getDescript());
-			
+
 
 			rowCount = pstmt.executeUpdate();
 			this.conn.commit();
@@ -540,10 +657,10 @@ public class BeansDAO {
 		return rowCount;
 	}
 
-	// 카테고리 번호목록(국기 리스트)가져오기 - 카테고리 컬럼에 이미지로 대체할듯
+	// 카테고리 번호목록(국기 리스트)가져오기 
 	public ArrayList<CategoryDO> getAllCategory() {
 		ArrayList<CategoryDO> categoryList = new ArrayList<CategoryDO>();
-		this.sql = "select c_name from category";
+		this.sql = "select category_name, category_img from category";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
@@ -552,7 +669,8 @@ public class BeansDAO {
 			while (rs.next()) {
 				category = new CategoryDO();
 
-				category.setCategoryName(rs.getString("c_name"));
+				category.setCategoryName(rs.getString("category_name"));
+				category.setCategoryImg(rs.getString("category_img"));
 
 				categoryList.add(category);
 			}
@@ -570,19 +688,44 @@ public class BeansDAO {
 
 		return categoryList;
 	}
+	//개별 상품 카테고리 이름 가져오기
+	public String getCategoryName(int categoryNum) {
+		String categoryName = "";
+		this.sql = "select category_name from category where category_num = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, categoryNum);
+			rs = pstmt.executeQuery();
 
+			while (rs.next()) {
+				categoryName = rs.getString("category_name");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (!pstmt.isClosed()) {
+					pstmt.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return categoryName;
+	}
 	// 원두 정렬하기 - 원산지별
 
-	public ArrayList<BeansDO> arrayOrigin(String cName) {
+	public ArrayList<BeansDO> arrayOrigin(int categoryNum) {
 		ArrayList<BeansDO> beanList = new ArrayList<BeansDO>();
 
 		this.sql = "select beans.bean_name, beans.bean_img, beans.like_count  "
-				+ "from beans join category on category.category_num = beans.category_num where c_name = ?"
+				+ "from beans join category on category.category_num = beans.category_num where category_num = ?"
 				+ "order by beans.beans_regdate desc";
 		try {
 			this.pstmt = conn.prepareStatement(sql);
 
-			this.pstmt.setString(1, cName);
+			this.pstmt.setInt(1, categoryNum);
 			rs = this.pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -667,36 +810,32 @@ public class BeansDAO {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}		
-    	return beanList;
-    }
-
-	//likeCount 수정하기
-	public int beansLikeCountUpdate(int beansNum, boolean bl){
-		int rowCount = 0;
-		if(bl){
-			this.sql = "update beans set like_count = like_count + 1 where beans_num = ?";
 		}
-		else{
+		return beanList;
+	}
+
+	// likeCount 수정하기
+	public int beansLikeCountUpdate(int beansNum, boolean bl) {
+		int rowCount = 0;
+		if (bl) {
+			this.sql = "update beans set like_count = like_count + 1 where beans_num = ?";
+		} else {
 			this.sql = "update beans set like_count = like_count - 1 where beans_num = ?";
 		}
 
-		try{
+		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, beansNum);
 
 			rowCount = pstmt.executeUpdate();
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			try {
-				if(!pstmt.isClosed()) {
+				if (!pstmt.isClosed()) {
 					pstmt.close();
 				}
-			}
-			catch(Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -732,4 +871,70 @@ public class BeansDAO {
 
 		return rowCount;
 	}
+
+	//판매 내역 조회
+	public ArrayList<BeansDO> getSellList(String sellerEmail, int statusNum, String groupOrOther) {
+
+		ArrayList<BeansDO> sellList = new ArrayList<>();
+
+		//statusNum 판매종료 - 1, 판매중 - 0
+		//groupOrOther 공동구매 - "group", 일반구매 - other
+		if (statusNum == 0) {
+            //공동구매 판매중
+            if (groupOrOther.equals("group")) {
+				this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount " +
+						"from beans where seller_email = ? " +
+						"and status_num = 0 " +
+						"and deadline is not null " +
+						"order by beans_num desc";
+			}
+			else {
+				//일반구매 판매중
+				this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount " +
+						"from beans where seller_email = ? and status_num = 0 and deadline is null " +
+						"order by beans_num desc";
+			}
+		} else {
+			if (groupOrOther.equals("group")) {
+				//공동구매 판매종료
+				this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount " +
+						"from beans where seller_email = ? and status_num = 1 and deadline is not null " +
+						"order by beans_num desc";
+			} else {
+				//일반구매 판매종료
+				this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount " +
+						"from beans where seller_email = ? and status_num = 1 and deadline is null " +
+						"order by beans_num desc";
+			}
+		}
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, sellerEmail);
+				rs = pstmt.executeQuery();
+
+				BeansDO beans = null;
+
+				while (rs.next()) {
+					beans = new BeansDO();
+					beans.setBeansNum(rs.getInt("beans_num"));
+					beans.setBeanName(rs.getString("bean_name"));
+					beans.setBeanPrice(rs.getInt("bean_price"));
+					beans.setBeanImg(rs.getString("bean_img"));
+					beans.setBeanTotalSellCount(rs.getInt("bean_total_selcount"));
+
+					sellList.add(beans);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (!pstmt.isClosed()) {
+						pstmt.close();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return sellList;
+		}
 }

@@ -15,7 +15,8 @@
                  <div class="mainIntro__loginAll">
                      <div class="mainIntro__loginAfter">
                             <div class="user">
-                             <img class="mainIntro__loginImg" src="${pageContext.request.contextPath }/images/userImginit.png" alt="">
+                       <!--       <img class="mainIntro__loginImg" src="${pageContext.request.contextPath }/images/userImginit.png" alt="">-->
+                            <img class="mainIntro__loginImg" src="${ seller.sellerImg}" alt="">
                              <p class="mainIntro__loginId">${ seller.nickname }<span class="mainIntro__loginIdText">님</span></p>
                          </div>
                          <div class="mainIntro__buyer">
@@ -105,12 +106,16 @@
         <div class="max-container">
             <div class="resisterProduct">
                 <img class="resisterProductImg" src="images/test1.jpg" alt="">
+                
                 <div class="resisterProductButton">
+
                 	<form method="get" action="goResisterProd">
                     <button name="action" value="normal" class="resisterProductButton__detail">일반상품판매등록</button>
                     <button name="action" value="group" class="resisterProductButton__detail">공동상품판매등록</button>
                     </form>                    
+
                 </div>
+                
             </div>
         </div>
     </section>

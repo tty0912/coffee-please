@@ -1,4 +1,4 @@
-package main.java.model.order;
+package model.order;
 
 
 import org.junit.Test;

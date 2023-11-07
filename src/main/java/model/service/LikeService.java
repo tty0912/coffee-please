@@ -1,10 +1,5 @@
-//package main.java.model.service;
 package model.service;
 
-
-
-//import main.java.model.like.LikeDAO;
-//import main.java.model.product.BeansDO;
 import model.like.LikeDAO;
 import model.product.*;
 

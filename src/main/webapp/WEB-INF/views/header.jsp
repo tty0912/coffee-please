@@ -23,17 +23,24 @@
     <!-- Javascript -->
     <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script>
 </head>
 <body>
     <!-- Header -->
     <header class="header">
         <nav class="header__nav">
             <ul class="header__menu">
-                <li><a class="header__menu__item" href="/coffee/goProductList">STORE</a></li>
+
+                <li><a class="header__menu__item" href="#about">STORE</a></li>
                 <div class="header__menu__item header__logo">
-                    <a href="/coffee/main"><img class="header__logo__img" src="${pageContext.request.contextPath }/images/logoName.png" alt="logo" /></a>
+                    <img class="header__logo__img" src="images/logoName.png" alt="logo" />
                 </div>
-                <li><a class="header__menu__item" href="/coffee/goProductListGroup">GROUP</a></li>
+                <li><a class="header__menu__item" href="#about">GROUP</a></li>
+            </ul>
+            <ul class="header__side">
+                <li><a class="header__menu__item header__cart" href="#about"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                <li><a class="header__menu__item header__user" href="#about"><i class="fa-regular fa-user"></i></a></li>
+
             </ul>
         </nav>
     </header>
