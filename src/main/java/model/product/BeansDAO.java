@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import model.member.BuyerDO;
 import model.member.SellerDO;
 
+
 public class BeansDAO {
 
 	private Connection conn;
@@ -46,10 +47,10 @@ public class BeansDAO {
             pstmt.setString(1, newBeans.getSellerEmail());
             pstmt.setInt(2, newBeans.getCategoryNum());
             pstmt.setString(3, newBeans.getBeanName());
-            pstmt.setInt(4, newBeans.getBeanPrice());
+            pstmt.setLong(4, newBeans.getBeanPrice());
             pstmt.setString(5, newBeans.getBeanImg());
             pstmt.setString(6, newBeans.getDescript());
-            pstmt.setInt(7, newBeans.getDeliveryCharge());
+            pstmt.setLong(7, newBeans.getDeliveryCharge());
             System.out.println(newBeans+"-1");
             pstmt.executeUpdate();
             // 파일을 실제로 업로드하고 저장 경로를 데이터베이스에 저장해야 합니다.
@@ -73,7 +74,7 @@ public class BeansDAO {
 
 		BeansDO beans = new BeansDO();
 
-		sql = "select bean_name, bean_price, bean_img, descript, delivery_charge, bean_thumbnail " + 
+		sql = "select bean_name, bean_price, bean_img, descript, delivery_charge" + 
 			  "from beans where beans_num = ?";
 
 		try {
@@ -83,11 +84,10 @@ public class BeansDAO {
 
 			if (rs.next()) {
 				beans.setBeanName(rs.getString("bean_name"));
-				beans.setBeanPrice(rs.getInt("bean_price"));
+				beans.setBeanPrice(rs.getLong("bean_price"));
 				beans.setBeanImg(rs.getString("bean_img"));
 				beans.setDescript(rs.getString("descript"));
 				beans.setDeliveryCharge(rs.getInt("delivery_charge"));
-				beans.setBeanThumbnail(rs.getString("bean_thumbnail"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -120,7 +120,6 @@ public class BeansDAO {
 				beans.setBeanImg(rs.getString("bean_img"));
 				beans.setDescript(rs.getString("descript"));
 				beans.setDeliveryCharge(rs.getInt("delivery_charge"));
-				beans.setBeanThumbnail(rs.getString("bean_thumbnail"));
 				beans.setDeadline(rs.getString("deadline"));
 				beans.setGoalQty(rs.getInt("goal_qty"));
 				beans.setGoalPrice(rs.getInt("goal_price"));
@@ -407,16 +406,16 @@ public class BeansDAO {
 			this.conn.setAutoCommit(false);
 
 			this.sql =  "INSERT INTO BEANS (seller_email, beans_num, BEAN_name, BEAN_PRICE," +
-				 	"category_name, DELIVERY_CHARGE) "
+				 	"category_num, DELIVERY_CHARGE) "
 				 	+ //"bean_img, descript)" +
 				 	"VALUES (?, sq_beans_num.nextval, ?, ?, ?, ?)";
 				 	 //", ?, ?
 		pstmt = conn.prepareStatement(sql);	
 		pstmt.setString(1, sessionSeller);
 		pstmt.setString(2, beansDO.getBeanName());
-		pstmt.setInt(3, beansDO.getBeanPrice());
-		pstmt.setString(4, beansDO.getCategoryName());
-		pstmt.setInt(5, beansDO.getDeliveryCharge());
+		pstmt.setLong(3, beansDO.getBeanPrice());
+		pstmt.setInt(4, beansDO.getCategoryNum());
+		pstmt.setLong(5, beansDO.getDeliveryCharge());
 		//pstmt.setString(5, beansDO.getBeanImg());
 		//pstmt.setString(6, beansDO.getDescript());
 			
@@ -453,12 +452,12 @@ public class BeansDAO {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, beansDO.getSellerEmail());
 				pstmt.setString(2, beansDO.getBeanName());
-				pstmt.setInt(3, beansDO.getBeanPrice());
-				pstmt.setInt(4, beansDO.getGoalPrice());
+				pstmt.setLong(3, beansDO.getBeanPrice());
+				pstmt.setLong(4, beansDO.getGoalPrice());
 				pstmt.setInt(5, beansDO.getCategoryNum());
 				pstmt.setInt(6, beansDO.getGoalQty());
 				pstmt.setString(7, beansDO.getDeadline());
-				pstmt.setInt(8, beansDO.getDeliveryCharge());
+				pstmt.setLong(8, beansDO.getDeliveryCharge());
 				pstmt.setString(10, beansDO.getDescript());
 				pstmt.setString(11, beansDO.getBeanImg());
 
@@ -519,8 +518,8 @@ public class BeansDAO {
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, beansDO.getBeanName());
-			pstmt.setInt(2, beansDO.getBeanPrice());
-			pstmt.setInt(3, beansDO.getDeliveryCharge());
+			pstmt.setLong(2, beansDO.getBeanPrice());
+			pstmt.setLong(3, beansDO.getDeliveryCharge());
 			pstmt.setString(4, beansDO.getBeanImg());
 			pstmt.setString(5, beansDO.getDescript());
 			pstmt.setInt(7, beansDO.getBeansNum());

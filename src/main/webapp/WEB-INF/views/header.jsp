@@ -29,11 +29,11 @@
     <header class="header">
         <nav class="header__nav">
             <ul class="header__menu">
-                <li><a class="header__menu__item" href="/coffee/sellerModify">STORE</a></li>
+                <li><a class="header__menu__item" href="/coffee/goProductList">STORE</a></li>
                 <div class="header__menu__item header__logo">
-                    <a href="/coffee/signup"><img class="header__logo__img" src="${pageContext.request.contextPath }/images/logoName.png" alt="logo" /></a>
+                    <a href="/coffee/main"><img class="header__logo__img" src="${pageContext.request.contextPath }/images/logoName.png" alt="logo" /></a>
                 </div>
-                <li><a class="header__menu__item" href="/coffee/buyerModify">GROUP</a></li>
+                <li><a class="header__menu__item" href="/coffee/goProductListGroup">GROUP</a></li>
             </ul>
         </nav>
     </header>
