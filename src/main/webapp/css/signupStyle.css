@@ -96,6 +96,13 @@ button:focus {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     z-index: 999;
 }
+.header__nav {
+    display: flex;
+}
+.header__side {
+    display: flex;
+    padding-left: 27rem;
+}
 .header__logo {
     align-items: center;
     gap: 8px;
@@ -108,6 +115,7 @@ button:focus {
 .header__menu {
     display: flex;
     gap: 1rem;
+    margin-left: 38rem;
 }
 
 .header__menu__item {

@@ -106,12 +106,16 @@
         <div class="max-container">
             <div class="resisterProduct">
                 <img class="resisterProductImg" src="images/test1.jpg" alt="">
+                
                 <div class="resisterProductButton">
-                	<form method="get" action="resisterProductPage">
-                    <button class="resisterProductButton__detail">일반상품판매등록</button>
-                    </form>
-                    <button class="resisterProductButton__detail">공동상품판매등록</button>
+                <form method="get" action="resisterProduct">
+                    <button class="resisterProductButton__detail" type="submit">일반상품판매등록</button>
+               	</form>
+               	<form method="get" action="resisterProductGroup">
+                    <button class="resisterProductButton__detail" type="submit">공동상품판매등록</button>
+                </form>
                 </div>
+                
             </div>
         </div>
     </section>
