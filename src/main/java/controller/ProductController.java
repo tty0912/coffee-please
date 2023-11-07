@@ -218,9 +218,7 @@ public class ProductController {
 	@GetMapping("/goRegisterProd")
 	public String resisterProduct(@RequestParam("action") String action) {
 
-		System.out.println("-----------------------------");
 		if(action.equals("normal")) {
-			System.out.println("===========================");
 			return "registerProduct";
 		}
 		else if(action.equals("group")) {
@@ -238,51 +236,33 @@ public class ProductController {
 	@PostMapping("/registerProd")
 	public String resisterProduct(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
 
-//		System.out.println(request.getParameter("categoryNum"));
-//		int categoryNum = Integer.parseInt(request.getParameter("categoryNum"));
-
-
-		String categoryName = beansDAO.getCategoryName(10);
 		// String directory = "C:\\\\Users\\Jun\\Desktop\\finalproject\\coffee-please\\src\\main\\webapp\\uploadTest";
-		String directory = "C:/Users/H40/finalCoffee/coffee-please/src/main/webapp/registerData/sellerData/beans/" + categoryName;
+		String directory = "D:/multicampus_project/coffee/coffee-please/src/main/webapp/registerData/sellerData/beans/";
 		int sizeLimit = 1024 * 1024 * 5;
 		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
 				"UTF-8", new DefaultFileRenamePolicy());
 
+		String categoryName = multi.getParameter("categoryNum");
+		directory += categoryName;
+
+		multi = new MultipartRequest(request,directory,sizeLimit,
+				"UTF-8", new DefaultFileRenamePolicy());
 
 		String action = multi.getParameter("action");
 		if (action != null && action.equals("register")) {
 
-			// 파일 업로드 액션
-			System.out.println(directory);
-			// 디렉토리 생성w
-			File uploadDir = new File(directory);
-			if (!uploadDir.exists()) {
-				uploadDir.mkdirs();
-			}
-			String savedName = "";
-			String savedName1 = "";
-			@SuppressWarnings("unchecked")
-			Enumeration<String> fileNames = multi.getFileNames();
-			if (fileNames.hasMoreElements()) {
-				String paramName = fileNames.nextElement();
-				savedName = multi.getFilesystemName(paramName);
-			}
-			if (fileNames.hasMoreElements()) {
-				String paramName = fileNames.nextElement();
-				savedName1 = multi.getFilesystemName(paramName);
-			}
+			String[] img = imgUpload.saveImg(multi);
+
 			// 세션이메일을 받아서 판매자 이메일로 저장
 			String sellerEmail = String.valueOf(session.getAttribute("sellerEmail"));
 
 			String beanName = multi.getParameter("beanName");
 			int beanPrice = Integer.parseInt(multi.getParameter("beanPrice"));
-
 			int deliveryCharge = Integer.parseInt(multi.getParameter("deliveryCharge"));
 
 //			"\\finalProject\\uploadTest" + savedName; //
-			String beanImg = "/coffee-please/registerData/sellerData/beans/" + categoryName + "/" + savedName; // 웹 경로로 수정
-			String descript = "/coffee-please/registerData/sellerData/beans/" + categoryName + "/" + savedName1; // 웹 경로로 수정
+			String beanImg = "/coffee-please/registerData/sellerData/beans/" + categoryName + "/" + img[0]; // 웹 경로로 수정
+			String descript = "/coffee-please/registerData/sellerData/beans/" + categoryName + "/" + img[1]; // 웹 경로로 수정
 			// 게시물 생성
 			BeansDO newBeans = new BeansDO();
 			newBeans.setBeanImg(beanImg);
@@ -293,12 +273,9 @@ public class ProductController {
 			newBeans.setCategoryNum(10);
 			newBeans.setDeliveryCharge(deliveryCharge);
 
-			// id 설정 - 필요한 경우 수정
-	//            newBeans.setId((String)request.getSession().getAttribute("userId"));
 			// 데이터베이스에 새 게시물 추가
 			beansDAO.insertBeans(newBeans);
 
-	//            request.setAttribute("uploadedPhoto", photo);
 		}
 		return "redirect:/mainLoginSeller";
 	}
