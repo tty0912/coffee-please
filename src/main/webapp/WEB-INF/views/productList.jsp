@@ -28,6 +28,7 @@
                 <div class="productList__sortSerch">
                     <div class="productList__sortDiv">
                         <span class="productList__sortText">정렬</span>
+
                         <form action="/coffee/productList" method="GET" id="sorting">
 	                        <button class="productList__sort" value="recent" type="submit">최신순</button>
 	                        <button class="productList__sort" value="mostLiked" type="submit">인기순</button>
@@ -46,6 +47,7 @@
                     <div class="productList__product">
                         <img class="productList__productImg" src="images/test2.jpg" alt="">
                         <div class="productList__productText">
+
                             <p class="productList__productTitle">${bean.beanName}</p>
                             <p class="productList__productPrice">${bean.beanPrice}원</p>
                             <p class="productList__productCategory">케냐</p>

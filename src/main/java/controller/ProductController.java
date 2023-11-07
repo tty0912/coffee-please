@@ -2,6 +2,7 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.http.HttpRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpSession;
 
 import javax.servlet.http.HttpSession;
 
+
+import model.service.ImgUpload;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,7 +38,24 @@ import model.product.*;
 
 
 /*
- * 	1) GET	|	/
+ * 	구매자 메서드
+ * 	1) GET	|	/goProdcutList		->	mainLoginBuyer, mainLoginSeller랑 각각 설정? -> productList.jsp
+ *  2) GET	|	/goProdcutListGroup ->	productListGroup.jsp
+ *  2) POST	|	/goListDetail		->	각각의 상품 마다 고유 NUM이 있을텐데 ... -> productListDetail.jsp
+ *  3) POST	|	/goListDetailGroup	->	그룹 상품도 마찬가지 -> productListDetailGroup.jsp
+ *  4) POST	|	/payment			->	상세 페이지에서 결제 누르면 바로이동 -> payment.jsp
+ *  5) POST	|	/paymentComplete	->	결제 완료시 -> paymentComplete.jsp
+ *  6) POST	|	/mainLogin			->	결제 완료 페이지에서 버튼 누르면 메인으로 이동(멤버 컨트롤러에 메서드 정의되어있음) -> mainLoginBuyer
+ *  7) POST	|	/cart				->	어디서 누르는지는 모르겟지만 카트로 이동 -> cart.jsp
+ *  
+ *  장바구니는 마이페이지로 이동하게 만들면 될듯
+ *  
+ *  판매자 메서드
+ *  8) GET	|	/goRegisterProd		->	상품등록 페이지로 이동 -> registerProduct.jsp
+ *  9) GET	|	/goRegisterProdGroup->	공동구매 상품등록 페이지로 이동 -> registerProductGroup.jsp
+ *  10)POST	|	/registerProd		->	상품등록 후 -> mainLoginSeller.jsp
+ *  11)POST	|	/registerProdGroup	->	공동구매 상품 등록 -> mainLoginSeller.jsp
+ *  
  */
 
 
@@ -43,38 +63,66 @@ import model.product.*;
 public class ProductController {
 	
 	private BeansDO beans;
-	private BeansDAO beansDAO = new BeansDAO();
-	private SellerDAO sellerDAO = new SellerDAO();
+	private final BeansDAO beansDAO = new BeansDAO();
+	private final SellerDAO sellerDAO = new SellerDAO();
+	private final ImgUpload imgUpload = new ImgUpload();
 	
 	public ProductController() {
 	}
 	
 
-	public ProductController(BeansDAO beansDAO) {
-		this.beansDAO = beansDAO;
-	}
 
-	
-//	상품 등록
-	@GetMapping("/goRegisterProduct")
-	public String goRegisterProduct() {
+	/*
+	 * 
+	 * 구매자 메서드
+	 * 
+	 */
+	// 상품 목록 페이지 이동
+	@GetMapping("goProductList")
+	public String goProductList(Model model) {
 		
-		return "registerProduct";
+		BeansDO beansDO = new BeansDO();
+		
+		beansDO = beansDAO.getBean(10);
+		
+		System.out.println(beansDO.getBeansNum());
+		
+		model.addAttribute("beansDO", beansDO);
+		
+
+		
+		return "productList";
 	}
 	
-/*
-	@PostMapping("/registerProduct")
-	public String registerProduct(@ModelAttribute BeansDO beansDO, HttpSession session, Model model) throws Exception {
+
+	@GetMapping("payment")
+	public String payment() {
+
 		
-		String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
-		model.addAttribute("seller", sellerDAO.getSeller(sessionSeller));
 		
-		BeansDAO beansDAO = new BeansDAO();
-		beansDAO.insertBean(beansDO, session);	
-		return "redirect:/signup";
+		
+		return "payment";
 	}
-*/
-  
+ 	
+	@PostMapping("goListDetail")
+	public String productDetail(@RequestParam String beansNum, Model model) {
+		System.out.println(beansNum);
+		
+		int bNum = Integer.parseInt(beansNum);
+		
+		model.addAttribute("beansNum", bNum);
+		
+		return "productListDetail";
+	}
+	
+	// 공동판매 상품 목록 페이지 이동
+	@GetMapping("goProductListGroup")
+	public String goProductListGroup() {
+		
+		return "productListGroup";
+	}
+	
+	
 	// 상품 목록 페이지
 		@GetMapping("/productList")
 		public String productList(Model model, 
@@ -290,6 +338,16 @@ public class ProductController {
 		}
 	}
 
+
+	/*
+	 * 
+	 * 판매자 메서드
+	 * 
+	 */
+	// 판맴 등록 페이지로 이동 ( mainLoginSeller.jsp -> registerProduct.jsp )
+	@GetMapping("/goResisterProd")
+	public String goResisterProduct(@RequestParam("action") String command) {
+
 //	//상품 등록 후 상품 목록 페이지로 이동
 //	@PostMapping("/insertBeans")
 //	public String insertBeans(@ModelAttribute BeansDO command, Model model) {
@@ -350,6 +408,25 @@ public class ProductController {
 //	}
 	
 
+	
+	@GetMapping("/productListDetail")
+	public String productListDetail(@RequestParam("beansNum") int beansNum, Model model) {
+		beans = beansDAO.getBean(beansNum);
+		
+		if(beans != null) {
+			model.addAttribute("productListDetail", beansDAO.getBean(beansNum));
+			return "productListDetail";
+		}
+		else {
+			return "redirect:/productListDetail";
+		}
+	}
+
+	
+	
+	//상품등록
+
+
 //	// 상품 목록 페이지 테스트
 //	@GetMapping("/beansList")
 //	public String beansList(Model model, 
@@ -392,25 +469,23 @@ public class ProductController {
 //
 //        return "beansList";
 //	}
-	
+
 	@GetMapping("/registerProductPage")
 	public String resisterProduct(HttpSession session, Model model) {
-		
-		String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
-		model.addAttribute("seller", sellerDAO.getSeller(sessionSeller));
-	
-		return "registerProduct";
-	}
-	@GetMapping("/registerProductGroup")
-	public String resisterProductGroup(HttpSession session, Model model) {
-		
-		String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
-		model.addAttribute("seller", sellerDAO.getSeller(sessionSeller));
-	
-		return "registerProductGroup";
+
+		if(command.equals("normal")) {
+			return "registerProduct";
+		} 
+		else if(command.equals("group")) {
+			return "registerProductGroup";
+		} 
+		else {
+			return "error";
+		}
 	}
 	
-	@PostMapping("/registerProduct")
+	// 상품 등록
+	@PostMapping("/registerProd")
 	public String resisterProduct(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
 		int categoryNum = 1;
 		String categoryName = beansDAO.getCategoryName(categoryNum);
@@ -419,9 +494,11 @@ public class ProductController {
         int sizeLimit = 1024 * 1024 * 5;
         MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
                 "UTF-8", new DefaultFileRenamePolicy());
+        
     	
     	String action = multi.getParameter("action");
         if (action != null && action.equals("register")) {
+
             // 파일 업로드 액션
             System.out.println(directory);
             // 디렉토리 생성w
@@ -431,27 +508,26 @@ public class ProductController {
             }
             String savedName = "";
             String savedName1 = "";
-            
             @SuppressWarnings("unchecked")
             Enumeration<String> fileNames = multi.getFileNames();
             if (fileNames.hasMoreElements()) {
                 String paramName = fileNames.nextElement();
                 savedName = multi.getFilesystemName(paramName);
-                
             }
             if (fileNames.hasMoreElements()) {
             	String paramName = fileNames.nextElement();
             	savedName1 = multi.getFilesystemName(paramName);
             }
-            
             // 파일 정보를 photo 변수에 저장
-            //String beanImg = "\\finalProject\\uploadTest" + savedName; // 웹 경로로 수정
-            //String descript = "\\finalProject\\uploadTest" + savedName1; // 웹 경로로 수정
-            
-            String sellerEmail = "longlee@daum.net";
+            String beanImg = "\\finalProject\\uploadTest" + savedName; // 웹 경로로 수정
+            String descript = "\\finalProject\\uploadTest" + savedName1; // 웹 경로로 수정
+            // 세션이메일을 받아서 판매자 이메일로 저장
+            String sellerEmail = String.valueOf(session.getAttribute("sellerEmail"));
+
             String beanName = multi.getParameter("beanName");
             int beanPrice = Integer.parseInt(multi.getParameter("beanPrice"));
-            //int categoryNum = 1;
+            int categoryNum = Integer.parseInt(multi.getParameter("categoryNum"));;
+
             int deliveryCharge = Integer.parseInt(multi.getParameter("deliveryCharge"));
             
             String beanImg = "/coffee/registerData/sellerData/beans/" + categoryName + "/" + savedName; // 웹 경로로 수정
@@ -473,9 +549,25 @@ public class ProductController {
            
 //            request.setAttribute("uploadedPhoto", photo);
         }
-        // 업로드 후 다시 갤러리 페이지로 리다이렉트 또는 원하는 페이지로 이동
-//        response.sendRedirect("BoardController");
-        return "main";
+        return "redirect:/mainLoginSeller";
     }
-   }
+	
+	// 공동구매 판매등록 페이지로 이동
+	@GetMapping("/goRegisterProdGroup")
+	public String goRegisterProdGroup() {
+		return "registerProductGroup";
+	}
+	
+	// 임시 공동구매 판매 등록
+	@PostMapping("/registerProdGroup")
+	public String resisterProductGroup(HttpSession session, Model model) {
+		
+		String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
+		model.addAttribute("seller", sellerDAO.getSeller(sessionSeller));
+		
+		return "redirect:/mainLogin";
+	}
+	
+	
+}
 
