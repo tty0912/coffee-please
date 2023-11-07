@@ -45,11 +45,13 @@
                     <div class="productList__product">
                         <img class="productList__productImg" src="images/test2.jpg" alt="">
                         <div class="productList__productText">
-                            <p class="productList__productTitle">원두</p>
-                            <p class="productList__productPrice">12,000원</p>
+                            <p class="productList__productTitle">${ beansDO.beanName }</p>
+                            <p class="productList__productPrice">${ beansDO.beanPrice }</p>
                             <p class="productList__productCategory">케냐</p>
                             <div class="productList__likeButton">
-                                <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                            <form method="post" action="goListDetail">
+                                <button class="myPageLike__button" action="beansNum" value="${ beansDO.beansNum }" >${ beansDO.beansNum }<i class="fa-solid fa-heart"></i></button>
+                            </form>
                                 <p class="mainBeanBest__productLikeCount">30</p>
                             </div>
                         </div>

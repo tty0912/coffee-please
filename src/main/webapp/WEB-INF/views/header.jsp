@@ -30,6 +30,7 @@
     <header class="header">
         <nav class="header__nav">
             <ul class="header__menu">
+
                 <li><a class="header__menu__item" href="#about">STORE</a></li>
                 <div class="header__menu__item header__logo">
                     <img class="header__logo__img" src="images/logoName.png" alt="logo" />
@@ -39,6 +40,7 @@
             <ul class="header__side">
                 <li><a class="header__menu__item header__cart" href="#about"><i class="fa-solid fa-cart-shopping"></i></a></li>
                 <li><a class="header__menu__item header__user" href="#about"><i class="fa-regular fa-user"></i></a></li>
+
             </ul>
         </nav>
     </header>
