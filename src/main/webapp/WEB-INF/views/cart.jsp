@@ -8,11 +8,11 @@
 <<!-- Cart -->
     <section id="cart" class="section">
         <div class="max-container">
-            <div class="cart">
+            <div class="cart" id="cartList">
                 <h2 class="cartTitle">${buyerDO.buyerName}님의 장바구니</h2>
-                <c:forEach items="${cartList}" var="cartDO">
+                <c:forEach items="${cartList}" var="cartDO" varStatus="index">
                 	<div class="cartProduct">
-                    	<input type="checkbox" class="cartProduct__check" checked />
+                    	<input type="checkbox" class="cartProduct__check" value="${index.count}" checked />
                     	<img class="cartProduct__img" src="${beansDO.beanImg}" alt="">
                     	<div class="cartProductInfo">
                         	<p class="cartProductInfo__Name">${beansDO.beanName}</p>
