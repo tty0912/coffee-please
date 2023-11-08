@@ -97,7 +97,9 @@
             </div>
             <div class="mainBeanBest__button">
                 <h2 class="mainBeanBest__buttonTitle">더 많은 원두를 보려면?</h2>
-                <button class="mainBeanBest__plusButton"><i class="fa-solid fa-angles-right"></i></button>
+                <form method="get" action="goProdcutList">
+               	    <button class="mainBeanBest__plusButton"><i class="fa-solid fa-angles-right"></i></button>
+               	</form>
             </div>
         </div>
     </section>

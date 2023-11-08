@@ -14,7 +14,7 @@
                     <h4 class="signup__description">커피도시 부산의 신선하고 맛있는 원두를 공급할 사장님들을 기다리고 있습니다.</h4> 
                     <form id="signup__form" method="post" action="signupSeller">
                         <label for="new-userId" class="signup__label">
-                            <i class="fa-regular fa-envelope"></i>
+                            <i class="fa-regular fa-envelope signup__icon"></i>
                             <input
                                 class="signup__input"
                                 type="email"
@@ -23,8 +23,9 @@
                                 placeholder="email@example.com"
                             />
                         </label> 
+                        <p id="idCheckMsg"></p>
                         <label for="new-password" class="signup__label">
-                            <i class="fa-solid fa-key"></i>
+                            <i class="fa-solid fa-key signup__icon"></i>
                             <input
                                 class="signup__input"
                                 type="password"
@@ -33,8 +34,12 @@
                                 placeholder="4자리 이상 입력해주세요."
                             />
                         </label>
+                        <div class="passwdMsg">
+                            <p id="strengthDisp"></p>
+                            <p id="strengthMsg"></p>
+                        </div>
                         <label for="new-passwordConfirm" class="signup__label">
-                            <i class="fa-solid fa-check"></i>
+                            <i class="fa-solid fa-check signup__icon"></i>
                             <input
                                 class="signup__input"
                                 type="password"
@@ -43,8 +48,9 @@
                                 placeholder="비밀번호 확인"
                             />
                         </label>
+                        <p id="confirmMsg"></p>
                         <label for="new-sellerName" class="signup__label">
-                            <i class="fa-regular fa-circle-user"></i>
+                            <i class="fa-regular fa-circle-user signup__icon"></i>
                             <input
                                 class="signup__input"
                                 type="text"
@@ -54,7 +60,7 @@
                             />
                         </label>
                         <label for="new-phoneNumber" class="signup__label">
-                            <i class="fa-solid fa-phone"></i>
+                            <i class="fa-solid fa-phone signup__icon"></i>
                             <input
                                 class="signup__input"
                                 type="text"
@@ -65,7 +71,7 @@
                         </label>
                         <h4 class="business__title">사업자 정보</h4>
                         <label for="new-businessName" class="signup__label">
-                            <i class="fa-solid fa-store"></i>
+                            <i class="fa-solid fa-store signup__icon"></i>
                             <input
                                 class="signup__input"
                                 type="text"
@@ -75,7 +81,7 @@
                             />
                         </label>
                         <label for="new-businessNumber" class="signup__label">
-                            <i class="fa-regular fa-address-card"></i>
+                            <i class="fa-regular fa-address-card signup__icon"></i>
                             <input
                                 class="signup__input"
                                 type="text"
@@ -88,7 +94,7 @@
                         </label>
                         
                         <label for="new-address" class="signup__label">
-                            <i class="fa-solid fa-location-dot"></i>
+                        	<i class="fa-solid fa-map-location-dot signup__icon"></i>
                             <input
                                 class="signup__input"
                                 type="text"

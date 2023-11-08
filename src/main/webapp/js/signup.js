@@ -14,14 +14,20 @@ function checkPasswordStrength(){
 	password.addEventListener('submit', password);
 	
   if (strongPassword.test(password.value)) {
+	strengthMsg.style.display = 'block'; 
+	strengthBadge.style.display = 'block'; 
     strengthBadge.style.backgroundColor = "green";
     strengthBadge.textContent = 'Strong';
     strengthMsg.textContent = '비밀번호가 강력합니다.';
   } else if (mediumPassword.test(password.value)) {
+	strengthMsg.style.display = 'block'; 
+	strengthBadge.style.display = 'block'; 
     strengthBadge.style.backgroundColor = 'blue';
     strengthBadge.textContent = 'Medium';
     strengthMsg.textContent = '비밀번호가 중간입니다.';
   } else {
+	strengthMsg.style.display = 'block'; 
+	strengthBadge.style.display = 'block'; 
     strengthBadge.style.backgroundColor = 'red';
     strengthBadge.textContent = 'Weak';
     strengthMsg.textContent = '비밀번호가 약합니다.';
@@ -33,10 +39,12 @@ function checkPasswordStrength(){
 function confirmPassword(){
 	if(passwordConfirm.value !='' && passwordConfirm.value!=''){
             if(password.value==passwordConfirm.value){
+				confirmMsg.style.display = 'block'; 
                 confirmMsg.textContent='비밀번호가 일치합니다.'
                 confirmMsg.style.color='blue';
             }
             else{
+				confirmMsg.style.display = 'block'; 
                 confirmMsg.textContent='비밀번호가 일치하지 않습니다.';
                 confirmMsg.style.color='red';
             }

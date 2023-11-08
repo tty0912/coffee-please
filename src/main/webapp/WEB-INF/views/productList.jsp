@@ -40,18 +40,25 @@
                     </form>
                 </div>
                 <div class="productList__productDiv">
-                    <div class="productList__product">
-                        <img class="productList__productImg" src="images/test2.jpg" alt="">
-                        <div class="productList__productText">
-                            <p class="productList__productTitle">원두</p>
-                            <p class="productList__productPrice">12,000원</p>
-                            <p class="productList__productCategory">케냐</p>
-                            <div class="productList__likeButton">
-                                <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
-                                <p class="mainBeanBest__productLikeCount">30</p>
-                            </div>
-                        </div>
-                    </div>
+                	<c:forEach items="${beanList}" var="beansDO" >
+                    	<div class="productList__product">
+                        	<img class="productList__productImg" src="${beansDO.beanImg}" alt="">
+                        	<div class="productList__productText">
+                            	<p class="productList__productTitle">${beansDO.beanName}</p>
+                            	<p class="productList__productPrice">${beansDO.beanPrice}원</p>
+                            	<p class="productList__productCategory">${beansDO.categoryNum}</p>
+                            	<form method="Get" action="goListDetail" class="">
+                            		<button type="submit" class="productList__button">상세보기</button>
+                            	</form>
+
+                            
+                            	<div class="productList__likeButton">
+                                	<button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                                	<p class="mainBeanBest__productLikeCount">${beansDO.likeCount}</p>
+                          		</div>
+                        	</div>
+                    	</div>
+                    </c:forEach>
                 </div>
                 <div class="productList__buttonDiv">
                     <button class="productList__button"><i class="fa-solid fa-angles-left"></i></button>
