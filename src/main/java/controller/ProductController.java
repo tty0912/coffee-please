@@ -236,14 +236,16 @@ public class ProductController {
 	@PostMapping("/registerProd")
 	public String resisterProduct(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
 
+
+
 		// String directory = "C:\\\\Users\\Jun\\Desktop\\finalproject\\coffee-please\\src\\main\\webapp\\uploadTest";
 		String directory = "D:/multicampus_project/coffee/coffee-please/src/main/webapp/registerData/sellerData/beans/";
 		int sizeLimit = 1024 * 1024 * 5;
 		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
 				"UTF-8", new DefaultFileRenamePolicy());
 
-		String categoryName = multi.getParameter("categoryNum");
-		directory += categoryName;
+		int categoryNum = Integer.parseInt(multi.getParameter("categoryNum"));
+		directory += categoryNum;
 
 		multi = new MultipartRequest(request,directory,sizeLimit,
 				"UTF-8", new DefaultFileRenamePolicy());
@@ -261,8 +263,8 @@ public class ProductController {
 			int deliveryCharge = Integer.parseInt(multi.getParameter("deliveryCharge"));
 
 //			"\\finalProject\\uploadTest" + savedName; //
-			String beanImg = "/coffee-please/registerData/sellerData/beans/" + categoryName + "/" + img[0]; // 웹 경로로 수정
-			String descript = "/coffee-please/registerData/sellerData/beans/" + categoryName + "/" + img[1]; // 웹 경로로 수정
+			String beanImg = "/coffee-please/registerData/sellerData/beans/" + categoryNum + "/" + img[0]; // 웹 경로로 수정
+			String descript = "/coffee-please/registerData/sellerData/beans/" + categoryNum + "/" + img[1]; // 웹 경로로 수정
 			// 게시물 생성
 			BeansDO newBeans = new BeansDO();
 			newBeans.setBeanImg(beanImg);
