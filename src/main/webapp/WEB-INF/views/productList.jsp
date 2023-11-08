@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" import="java.util.*"%>
+<%@ page contentType="text/html; charset=UTF-8" import="java.util.*, model.product.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
@@ -32,9 +32,12 @@
                         <form action="/coffee/goProductList" method="GET" id="sorting">
                         <label for="category">카테고리:</label>	
 							<select id="category" name="category">
-					            	<option value="0" ${param.category == '0' ? 'selected' : '' }>전체</option>      	
-					            	<option value="1" ${param.category == '1' ? 'selected' : '' }>코스타리카</option>      	
-					            	<option value="2" ${param.category == '2' ? 'selected' : '' }>케냐</option>
+                                <option value="0" ${param.category == '0' ? 'selected' : '' }>전체</option>
+                                <option value="1" ${param.category == '1' ? 'selected' : '' }>브라질</option>
+                                <option value="2" ${param.category == '2' ? 'selected' : '' }>콜롬비아</option>
+                                <option value="3" ${param.category == '3' ? 'selected' : '' }>에티오피아</option>
+                                <option value="4" ${param.category == '4' ? 'selected' : '' }>온두라스</option>
+                                <option value="5" ${param.category == '5' ? 'selected' : '' }>인도</option>
 						    </select>
 	                        <button class="productList__sort" name="sort" value="recent" type="submit">최신순</button>
 	                        <button class="productList__sort" name="sort" value="mostLiked" type="submit">인기순</button>
@@ -51,7 +54,7 @@
                 <div id="beansTable" class="productList__productDiv">
                 <c:forEach items="${beansList}" var="bean">
                     <div  class="productList__product">
-                        <img class="productList__productImg" src="images/test2.jpg" alt="">
+                        <img class="productList__productImg" src="${bean.beanImg}" alt="">
                         <div class="productList__productText">
 
                             <p class="productList__productTitle">${bean.beanName}</p>

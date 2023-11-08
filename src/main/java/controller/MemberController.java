@@ -234,21 +234,26 @@ public class MemberController {
 	
 	// 구매자 회원정보 수정
 	@PostMapping("/buyerModifyChange")
+
 	public String buyerModifyChange(@RequestParam("action") String action, @ModelAttribute BuyerDO buyer, HttpServletRequest request, HttpSession session, Model model) throws IOException {
-		
+	
 		if(action.equals("buyerModifyChange")) {
-			String directory = "";
+			String directory = "C:/Users/H40/finalCoffee/coffee-please/src/main/webapp/registerData/buyerData/buyer";
+
 
 			int sizeLimit = 1024 * 1024 * 5;
 			MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
 					"UTF-8", new DefaultFileRenamePolicy());
 
 
-			String[] img = imgUpload.saveImg(multi);
+			String[] img = imgUpload.saveImg(multi, directory);
 
 			String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 			buyer.setBuyerEmail(sessionBuyer);
-			buyer.setBuyerImg(img[0]);
+      
+      String buyerImg = "/coffee-please/registerData/buyerData/buyer/" + img[0];
+
+			buyer.setBuyerImg(buyerImg);
 			buyerDAO.updateBuyer(buyer);
 			model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
 			return "myPageBuyer";
@@ -259,6 +264,7 @@ public class MemberController {
 		}
 		
 		return "error";
+
 	}
 	/*
 	 * 
@@ -296,17 +302,21 @@ public class MemberController {
 	public String sellerModifyChange(@RequestParam("action") String action, @ModelAttribute SellerDO seller,HttpServletRequest request, HttpSession session, Model model) throws IOException {
 		
 		if(action.equals("sellerModifyChange")) {
-			String directory = "";
+			String directory =  "C:/Users/H40/finalCoffee/coffee-please/src/main/webapp/registerData/sellerData/seller";
 
 			int sizeLimit = 1024 * 1024 * 5;
 			MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
 					"UTF-8", new DefaultFileRenamePolicy());
 
 
-			String[] img = imgUpload.saveImg(multi);
+			String[] img = imgUpload.saveImg(multi, directory);
 
 			String sessionBuyer = String.valueOf(session.getAttribute("sellerEmail"));
 			seller.setSellerEmail(sessionBuyer);
+      
+      String sellerImg = "/coffee-please/registerData/sellerData/seller/" + img[0];
+      
+      seller.setSellerImg(sellerImg);
 			sellerDAO.updateSeller(seller);
 			
 			model.addAttribute("seller", sellerDAO.getSeller(sessionBuyer));
@@ -316,8 +326,7 @@ public class MemberController {
 			String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
 			
 		    return "myPageSeller";
-		}
-		
+		}		
 		return "error";
 	}
 	
@@ -349,11 +358,9 @@ public class MemberController {
 	// 구매자 회원가입후 메인으로 이동
 	@PostMapping("signupBuyer")
 	public String signupBuyer(@ModelAttribute BuyerDO buyer) throws Exception{
+
 		buyerDAO.insertBuyer(buyer);
 		return "redirect:/main";
 	}
-	
-	
-	
 	
 }

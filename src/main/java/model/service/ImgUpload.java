@@ -15,11 +15,11 @@ public class ImgUpload {
     BeansDAO beansDAO = new BeansDAO();
 
     //이미지 저장
-    public String[] saveImg(MultipartRequest multi){
+    public String[] saveImg(MultipartRequest multi, String directory){
 
         String[] name = {"", ""};
-        String directory = multi.getParameter("directory");
 
+        System.out.println(directory);
         // 파일 업로드 액션
         // 디렉토리 생성
         File uploadDir = new File(directory);
