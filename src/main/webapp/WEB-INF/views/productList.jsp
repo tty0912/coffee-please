@@ -29,7 +29,7 @@
                     <div class="productList__sortDiv">
                         <span class="productList__sortText">정렬</span>
 
-                        <form action="/coffee/goProductList" method="GET" id="sorting">
+                        <form action="goProductList" method="GET" id="sorting">
                         <label for="category">카테고리:</label>	
 							<select id="category" name="category">
                                 <option value="0" ${param.category == '0' ? 'selected' : '' }>전체</option>
@@ -68,7 +68,9 @@
                                     </form>
                 				</c:when>
                 				<c:when test="${bean.aBoolean == true}">
-                    				<button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                                    <form method="post" action="like">
+                                        <button name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                                    </form>
                 				</c:when>
                 			</c:choose>
                                 <p class="mainBeanBest__productLikeCount">${bean.beansDO.likeCount}</p>

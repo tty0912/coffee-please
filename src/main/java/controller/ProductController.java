@@ -189,8 +189,16 @@ public class ProductController {
 	@GetMapping("/goListDetail")
 	public String goListDetail(@RequestParam("beansNum") int beansNum, Model model, HttpSession session) throws SQLException {
 
-			model.addAttribute("productListDetail", beansDAO.getBean(beansNum));
-			return "productListDetail";
+		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+		boolean b = likeService.checkLike(sessionBuyer, beansNum);
+
+		LikeBeans likeBeans = new LikeBeans();
+		likeBeans.setBeansDO(beansDAO.getBean(beansNum));
+		likeBeans.setaBoolean(b);
+
+
+		model.addAttribute("productListDetail", likeBeans);
+		return "productListDetail";
 	}
 
 // 공동 상품 상세 페이지로 이동
@@ -224,8 +232,6 @@ public class ProductController {
 			BeansDO bean = beansDAO.getBean(beansNum);
 			String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 			cartDAO.addItem(sessionBuyer, bean, qty);
-
-
 
 				return "goProductList";
 		}
