@@ -22,8 +22,23 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
     <script>
-    let sellerEmail = ${sellerEmail};
-    let buyerEmail = ${buyerEmail};
+    let sellerEmail = `${sellerEmail}`;
+    let buyerEmail = `${buyerEmail}`;
+
+    
+    let cart = document.querySelector('.header__cart');
+    let userSeller = document.querySelector('.header__userSeller');
+    let userBuyer = document.querySelector(''.header__userBuyer');
+    
+    function headerHandler(event) {
+    	if(sellerEmail) {
+    		userSeller.style.display = 'block'; 
+    	}
+    	else if(buyerEmail) {
+    		cart.style.display = 'block'; 
+    		userBuyer.style.display = 'block'; 
+    	}
+    }
     
     
     </script>
@@ -36,17 +51,34 @@
     <header class="header">
         <nav class="header__nav">
             <ul class="header__menu">
-
-                <li><a class="header__menu__item" href="#about">STORE</a></li>
+                <li><a class="header__menu__item" href="http://localhost:8080/coffee/goProdcutList">STORE</a></li>
                 <div class="header__menu__item header__logo">
                     <img class="header__logo__img" src="images/logoName.png" alt="logo" />
                 </div>
-                <li><a class="header__menu__item" href="#about">GROUP</a></li>
+                <li><a class="header__menu__item" href="http://localhost:8080/coffee/goProdcutListGroup">GROUP</a></li>
             </ul>
             <ul class="header__side">
-                <li><a class="header__menu__item header__cart" href="#about"><i class="fa-solid fa-cart-shopping"></i></a></li>
-                <li><a class="header__menu__item header__user" href="#about"><i class="fa-regular fa-user"></i></a></li>
-
-            </ul>
+            <c:choose>
+                <c:when test="${not empty sellerEmail}">
+                    <li class="header__userSeller">
+                        <a class="header__menu__item" href="${pageContext.request.contextPath}/myPageSeller">
+                            <i class="fa-regular fa-user"></i>
+                        </a>
+                    </li>
+                </c:when>
+                <c:when test="${not empty buyerEmail}">
+                    <li class="header__cart">
+                        <a class="header__menu__item" href="${pageContext.request.contextPath}/cart">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </a>
+                    </li>
+                    <li class="header__userBuyer">
+                        <a class="header__menu__item" href="${pageContext.request.contextPath}/myPageBuyer">
+                            <i class="fa-regular fa-user"></i>
+                        </a>
+                    </li>
+                </c:when>
+            </c:choose>
+        </ul>
         </nav>
     </header>

@@ -103,6 +103,8 @@ button:focus {
     display: flex;
     padding-left: 27rem;
 }
+
+
 .header__logo {
     align-items: center;
     gap: 8px;

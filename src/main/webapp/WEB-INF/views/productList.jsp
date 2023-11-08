@@ -61,8 +61,17 @@
                             <p class="productList__productPrice">${bean.beansDO.beanPrice}원</p>
                             <p>${bean.aBoolean}</p>
                             <div class="productList__likeButton">
-                                <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
-                                <p class="mainBeanBest__productLikeCount">${bean.beansDO.likeCount}</p>
+
+                            <c:choose>
+                				<c:when test="${bean.aBoolean == false}">
+                    				<button class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
+                				</c:when>
+                				<c:otherwise test="${bean.aBoolean == true}">
+                    				<button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                				</c:otherwise>
+                			</c:choose>
+                      
+                                <p class="mainBeanBest__productLikeCount">${bean.likeCount}</p>
                             </div>
                         </div>
                         <button class="productList__button" id="${bean.beansDO.beansNum}">상세보기</button>
