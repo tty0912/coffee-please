@@ -70,8 +70,7 @@
                     				<button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
                 				</c:when>
                 			</c:choose>
-                      
-                                <p class="mainBeanBest__productLikeCount">${bean.likeCount}</p>
+                                <p class="mainBeanBest__productLikeCount">${bean.beansDO.likeCount}</p>
                             </div>
                         </div>
                         <button class="productList__button" id="${bean.beansDO.beansNum}">상세보기</button>
