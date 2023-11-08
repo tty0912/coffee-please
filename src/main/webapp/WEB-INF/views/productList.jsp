@@ -28,114 +28,92 @@
                 <div class="productList__sortSerch">
                     <div class="productList__sortDiv">
                         <span class="productList__sortText">정렬</span>
-                        <button class="productList__sort">최신순</button>
-                        <button class="productList__sort">인기순</button>
-                        <button class="productList__sort">판매량순</button>
+
+                        <form action="/coffee/goProductList" method="GET" id="sorting">
+                        <label for="category">카테고리:</label>	
+							<select id="category" name="category">
+					            	<option value="0" ${param.category == '0' ? 'selected' : '' }>전체</option>      	
+					            	<option value="1" ${param.category == '1' ? 'selected' : '' }>코스타리카</option>      	
+					            	<option value="2" ${param.category == '2' ? 'selected' : '' }>케냐</option>
+						    </select>
+	                        <button class="productList__sort" name="sort" value="recent" type="submit">최신순</button>
+	                        <button class="productList__sort" name="sort" value="mostLiked" type="submit">인기순</button>
+	                        <button class="productList__sort" name="sort" value="bestSelling" type="submit">판매량순</button>
+                        </form>
                     </div>
                     <form class="productList__search">
                         <input type="text" class="productList__searchInput" id="searchInput" />
-                        <button class="productList__searchButton" type="submit" name="action" value="search">
+                        <button class="productList__searchButton" type="submit" name="search" value="search">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button> 
                     </form>
                 </div>
-                <div class="productList__productDiv">
-                	<c:forEach items="${beanList}" var="beansDO" >
-                    	<div class="productList__product">
-                        	<img class="productList__productImg" src="${beansDO.beanImg}" alt="">
-                        	<div class="productList__productText">
-                            	<p class="productList__productTitle">${beansDO.beanName}</p>
-                            	<p class="productList__productPrice">${beansDO.beanPrice}원</p>
-                            	<p class="productList__productCategory">${beansDO.categoryNum}</p>
-                            	<form method="Get" action="goListDetail" class="">
-                            		<button type="submit" class="productList__button">상세보기</button>
-                            	</form>
+                <div id="beansTable" class="productList__productDiv">
+                <c:forEach items="${beansList}" var="bean">
+                    <div  class="productList__product">
+                        <img class="productList__productImg" src="images/test2.jpg" alt="">
+                        <div class="productList__productText">
 
-                            
-                            	<div class="productList__likeButton">
-                                	<button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
-                                	<p class="mainBeanBest__productLikeCount">${beansDO.likeCount}</p>
-                          		</div>
-                        	</div>
-                    	</div>
+                            <p class="productList__productTitle">${bean.beanName}</p>
+                            <p class="productList__productPrice">${bean.beanPrice}원</p>
+                            <p class="productList__productCategory">케냐</p>
+                            <div class="productList__likeButton">
+                                <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                                <p class="mainBeanBest__productLikeCount">${bean.likeCount}</p>
+                            </div>
+                        </div>
+                        <button class="productList__button" id="${bean.beansNum}">상세보기</button>
+                    </div>
                     </c:forEach>
                 </div>
                 <div class="productList__buttonDiv">
-                    <button class="productList__button"><i class="fa-solid fa-angles-left"></i></button>
-                    <button class="productList__button"><i class="fa-solid fa-angles-right"></i></button>
+                    <%--<button class="productList__button"><i class="fa-solid fa-angles-left"></i></button>--%>
+                    <c:if test="${currentPage > 1}">
+					    <c:url var="prevUrl" value="/goProductList">
+					        <c:param name="page" value="${currentPage - 1}" />
+					        <c:if test="${not empty search}">
+					            <c:param name="search" value="${search}" />
+					        </c:if>
+					        <c:param name="sort" value="${sortOption}" />
+					        <c:param name="category" value="${categoryNum}" />
+					    </c:url>
+					    <a class="productList__button" href="${prevUrl}"><i class="fa-solid fa-angles-left"></i></a>
+					</c:if>
+
+                    <%-- <button class="productList__button"><i class="fa-solid fa-angles-right"></i></button> --%>
+                    <c:if test="${currentPage < totalPages}">
+					    <c:url var="nextUrl" value="/goProductList">
+					        <c:param name="page" value="${currentPage + 1}" />
+					        <c:if test="${not empty search}">
+					            <c:param name="search" value="${search}" />
+					        </c:if>
+					        <c:param name="sort" value="${sortOption}" />
+					        <c:param name="category" value="${categoryNum}" />
+					    </c:url>
+					    <a class="productList__button" href="${nextUrl}"><i class="fa-solid fa-angles-right"></i></a>
+					</c:if>
                 </div>
             </div>
         </div>
     </section>
 
+<script>
+    function categoryHandler () {
+        document.querySelector('#sorting').submit();
+    }
 
-<!-- Category -->
-<section id="mainCategory">
-	<div class="max-container">
-		<div class="mainCategory__detail">
-			<img src="images/categoryTest1.jpg" alt=""
-				class="mainCategory__detailImg" />
-			<p class="mainCategory__detailTitle">영국</p>
-		</div>
-	</div>
-</section>
-<!-- productList -->
-<section id="productList">
-	<div class="max-container">
-		<div class="productList">
-			<form action="/coffee/beansList" method="GET" id="sorting">
-				<div class="productList__sortSerch">
-					<div class="productList__sort">
-						<button class="productList__sort" type="submit" name="sort"	value="recent">최신순</button>
-						<button class="productList__sort" type="submit" name="sort" value="mostLiked">인기순</button>
-						<button class="productList__sort" type="submit" name="sort" value="bestSelling">판매량순</button>
-					</div>
-					<div class="productList__search">
-						<input type="text" class="productList__searchInput"
-							id="searchInput" />
-						<button class="productList__searchButton" type="submit"
-							name="search" value="search" placeholder="검색어 입력">
-							<i class="fa-solid fa-magnifying-glass"></i>
-						</button>
-					</div>
-				</div>
-			</form>
-			<div class="productList__product">
-				<div class="productList__productDiv">
-					<img class="productList__productImg" src="images/test2.jpg" alt="">
-					<p class="productList__productLikeCount"></p>
-				</div>
-				<%--기존:버튼 현재:링크 --%>
-				<div class="productList__button">
-					<c:if test="${currentPage > 1}">
-						<c:url var="prevUrl" value="/beansList">
-							<c:param name="page" value="${currentPage - 1}" />
-							<c:if test="${not empty search}">
-								<c:param name="search" value="${search}" />
-							</c:if>
-							<c:param name="sort" value="${sortOption}" />
-							<c:param name="category" value="${categoryNum}" />
-						</c:url>
-						<a class="productList__before" href="${prevUrl}">이전</a>
-					</c:if>
+    function prodDetailHandler(event) {
+        let beans = event.target.getAttribute('id');
+        //alert(beans);
 
-					<c:if test="${currentPage < totalPages}">
-						<c:url var="nextUrl" value="/beansList">
-							<c:param name="page" value="${currentPage + 1}" />
-							<c:if test="${not empty search}">
-								<c:param name="search" value="${search}" />
-							</c:if>
-							<c:param name="sort" value="${sortOption}" />
-							<c:param name="category" value="${categoryNum}" />
-						</c:url>
-						<a class="productList__after" href="${nextUrl}">다음</a>
-					</c:if>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+        let url = '/coffee/goListDetail?beansNum=' + beans;
+        location.href = url;
+    }
+    function init() {
+        document.querySelector('#category').addEventListener('change', categoryHandler);
+        document.querySelector('#beansTable').addEventListener('click', prodDetailHandler);
 
-
-
+    }
+    window.addEventListener('load', init);
+</script>
 <%@ include file="/WEB-INF/views/footer.jsp"%>

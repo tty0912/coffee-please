@@ -25,7 +25,7 @@ public class LikeTest {
             String beanName = e.getBeanName();
             int likeCount = e.getLikeCount();
             String beanImg = e.getBeanImg();
-            int beanPrice = e.getBeanPrice();
+            long beanPrice = e.getBeanPrice();
 
             assertThat(beanName).isEqualTo("코스타리카산");
             assertThat(likeCount).isEqualTo(1);

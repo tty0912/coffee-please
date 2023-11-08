@@ -81,6 +81,7 @@ public class MemberController {
 	
 	// 메인 로그인 페이지 (가영 수정)
 	@PostMapping("/mainLogin")
+
 	public String mainLoginBuyer(@RequestParam("action") String action, HttpServletRequest request, HttpSession session, Model model) {
 		String user = request.getParameter("user");
 		
@@ -89,6 +90,7 @@ public class MemberController {
 			if(user.equals("seller")) {
 				String id = request.getParameter("id");
 				String pw = request.getParameter("passwd");
+
 				
 				SellerDO sellerEmail = sellerDAO.getSeller(id);
 				model.addAttribute("seller", sellerEmail);
@@ -155,6 +157,18 @@ public class MemberController {
 		return "error";
 		
 	}
+	
+	// 판매자 메인 로그인
+	@GetMapping("mainLoginSeller")
+	public String mainLoginSeller(HttpSession session, Model model) {
+		
+		String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
+		model.addAttribute("seller", sellerDAO.getSeller(sessionSeller));
+		
+		return "mainLoginSeller";
+	}
+	
+	
 	/*
 	 * 
 	 * 구매자 메소드
