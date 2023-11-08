@@ -16,19 +16,24 @@
                         <p class="mainBeanBest__productLikeCount">${productListDetail.likeCount}</p>
                     </div>
                 </div>
-                <div class="productListDetail__topRight">
-                    <p class="productListDetail__beanName">${ productListDetail.beanName }</p>
-                    <p class="productListDetail__deliveryPrice">${ productListDetail.beanPrice }원</p>
-                    <div class="cartProductInfo__QtyDiv">
-                        <button class="cartProductInfo__QtyButton"><i class="fa-solid fa-plus"></i></button>
-                        <input type="text" class="cartProductInfo__QtyText" />
-                        <button class="cartProductInfo__QtyButton"><i class="fa-solid fa-minus"></i></button>
+                <form method="post" action="cartOrPayment">
+                    <div class="productListDetail__topRight">
+                        <p class="productListDetail__beanName">${ productListDetail.beanName }</p>
+                        <p class="productListDetail__deliveryPrice">${ productListDetail.beanPrice }원</p>
+                        <div class="cartProductInfo__QtyDiv">
+                            <button class="cartProductInfo__QtyButton"><i class="fa-solid fa-plus"></i></button>
+                            <label name="qty">
+                                <input type="number" class="cartProductInfo__QtyText"/>
+                            </label>
+                            <button class="cartProductInfo__QtyButton"><i class="fa-solid fa-minus"></i></button>
+                        </div>
+                        <div class="productListDetail__button">
+                            <button class="productListDetail__cart" name="action" value="cart">장바구니</button>
+                            <button class="productListDetail__pay" name="action" value="onePayment">바로구매</button>
+
+                        </div>
                     </div>
-                    <div class="productListDetail__button">
-                        <button class="productListDetail__cart">장바구니</button>
-                        <button class="productListDetail__pay">바로구매</button>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </section>

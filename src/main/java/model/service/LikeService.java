@@ -12,7 +12,7 @@ public class LikeService {
     BeansDAO beansDAO = new BeansDAO();
 
     public void clickLike(String email, int beanNum) throws SQLException {
-        if(checkLike(email,beanNum)){
+        if(!checkLike(email,beanNum)){
             likeDAO.insertLike(email,beanNum);
             beansDAO.beansLikeCountUpdate(beanNum, true);
 
@@ -33,5 +33,35 @@ public class LikeService {
     public ArrayList<BeansDO> getLikeList(String email){
         return likeDAO.getLikeList(email);
     }
+
+    //찜한 상품은 true로 바꾸기
+    public ArrayList<LikeBeans> likeBeans(String buyerEmail, ArrayList<BeansDO> beansDO) throws SQLException {
+
+        ArrayList<LikeBeans> likeBeansList = new ArrayList<>();
+
+        if(buyerEmail.isEmpty()){
+            for (BeansDO b : beansDO) {
+                LikeBeans likeBeans = new LikeBeans();
+                likeBeans.setBeansDO(b);
+                likeBeans.setaBoolean(false);
+
+                likeBeansList.add(likeBeans);
+            }
+        }
+        else {
+            for (BeansDO b : beansDO) {
+                LikeBeans likeBeans = new LikeBeans();
+                likeBeans.setBeansDO(b);
+                likeBeans.setaBoolean(likeDAO.checkLike(buyerEmail, b.getBeansNum()));
+
+                likeBeansList.add(likeBeans);
+            }
+        }
+
+        return likeBeansList;
+    }
+
+
+
 
 }

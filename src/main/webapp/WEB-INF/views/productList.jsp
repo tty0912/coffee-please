@@ -62,7 +62,7 @@
                             <p class="productList__productCategory">케냐</p>
                             <div class="productList__likeButton">
                                 <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
-                                <p class="mainBeanBest__productLikeCount">${bean.likeCount}</p>
+                                <p class="mainBeanBest__productLikeCount">${bean.beansDO.likeCount}</p>
                             </div>
                         </div>
                         <button class="productList__button" id="${bean.beansNum}">상세보기</button>

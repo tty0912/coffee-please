@@ -40,7 +40,7 @@ public class LikeDAO {
         pstmt.setString(1, email);
         pstmt.setInt(2,beanNum);
         this.rs = pstmt.executeQuery();
-        result = !rs.next();
+        result = rs.next();
 
 
         }catch(Exception e) {

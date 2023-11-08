@@ -3,6 +3,7 @@ package controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.http.HttpRequest;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -18,6 +19,8 @@ import model.cart.CartDAO;
 import model.service.ImgUpload;
 
 
+import model.service.LikeService;
+import model.service.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,6 +64,9 @@ public class ProductController {
 	private final SellerDAO sellerDAO = new SellerDAO();
 	private final ImgUpload imgUpload = new ImgUpload();
 	private final CartDAO cartDAO = new CartDAO();
+	private final OrderService orderService = new OrderService();
+	private final LikeService likeService = new LikeService();
+
 	
 	public ProductController() {
 	}
@@ -122,15 +128,21 @@ public class ProductController {
         int startRow = 1 + (page - 1) * pageSize;
         int endRow = pageSize * page;
         ArrayList<BeansDO> pagedBeansList = new ArrayList<>(beansList.subList(
-        	    Math.max(startRow - 1, 0), Math.min(endRow, totalRows))); 
+        	    Math.max(startRow - 1, 0), Math.min(endRow, totalRows)));
 
-        // 모델에 데이터 추가
+		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+
+		ArrayList<LikeBeans> likeBeans = likeService.likeBeans(sessionBuyer, pagedBeansList);
+
+		// 모델에 데이터 추가
         model.addAttribute("categoryNum", categoryNum);
         model.addAttribute("sortOption", sort);
-        model.addAttribute("beansList", pagedBeansList);
+        model.addAttribute("beansList", likeBeans);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("currentPage", page);
         model.addAttribute("search", search);
+
+
 
 		return "productList";
 	}
@@ -190,6 +202,53 @@ public class ProductController {
 	}
 
 // *  4) POST	|	/payment			->	상세 페이지에서 결제 누르면 바로이동 -> payment.jsp
+	//결제페이지로 이동
+	@PostMapping("/cartOrPayment")
+	public String payment(@RequestParam("beansNum") int beansNum,
+						  @RequestParam("qty") int qty,
+						  @RequestParam("action") String action,
+						  HttpSession session,
+						  Model model) throws SQLException {
+		if(action.equals("onePayment")){
+			BeansDO bean = beansDAO.getBean(beansNum);
+			model.addAttribute(bean);
+			model.addAttribute(qty);
+
+			return "payment";
+		}
+		else if (action.equals("cart")){
+
+			BeansDO bean = beansDAO.getBean(beansNum);
+			String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+			cartDAO.addItem(sessionBuyer, bean, qty);
+
+
+
+				return "goProductList";
+		}
+		else {
+			return "error";
+		}
+	}
+
+
+	//즉시 결제
+	@PostMapping("/")
+	public String payment1(@RequestParam("beansNum") int beansNum,
+	 					  @RequestParam("qty") int qty,
+						  Model model, HttpSession session) throws SQLException {
+
+		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+
+		boolean b = orderService.onlyOnePayment(beansNum, qty, sessionBuyer);
+
+		if(b){
+			return "paymentComplete";
+		}
+		return null;
+	}
+
+	//장바구니 결제
 
 
 // *  5) POST	|	/paymentComplete	->	결제 완료시 -> paymentComplete.jsp
@@ -272,6 +331,30 @@ public class ProductController {
 	}
 
 // *  11)POST	|	/registerProdGroup	->	공동구매 상품 등록 -> mainLoginSeller.jsp
+
+
+	//찜하기
+//	@PostMapping("/like")
+//	public String like(@RequestParam("beansNum") int beansNum, HttpSession session, Model model) throws SQLException {
+//
+//		String buyerEmail = String.valueOf(session.getAttribute("buyerEmail"));
+//
+//		likeService.clickLike(buyerEmail, beansNum);
+//
+//		//상품 목록에서 like 누르면
+//		if(action.equal("1")) {
+//
+//			model.addAttribute()
+//
+//			return "productList";
+//
+//			//상품 상세에서 like 누르면
+//		} else (action.equal("2")) {
+//			model.addAttribute()
+//
+//			return "productListDetail";
+//		}
+//	}
 
 
 }
