@@ -109,12 +109,12 @@ public class ProductController {
 		            @RequestParam(value = "category", required = false, defaultValue = "0") String categoryNum,
 		            @RequestParam(value = "sort", required = false, defaultValue = "recent") String sort,
 		            @RequestParam(value = "search", required = false , defaultValue = "") String search,
-							  HttpSession session) throws SQLException {
+							  HttpSession session, HttpServletRequest request) throws SQLException {
 		// 상품 목록을 가져오는 기본 메서드
 		System.out.println(sort + ":" + search + ":" + categoryNum);
         ArrayList<BeansDO> beansList = beansDAO.sortedPage(sort, search, Integer.parseInt(categoryNum));
-                            
-        // 페이징 처리를 위한 전체 상품 수 계산
+
+		// 페이징 처리를 위한 전체 상품 수 계산
         int totalRows = beansList.size();
         int totalPages = (int) Math.ceil((double) totalRows / pageSize);
 
@@ -336,18 +336,18 @@ public class ProductController {
 
 	//찜하기
 //	@PostMapping("/like")
-//	public String like(@RequestParam("beansNum") int beansNum, HttpSession session, Model model) throws SQLException {
+//	public String like(@RequestParam("beansNum") int beansNum, HttpSession session, Model model, HttpServletRequest request) throws SQLException {
 //
 //		String buyerEmail = String.valueOf(session.getAttribute("buyerEmail"));
 //
-//		likeService.clickLike(buyerEmail, beansNum);
+//		String url = String.valueOf(request.getRequestURL());
 //
 //		//상품 목록에서 like 누르면
 //		if(action.equal("1")) {
 //
-//			model.addAttribute()
+//			likeService.clickLike(buyerEmail, beansNum);
 //
-//			return "productList";
+//			return "redirect:/goProductList";
 //
 //			//상품 상세에서 like 누르면
 //		} else (action.equal("2")) {
