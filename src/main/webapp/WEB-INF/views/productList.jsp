@@ -61,7 +61,15 @@
                             <p class="productList__productPrice">${bean.beanPrice}원</p>
                             <p class="productList__productCategory">케냐</p>
                             <div class="productList__likeButton">
-                                <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                            <c:choose>
+                				<c:when test="${bean.aBoolean == false}">
+                    				<button class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
+                				</c:when>
+                				<c:otherwise test="${bean.aBoolean == true}">
+                    				<button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                				</c:otherwise>
+                			</c:choose>
+                      
                                 <p class="mainBeanBest__productLikeCount">${bean.likeCount}</p>
                             </div>
                         </div>

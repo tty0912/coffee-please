@@ -104,9 +104,7 @@ button:focus {
     padding-left: 27rem;
 }
 
-.header__cart, .header__userBuyer, .header__userSeller {
-	display: none;
-}
+
 .header__logo {
     align-items: center;
     gap: 8px;
