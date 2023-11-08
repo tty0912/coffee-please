@@ -79,74 +79,82 @@ public class MemberController {
 		return "main";
 	}
 	
-	// 메인 로그인 페이지
+	// 메인 로그인 페이지 (가영 수정)
 	@PostMapping("/mainLogin")
-	public String mainLogin(@RequestParam("login") String user, HttpServletRequest request, HttpSession session, Model model) {
+
+	public String mainLoginBuyer(@RequestParam("action") String action, HttpServletRequest request, HttpSession session, Model model) {
+		String user = request.getParameter("user");
 		
-		if(user.equals("seller") || user.equals("register")) {
-			String id = request.getParameter("id");
-			String pw = request.getParameter("passwd");
-			
-			SellerDO sellerEmail = sellerDAO.getSeller(id);
-			model.addAttribute("seller", sellerEmail);
-			
-			// 겹치면 true = DB에 id가 있다는 뜻
-			if(sellerDAO.checkSellerId(id) == true) { 
-				System.out.println("login fail1");
-				return "redirect:/main";
-			}
-			//비밀번호 틀림
-			else if(!sellerEmail.getPasswd().equals(pw)){  
-				System.out.println("login fail2");
-				return "redirect:/main";
-			}
-			//아이디 비밀번호 전부일치
-			else { 
-				System.out.println("login all clear");
+		if(action.equals("login")) {
+			System.out.print("1");
+			if(user.equals("seller")) {
+				String id = request.getParameter("id");
+				String pw = request.getParameter("passwd");
+
 				
-				session.setAttribute("sellerEmail", sellerEmail.getSellerEmail());
-				String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
-				System.out.printf(sessionSeller);
-				System.out.println();
+				SellerDO sellerEmail = sellerDAO.getSeller(id);
+				model.addAttribute("seller", sellerEmail);
 				
-				return "mainLoginSeller";
-			}
-			
-		} 
-		else if(user.equals("buyer")){
-			String id = request.getParameter("id");
-			String pw = request.getParameter("passwd");
-			
-			BuyerDO buyerEmail = buyerDAO.getBuyer(id);
-			model.addAttribute("buyer", buyerEmail);
-			
-			// 겹치면 true = DB에 id가 있다는 뜻
-			if(buyerDAO.checkBuyerId(id) == true) { 
-				System.out.println("login fail1");
-				return "redirect:/main";
-			}
-			//비밀번호 틀림
-			else if(!buyerEmail.getPasswd().equals(pw)){  
-				System.out.println("login fail2");
-				return "redirect:/main";
-			}
-			//아이디 비밀번호 전부일치
-			else { 
-				System.out.println("login all clear");
+				// 겹치면 true = DB에 id가 있다는 뜻
+				if(sellerDAO.checkSellerId(id) == true) { 
+					System.out.println("login fail1");
+					return "redirect:/main";
+				}
+				//비밀번호 틀림
+				else if(!sellerEmail.getPasswd().equals(pw)){  
+					System.out.println("login fail2");
+					return "redirect:/main";
+				}
+				//아이디 비밀번호 전부일치
+				else { 
+					System.out.println("login all clear");
+					
+					session.setAttribute("sellerEmail", sellerEmail.getSellerEmail());
+					String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
+					System.out.printf(sessionSeller);
+					System.out.println();
+					
+					return "mainLoginSeller";
+				}
 				
-				session.setAttribute("buyerEmail", buyerEmail.getBuyerEmail());
-				String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
-				System.out.printf(sessionBuyer);
-				System.out.println();
+			} 
+			else if(user.equals("buyer")){
+				String id = request.getParameter("id");
+				String pw = request.getParameter("passwd");
 				
-				return "mainLoginBuyer";
+				BuyerDO buyerEmail = buyerDAO.getBuyer(id);
+				model.addAttribute("buyer", buyerEmail);
+				
+				// 겹치면 true = DB에 id가 있다는 뜻
+				if(buyerDAO.checkBuyerId(id) == true) { 
+					System.out.println("login fail1");
+					return "redirect:/main";
+				}
+				//비밀번호 틀림
+				else if(!buyerEmail.getPasswd().equals(pw)){  
+					System.out.println("login fail2");
+					return "redirect:/main";
+				}
+				//아이디 비밀번호 전부일치
+				else { 
+					System.out.println("login all clear");
+					
+					session.setAttribute("buyerEmail", buyerEmail.getBuyerEmail());
+					String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+					System.out.printf(sessionBuyer);
+					System.out.println();
+					
+					return "mainLoginBuyer";
+				}
+				
 			}
-			
-		}
-		else {
-			return "error";
 		}
 		
+		else if (action.equals("signup")) {
+			return "signup";
+		}
+		
+		return "error";
 		
 	}
 	
@@ -269,11 +277,11 @@ public class MemberController {
 		return "myPageSeller";
 	}
 	
-	// 회원가입 하기위해서 판매자 구매자 선택 화면으로 이동
-	@GetMapping("/signup")
-	public String signup() {
-		return "signup";
-	}
+	// 회원가입 하기위해서 판매자 구매자 선택 화면으로 이동 (가영 수정) 확인하고 삭제해도 되는지
+//	@GetMapping("/signup")
+//	public String signup() {
+//		return "signup";
+//	}
 	
 	// 판매자 회원가입화면으로 이동
 	@GetMapping("/goSignupSeller")
@@ -303,7 +311,7 @@ public class MemberController {
 	
 	// 로그아웃
 	@GetMapping("/logout")
-	public String logout(HttpSession session) {
+	public String loginAfter(HttpSession session) {
 		
 		session.invalidate();
 		

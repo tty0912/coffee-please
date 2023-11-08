@@ -21,6 +21,12 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
+    <script>
+    let sellerEmail = ${sellerEmail};
+    let buyerEmail = ${buyerEmail};
+    
+    
+    </script>
     <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script>

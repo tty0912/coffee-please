@@ -10,10 +10,10 @@
         <div class="max-container">
             <div class="productListDetail__top">
                 <div class="productListDetail__topLeft">
-                    <img src="images/test1.jpg" alt="" class="productListDetail__img">
+                    <img src="${beansDO.beanImg}" alt="" class="productListDetail__img">
                     <div class="productListDetail__likeButton">
                         <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
-                        <p class="mainBeanBest__productLikeCount">30</p>
+                        <p class="mainBeanBest__productLikeCount">${beansDO.likeCount}</p>
                     </div>
                 </div>
                 <div class="productListDetail__topRight">

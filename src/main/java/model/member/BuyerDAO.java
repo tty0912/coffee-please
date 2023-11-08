@@ -22,6 +22,7 @@ public class BuyerDAO {
         }
         catch (Exception e){
             e.printStackTrace();
+
         }
     }
 

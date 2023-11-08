@@ -17,8 +17,8 @@
                     <div class="mainIntro__login">
                         <form class="mainIntro__loginForm" method="post" action="mainLogin">
                             <div class="loginRadio">
-                                <input type="radio" name="login" value="buyer" /><label class="radioLabel">구매자</label>
-                                <input type="radio" name="login" value="seller" /><label class="radioLabel">판매자</label>
+                                <input type="radio" name="user" value="buyer" /><label class="radioLabel">구매자</label>
+                                <input type="radio" name="user" value="seller" /><label class="radioLabel">판매자</label>
                             </div>
                                    
                             <label for="id" class="login__label">
@@ -42,11 +42,9 @@
                                 />
                             </label>
                             <div class="mainIntro__loginFormButton">
-                                <button class="mainIntro__loginButton">로그인</button>
+                                <button class="mainIntro__loginButton" type="submit" name="action" value="login">로그인</button>
+                                <button class="mainIntro__loginButton" type="submit" name="action" value="signup">회원가입</button>
                             </div>
-                        </form>
-                        <form id="mainIntro__loginForm" method="get" action="signup">
-                          <button class="mainIntro__loginButton">회원가입</button>
                         </form>
                     </div>
                      <h4 class="loginErrorMsg" id="msg"></h4>
@@ -88,11 +86,13 @@
                     	</div>
                     </div>
     				</c:forEach>
-    				
                 </div>
                 	<div class="mainBeanBest__button">
                 	<h2 class="mainBeanBest__buttonTitle">더 많은 원두를 보려면?</h2>
-                    <button class="mainBeanBest__plusButton"><i class="fa-solid fa-angles-right"></i></button>
+                	<form method="get" action="goProdcutList">
+                	    <button class="mainBeanBest__plusButton"><i class="fa-solid fa-angles-right"></i></button>
+                	</form>
+
                 
             </div>
         </div>

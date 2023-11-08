@@ -15,19 +15,19 @@
                  <div class="mainIntro__loginAll">
                      <div class="mainIntro__loginAfter">
                             <div class="user">
-                          <!--<img class="mainIntro__loginImg" src="${pageContext.request.contextPath }/images/userImginit.png" alt="">--> 
-                           <img class="mainIntro__loginImg" src="${buyer.buyerImg}" alt="">
-                             <p class="mainIntro__loginId">${buyer.nickname } <span class="mainIntro__loginIdText">님</span></p>
-                         </div>
-                         <div class="mainIntro__buyer">
-                             <p class="mainIntro__loginPoint">${buyer.point} <span class="mainIntro__loginPointText"> point</span></p>
-                             <div class="mainIntro__button">
-                                 <form method="Get" action="logout" class="mainIntro__buyer">
-                                  <button class="mainIntro__AfterButton">로그아웃</button>
-                                  </form>
-                                  <form method="Get" action="myPageBuyer" class="mainIntro__buyer">
-                                    <button class="mainIntro__AfterButton">마이페이지</button>
-                                   </form>
+                          		<img class="mainIntro__loginImg" src="${pageContext.request.contextPath }/images/userImginit.png" alt=""> 
+                           <%-- <img class="mainIntro__loginImg" src="${buyer.buyerImg}" alt=""> --%>
+                             	<p class="mainIntro__loginId">${buyer.nickname } <span class="mainIntro__loginIdText">님</span></p>
+                         	</div>
+                         	<div class="mainIntro__buyer">
+                             	<p class="mainIntro__loginPoint">${buyer.point} <span class="mainIntro__loginPointText"> point</span></p>
+                             	<div class="mainIntro__button">
+                                	<form method="Get" action="logout">
+                                  		<button class="mainIntro__AfterButton">로그아웃</button>
+                                  	</form>
+                                  	<form method="Get" action="myPageBuyer">
+                                    	<button class="mainIntro__AfterButton">마이페이지</button>
+                                   	</form>
                              </div>
                          </div>
                      </div>
@@ -96,7 +96,9 @@
             </div>
             <div class="mainBeanBest__button">
                 <h2 class="mainBeanBest__buttonTitle">더 많은 원두를 보려면?</h2>
-                <button class="mainBeanBest__plusButton"><i class="fa-solid fa-angles-right"></i></button>
+                <form method="get" action="goProdcutList">
+               	    <button class="mainBeanBest__plusButton"><i class="fa-solid fa-angles-right"></i></button>
+               	</form>
             </div>
         </div>
     </section>

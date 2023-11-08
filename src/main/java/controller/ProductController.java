@@ -1,23 +1,22 @@
+//package main.java.controller;
 package controller;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.http.HttpRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
 import java.util.Enumeration;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import javax.servlet.http.HttpSession;
+
 
 
 import model.cart.CartDAO;
 import model.service.ImgUpload;
+
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,19 +24,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-
-
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-
-
 import model.product.BeansDAO;
 import model.product.BeansDO;
 import model.member.SellerDAO;
 import model.product.*;
-
-
 /*
  * 	구매자 메서드
  * 	1) GET	|	/goProdcutList		->	mainLoginBuyer, mainLoginSeller랑 각각 설정? -> productList.jsp
@@ -48,9 +40,11 @@ import model.product.*;
  *  5) POST	|	/paymentComplete	->	결제 완료시 -> paymentComplete.jsp
  *  6) POST	|	/mainLogin			->	결제 완료 페이지에서 버튼 누르면 메인으로 이동(멤버 컨트롤러에 메서드 정의되어있음) -> mainLoginBuyer
  *  7) POST	|	/cart				->	어디서 누르는지는 모르겟지만 카트로 이동 -> cart.jsp
+
  *  
  *  장바구니는 마이페이지로 이동하게 만들면 될듯
  *  
+
  *  판매자 메서드
  *  8) GET	|	/goRegisterProd		->	상품등록 페이지로 이동 -> registerProduct.jsp
  *  9) GET	|	/goRegisterProdGroup->	공동구매 상품등록 페이지로 이동 -> registerProductGroup.jsp
@@ -58,12 +52,11 @@ import model.product.*;
  *  11)POST	|	/registerProdGroup	->	공동구매 상품 등록 -> mainLoginSeller.jsp
  *  
  */
-
-
 @Controller
 public class ProductController {
 	
 	private BeansDO beans;
+
 	private final BeansDAO beansDAO = new BeansDAO();
 	private final SellerDAO sellerDAO = new SellerDAO();
 	private final ImgUpload imgUpload = new ImgUpload();
