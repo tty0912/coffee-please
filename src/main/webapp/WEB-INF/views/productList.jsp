@@ -59,12 +59,13 @@
 
                             <p class="productList__productTitle">${bean.beansDO.beanName}</p>
                             <p class="productList__productPrice">${bean.beansDO.beanPrice}원</p>
-                            <p>${bean.aBoolean}</p>
                             <div class="productList__likeButton">
 
                             <c:choose>
                 				<c:when test="${bean.aBoolean == false}">
-                    				<button class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
+                                    <form method="post" action="like" >
+                                        <button name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
+                                    </form>
                 				</c:when>
                 				<c:when test="${bean.aBoolean == true}">
                     				<button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
