@@ -51,7 +51,7 @@
                 <div id="beansTable" class="productList__productDiv">
                 <c:forEach items="${beansList}" var="bean">
                     <div  class="productList__product">
-                        <img class="productList__productImg" src="images/test2.jpg" alt="">
+                        <img class="productList__productImg" src="${bean.beanImg}" alt="">
                         <div class="productList__productText">
 
                             <p class="productList__productTitle">${bean.beanName}</p>

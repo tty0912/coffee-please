@@ -220,8 +220,12 @@ public class MemberController {
 
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 		buyer.setBuyerEmail(sessionBuyer);
-		buyer.setBuyerImg(img[0]);
+
+		String buyerImg = "/coffee-please/registerData/buyerData/buyer/" + img[0];
+
+		buyer.setBuyerImg(buyerImg);
 		buyerDAO.updateBuyer(buyer);
+
 		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
 		return "myPageBuyer";
 	}
