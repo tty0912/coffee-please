@@ -70,11 +70,9 @@
                         </label>
                         <input type="file" class="fileInput" />
                         <div class="signup__button-div">
-                            <button class="signup__button" id="signup-button" type="submit">수정</button>
+                            <button class="signup__button" id="signup-button" type="submit" name="action" value="buyerModifyChange">수정</button>
+                            <button class="signup__button" id="signup-button" type="submit" name="action" value="previousPage">취소</button>
                         </div>
-                    </form>
-                    <form method="get" action="myPageBuyer">
-	                    <button class="signup__button" id="signup-button" >취소</button>
                     </form>
                 </div>
             </div>

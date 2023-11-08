@@ -216,10 +216,14 @@ input[type='radio']:checked {
     color: var(--color-darkgreen);
     margin-bottom: 3rem;
 }
-.mainCategory {
-    display: flex;
-    justify-content: space-between;
+.category {
+	display: flex;
 }
+.mainCategory {
+    display: inline-flex;
+    gap: 7rem;    
+}	
+
 .mainCategory__detail {
     width: 10rem;
     position: relative;
@@ -330,6 +334,8 @@ input[type='radio']:checked {
 }
 .mainIntro__buyer {
     margin-top: 5rem;
+    display: grid;
+    gap: 4.7rem;
 }
 .mainIntro__loginPoint{
     font-size: 1.2rem;
