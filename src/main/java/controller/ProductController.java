@@ -197,7 +197,7 @@ public class ProductController {
 		beans = beansDAO.getBean(beansNum);
 
 
-			model.addAttribute("beans", beansDAO.getGroupBean(beansNum));
+			model.addAttribute("productListDetailGroup", beansDAO.getGroupBean(beansNum));
 			return "productListDetailGroup";
 	}
 
