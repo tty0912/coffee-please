@@ -66,12 +66,11 @@
                 				<c:when test="${bean.aBoolean == false}">
                     				<button class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
                 				</c:when>
-                				<c:otherwise test="${bean.aBoolean == true}">
+                				<c:when test="${bean.aBoolean == true}">
                     				<button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
-                				</c:otherwise>
+                				</c:when>
                 			</c:choose>
-                      
-                                <p class="mainBeanBest__productLikeCount">${bean.likeCount}</p>
+                                <p class="mainBeanBest__productLikeCount">${bean.beansDO.likeCount}</p>
                             </div>
                         </div>
                         <button class="productList__button" id="${bean.beansDO.beansNum}">상세보기</button>
