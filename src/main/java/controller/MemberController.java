@@ -209,14 +209,14 @@ public class MemberController {
 	@PostMapping("/buyerModifyChange")
 	public String buyerModifyChange(@ModelAttribute BuyerDO buyer, HttpServletRequest request, HttpSession session, Model model) throws IOException {
 
-		String directory = "";
+		String directory = "C:/Users/H40/finalCoffee/coffee-please/src/main/webapp/registerData/buyerData/buyer";
 
 		int sizeLimit = 1024 * 1024 * 5;
 		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
 				"UTF-8", new DefaultFileRenamePolicy());
 
 
-		String[] img = imgUpload.saveImg(multi);
+		String[] img = imgUpload.saveImg(multi, directory);
 
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 		buyer.setBuyerEmail(sessionBuyer);
@@ -260,17 +260,21 @@ public class MemberController {
 	@PostMapping("/sellerModifyChange")
 	public String sellerModifyChange(@ModelAttribute SellerDO seller,HttpServletRequest request, HttpSession session, Model model) throws IOException {
 
-		String directory = "";
+		String directory = "C:/Users/H40/finalCoffee/coffee-please/src/main/webapp/registerData/sellerData/seller";
 
 		int sizeLimit = 1024 * 1024 * 5;
 		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
 				"UTF-8", new DefaultFileRenamePolicy());
 
 
-		String[] img = imgUpload.saveImg(multi);
+		String[] img = imgUpload.saveImg(multi, directory);
 
 		String sessionBuyer = String.valueOf(session.getAttribute("sellerEmail"));
 		seller.setSellerEmail(sessionBuyer);
+
+		String sellerImg = "/coffee-please/registerData/sellerData/seller/" + img[0];
+
+		seller.setSellerImg(sellerImg);
 		sellerDAO.updateSeller(seller);
 		
 		model.addAttribute("seller", sellerDAO.getSeller(sessionBuyer));
@@ -305,6 +309,7 @@ public class MemberController {
 	// 구매자 회원가입후 메인으로 이동
 	@PostMapping("signupBuyer")
 	public String signupBuyer(@ModelAttribute BuyerDO buyer) throws Exception{
+
 		buyerDAO.insertBuyer(buyer);
 		return "redirect:/main";
 	}
@@ -317,6 +322,7 @@ public class MemberController {
 		
 		return "redirect:/main";
 	}
+
 	
 	
 }

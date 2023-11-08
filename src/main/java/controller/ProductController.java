@@ -97,7 +97,7 @@ public class ProductController {
 
 // 상품 목록 페이지로 이동
 	@GetMapping("/goProductList")
-	public String goProductList(Model model,
+	public String ProductList(Model model,
 							  @RequestParam(value = "page", required = false, defaultValue = "1") int page, 
 		            @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize,
 		            @RequestParam(value = "category", required = false, defaultValue = "0") String categoryNum,
@@ -229,25 +229,21 @@ public class ProductController {
 	@PostMapping("/registerProd")
 	public String resisterProduct(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
 
-
-
-		// String directory = "C:\\\\Users\\Jun\\Desktop\\finalproject\\coffee-please\\src\\main\\webapp\\uploadTest";
-		String directory = "D:/multicampus_project/coffee/coffee-please/src/main/webapp/registerData/sellerData/beans/";
+		String directory = "C:/Users/H40/finalCoffee/coffee-please/src/main/webapp/registerData/sellerData/beans";
 		int sizeLimit = 1024 * 1024 * 5;
+
 		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
 				"UTF-8", new DefaultFileRenamePolicy());
 
 		int categoryNum = Integer.parseInt(multi.getParameter("categoryNum"));
-		directory += categoryNum;
-
-		multi = new MultipartRequest(request,directory,sizeLimit,
-				"UTF-8", new DefaultFileRenamePolicy());
+		System.out.println(categoryNum);
 
 		String action = multi.getParameter("action");
 		if (action != null && action.equals("register")) {
 
-			String[] img = imgUpload.saveImg(multi);
-
+			System.out.println(2);
+			String[] img = imgUpload.saveImg(multi, directory);
+			System.out.println(3);
 			// 세션이메일을 받아서 판매자 이메일로 저장
 			String sellerEmail = String.valueOf(session.getAttribute("sellerEmail"));
 
@@ -256,8 +252,8 @@ public class ProductController {
 			int deliveryCharge = Integer.parseInt(multi.getParameter("deliveryCharge"));
 
 //			"\\finalProject\\uploadTest" + savedName; //
-			String beanImg = "/coffee-please/registerData/sellerData/beans/" + categoryNum + "/" + img[0]; // 웹 경로로 수정
-			String descript = "/coffee-please/registerData/sellerData/beans/" + categoryNum + "/" + img[1]; // 웹 경로로 수정
+			String beanImg = "/coffee-please/registerData/sellerData/beans/" + img[0]; // 웹 경로로 수정
+			String descript = "/coffee-please/registerData/sellerData/beans/" + img[1]; // 웹 경로로 수정
 			// 게시물 생성
 			BeansDO newBeans = new BeansDO();
 			newBeans.setBeanImg(beanImg);
