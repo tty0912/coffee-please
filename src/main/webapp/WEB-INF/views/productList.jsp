@@ -54,20 +54,20 @@
                 <div id="beansTable" class="productList__productDiv">
                 <c:forEach items="${beansList}" var="bean">
                     <div  class="productList__product">
-                        <img class="productList__productImg" src="${bean.beanImg}" alt="">
+                        <img class="productList__productImg" src="${bean.beansDO.beanImg}" alt="">
                         <div class="productList__productText">
 
-                            <p class="productList__productTitle">${bean.beanName}</p>
-                            <p class="productList__productPrice">${bean.beanPrice}원</p>
-                            <p class="productList__productCategory">케냐</p>
+                            <p class="productList__productTitle">${bean.beansDO.beanName}</p>
+                            <p class="productList__productPrice">${bean.beansDO.beanPrice}원</p>
+                            <p>${bean.aBoolean}</p>
                             <div class="productList__likeButton">
                                 <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
                                 <p class="mainBeanBest__productLikeCount">${bean.beansDO.likeCount}</p>
                             </div>
                         </div>
-                        <button class="productList__button" id="${bean.beansNum}">상세보기</button>
+                        <button class="productList__button" id="${bean.beansDO.beansNum}">상세보기</button>
                     </div>
-                    </c:forEach>
+                </c:forEach>
                 </div>
                 <div class="productList__buttonDiv">
                     <%--<button class="productList__button"><i class="fa-solid fa-angles-left"></i></button>--%>

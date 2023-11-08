@@ -108,7 +108,8 @@ public class ProductController {
 		            @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize,
 		            @RequestParam(value = "category", required = false, defaultValue = "0") String categoryNum,
 		            @RequestParam(value = "sort", required = false, defaultValue = "recent") String sort,
-		            @RequestParam(value = "search", required = false , defaultValue = "") String search) {
+		            @RequestParam(value = "search", required = false , defaultValue = "") String search,
+							  HttpSession session) throws SQLException {
 		// 상품 목록을 가져오는 기본 메서드
 		System.out.println(sort + ":" + search + ":" + categoryNum);
         ArrayList<BeansDO> beansList = beansDAO.sortedPage(sort, search, Integer.parseInt(categoryNum));

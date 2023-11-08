@@ -3,6 +3,7 @@ package model.service;
 import model.like.LikeDAO;
 import model.product.*;
 
+import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
