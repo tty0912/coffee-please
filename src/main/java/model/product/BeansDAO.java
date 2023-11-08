@@ -118,14 +118,19 @@ public class BeansDAO {
 			rs = this.pstmt.executeQuery();
 
 			if (rs.next()) {
+				beans.setSellerEmail(rs.getString("seller_email"));
 				beans.setBeanName(rs.getString("bean_name"));
-				beans.setBeanPrice(rs.getInt("bean_price"));
+				beans.setBeanPrice(rs.getLong("bean_price"));
 				beans.setBeanImg(rs.getString("bean_img"));
 				beans.setDescript(rs.getString("descript"));
 				beans.setDeliveryCharge(rs.getInt("delivery_charge"));
+				beans.setBeansRegdate(rs.getString("beans_regdate"));
+				beans.setLikeCount(rs.getInt("like_count"));
 				beans.setDeadline(rs.getString("deadline"));
 				beans.setGoalQty(rs.getInt("goal_qty"));
-				beans.setGoalPrice(rs.getInt("goal_price"));
+				beans.setGoalPrice(rs.getLong("goal_price"));
+				beans.setStatusNumber(rs.getInt("status"));
+				beans.setBeanTotalSellCount(rs.getInt("bean_total_selcount"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

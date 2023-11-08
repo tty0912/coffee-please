@@ -80,8 +80,6 @@
 	function prodDetailHandler(event) {
 		let beans = event.target.getAttribute('id');
 		
-		let beansNum = parseInt(beans, 10);
-		
 		let url = '/coffee/goListDetailGroup?beansNum=' + beans;
 		
 		location.href = url;
