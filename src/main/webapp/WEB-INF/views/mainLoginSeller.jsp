@@ -21,11 +21,9 @@
                     <div class="mainIntro__buyer">
                         <p class="mainIntro__loginPoint">${ seller.point }<span class="mainIntro__loginPointText"> point</span></p>
                         <div class="mainIntro__button">
-                            <form method="get" action="logout">
-                                <button class="mainIntro__AfterButton">로그아웃</button>
-                            </form>
-                            <form method="get" action="myPageSeller">
-                                <button class="mainIntro__AfterButton">마이페이지</button>
+                            <form method="Get" action="loginAfter">
+                                  <button class="mainIntro__AfterButton" type="submit" name="action" value="logout">로그아웃</button>
+                            	  <button class="mainIntro__AfterButton" type="submit" name="action" value="buyerModify">정보수정</button>
                             </form>
                         </div>
                     </div>
@@ -36,16 +34,18 @@
 </section>
 <!-- Category -->
 <section id="mainCategory" class="section">
-    <div class="max-container">
+       <div class="max-container">
         <h1 class="mainCategory__title">Category</h1>
-        <div class="mainCategory">
-            <div class="mainCategory__detail">
-                <img src="images/categoryTest1.jpg" alt="" class="mainCategory__detailImg" />
-                <p class="mainCategory__detailTitle">영국</p>
-            </div>
+            	<div id="categoryList" class="mainCategory">
+                    <c:forEach items="${categoryList}" var="categoryDO" >
+        			<div class="mainCategory__detail">
+        				<img id="categoryName"  alt="" class="mainCategory__detailImg" src="${categoryDO.categoryImg}"/>
+        				<p class="mainCategory__detailTitle">${categoryDO.categoryName}</p>
+        			</div>
+        			</c:forEach>
+            	</div>
         </div>
-    </div>
-</section>
+    </section>
 <!-- BeanBest -->
 <section id="mainBeanBest" class="section">
     <div class="max-container">

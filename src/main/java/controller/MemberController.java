@@ -196,34 +196,69 @@ public class MemberController {
 		return "myPageBuyer";
 	}
 	
+//	// 로그아웃  		확인하고 지우기 가영
+//		@GetMapping("/loginAfter")
+//		public String loginAfter(HttpSession session) {
+//			
+//			session.invalidate();
+//			
+//			return "redirect:/main";
+//		}
+	
 	// 구매자 회원정보 수정페이지로 이동
+	@GetMapping("/loginAfter")
+	public String loginAfter(@RequestParam("action") String action, HttpSession session, Model model) {
+		
+		if(action.equals("buyerModify")) {
+			String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+			model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
+			
+			return "buyerModify";
+		}
+		else if(action.equals("logout")) {
+			session.invalidate();
+			
+			return "redirect:/main";
+		}
+		return "main";
+	}
+	
 	@GetMapping("/buyerModify")
 	public String buyerModify(HttpSession session, Model model) {
-		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
-		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
 		
-		return "buyerModify";
+			String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+			model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
+			
+			return "buyerModify";
 	}
 	
 	// 구매자 회원정보 수정
 	@PostMapping("/buyerModifyChange")
-	public String buyerModifyChange(@ModelAttribute BuyerDO buyer, HttpServletRequest request, HttpSession session, Model model) throws IOException {
+	public String buyerModifyChange(@RequestParam("action") String action, @ModelAttribute BuyerDO buyer, HttpServletRequest request, HttpSession session, Model model) throws IOException {
+		
+		if(action.equals("buyerModifyChange")) {
+			String directory = "";
 
-		String directory = "";
-
-		int sizeLimit = 1024 * 1024 * 5;
-		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
-				"UTF-8", new DefaultFileRenamePolicy());
+			int sizeLimit = 1024 * 1024 * 5;
+			MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
+					"UTF-8", new DefaultFileRenamePolicy());
 
 
-		String[] img = imgUpload.saveImg(multi);
+			String[] img = imgUpload.saveImg(multi);
 
-		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
-		buyer.setBuyerEmail(sessionBuyer);
-		buyer.setBuyerImg(img[0]);
-		buyerDAO.updateBuyer(buyer);
-		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
-		return "myPageBuyer";
+			String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+			buyer.setBuyerEmail(sessionBuyer);
+			buyer.setBuyerImg(img[0]);
+			buyerDAO.updateBuyer(buyer);
+			model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
+			return "myPageBuyer";
+		}
+		else if(action.equals("previousPage")) {
+			String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+			return "myPageBuyer";
+		}
+		
+		return "error";
 	}
 	/*
 	 * 
@@ -258,23 +293,32 @@ public class MemberController {
 	
 	// 판매자 정보수정
 	@PostMapping("/sellerModifyChange")
-	public String sellerModifyChange(@ModelAttribute SellerDO seller,HttpServletRequest request, HttpSession session, Model model) throws IOException {
-
-		String directory = "";
-
-		int sizeLimit = 1024 * 1024 * 5;
-		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
-				"UTF-8", new DefaultFileRenamePolicy());
-
-
-		String[] img = imgUpload.saveImg(multi);
-
-		String sessionBuyer = String.valueOf(session.getAttribute("sellerEmail"));
-		seller.setSellerEmail(sessionBuyer);
-		sellerDAO.updateSeller(seller);
+	public String sellerModifyChange(@RequestParam("action") String action, @ModelAttribute SellerDO seller,HttpServletRequest request, HttpSession session, Model model) throws IOException {
 		
-		model.addAttribute("seller", sellerDAO.getSeller(sessionBuyer));
-		return "myPageSeller";
+		if(action.equals("sellerModifyChange")) {
+			String directory = "";
+
+			int sizeLimit = 1024 * 1024 * 5;
+			MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
+					"UTF-8", new DefaultFileRenamePolicy());
+
+
+			String[] img = imgUpload.saveImg(multi);
+
+			String sessionBuyer = String.valueOf(session.getAttribute("sellerEmail"));
+			seller.setSellerEmail(sessionBuyer);
+			sellerDAO.updateSeller(seller);
+			
+			model.addAttribute("seller", sellerDAO.getSeller(sessionBuyer));
+			return "myPageSeller";
+		}
+		else if(action.equals("previousPage")) {
+			String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
+			
+		    return "myPageSeller";
+		}
+		
+		return "error";
 	}
 	
 	// 회원가입 하기위해서 판매자 구매자 선택 화면으로 이동 (가영 수정) 확인하고 삭제해도 되는지
@@ -309,14 +353,7 @@ public class MemberController {
 		return "redirect:/main";
 	}
 	
-	// 로그아웃
-	@GetMapping("/logout")
-	public String loginAfter(HttpSession session) {
-		
-		session.invalidate();
-		
-		return "redirect:/main";
-	}
+	
 	
 	
 }

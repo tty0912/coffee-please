@@ -14,22 +14,20 @@
                  </div>
                  <div class="mainIntro__loginAll">
                      <div class="mainIntro__loginAfter">
-                            <div class="user">
-                          		<img class="mainIntro__loginImg" src="${pageContext.request.contextPath }/images/userImginit.png" alt=""> 
+                     		<div class="user">
+                        	<img class="mainIntro__loginImg" src="${pageContext.request.contextPath }/images/userImginit.png" alt=""> 
                            <%-- <img class="mainIntro__loginImg" src="${buyer.buyerImg}" alt=""> --%>
                              	<p class="mainIntro__loginId">${buyer.nickname } <span class="mainIntro__loginIdText">님</span></p>
                          	</div>
                          	<div class="mainIntro__buyer">
                              	<p class="mainIntro__loginPoint">${buyer.point} <span class="mainIntro__loginPointText"> point</span></p>
                              	<div class="mainIntro__button">
-                                	<form method="Get" action="logout">
-                                  		<button class="mainIntro__AfterButton">로그아웃</button>
-                                  	</form>
-                                  	<form method="Get" action="myPageBuyer">
-                                    	<button class="mainIntro__AfterButton">마이페이지</button>
+                                	<form method="Get" action="loginAfter">
+                                  		<button class="mainIntro__AfterButton" type="submit" name="action" value="logout">로그아웃</button>
+                                    	<button class="mainIntro__AfterButton" type="submit" name="action" value="buyerModify">정보수정</button>
                                    	</form>
-                             </div>
-                         </div>
+                             	</div>
+                         	</div>
                      </div>
                  </div>
              </div>
@@ -37,14 +35,16 @@
      </section>
     <!-- Category -->
     <section id="mainCategory" class="section">
-        <div class="max-container">
-            <h1 class="mainCategory__title">Category</h1>
-            <div class="mainCategory">
-                <div class="mainCategory__detail">
-                    <img src="images/categoryTest1.jpg" alt="" class="mainCategory__detailImg" />
-                    <p class="mainCategory__detailTitle">영국</p>
-                </div>
-            </div>
+       <div class="max-container">
+        <h1 class="mainCategory__title">Category</h1>
+            	<div id="categoryList" class="mainCategory">
+                    <c:forEach items="${categoryList}" var="categoryDO" >
+        			<div class="mainCategory__detail">
+        				<img id="categoryName"  alt="" class="mainCategory__detailImg" src="${categoryDO.categoryImg}"/>
+        				<p class="mainCategory__detailTitle">${categoryDO.categoryName}</p>
+        			</div>
+        			</c:forEach>
+            	</div>
         </div>
     </section>
     <!-- BeanBest -->
