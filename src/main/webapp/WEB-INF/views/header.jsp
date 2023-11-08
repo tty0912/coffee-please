@@ -25,6 +25,20 @@
     let sellerEmail = ${sellerEmail};
     let buyerEmail = ${buyerEmail};
     
+    let cart = document.querySelector(.header__cart);
+    let userSeller = document.querySelector(.header__userSeller);
+    let userBuyer = document.querySelector(.header__userBuyer);
+    
+    function headerHandler(event) {
+    	if(sellerEmail) {
+    		userSeller.style.display = 'block'; 
+    	}
+    	else if(buyerEmail) {
+    		cart.style.display = 'block'; 
+    		userBuyer.style.display = 'block'; 
+    	}
+    }
+    
     
     </script>
     <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script>
@@ -36,17 +50,16 @@
     <header class="header">
         <nav class="header__nav">
             <ul class="header__menu">
-
-                <li><a class="header__menu__item" href="#about">STORE</a></li>
+                <li><a class="header__menu__item" href="http://localhost:8080/coffee/goProdcutList">STORE</a></li>
                 <div class="header__menu__item header__logo">
                     <img class="header__logo__img" src="images/logoName.png" alt="logo" />
                 </div>
-                <li><a class="header__menu__item" href="#about">GROUP</a></li>
+                <li><a class="header__menu__item" href="http://localhost:8080/coffee/goProdcutListGroup">GROUP</a></li>
             </ul>
             <ul class="header__side">
-                <li><a class="header__menu__item header__cart" href="#about"><i class="fa-solid fa-cart-shopping"></i></a></li>
-                <li><a class="header__menu__item header__user" href="#about"><i class="fa-regular fa-user"></i></a></li>
-
+                <li><a class="header__menu__item header__cart" href="http://localhost:8080/coffee/cart"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                <li><a class="header__menu__item header__userBuyer" href="http://localhost:8080/coffee/myPageBuyer"><i class="fa-regular fa-user"></i></a></li>
+                <li><a class="header__menu__item header__userSeller" href="http://localhost:8080/coffee/myPageSeller"><i class="fa-regular fa-user"></i></a></li>
             </ul>
         </nav>
     </header>

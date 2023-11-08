@@ -40,11 +40,11 @@
             </div>
         </div>
     </section>
-    <!-- myPageLike -->
+        <!-- myPageLike -->
     <section id="myPageLike" class="section">
         <div class="max-container">
         	<div>
-        		<h2 class="myPageLike__title">내가 판매 중인 게시물을 확인해보세요!</h2> 
+        		<h2 class="myPageLike__title">판매 중인 게시물을 확인해보세요!</h2> 
             	<div class="myPageLike">
             		<c:forEach items="${likeList}" var="beansDO">
                 		<div class="myPageLike__product">
@@ -53,48 +53,53 @@
                         		<p class="myPageLike__productName">${beansDO.beanName}</p>
                         		<p class="myPageLike__productPrice">${beansDO.beanPrice}</p>
                     		</div>
-                    		<button class="myPagePurchase__modify"><i class="fa-regular fa-pen-to-square"></i></button>
-                    		<button class="myPagePurchase__delete"><i class="fa-solid fa-trash"></i></button>
+                    		<button class="myPageLike__hate"><i class="fa-solid fa-heart"></i></button>
                 		</div>
                 	</c:forEach>
             	</div>
         	</div>
-        	<div>
-        		<h2 class="myPagePurchase__title">내가 판매한 일반상품내역을 확인해보세요!</h2> 
+        </div>
+    </section>
+    <section id="myPagePurchase" class="section">
+        <div class="max-container">	
+        		<h2 class="myPagePurchase__title">일반상품 판매내역을 확인해보세요!</h2> 
             	<div class="myPagePurchase">
-            		<c:forEach items="${purchaseList}" var="beansDO">
+            		<c:forEach items="${orderList}" var="OrderProductDO">
                 		<div class="myPagePurchase__product">
-                    		<img class="myPagePurchase__productImg" src="${beansDO.beanImg}" alt="buyerImg" />
+                    		
                     		<div class="myPagePurchase__productInfo">
-                        		<p class="myPagePurchase__productName">${beansDO.beanName}</p>
-                        		<p class="myPagePurchase__productPrice">${beansDO.beanPrice}</p>
+                        		<p class="myPagePurchase__productName">${OrderProductDO.orderDatetime}</p>
+                        		<p class="myPagePurchase__productPrice">${OrderProductDO.orderTotalPrice}</p>
                     		</div>
-                    		<p class="myPagePurchaseGroup__productPrice">${beansDO.beanPrice}</p>
+                    		<button class="myPagePurchase__detail"><i class="fa-solid fa-heart"></i></button>
                 		</div>
                 	</c:forEach>
             	</div>
         	</div>
+   		</div>
+    </section>
+    <section id="myPagePurchaseGroup" class="section">
+        <div class="max-container">
         	<div>
-        		<h2 class="myPagePurchaseGroup__title">내가 판매한 공동구매내역을 확인해보세요!</h2> 
+        		<h2 class="myPagePurchaseGroup__title">공동구매 판매내역을 확인해보세요!</h2> 
             	<div class="myPagePurchaseGroup">
-            		<c:forEach items="${purchaseGroupList}" var="beansDO">
+            		<c:forEach items="${likeList}" var="beansDO">
                 		<div class="myPagePurchaseGroup__product">
                     		<img class="myPagePurchaseGroup__productImg" src="${beansDO.beanImg}" alt="buyerImg" />
                     		<div class="myPagePurchaseGroup__productInfo">
                         		<p class="myPagePurchaseGroup__productName">${beansDO.beanName}</p>
                         		<p class="myPagePurchaseGroup__productPrice">${beansDO.beanPrice}</p>
                     		</div>
-                    		<p class="myPagePurchaseGroup__productPrice">${beansDO.beanPrice}</p>
+                    		<button class="myPagePurchaseGroup__detail"><i class="fa-solid fa-heart"></i></button>
                 		</div>
                 	</c:forEach>
             	</div>
         	</div>
-            
         </div>
     </section>
     <div class="myPageSources">
         출처 <a href="https://kr.freepik.com/free-vector/flat-design-profile-icon-set_29332702.htm#query=%EC%82%AC%EC%9A%A9%EC%9E%90&position=4&from_view=search&track=sph">Freepik</a>
-    </div>s
+    </div>
 
 
 

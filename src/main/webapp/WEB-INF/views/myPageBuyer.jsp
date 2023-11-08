@@ -53,7 +53,7 @@
     <section id="myPageLike" class="section">
         <div class="max-container">
         	<div>
-        		<h2 class="myPageLike__title">내가 찜한 목록을 확인해보세요!</h2> 
+        		<h2 class="myPageLike__title">찜한 목록을 확인해보세요!</h2> 
             	<div class="myPageLike">
             		<c:forEach items="${likeList}" var="beansDO">
                 		<div class="myPageLike__product">
@@ -67,8 +67,11 @@
                 	</c:forEach>
             	</div>
         	</div>
-        	<div>
-        		<h2 class="myPagePurchase__title">내가 구매한 내역을 확인해보세요!</h2> 
+        </div>
+    </section>
+    <section id="myPagePurchase" class="section">
+        <div class="max-container">	
+        		<h2 class="myPagePurchase__title">구매한 내역을 확인해보세요!</h2> 
             	<div class="myPagePurchase">
             		<c:forEach items="${orderList}" var="OrderProductDO">
                 		<div class="myPagePurchase__product">
@@ -82,8 +85,12 @@
                 	</c:forEach>
             	</div>
         	</div>
+   		</div>
+    </section>
+    <section id="myPagePurchaseGroup" class="section">
+        <div class="max-container">
         	<div>
-        		<h2 class="myPagePurchaseGroup__title">내가 찜한 목록을 확인해보세요!</h2> 
+        		<h2 class="myPagePurchaseGroup__title">공동 구매한 목록을 확인해보세요!</h2> 
             	<div class="myPagePurchaseGroup">
             		<c:forEach items="${likeList}" var="beansDO">
                 		<div class="myPagePurchaseGroup__product">
@@ -102,7 +109,7 @@
     </section>
     <div class="myPageSources">
         출처 <a href="https://kr.freepik.com/free-vector/flat-design-profile-icon-set_29332702.htm#query=%EC%82%AC%EC%9A%A9%EC%9E%90&position=4&from_view=search&track=sph">Freepik</a>
-    </div>s
+    </div>
 
 
 
