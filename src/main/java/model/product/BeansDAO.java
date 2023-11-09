@@ -91,6 +91,7 @@ public class BeansDAO {
 				beans.setGoalPrice(rs.getLong("goal_price"));
 				beans.setStatusNumber(rs.getInt("status"));
 				beans.setBeanTotalSellCount(rs.getInt("bean_total_selcount"));
+				beans.setBeansNum(beansNum);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

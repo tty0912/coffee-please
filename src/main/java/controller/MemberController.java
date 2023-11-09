@@ -113,6 +113,9 @@ public class MemberController {
 					String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
 					System.out.printf(sessionSeller);
 					System.out.println();
+
+					model.addAttribute("categoryList", beansDAO.getAllCategory());
+					model.addAttribute("bestBean", beansDAO.bestBeanArray());
 					
 					return "mainLoginSeller";
 				}
@@ -143,6 +146,9 @@ public class MemberController {
 					String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 					System.out.printf(sessionBuyer);
 					System.out.println();
+
+					model.addAttribute("categoryList", beansDAO.getAllCategory());
+					model.addAttribute("bestBean", beansDAO.bestBeanArray());
 					
 					return "mainLoginBuyer";
 				}
