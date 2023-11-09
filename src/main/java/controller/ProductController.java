@@ -66,7 +66,6 @@ public class ProductController {
 	private final CartDAO cartDAO = new CartDAO();
 	private final OrderService orderService = new OrderService();
 	private final LikeService likeService = new LikeService();
-
 	
 	public ProductController() {
 	}
