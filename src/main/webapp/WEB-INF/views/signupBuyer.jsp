@@ -97,7 +97,19 @@
             </div>
         </div>
     </section>
-    
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        window.onload = function (){
+            document.getElementById("new-address").addEventListener("click", function (){
+                new daum.Postcode({
+                    oncomplete: function (data){
+                        document.getElementById("new-address").value = data.address;
+                        document.querySelector("input[name=address]").focus();
+                    }
+                })
+            })
+        }
+    </script>
    
 
 <%@ include file = "footer.jsp" %>

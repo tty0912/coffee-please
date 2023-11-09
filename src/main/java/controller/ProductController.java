@@ -323,8 +323,8 @@ public class ProductController {
 			int deliveryCharge = Integer.parseInt(multi.getParameter("deliveryCharge"));
 
 //			"\\finalProject\\uploadTest" + savedName; //
-			String beanImg = "/coffee-please/registerData/sellerData/beans/" + img[0]; // 웹 경로로 수정
-			String descript = "/coffee-please/registerData/sellerData/beans/" + img[1]; // 웹 경로로 수정
+			String beanImg = "/coffee/registerData/sellerData/beans/" + img[0]; // 웹 경로로 수정
+			String descript = "/coffee/registerData/sellerData/beans/" + img[1]; // 웹 경로로 수정
 			// 게시물 생성
 			BeansDO newBeans = new BeansDO();
 			newBeans.setBeanImg(beanImg);
@@ -346,7 +346,7 @@ public class ProductController {
 
 
 	//찜하기
-	@PostMapping("/like")
+	@GetMapping("/like")
 	public String like(HttpSession session, Model model, HttpServletRequest request) throws SQLException {
 
 		String buyerEmail = String.valueOf(session.getAttribute("buyerEmail"));
@@ -357,17 +357,22 @@ public class ProductController {
 		String beansNum2 = request.getParameter("beansNum2");
 		System.out.println(beansNum2);
 
-		Enumeration<String> names = request.getParameterNames();
-		String s = names.nextElement();
+		String sort = request.getParameter("sort");
+		String page = request.getParameter("page");
+		System.out.println(sort);
 
 		//상품 목록에서 like 누르면
-		if(s.equals("beansNum")) {
-
+		if (sort.equals("myPage")) {
 			likeService.clickLike(buyerEmail, Integer.parseInt(beansNum));
 
+			return "redirect:/myPageBuyer";
+		}
+		else if(sort.equals("detail") ) {
 
-			return "redirect:/goProductList";
+			likeService.clickLike(buyerEmail, Integer.parseInt(beansNum));
+			model.addAttribute("beansNum", Integer.parseInt(beansNum));
 
+			return "redirect:/goListDetail";
 			//상품 상세에서 like 누르면
 		} else if (s.equals("beansNum2")){
 

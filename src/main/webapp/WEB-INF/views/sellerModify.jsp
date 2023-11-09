@@ -11,7 +11,7 @@
             <div class="signup">
                 <div class="signup__form-div">
                     <h2 class="signup__title">Bean2B 비즈니스 회원 정보를 수정해주세요.</h2> 
-                    <form id="signup__form" method="post" action="sellerModifyChange">
+                    <form id="signup__form" enctype="multipart/form-data" method="post" action="sellerModifyChange">
                         <label for="new-userId" class="signup__label">
                             <i class="fa-regular fa-envelope"></i>
                             <input
@@ -83,13 +83,11 @@
                                 placeholder="주소를 입력해주세요."
                             />
                         </label>
-                        <input type="file" class="fileInput" />
+                        <input type="file" class="fileInput" name="sellerImg"/>
                         <div class="signup__button-div">
-                            <button class="signup__button" id="signup-button" type="submit">수정</button>
+                            <button class="signup__button" type="submit" name="action" value="sellerModifyChange">수정</button>
+                            <button class="signup__button" type="submit" name="action" value="previousPage">취소</button>
                         </div>
-                    </form>
-                    <form method="get" action="myPageSeller">
-	                	<button class="signup__button" id="signup-button">취소</button>
                     </form>
                 </div>
             </div>

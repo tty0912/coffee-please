@@ -14,13 +14,15 @@
                     <div class="productListDetail__likeButton">
                         <c:choose>
                             <c:when test="${productListDetail.aBoolean == false}">
-                                <form method="post" action="like">
-                                    <button name="beansNum2" value="${productListDetail.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
+                                <form method="get" action="like">
+                                    <input type="hidden" name="sort" value="detail">
+                                    <button name="beansNum" value="${productListDetail.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
                                 </form>
                             </c:when>
                             <c:when test="${productListDetail.aBoolean == true}">
-                                <form method="post" action="like">
-                                    <button name="beansNum2" value="${productListDetail.beansDO.beansNum}" class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                                <form method="get" action="like">
+                                    <input type="hidden" name="sort" value="detail">
+                                    <button name="beansNum" value="${productListDetail.beansDO.beansNum}" class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
                                 </form>
                             </c:when>
                         </c:choose>

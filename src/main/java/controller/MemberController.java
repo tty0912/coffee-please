@@ -70,13 +70,24 @@ public class MemberController {
 	public String main(HttpSession session, Model model) {
 		model.addAttribute("categoryList", beansDAO.getAllCategory());
 		model.addAttribute("bestBean", beansDAO.bestBeanArray());
-		
-		if (session.getAttribute("buyerEmail") != null) {
-			
+
+		String sessionBuyer = (String) session.getAttribute("buyerEmail");
+		String sessionSeller = (String) session.getAttribute("sellerEmail");
+
+
+		if (sessionBuyer != null) {
+
+			BuyerDO buyerDO = buyerDAO.getBuyer(sessionBuyer);
+
+			model.addAttribute("buyer", buyerDO);
+
 			return "mainLoginBuyer";
 		}
-		
-		return "main";
+		else {
+
+			return "main";
+		}
+
 	}
 	
 	// 메인 로그인 페이지 (가영 수정)
@@ -241,24 +252,30 @@ public class MemberController {
 	// 구매자 회원정보 수정
 	@PostMapping("/buyerModifyChange")
 
-	public String buyerModifyChange(@RequestParam("action") String action, @ModelAttribute BuyerDO buyer, HttpServletRequest request, HttpSession session, Model model) throws IOException {
-	
+	public String buyerModifyChange(HttpServletRequest request, HttpSession session, Model model) throws IOException {
+		String directory = "C:/Users/H40/finalCoffee/coffee-please/src/main/webapp/registerData/buyerData/buyer";
+
+
+		int sizeLimit = 1024 * 1024 * 5;
+		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
+				"UTF-8", new DefaultFileRenamePolicy());
+
+		String action = multi.getParameter("action");
+
+		BuyerDO buyer = new BuyerDO();
+
 		if(action.equals("buyerModifyChange")) {
-			String directory = "C:/Users/H40/finalCoffee/coffee-please/src/main/webapp/registerData/buyerData/buyer";
-
-
-			int sizeLimit = 1024 * 1024 * 5;
-			MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
-					"UTF-8", new DefaultFileRenamePolicy());
-
 
 			String[] img = imgUpload.saveImg(multi, directory);
 
 			String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 			buyer.setBuyerEmail(sessionBuyer);
       
-      String buyerImg = "/coffee-please/registerData/buyerData/buyer/" + img[0];
+      String buyerImg = "/coffee/registerData/buyerData/buyer/" + img[0];
 
+	  		buyer.setNickname(multi.getParameter("nickname"));
+			buyer.setTel(multi.getParameter("tel"));
+			buyer.setAddress(multi.getParameter("address"));
 			buyer.setBuyerImg(buyerImg);
 			buyerDAO.updateBuyer(buyer);
 			model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
@@ -297,35 +314,45 @@ public class MemberController {
 	// 판매자 정보수정페이지로 이동
 	@GetMapping("/sellerModify")
 	public String sellerModify(HttpSession session, Model model) {
-		String sessionBuyer = String.valueOf(session.getAttribute("sellerEmail"));
-		model.addAttribute("seller", sellerDAO.getSeller(sessionBuyer));
+		String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
+		model.addAttribute("seller", sellerDAO.getSeller(sessionSeller));
 		
 		return "sellerModify";
 	}
 	
 	// 판매자 정보수정
 	@PostMapping("/sellerModifyChange")
-	public String sellerModifyChange(@RequestParam("action") String action, @ModelAttribute SellerDO seller,HttpServletRequest request, HttpSession session, Model model) throws IOException {
-		
+	public String sellerModifyChange(HttpServletRequest request, HttpSession session, Model model) throws IOException {
+
+		String directory =  "C:/Users/H40/finalCoffee/coffee-please/src/main/webapp/registerData/sellerData/seller";
+
+		int sizeLimit = 1024 * 1024 * 5;
+		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
+				"UTF-8", new DefaultFileRenamePolicy());
+
+		String action = multi.getParameter("action");
+
+		SellerDO seller = new SellerDO();
+
 		if(action.equals("sellerModifyChange")) {
-			String directory =  "C:/Users/H40/finalCoffee/coffee-please/src/main/webapp/registerData/sellerData/seller";
-
-			int sizeLimit = 1024 * 1024 * 5;
-			MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
-					"UTF-8", new DefaultFileRenamePolicy());
-
 
 			String[] img = imgUpload.saveImg(multi, directory);
 
-			String sessionBuyer = String.valueOf(session.getAttribute("sellerEmail"));
-			seller.setSellerEmail(sessionBuyer);
+			String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
+			seller.setSellerEmail(sessionSeller);
       
-      String sellerImg = "/coffee-please/registerData/sellerData/seller/" + img[0];
-      
-      seller.setSellerImg(sellerImg);
+			String sellerImg = "/coffee/registerData/sellerData/seller/" + img[0];
+
+			seller.setSellerImg(sellerImg);
+			seller.setNickname(multi.getParameter("nickname"));
+			seller.setTel(multi.getParameter("tel"));
+			seller.setAddress(multi.getParameter("address"));
+			seller.setSellerEmail(sessionSeller);
+
 			sellerDAO.updateSeller(seller);
-			
-			model.addAttribute("seller", sellerDAO.getSeller(sessionBuyer));
+
+			model.addAttribute("seller", sellerDAO.getSeller(sessionSeller));
+
 			return "myPageSeller";
 		}
 		else if(action.equals("previousPage")) {
@@ -351,6 +378,8 @@ public class MemberController {
 	// 판매자 회원가입후 메인으로 이동
 	@PostMapping("/signupSeller")
 	public String signupSeller(@ModelAttribute SellerDO seller) throws Exception {
+
+		seller.setSellerImg("/coffee-please/images/userImginit.png");
 		sellerDAO.insertSeller(seller);
 		return "redirect:/main";
 	}
@@ -365,6 +394,7 @@ public class MemberController {
 	@PostMapping("signupBuyer")
 	public String signupBuyer(@ModelAttribute BuyerDO buyer) throws Exception{
 
+		buyer.setBuyerImg("/coffee-please/images/userImginit.png");
 		buyerDAO.insertBuyer(buyer);
 		return "redirect:/main";
 	}
