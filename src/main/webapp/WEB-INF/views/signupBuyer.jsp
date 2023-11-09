@@ -92,7 +92,7 @@
                                 type="text"
                                 id="new-nickname"
                                 name="nickname"
-                                placeholder="2자리 이상 입력해주세요."
+                                placeholder="닉네임을 입력해주세요."
                             />
                         </label>
                         <label for="new-phoneNumber" class="signup__label">
