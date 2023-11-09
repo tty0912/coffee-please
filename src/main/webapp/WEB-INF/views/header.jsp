@@ -8,6 +8,3 @@
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/98a796a30f.js" crossorigin="anonymous"></script>
-    
-
-    

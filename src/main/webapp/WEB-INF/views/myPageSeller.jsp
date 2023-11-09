@@ -34,7 +34,7 @@
         <div class="max-container">
             <div class="myPageInfo">
                 <div class="myPageInfo__info">
-                    <img src="${pageContext.request.contextPath}/images/userImginit.png" alt="" class="myPageInfo__img">
+                    <img src="${seller.sellerImg}" alt="" class="myPageInfo__img">
                     <p class="myPageInfo__id">${seller.nickname}</p>
                 </div>
                 <div class="myPageInfo__po-mo">

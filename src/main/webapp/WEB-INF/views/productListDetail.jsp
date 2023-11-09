@@ -38,13 +38,15 @@
                     <div class="productListDetail__likeButton">
                         <c:choose>
                             <c:when test="${productListDetail.aBoolean == false}">
-                                <form method="post" action="like">
-                                    <button name="beansNum2" value="${productListDetail.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
+                                <form method="get" action="like">
+                                    <input type="hidden" name="sort" value="detail">
+                                    <button name="beansNum" value="${productListDetail.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
                                 </form>
                             </c:when>
                             <c:when test="${productListDetail.aBoolean == true}">
-                                <form method="post" action="like">
-                                    <button name="beansNum2" value="${productListDetail.beansDO.beansNum}" class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                                <form method="get" action="like">
+                                    <input type="hidden" name="sort" value="detail">
+                                    <button name="beansNum" value="${productListDetail.beansDO.beansNum}" class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
                                 </form>
                             </c:when>
                         </c:choose>
@@ -52,22 +54,24 @@
                         <p class="mainBeanBest__productLikeCount">${productListDetail.beansDO.likeCount}</p>
                     </div>
                 </div>
-                <form method="post" action="cartOrPayment">
                     <div class="productListDetail__topRight">
                         <p class="productListDetail__beanName">${ productListDetail.beansDO.beanName }</p>
                         <p class="productListDetail__deliveryPrice">${ productListDetail.beansDO.beanPrice }원</p>
                         <div class="cartProductInfo__QtyDiv">
                             <button class="cartProductInfo__QtyButton"><i class="fa-solid fa-plus"></i></button>
                             <label>
-                                <input type="number" id="qty" name="qty" class="cartProductInfo__QtyText"/>
+                                <input type="number" name="qty" class="cartProductInfo__QtyText"/>
                             </label>
                             <button class="cartProductInfo__QtyButton"><i class="fa-solid fa-minus"></i></button>
                         </div>
                         <div class="productListDetail__button">
-                            <button id="${productListDetail.beansDO.beansNum}" class="productListDetail__cart" name="action" value="cart">장바구니</button>
-                            <button class="productListDetail__pay" name="action" value="onePayment">바로구매</button>
+                            <button class="productListDetail__cart" id="cart">장바구니</button>
+                            <button class="productListDetail__pay" id="onePayment">바로구매</button>
                         </div>
                     </div>
+                <form method="post" id="hiddenForm">
+                    <input type="hidden" id="beansNum" name="beansNum" value="${ productListDetail.beansDO.beansNum }">
+                    <input type="hidden" id="qty" name="qty" >
                 </form>
 
             </div>

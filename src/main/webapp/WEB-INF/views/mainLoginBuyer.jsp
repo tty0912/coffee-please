@@ -47,7 +47,7 @@
                  <div class="mainIntro__loginAll">
                      <div class="mainIntro__loginAfter">
                      		<div class="user">
-                        	<img class="mainIntro__loginImg" src="${pageContext.request.contextPath }/images/userImginit.png" alt=""> 
+                        	<img class="mainIntro__loginImg" src="${buyer.buyerImg}" alt="">
                            <%-- <img class="mainIntro__loginImg" src="${buyer.buyerImg}" alt=""> --%>
                              	<p class="mainIntro__loginId">${buyer.nickname } <span class="mainIntro__loginIdText">님</span></p>
                          	</div>
@@ -72,17 +72,19 @@
         <div class="max-container">
             <h1 class="mainBeanBest__title">Best</h1>
             <div class="mainBeanBest">
-  			<c:forEach items="${bestBean}" var="beansDO" >
-      	        <div class="mainBeanBest__product">
-   	            	<img src="" alt="" class="beanBest__number">
-   					<img src="${beansDO.beanImg}"  alt="" class="mainBeanBest__productImg" >
-      				<div class="likeButton">
-      	               	<button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
-      	               	<p class="mainBeanBest__productLikeCount">${beansDO.likeCount}</p>
-      	   	    	</div>
-      	    	</div>
-   			</c:forEach>
-      		</div>
+
+                <c:forEach items="${bestBean}" var="beansDO" >
+                    <div class="mainBeanBest__product">
+                        <img src="" alt="" class="beanBest__number">
+                        <img src="${beansDO.beanImg}"  alt="" class="mainBeanBest__productImg" >
+                        <div class="likeButton">
+                            <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                            <p class="mainBeanBest__productLikeCount">${beansDO.likeCount}</p>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+
             <div class="mainBeanBest__button">
                 <h2 class="mainBeanBest__buttonTitle">더 많은 원두를 보려면?</h2>
                 <form method="get" action="goProductList">

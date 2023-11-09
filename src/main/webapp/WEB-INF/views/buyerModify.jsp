@@ -35,7 +35,7 @@
                 <div class="signup__form-div">
                     <h2 class="signup__title">Bean2B 구매자 회원 정보를 수정해주세요.</h2> 
                     <!-- 수정부분 form에서 method, action, input name속성 수정 -->
-                    <form id="signup__form" method="post" action="buyerModifyChange">
+                    <form id="signup__form" enctype="multipart/form-data" method="post" action="buyerModifyChange">
                         <label for="new-userId" class="signup__label">
                             <i class="fa-regular fa-envelope"></i>
                             <input
@@ -91,10 +91,10 @@
                                 placeholder="주소를 입력해주세요."
                             />
                         </label>
-                        <input type="file" class="fileInput" />
+                        <input type="file" class="fileInput" name="buyerImg"/>
                         <div class="signup__button-div">
-                            <button class="signup__button" id="signup-button" type="submit" name="action" value="buyerModifyChange">수정</button>
-                            <button class="signup__button" id="signup-button" type="submit" name="action" value="previousPage">취소</button>
+                            <button class="signup__button"  type="submit" name="action" value="buyerModifyChange">수정</button>
+                            <button class="signup__button"  type="submit" name="action" value="previousPage">취소</button>
                         </div>
                     </form>
                 </div>

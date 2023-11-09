@@ -34,7 +34,7 @@
         <div class="max-container">
             <div class="myPageInfo">
                 <div class="myPageInfo__info">
-                    <img src="${pageContext.request.contextPath}/images/userImginit.png" alt="" class="myPageInfo__img">
+                    <img src="${buyer.buyerImg}" alt="" class="myPageInfo__img">
                     <p class="myPageInfo__id">${buyer.nickname}</p>
                 </div>
                 <div class="myPageInfo__po-mo">
@@ -86,7 +86,10 @@
                         		<p class="myPageLike__productName">${beansDO.beanName}</p>
                         		<p class="myPageLike__productPrice">${beansDO.beanPrice}</p>
                     		</div>
-                    		<button class="myPageLike__hate"><i class="fa-solid fa-heart"></i></button>
+                    		<form method="get" action="like">
+                                <input type="hidden" name="sort" value="myPage">
+                                <button name="beansNum" value="${beansDO.beansNum}" class="myPageLike__hate"><i class="fa-solid fa-heart"></i></button>
+                            </form>
                 		</div>
                 	</c:forEach>
             	</div>

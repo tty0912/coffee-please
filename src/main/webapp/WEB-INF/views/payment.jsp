@@ -34,7 +34,7 @@
         <div class="max-container">
             <div class="cart">
                 <h2 class="cartTitle">결제진행</h2>
-                <c:forEach items="${test}" var="test">
+                <c:forEach items="${bean}" var="beansDO">
                 	<div class="paymentProduct">
                     	<img class="cartProduct__img" src="${beansDO.beanImg}" alt="">
                     	<div class="cartProductInfo">
