@@ -266,12 +266,23 @@ public class ProductController {
 
 
 	//장바구니에 담기
+	@PostMapping("/addCart")
+	public String addCart(HttpSession session, 
+						 Model model,
+						 @RequestParam("beansNum") int beansNum,
+						 @RequestParam("qty") int qty) {
+		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+		
+		cartDAO.addItem(sessionBuyer, beans, qty);
+		
+		return "redirect:/cart";
+	}
 
-
-// 장바구니로 이동
-	@GetMapping("/goCart")
+	// 장바구니로 이동
+	@PostMapping("/goCart")
 	public String goCart(HttpSession session, Model model){
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+		
 		model.addAttribute("cart", cartDAO.getCartList(sessionBuyer));
 
 		return "cart";
