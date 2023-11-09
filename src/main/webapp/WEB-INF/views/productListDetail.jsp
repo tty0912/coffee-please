@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
-    <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/productDetail.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
@@ -71,7 +71,7 @@
                     </div>
                 <form method="post" id="hiddenForm">
                     <input type="hidden" id="beansNum" name="beansNum" value="${ productListDetail.beansDO.beansNum }">
-                    <input type="hidden" id="qty" name="qty" >
+                    <input type="hidden" id="qty" name="qty" value="1">
                 </form>
 
             </div>

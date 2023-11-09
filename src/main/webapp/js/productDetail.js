@@ -1,18 +1,17 @@
-/**
- * 
+/*
  */
-function modifyHandler(event) {
-		let beans = event.target.getAttribute('id');
-		
-		let beansNum = parseInt(beans, 10);
-		
-		let url = '/coffee/productListDetail?productListDetail&beansNum=' + beansNum;
-		
-		location.href = url;
+function cartHandler() {
+	let hiddenForm = document.querySelector('#hiddenForm');
+	let qty = document.querySelector('#qty');
+
+	if (confirm('장바구니에 추가하시겠습니까?')) {
+		hiddenForm.setAttribute('action', '/coffee/cartOrPayment');
+		hiddenForm.submit();
 	}
-	function init() {
-		let beansTable = document.querySelector('#beansTable');
-		
-		beansTable.addEventListener('click', modifyHandler);
-	}
-	window.addEventListener('load', init);
+}
+
+function init() {
+	document.querySelector('#cart').addEventListener('click', cartHandler);
+	//document.querySelector('#onePayment').addEventListener('click', onePaymentHandler);
+}
+window.addEventListener('load', init);
