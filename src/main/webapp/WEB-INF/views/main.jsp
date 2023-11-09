@@ -2,9 +2,32 @@
 	import="java.util.*"
     	  %>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
- 
-<%@ include file = "/WEB-INF/views/header.jsp" %>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Seo -->
+    <title>Bean2B</title>
+	<%@ include file = "/WEB-INF/views/header.jsp" %>
+	<!-- CSS -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/signupStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/productStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/myPageStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
+    <!-- Javascript -->
+    <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
+<%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
+    
+<%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
+    <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
+     <%--<script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script> --%>
+</head>
+<body>
+<%@ include file = "/WEB-INF/views/headerNav.jsp" %>
  <!-- Main -->
     <section id="mainIntro" class="section">
         <div class="max-container">
@@ -63,19 +86,7 @@
     </section>
     <!-- Category 버튼 꾸미기?? -->
     <!-- Category -->
-    <section id="mainCategory" class="section">
-       <div class="max-container">
-        <h1 class="mainCategory__title">Category</h1>
-            	<div id="categoryList" class="mainCategory">
-                    <c:forEach items="${categoryList}" var="categoryDO" >
-        			<div class="mainCategory__detail">
-        				<img id="categoryName"  alt="" class="mainCategory__detailImg" src="${categoryDO.categoryImg}"/>
-        				<p class="mainCategory__detailTitle">${categoryDO.categoryName}</p>
-        			</div>
-        			</c:forEach>
-            	</div>
-        </div>
-    </section>
+    <%@ include file = "/WEB-INF/views/category.jsp" %>
     <!-- BeanBest -->
     <section id="mainBeanBest" class="section">
          <div class="max-container">
@@ -101,7 +112,8 @@
         </div>
     </section>
     
-	<!-- Javascript -->
-    <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
+
     
 <%@ include file = "/WEB-INF/views/footer.jsp" %>
+</body>
+</html>

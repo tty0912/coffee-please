@@ -2,9 +2,34 @@
 	import="java.util.*"
     	  %>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
- 
-<%@ include file = "/WEB-INF/views/header.jsp" %>
-<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Seo -->
+    <title>Bean2B</title>
+	<%@ include file = "/WEB-INF/views/header.jsp" %>
+	<!-- CSS -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/signupStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/productStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/myPageStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
+    <!-- Javascript -->
+    <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+   	<script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script>
+<%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
+    
+<%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
+    <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
+     <%--<script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script> --%>
+</head>
+<body>
+<%@ include file = "/WEB-INF/views/headerNav.jsp" %>
+
 
 <!-- SignupBuyer -->
     <section id="signup" class="section">
@@ -99,10 +124,11 @@
             </div>
         </div>
     </section>
-    <!-- Javascript -->
-   	<script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script>
+    
 
-<%@ include file = "footer.jsp" %>
+<%@ include file = "/WEB-INF/views/footer.jsp" %>
+</body>
+</html>
 
 
 
