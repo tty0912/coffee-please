@@ -1,25 +1,35 @@
-<%@ page contentType="text/html; charset=UTF-8" import="java.util.*, model.product.*"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page contentType="text/html; charset=UTF-8" 
+	import="java.util.*"
+    	  %>
+<%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-
-<%@ include file="/WEB-INF/views/header.jsp"%>
-         <!-- Category -->
-      <section id="listCategory" class="section">
-        <div class="max-container">
-            <h1 class="mainCategory__title">Category</h1>
-            <div class="mainCategory">
-                <div class="mainCategory__detail">
-                    <img src="images/categoryTest1.jpg" alt="" class="mainCategory__detailImg" />
-                    <p class="mainCategory__detailTitle">영국</p>
-                </div>
-                <div class="mainCategory__detail">
-                    <img src="images/categoryTest1.jpg" alt="" class="mainCategory__detailImg" />
-                    <p class="mainCategory__detailTitle">영국</p>
-                </div>
-            </div>
-
-        </div>
-    </section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Seo -->
+    <title>Bean2B</title>
+	<%@ include file = "/WEB-INF/views/header.jsp" %>
+	<!-- CSS -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/signupStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/productStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/myPageStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
+    <!-- Javascript -->
+    <script type="module" src="${pageContext.request.contextPath }/js/category.js" defer></script>
+<%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
+    
+<%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
+    <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
+     <%--<script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script> --%>
+</head>
+<body>
+<%@ include file = "/WEB-INF/views/headerNav.jsp" %>
+     <!-- Category -->
+    <%@ include file = "/WEB-INF/views/category.jsp" %> 
 
     <!--productList  -->
     <section id="productList" class="section">
@@ -59,7 +69,7 @@
                 </div>
                 <div id="beansTable" class="productList__productDiv">
                 <c:forEach items="${beansList}" var="bean">
-                    <div  class="productList__product">
+                    <div id=${bean.beansDO.beansNum} class="productList__product" onclick="let that = this; prodDetail2Handler(that)">
                         <img class="productList__productImg" src="${bean.beansDO.beanImg}" alt="">
                         <div class="productList__productText">
 
@@ -69,12 +79,16 @@
 
                             <c:choose>
                 				<c:when test="${bean.aBoolean == false}">
-                                    <form method="post" action="like" >
+                                    <form method="GET" action="like" >
+                                        <input type="hidden" name="sort" value=${sortOption}>
+                                        <input type="hidden" name="page" value=${currentPage}>
                                         <button name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
                                     </form>
                 				</c:when>
                 				<c:when test="${bean.aBoolean == true}">
-                                    <form method="post" action="like">
+                                    <form method="GET" action="like">
+                                        <input type="hidden" name="sort" value=${sortOption}>
+                                        <input type="hidden" name="page" value=${currentPage}>
                                         <button name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
                                     </form>
                 				</c:when>
@@ -82,7 +96,6 @@
                                 <p class="mainBeanBest__productLikeCount">${bean.beansDO.likeCount}</p>
                             </div>
                         </div>
-                        <button class="productList__button" id="${bean.beansDO.beansNum}">상세보기</button>
                     </div>
                 </c:forEach>
                 </div>
@@ -117,18 +130,30 @@
         </div>
     </section>
 
+
 <script>
     function categoryHandler () {
         document.querySelector('#sorting').submit();
     }
 
-    function prodDetailHandler(event) {
-        let beans = event.target.getAttribute('id');
-        //alert(beans);
+    function prodDetail2Handler(that) {
+        //alert('div가 눌려졌음');
+
+        let beans = that.getAttribute('id');
+        // alert(beans);
 
         let url = '/coffee/goListDetail?beansNum=' + beans;
         location.href = url;
     }
+
+    // function prodDetailHandler(event) {
+    //     let beans = event.getAttribute('id');
+    //     alert(beans);
+    //
+    //     let url = '/coffee/goListDetail?beansNum=' + beans;
+    //     location.href = url;
+    // }
+
     function init() {
         document.querySelector('#category').addEventListener('change', categoryHandler);
         document.querySelector('#beansTable').addEventListener('click', prodDetailHandler);
@@ -137,3 +162,6 @@
     window.addEventListener('load', init);
 </script>
 <%@ include file="/WEB-INF/views/footer.jsp"%>
+</body>
+</html>
+

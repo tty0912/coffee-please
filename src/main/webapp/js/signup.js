@@ -1,17 +1,18 @@
 let timeout;
-let newUserId = document.getElementById('new-userId');
-let password = document.getElementById('new-password');
-let passwordConfirm = document.getElementById('new-passwordConfirm');
-let tel = document.getElementById('tel');
-let strengthBadge = document.getElementById('strengthDisp');
-let strengthMsg = document.getElementById('strengthMsg');
-let confirmMsg = document.getElementById('confirmMsg');
+
+
+
 let idCheckMsg = document.getElementById('idCheckMsg');
-let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})');
-let mediumPassword = new RegExp('((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))');
+
 
 function checkPasswordStrength(){
-	password.addEventListener('submit', password);
+	
+	let password = document.getElementById('new-password');
+	let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})');
+	let mediumPassword = new RegExp('((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))');
+	let strengthBadge = document.getElementById('strengthDisp');
+	let strengthMsg = document.getElementById('strengthMsg');
+	
 	
   if (strongPassword.test(password.value)) {
 	strengthMsg.style.display = 'block'; 
@@ -37,6 +38,10 @@ function checkPasswordStrength(){
 };
 
 function confirmPassword(){
+	let password = document.getElementById('new-password');
+	let passwordConfirm = document.getElementById('new-passwordConfirm');
+	let confirmMsg = document.getElementById('confirmMsg');
+	
 	if(passwordConfirm.value !='' && passwordConfirm.value!=''){
             if(password.value==passwordConfirm.value){
 				confirmMsg.style.display = 'block'; 
@@ -52,6 +57,7 @@ function confirmPassword(){
 };
 
 function telHyphen() {
+	let tel = document.getElementById('new-tel');
   const phoneNumberValue = tel.value.replace(/[^0-9]/g, ''); 
   let formattedNumber = '';
 
@@ -65,12 +71,85 @@ function telHyphen() {
 
   tel.value = formattedNumber; 
 };
-		
-	
-password.addEventListener('input', checkPasswordStrength);
-passwordConfirm.addEventListener('input', confirmPassword);
-tel.addEventListener('input', telHyphen);
 
+function submitHandler(event) {
+    let userId = document.getElementById('new-userId');
+    let username = document.getElementById('new-username');
+    let password = document.getElementById('new-password');
+    let passwordConfirm = document.getElementById('new-passwordConfirm');
+    let nickname = document.getElementById('new-nickname');
+    let tel = document.getElementById('new-tel');
+    let address = document.getElementById('new-address');
+    let msgDiv = document.querySelector('#signUpMsg');
+    let signupLabels = document.querySelectorAll('.signup__label');
+    let signupIcons = document.querySelectorAll('.signup__icon');
+    let msg = '';
+
+    msgDiv.innerHTML = '';
+
+    signupLabels.forEach(label => label.classList.remove('error'));
+    signupIcons.forEach(icon => icon.classList.remove('error'));
+
+    [userId, username, password, passwordConfirm, nickname, tel, address].forEach((field, index) => {
+        if (field.value.trim() === "") {
+            field.value = '';
+            signupLabels[index].classList.add('error');
+            signupIcons[index].classList.add('error');
+            msg = '<i class="fa-solid fa-triangle-exclamation"></i> 모든 정보를 필수로 입력해야 합니다.';
+        }
+    });
+
+    if (password.value.length < 4) {
+        msg = '<i class="fa-solid fa-triangle-exclamation"></i> 비밀번호는 4글자 이상이어야 합니다!';
+        password.value = '';
+        passwordConfirm.value = '';
+        signupLabels[2].classList.add('error');
+        signupIcons[2].classList.add('error');
+    } else if (password.value !== passwordConfirm.value) {
+        msg = '<i class="fa-solid fa-triangle-exclamation"></i> 비밀번호와 비밀번호 확인은 서로 일치해야 합니다!';
+        password.value = '';
+        passwordConfirm.value = '';
+        signupLabels[2].classList.add('error');
+        signupIcons[2].classList.add('error');
+        signupLabels[3].classList.add('error');
+        signupIcons[3].classList.add('error');
+    } else if (username.value.length < 2 || nickname.value.length < 2) {
+        msg = '<i class="fa-solid fa-triangle-exclamation"></i> 이름은 2글자 이상이어야 합니다!';
+        username.value = '';
+        nickname.value = '';
+        signupLabels[1].classList.add('error');
+        signupIcons[1].classList.add('error');
+    }
+
+    if (msg !== '') {
+        msgDiv.style.display = 'block';
+        msgDiv.innerHTML = msg;
+        setTimeout(() => {
+            signupIcons.forEach(icon => icon.classList.remove('error'));
+        }, 500);
+        event.preventDefault();
+    }
+}
+
+		
+function init() {
+	let signUpForm = document.getElementById('signup__form');
+    let password = document.getElementById('new-password');
+    let passwordConfirm = document.getElementById('new-passwordConfirm');
+    let tel = document.getElementById('new-tel');
+	
+	console.log(signUpForm);
+	
+	signUpForm.addEventListener('submit', submitHandler);
+	password.addEventListener('input', checkPasswordStrength);
+	passwordConfirm.addEventListener('input', confirmPassword);
+	tel.addEventListener('input', telHyphen);
+}
+
+init();
+
+
+//window.addEventListener('load', init);
 
 
 
