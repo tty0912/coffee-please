@@ -108,12 +108,13 @@ public class ProductController {
 		            @RequestParam(value = "category", required = false, defaultValue = "0") String categoryNum,
 		            @RequestParam(value = "sort", required = false, defaultValue = "recent") String sort,
 		            @RequestParam(value = "search", required = false , defaultValue = "") String search,
-							  HttpSession session) throws SQLException {
+							  HttpSession session, HttpServletRequest request) throws SQLException {
+
 		// 상품 목록을 가져오는 기본 메서드
 		System.out.println(sort + ":" + search + ":" + categoryNum);
         ArrayList<BeansDO> beansList = beansDAO.sortedPage(sort, search, Integer.parseInt(categoryNum));
-                            
-        // 페이징 처리를 위한 전체 상품 수 계산
+
+		// 페이징 처리를 위한 전체 상품 수 계산
         int totalRows = beansList.size();
         int totalPages = (int) Math.ceil((double) totalRows / pageSize);
 
@@ -185,10 +186,18 @@ public class ProductController {
 
 // 일반 상품 상세페이지로 이동
 	@GetMapping("/goListDetail")
-	public String goListDetail(@RequestParam("beansNum") int beansNum, Model model) {
+	public String goListDetail(@RequestParam("beansNum") int beansNum, Model model, HttpSession session) throws SQLException {
 
-			model.addAttribute("productListDetail", beansDAO.getBean(beansNum));
-			return "productListDetail";
+		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+		boolean b = likeService.checkLike(sessionBuyer, beansNum);
+
+		LikeBeans likeBeans = new LikeBeans();
+		likeBeans.setBeansDO(beansDAO.getBean(beansNum));
+		likeBeans.setaBoolean(b);
+
+
+		model.addAttribute("productListDetail", likeBeans);
+		return "productListDetail";
 	}
 
 // 공동 상품 상세 페이지로 이동
@@ -209,6 +218,7 @@ public class ProductController {
 						  @RequestParam("action") String action,
 						  HttpSession session,
 						  Model model) throws SQLException {
+		System.out.println(beansNum);
 		if(action.equals("onePayment")){
 			BeansDO bean = beansDAO.getBean(beansNum);
 			model.addAttribute(bean);
@@ -221,8 +231,6 @@ public class ProductController {
 			BeansDO bean = beansDAO.getBean(beansNum);
 			String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 			cartDAO.addItem(sessionBuyer, bean, qty);
-
-
 
 				return "goProductList";
 		}
@@ -255,6 +263,9 @@ public class ProductController {
 
 
 // *  6) POST	|	/mainLogin			->	결제 완료 페이지에서 버튼 누르면 메인으로 이동(멤버 컨트롤러에 메서드 정의되어있음) -> mainLoginBuyer
+
+
+	//장바구니에 담기
 
 
 // 장바구니로 이동
@@ -334,27 +345,39 @@ public class ProductController {
 
 
 	//찜하기
-//	@PostMapping("/like")
-//	public String like(@RequestParam("beansNum") int beansNum, HttpSession session, Model model) throws SQLException {
-//
-//		String buyerEmail = String.valueOf(session.getAttribute("buyerEmail"));
-//
-//		likeService.clickLike(buyerEmail, beansNum);
-//
-//		//상품 목록에서 like 누르면
-//		if(action.equal("1")) {
-//
-//			model.addAttribute()
-//
-//			return "productList";
-//
-//			//상품 상세에서 like 누르면
-//		} else (action.equal("2")) {
-//			model.addAttribute()
-//
-//			return "productListDetail";
-//		}
-//	}
+	@PostMapping("/like")
+	public String like(HttpSession session, Model model, HttpServletRequest request) throws SQLException {
+
+		String buyerEmail = String.valueOf(session.getAttribute("buyerEmail"));
+		String beansNum = request.getParameter("beansNum");
+		System.out.println("================");
+		System.out.println(beansNum);
+		System.out.println(buyerEmail);
+		String beansNum2 = request.getParameter("beansNum2");
+		System.out.println(beansNum2);
+
+		Enumeration<String> names = request.getParameterNames();
+		String s = names.nextElement();
+
+		//상품 목록에서 like 누르면
+		if(s.equals("beansNum")) {
+
+			likeService.clickLike(buyerEmail, Integer.parseInt(beansNum));
+
+
+			return "redirect:/goProductList";
+
+			//상품 상세에서 like 누르면
+		} else if (s.equals("beansNum2")){
+
+			likeService.clickLike(buyerEmail, Integer.parseInt(beansNum2));
+
+			model.addAttribute("beansNum", Integer.parseInt(beansNum2));
+
+			return "redirect:/goListDetail";
+		}
+		else return "error";
+	}
 
 
 }

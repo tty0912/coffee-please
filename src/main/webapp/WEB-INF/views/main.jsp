@@ -90,6 +90,7 @@
                         	<p class="mainBeanBest__productLikeCount">${beansDO.likeCount}</p>
                     	</div>
                     </div>
+
     			</c:forEach>
             </div>
  	         <div class="mainBeanBest__button">
@@ -97,6 +98,7 @@
  	         	<form method="get" action="goProdcutList">
  	         	    <button class="mainBeanBest__plusButton"><i class="fa-solid fa-angles-right"></i></button>	
  	         	</form>
+
             </div>
         </div>
     </section>

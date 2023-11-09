@@ -26,7 +26,7 @@
                     <div class="productList__sortDiv">
                         <span class="productList__sortText">정렬</span>
 
-                        <form action="/coffee/goProductList" method="GET" id="sorting">
+                        <form action="goProductList" method="GET" id="sorting">
                         <label for="category">카테고리:</label>	
 							<select id="category" name="category">
                                 <option value="0" ${param.category == '0' ? 'selected' : '' }>전체</option>
@@ -35,6 +35,12 @@
                                 <option value="3" ${param.category == '3' ? 'selected' : '' }>에티오피아</option>
                                 <option value="4" ${param.category == '4' ? 'selected' : '' }>온두라스</option>
                                 <option value="5" ${param.category == '5' ? 'selected' : '' }>인도</option>
+                                <option value="6" ${param.category == '6' ? 'selected' : '' }>인도네시아</option>
+                                <option value="7" ${param.category == '7' ? 'selected' : '' }>멕시코</option>
+                                <option value="8" ${param.category == '8' ? 'selected' : '' }>페루</option>
+                                <option value="9" ${param.category == '9' ? 'selected' : '' }>우간다</option>
+                                <option value="10" ${param.category == '10' ? 'selected' : '' }>베트남</option>
+                                
 						    </select>
 	                        <button class="productList__sort" name="sort" value="recent" type="submit">최신순</button>
 	                        <button class="productList__sort" name="sort" value="mostLiked" type="submit">인기순</button>
@@ -56,19 +62,21 @@
 
                             <p class="productList__productTitle">${bean.beansDO.beanName}</p>
                             <p class="productList__productPrice">${bean.beansDO.beanPrice}원</p>
-                            <p>${bean.aBoolean}</p>
                             <div class="productList__likeButton">
 
                             <c:choose>
                 				<c:when test="${bean.aBoolean == false}">
-                    				<button class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
+                                    <form method="post" action="like" >
+                                        <button name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
+                                    </form>
                 				</c:when>
-                				<c:otherwise test="${bean.aBoolean == true}">
-                    				<button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
-                				</c:otherwise>
+                				<c:when test="${bean.aBoolean == true}">
+                                    <form method="post" action="like">
+                                        <button name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                                    </form>
+                				</c:when>
                 			</c:choose>
-                      
-                                <p class="mainBeanBest__productLikeCount">${bean.likeCount}</p>
+                                <p class="mainBeanBest__productLikeCount">${bean.beansDO.likeCount}</p>
                             </div>
                         </div>
                         <button class="productList__button" id="${bean.beansDO.beansNum}">상세보기</button>

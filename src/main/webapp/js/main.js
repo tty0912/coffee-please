@@ -1,29 +1,4 @@
 
-
-//로그인 유효성 검사 + 메시지(임시)
-function loginCheckHandler(){
-	let msg = '';
-	let loginCheck = true;
-	let userId = document.querySelector('#userId');
-	let userPasswd = document.querySelector('#userPasswd');
-	
-	if(userId.value === '' || userPasswd.value === ''  ){
-		msg = '계정이 잘못되었습니다!';
-		userId.value = '';
-		userPasswd.value = '';
-		
-		loginCheck = false;
-	}
-	
-	if(loginCheck){
-		
-		userId.value = '';
-		userPasswd.value = '';
-	}
-	else {		
-		document.querySelector('#msg').innerHTML = msg;
-	}
-}
 //1~5등 이미지 연결
 function bestBeansImgHandler(){
 	const images = ["/coffee/images/number1.png", "/coffee/images/number2.png", 
@@ -67,14 +42,14 @@ function autoCycleCategoryListHandler(){
 	
 	
 function seeMoreHandler(){
-	let url = '/coffee/beansList';
+	let url = '/coffee/goProductList?';
 	
 	location.href = url;
 }
 
 function categoryListHandler(event){
-	let categoryName = event.target.getAttribute('categoryName');
-	let url = '/coffee/beansList?categoryName=' + categoryName;
+	let categoryNum = event.target.getAttribute('categoryNum');
+	let url = '/coffee/goProductList?category=' + categoryNum;
 	
 	location.href = url;
 }
