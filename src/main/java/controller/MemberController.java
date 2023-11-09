@@ -82,6 +82,13 @@ public class MemberController {
 			model.addAttribute("buyer", buyerDO);
 
 			return "mainLoginBuyer";
+		} else if(sessionSeller != null){
+
+			SellerDO sellerDO = sellerDAO.getSeller(sessionSeller);
+
+			model.addAttribute("buyer", sellerDO);
+
+			return "mainLoginSeller";
 		}
 		else {
 

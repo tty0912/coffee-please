@@ -28,7 +28,7 @@
     
     let cart = document.querySelector('.header__cart');
     let userSeller = document.querySelector('.header__userSeller');
-    let userBuyer = document.querySelector(''.header__userBuyer');
+    let userBuyer = document.querySelector('.header__userBuyer');
     
     function headerHandler(event) {
     	if(sellerEmail) {

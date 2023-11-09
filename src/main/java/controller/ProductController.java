@@ -354,8 +354,6 @@ public class ProductController {
 		System.out.println("================");
 		System.out.println(beansNum);
 		System.out.println(buyerEmail);
-		String beansNum2 = request.getParameter("beansNum2");
-		System.out.println(beansNum2);
 
 		String sort = request.getParameter("sort");
 		String page = request.getParameter("page");
@@ -374,15 +372,17 @@ public class ProductController {
 
 			return "redirect:/goListDetail";
 			//상품 상세에서 like 누르면
-		} else if (s.equals("beansNum2")){
-
-			likeService.clickLike(buyerEmail, Integer.parseInt(beansNum2));
-
-			model.addAttribute("beansNum", Integer.parseInt(beansNum2));
-
-			return "redirect:/goListDetail";
 		}
-		else return "error";
+		else {
+
+			likeService.clickLike(buyerEmail, Integer.parseInt(beansNum));
+			model.addAttribute("sort", sort);
+			model.addAttribute("page", page);
+
+			return "redirect:/goProductList";
+
+
+		}
 	}
 
 

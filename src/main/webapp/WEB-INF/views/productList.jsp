@@ -119,6 +119,16 @@
         document.querySelector('#sorting').submit();
     }
 
+    function prodDetail2Handler(that) {
+        // alert('div가 눌려졌음');
+
+        let beans = that.getAttribute('id');
+        // alert(beans);
+
+        let url = '/coffee/goListDetail?beansNum=' + beans;
+        location.href = url;
+    }
+
     // function prodDetailHandler(event) {
     //     let beans = event.getAttribute('id');
     //     alert(beans);

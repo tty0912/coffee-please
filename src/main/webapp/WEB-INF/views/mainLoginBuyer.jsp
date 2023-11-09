@@ -52,47 +52,16 @@
         <div class="max-container">
             <h1 class="mainBeanBest__title">Best</h1>
             <div class="mainBeanBest">
-                <div class="mainBeanBest__product">
-                    <img src="images/number1.png" alt="" class="beanBest__number">
-                    <img src="images/test1.jpg" alt="" class="mainBeanBest__productImg" />
-                    <div class="likeButton">
-                        <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
-                        <p class="mainBeanBest__productLikeCount">30</p>
+                <c:forEach items="${bestBean}" var="beansDO" >
+                    <div class="mainBeanBest__product">
+                        <img src="" alt="" class="beanBest__number">
+                        <img src="${beansDO.beanImg}"  alt="" class="mainBeanBest__productImg" >
+                        <div class="likeButton">
+                            <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                            <p class="mainBeanBest__productLikeCount">${beansDO.likeCount}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="mainBeanBest__product">
-                    <img src="images/number2.png" alt="" class="beanBest__number">
-                    <img src="images/test1.jpg" alt="" class="mainBeanBest__productImg" />
-                    <div class="likeButton">
-                        <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
-                        <p class="mainBeanBest__productLikeCount">30</p>
-                    </div>
-                </div>
-                <div class="mainBeanBest__product">
-                    <img src="images/number3.png" alt="" class="beanBest__number">
-                    <img src="images/test1.jpg" alt="" class="mainBeanBest__productImg" />
-                    <div class="likeButton">
-                        <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
-                        <p class="mainBeanBest__productLikeCount">30</p>
-                    </div>
-                </div>
-                <div class="mainBeanBest__product">
-                    <img src="images/number4.png" alt="" class="beanBest__number">
-                    <img src="images/test1.jpg" alt="" class="mainBeanBest__productImg" />
-                    <div class="likeButton">
-                        <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
-                        <p class="mainBeanBest__productLikeCount">30</p>
-                    </div>
-                </div>
-                <div class="mainBeanBest__product">
-                    <img src="images/number5.png" alt="" class="beanBest__number">
-                    <img src="images/test1.jpg" alt="" class="mainBeanBest__productImg" />
-                    <div class="likeButton">
-                        <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
-                        <p class="mainBeanBest__productLikeCount">30</p>
-                    </div>
-                    
-                </div>
+                </c:forEach>
             </div>
             <div class="mainBeanBest__button">
                 <h2 class="mainBeanBest__buttonTitle">더 많은 원두를 보려면?</h2>
