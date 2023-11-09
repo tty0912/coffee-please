@@ -13,13 +13,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import model.cart.CartDAO;
+import model.cart.CartDTO;
 import model.member.SellerDAO;
 import model.product.BeansDAO;
 import model.product.BeansDO;
@@ -207,6 +207,21 @@ public class ProductController {
 // *  4) POST	|	/payment			->	상세 페이지에서 결제 누르면 바로이동 -> payment.jsp
 	//결제페이지로 이동
 	@PostMapping("/cartOrPayment")
+	 public String payment(CartDTO cartDTO,
+	        HttpSession session,
+	        Model model) throws SQLException {
+		 System.out.println(cartDTO.toString());
+		 
+		BeansDO bean = beansDAO.getBean(cartDTO.getBeansNum());
+		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+		
+		// cart 추가
+		cartDAO.addItem(sessionBuyer, bean, cartDTO.getQty());	   
+	    return "productList";
+	 }
+	
+	/*
+	@PostMapping("/cartOrPayment")
 	 public String payment(@RequestBody String beansNum,
 			 @RequestBody String qty,
 	        HttpSession session,
@@ -222,6 +237,7 @@ public class ProductController {
 	  
 
 	 }
+	 */
 	/*
 	@PostMapping("/cartOrPayment")
 	public String payment(@RequestParam("beansNum") String beansNum,

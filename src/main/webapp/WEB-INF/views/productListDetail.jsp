@@ -71,7 +71,7 @@
                     </div>
                 <form method="post" id="hiddenForm">
                     <input type="hidden" id="beansNum" name="beansNum" value="${ productListDetail.beansDO.beansNum }">
-                    <input type="hidden" id="qty" name="qty" value="1">
+                    <input type="hidden" id="qty" name="qty">
                 </form>
 
             </div>
