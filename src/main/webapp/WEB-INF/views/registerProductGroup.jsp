@@ -2,8 +2,32 @@
 	import="java.util.*"
     	  %>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
- 
-<%@ include file = "/WEB-INF/views/header.jsp" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Seo -->
+    <title>Bean2B</title>
+	<%@ include file = "/WEB-INF/views/header.jsp" %>
+	<!-- CSS -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/signupStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/productStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/myPageStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
+    <!-- Javascript -->
+    <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
+<%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
+    
+<%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
+    <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
+     <%--<script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script> --%>
+</head>
+<body>
+<%@ include file = "/WEB-INF/views/headerNav.jsp" %>
 
  <!-- registerProductGroup -->
    <section id="signup" class="section">
@@ -14,7 +38,7 @@
                     <h4 class="signup__description">맛있는 원두를 등록해주세요!</h4> 
                     <form id="signup__form" action="Controller">
                         <label for="new-beanName" class="signup__label">
-                            <img src="${pageContext.request.contextPath}/images/bean.png" alt="" class="bean__img">
+                            <img src="${pageContext.request.contextPath}/images/bean.png" alt="" class="bean__img signup__icon">
                             <input
                                 class="signup__input"
                                 type="text"
@@ -24,7 +48,7 @@
                             />
                         </label> 
                         <label for="new-beanPrice" class="signup__label">
-                            <i class="fa-solid fa-tags"></i>
+                            <i class="fa-solid fa-tags signup__icon"></i>
                             <input
                                 class="signup__input"
                                 type="text"
@@ -34,7 +58,7 @@
                             />
                         </label>
                         <label for="new-goalPrice" class="signup__label">
-                            <img src="${pageContext.request.contextPath}/images/sale.png" alt="" class="sale__img">
+                            <img src="${pageContext.request.contextPath}/images/sale.png" alt="" class="sale__img signup__icon">
                             <input
                                 class="signup__input"
                                 type="text"
@@ -45,7 +69,7 @@
                         </label>
                        
                         <label for="new-cName" class="signup__label">
-                            <i class="fa-solid fa-flag-checkered"></i>
+                            <i class="fa-solid fa-flag-checkered signup__icon"></i>
                             <input
                                 class="signup__input"
                                 type="text"
@@ -56,7 +80,7 @@
                         </label>
 
                         <label for="new-goalQty" class="signup__label">
-                            <i class="fa-solid fa-medal"></i>
+                            <i class="fa-solid fa-medal signup__icon"></i>
                             <input
                                 class="signup__input"
                                 type="text"
@@ -67,7 +91,7 @@
                         </label>
 
                         <label for="new-deadline" class="signup__label">
-                            <i class="fa-regular fa-clock"></i>
+                            <i class="fa-regular fa-clock signup__icon"></i>
                             <input
                                 class="signup__input"
                                 type="text"
@@ -78,7 +102,7 @@
                         </label>
 
                         <label for="new-deliveryCharge" class="signup__label">
-                            <i class="fa-solid fa-truck-fast"></i>
+                            <i class="fa-solid fa-truck-fast signup__icon"></i>
                             <input
                                 class="signup__input"
                                 type="text"
@@ -103,3 +127,5 @@
         <a href="https://www.flaticon.com/kr/free-icons/" title="판매용 아이콘">판매용 아이콘  제작자: th studio - Flaticon</a>
     </div>
 <%@ include file = "/WEB-INF/views/footer.jsp" %>
+</body>
+</html>

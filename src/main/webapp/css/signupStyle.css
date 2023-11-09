@@ -101,7 +101,7 @@ button:focus {
 }
 .header__side {
     display: flex;
-    padding-left: 27rem;
+    padding-left: 22rem;
 }
 
 
@@ -117,7 +117,7 @@ button:focus {
 .header__menu {
     display: flex;
     gap: 1rem;
-    margin-left: 34rem;
+    margin-left: 23rem;
 }
 
 .header__menu__item {
@@ -269,6 +269,12 @@ button:focus {
   
   
   /*ErrorMessge*/
+  
+  #signUpMsg{
+	  color: var(--color-red);
+	  margin-top: 2rem;
+	  display: none;
+  }
   
   .passwdMsg {
 	  display: flex;

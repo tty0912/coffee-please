@@ -1,25 +1,35 @@
-<%@ page contentType="text/html; charset=UTF-8" import="java.util.*, model.product.*"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page contentType="text/html; charset=UTF-8" 
+	import="java.util.*"
+    	  %>
+<%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-
-<%@ include file="/WEB-INF/views/header.jsp"%>
-         <!-- Category -->
-      <section id="listCategory" class="section">
-        <div class="max-container">
-            <h1 class="mainCategory__title">Category</h1>
-            <div class="mainCategory">
-                <div class="mainCategory__detail">
-                    <img src="images/categoryTest1.jpg" alt="" class="mainCategory__detailImg" />
-                    <p class="mainCategory__detailTitle">영국</p>
-                </div>
-                <div class="mainCategory__detail">
-                    <img src="images/categoryTest1.jpg" alt="" class="mainCategory__detailImg" />
-                    <p class="mainCategory__detailTitle">영국</p>
-                </div>
-            </div>
-
-        </div>
-    </section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Seo -->
+    <title>Bean2B</title>
+	<%@ include file = "/WEB-INF/views/header.jsp" %>
+	<!-- CSS -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/signupStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/productStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/myPageStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
+    <!-- Javascript -->
+    <script type="module" src="${pageContext.request.contextPath }/js/category.js" defer></script>
+<%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
+    
+<%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
+    <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
+     <%--<script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script> --%>
+</head>
+<body>
+<%@ include file = "/WEB-INF/views/headerNav.jsp" %>
+     <!-- Category -->
+    <%@ include file = "/WEB-INF/views/category.jsp" %>
 
     <!--productList  -->
     <section id="productList" class="section">
@@ -38,6 +48,12 @@
                                 <option value="3" ${param.category == '3' ? 'selected' : '' }>에티오피아</option>
                                 <option value="4" ${param.category == '4' ? 'selected' : '' }>온두라스</option>
                                 <option value="5" ${param.category == '5' ? 'selected' : '' }>인도</option>
+                                <option value="6" ${param.category == '6' ? 'selected' : '' }>인도네시아</option>
+                                <option value="7" ${param.category == '7' ? 'selected' : '' }>멕시코</option>
+                                <option value="8" ${param.category == '8' ? 'selected' : '' }>페루</option>
+                                <option value="9" ${param.category == '9' ? 'selected' : '' }>우간다</option>
+                                <option value="10" ${param.category == '10' ? 'selected' : '' }>베트남</option>
+                                
 						    </select>
 	                        <button class="productList__sort" name="sort" value="recent" type="submit">최신순</button>
 	                        <button class="productList__sort" name="sort" value="mostLiked" type="submit">인기순</button>
@@ -114,6 +130,7 @@
         </div>
     </section>
 
+
 <script>
     function categoryHandler () {
         document.querySelector('#sorting').submit();
@@ -145,3 +162,6 @@
     window.addEventListener('load', init);
 </script>
 <%@ include file="/WEB-INF/views/footer.jsp"%>
+</body>
+</html>
+

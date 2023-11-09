@@ -21,11 +21,11 @@ function purchaseGroupButtonHandler(event) {
 }
 
 function init() {
-	let likeButton = document.getElementById('myPageNav__likeButton');
+//	let likeButton = document.getElementById('myPageNav__likeButton');
 	let purchaseButton = document.getElementById('myPageNav__purchaseButton');
 	let purchaseGroupButton = document.getElementById('myPageNav__purchaseGroupButton');
 	
-	likeButton.addEventListener('click', likeButtonHandler);
+//	likeButton.addEventListener('click', likeButtonHandler);
 	purchaseButton.addEventListener('click', purchaseButtonHandler);
 	purchaseGroupButton.addEventListener('click', purchaseGroupButtonHandler);
 }

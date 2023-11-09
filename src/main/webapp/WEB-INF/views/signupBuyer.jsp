@@ -2,9 +2,34 @@
 	import="java.util.*"
     	  %>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
- 
-<%@ include file = "/WEB-INF/views/header.jsp" %>
-<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Seo -->
+    <title>Bean2B</title>
+	<%@ include file = "/WEB-INF/views/header.jsp" %>
+	<!-- CSS -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/signupStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/productStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/myPageStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
+    <!-- Javascript -->
+    <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+   	<script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script>
+<%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
+    
+<%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
+    <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
+     <%--<script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script> --%>
+</head>
+<body>
+<%@ include file = "/WEB-INF/views/headerNav.jsp" %>
+
 
 <!-- SignupBuyer -->
     <section id="signup" class="section">
@@ -13,7 +38,7 @@
                 <div class="signup__form-div">
                     <h2 class="signup__title">Bean2B 구매자 회원 가입을 진행합니다.</h2> 
                     <h4 class="signup__description">맛있는 커피를 찾고 계신가요? 커피도시 부산의 신선한 원두로 여러분을 기다리고 있습니다.</h4> 
-                    <form id="signup__form" method="post" action="signupBuyer" >
+                    <form id="signup__form" >
                         <label for="new-userId" class="signup__label">
                             <i class="fa-regular fa-envelope signup__icon"></i>
                             <input
@@ -60,12 +85,12 @@
                             />
                         </label>
                         <p id="confirmMsg"></p>
-                        <label for="new-sellerName" class="signup__label">
+                        <label for="new-nickname" class="signup__label">
                             <i class="fa-regular fa-circle-user signup__icon"></i>
                             <input
                                 class="signup__input"
                                 type="text"
-                                id="new-sellerName"
+                                id="new-nickname"
                                 name="nickname"
                                 placeholder="2자리 이상 입력해주세요."
                             />
@@ -75,7 +100,7 @@
                             <input
                                 class="signup__input"
                                 type="text"
-                                id="tel"
+                                id="new-tel"
                                 name="tel"
                                 placeholder="휴대폰번호를 입력해주세요."
                                 maxlength="13"
@@ -91,12 +116,15 @@
                                 placeholder="주소를 입력해주세요."
                             />
                         </label>
-                        <button id="btn1" class="signup__button" type="submit">회원가입</button>
+                        <button class="signup__button" type="submit">회원가입</button>
                     </form>
+                    <div id="signUpMsg">${msg}</div>
                 </div>
+                
             </div>
         </div>
     </section>
+
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
         window.onload = function (){
@@ -111,8 +139,9 @@
         }
     </script>
    
-
-<%@ include file = "footer.jsp" %>
+<%@ include file = "/WEB-INF/views/footer.jsp" %>
+</body>
+</html>
 
 
 
