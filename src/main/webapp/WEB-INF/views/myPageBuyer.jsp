@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
-    <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
@@ -67,7 +67,7 @@
     <section id="myPageNav" class="section">
         <div class="max-container">
             <div class="myPageNav">
-                <button id="myPageNav__likeButton" class="myPageNav__button" >찜 내역</button>
+                <button id="myPageNav__likeButton" class="myPageNav__button active" >찜 내역</button>
                 <button id="myPageNav__purchaseButton" class="myPageNav__button">구매내역</button>
                 <button id="myPageNav__purchaseGroupButton" class="myPageNav__button">공동구매내역</button>
             </div>

@@ -48,7 +48,7 @@
                     <div class="mainIntro__login">
                         <form class="mainIntro__loginForm" method="post" action="mainLogin">
                             <div class="loginRadio">
-                                <input type="radio" name="user" value="buyer" /><label class="radioLabel">구매자</label>
+                                <input type="radio" name="user" value="buyer" checked/><label class="radioLabel">구매자</label>
                                 <input type="radio" name="user" value="seller" /><label class="radioLabel">판매자</label>
                             </div>
                                    
