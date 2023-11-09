@@ -79,74 +79,88 @@ public class MemberController {
 		return "main";
 	}
 	
-	// 메인 로그인 페이지
+	// 메인 로그인 페이지 (가영 수정)
 	@PostMapping("/mainLogin")
-	public String mainLogin(@RequestParam("login") String user, HttpServletRequest request, HttpSession session, Model model) {
+
+	public String mainLoginBuyer(@RequestParam("action") String action, HttpServletRequest request, HttpSession session, Model model) {
+		String user = request.getParameter("user");
 		
-		if(user.equals("seller") || user.equals("register")) {
-			String id = request.getParameter("id");
-			String pw = request.getParameter("passwd");
-			
-			SellerDO sellerEmail = sellerDAO.getSeller(id);
-			model.addAttribute("seller", sellerEmail);
-			
-			// 겹치면 true = DB에 id가 있다는 뜻
-			if(sellerDAO.checkSellerId(id) == true) { 
-				System.out.println("login fail1");
-				return "redirect:/main";
-			}
-			//비밀번호 틀림
-			else if(!sellerEmail.getPasswd().equals(pw)){  
-				System.out.println("login fail2");
-				return "redirect:/main";
-			}
-			//아이디 비밀번호 전부일치
-			else { 
-				System.out.println("login all clear");
+		if(action.equals("login")) {
+			System.out.print("1");
+			if(user.equals("seller")) {
+				String id = request.getParameter("id");
+				String pw = request.getParameter("passwd");
+
 				
-				session.setAttribute("sellerEmail", sellerEmail.getSellerEmail());
-				String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
-				System.out.printf(sessionSeller);
-				System.out.println();
+				SellerDO sellerEmail = sellerDAO.getSeller(id);
+				model.addAttribute("seller", sellerEmail);
 				
-				return "mainLoginSeller";
-			}
-			
-		} 
-		else if(user.equals("buyer")){
-			String id = request.getParameter("id");
-			String pw = request.getParameter("passwd");
-			
-			BuyerDO buyerEmail = buyerDAO.getBuyer(id);
-			model.addAttribute("buyer", buyerEmail);
-			
-			// 겹치면 true = DB에 id가 있다는 뜻
-			if(buyerDAO.checkBuyerId(id) == true) { 
-				System.out.println("login fail1");
-				return "redirect:/main";
-			}
-			//비밀번호 틀림
-			else if(!buyerEmail.getPasswd().equals(pw)){  
-				System.out.println("login fail2");
-				return "redirect:/main";
-			}
-			//아이디 비밀번호 전부일치
-			else { 
-				System.out.println("login all clear");
+				// 겹치면 true = DB에 id가 있다는 뜻
+				if(sellerDAO.checkSellerId(id) == true) { 
+					System.out.println("login fail1");
+					return "redirect:/main";
+				}
+				//비밀번호 틀림
+				else if(!sellerEmail.getPasswd().equals(pw)){  
+					System.out.println("login fail2");
+					return "redirect:/main";
+				}
+				//아이디 비밀번호 전부일치
+				else { 
+					System.out.println("login all clear");
+					
+					session.setAttribute("sellerEmail", sellerEmail.getSellerEmail());
+					String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
+					System.out.printf(sessionSeller);
+					System.out.println();
+
+					model.addAttribute("categoryList", beansDAO.getAllCategory());
+					model.addAttribute("bestBean", beansDAO.bestBeanArray());
+					
+					return "mainLoginSeller";
+				}
 				
-				session.setAttribute("buyerEmail", buyerEmail.getBuyerEmail());
-				String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
-				System.out.printf(sessionBuyer);
-				System.out.println();
+			} 
+			else if(user.equals("buyer")){
+				String id = request.getParameter("id");
+				String pw = request.getParameter("passwd");
 				
-				return "mainLoginBuyer";
+				BuyerDO buyerEmail = buyerDAO.getBuyer(id);
+				model.addAttribute("buyer", buyerEmail);
+				
+				// 겹치면 true = DB에 id가 있다는 뜻
+				if(buyerDAO.checkBuyerId(id) == true) { 
+					System.out.println("login fail1");
+					return "redirect:/main";
+				}
+				//비밀번호 틀림
+				else if(!buyerEmail.getPasswd().equals(pw)){  
+					System.out.println("login fail2");
+					return "redirect:/main";
+				}
+				//아이디 비밀번호 전부일치
+				else { 
+					System.out.println("login all clear");
+					
+					session.setAttribute("buyerEmail", buyerEmail.getBuyerEmail());
+					String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+					System.out.printf(sessionBuyer);
+					System.out.println();
+
+					model.addAttribute("categoryList", beansDAO.getAllCategory());
+					model.addAttribute("bestBean", beansDAO.bestBeanArray());
+					
+					return "mainLoginBuyer";
+				}
+				
 			}
-			
-		}
-		else {
-			return "error";
 		}
 		
+		else if (action.equals("signup")) {
+			return "signup";
+		}
+		
+		return "error";
 		
 	}
 	
@@ -188,34 +202,75 @@ public class MemberController {
 		return "myPageBuyer";
 	}
 	
+//	// 로그아웃  		확인하고 지우기 가영
+//		@GetMapping("/loginAfter")
+//		public String loginAfter(HttpSession session) {
+//			
+//			session.invalidate();
+//			
+//			return "redirect:/main";
+//		}
+	
 	// 구매자 회원정보 수정페이지로 이동
+	@GetMapping("/loginAfter")
+	public String loginAfter(@RequestParam("action") String action, HttpSession session, Model model) {
+		
+		if(action.equals("buyerModify")) {
+			String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+			model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
+			
+			return "buyerModify";
+		}
+		else if(action.equals("logout")) {
+			session.invalidate();
+			
+			return "redirect:/main";
+		}
+		return "main";
+	}
+	
 	@GetMapping("/buyerModify")
 	public String buyerModify(HttpSession session, Model model) {
-		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
-		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
 		
-		return "buyerModify";
+			String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+			model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
+			
+			return "buyerModify";
 	}
 	
 	// 구매자 회원정보 수정
 	@PostMapping("/buyerModifyChange")
-	public String buyerModifyChange(@ModelAttribute BuyerDO buyer, HttpServletRequest request, HttpSession session, Model model) throws IOException {
 
-		String directory = "";
-
-		int sizeLimit = 1024 * 1024 * 5;
-		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
-				"UTF-8", new DefaultFileRenamePolicy());
+	public String buyerModifyChange(@RequestParam("action") String action, @ModelAttribute BuyerDO buyer, HttpServletRequest request, HttpSession session, Model model) throws IOException {
+	
+		if(action.equals("buyerModifyChange")) {
+			String directory = "C:/Users/H40/finalCoffee/coffee-please/src/main/webapp/registerData/buyerData/buyer";
 
 
-		String[] img = imgUpload.saveImg(multi);
+			int sizeLimit = 1024 * 1024 * 5;
+			MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
+					"UTF-8", new DefaultFileRenamePolicy());
 
-		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
-		buyer.setBuyerEmail(sessionBuyer);
-		buyer.setBuyerImg(img[0]);
-		buyerDAO.updateBuyer(buyer);
-		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
-		return "myPageBuyer";
+
+			String[] img = imgUpload.saveImg(multi, directory);
+
+			String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+			buyer.setBuyerEmail(sessionBuyer);
+      
+      String buyerImg = "/coffee-please/registerData/buyerData/buyer/" + img[0];
+
+			buyer.setBuyerImg(buyerImg);
+			buyerDAO.updateBuyer(buyer);
+			model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
+			return "myPageBuyer";
+		}
+		else if(action.equals("previousPage")) {
+			String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+			return "myPageBuyer";
+		}
+		
+		return "error";
+
 	}
 	/*
 	 * 
@@ -250,30 +305,42 @@ public class MemberController {
 	
 	// 판매자 정보수정
 	@PostMapping("/sellerModifyChange")
-	public String sellerModifyChange(@ModelAttribute SellerDO seller,HttpServletRequest request, HttpSession session, Model model) throws IOException {
-
-		String directory = "";
-
-		int sizeLimit = 1024 * 1024 * 5;
-		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
-				"UTF-8", new DefaultFileRenamePolicy());
-
-
-		String[] img = imgUpload.saveImg(multi);
-
-		String sessionBuyer = String.valueOf(session.getAttribute("sellerEmail"));
-		seller.setSellerEmail(sessionBuyer);
-		sellerDAO.updateSeller(seller);
+	public String sellerModifyChange(@RequestParam("action") String action, @ModelAttribute SellerDO seller,HttpServletRequest request, HttpSession session, Model model) throws IOException {
 		
-		model.addAttribute("seller", sellerDAO.getSeller(sessionBuyer));
-		return "myPageSeller";
+		if(action.equals("sellerModifyChange")) {
+			String directory =  "C:/Users/H40/finalCoffee/coffee-please/src/main/webapp/registerData/sellerData/seller";
+
+			int sizeLimit = 1024 * 1024 * 5;
+			MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
+					"UTF-8", new DefaultFileRenamePolicy());
+
+
+			String[] img = imgUpload.saveImg(multi, directory);
+
+			String sessionBuyer = String.valueOf(session.getAttribute("sellerEmail"));
+			seller.setSellerEmail(sessionBuyer);
+      
+      String sellerImg = "/coffee-please/registerData/sellerData/seller/" + img[0];
+      
+      seller.setSellerImg(sellerImg);
+			sellerDAO.updateSeller(seller);
+			
+			model.addAttribute("seller", sellerDAO.getSeller(sessionBuyer));
+			return "myPageSeller";
+		}
+		else if(action.equals("previousPage")) {
+			String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
+			
+		    return "myPageSeller";
+		}		
+		return "error";
 	}
 	
-	// 회원가입 하기위해서 판매자 구매자 선택 화면으로 이동
-	@GetMapping("/signup")
-	public String signup() {
-		return "signup";
-	}
+	// 회원가입 하기위해서 판매자 구매자 선택 화면으로 이동 (가영 수정) 확인하고 삭제해도 되는지
+//	@GetMapping("/signup")
+//	public String signup() {
+//		return "signup";
+//	}
 	
 	// 판매자 회원가입화면으로 이동
 	@GetMapping("/goSignupSeller")
@@ -297,18 +364,9 @@ public class MemberController {
 	// 구매자 회원가입후 메인으로 이동
 	@PostMapping("signupBuyer")
 	public String signupBuyer(@ModelAttribute BuyerDO buyer) throws Exception{
+
 		buyerDAO.insertBuyer(buyer);
 		return "redirect:/main";
 	}
-	
-	// 로그아웃
-	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-		
-		session.invalidate();
-		
-		return "redirect:/main";
-	}
-	
 	
 }

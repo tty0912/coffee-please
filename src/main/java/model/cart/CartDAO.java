@@ -36,14 +36,14 @@ public class CartDAO {
 	
 	// 장바구니 상품 추가
 	// 같은 상품 추가 시 "이미 등록한 상품입니다." msg 예외 띄우기
-	public int addItem (BuyerDO buyerDO, BeansDO beansDO, int qty) {
+	public int addItem (String buyerEmail, BeansDO beansDO, int qty) {
 		int rowCount = 0;
 		
 		sql = "insert into cart (buyer_email, beans_num, qty) values (?, ?, ?)";
 		
 		try {
 				this.pstmt = conn.prepareStatement(this.sql);
-				this.pstmt.setString(1, buyerDO.getBuyerEmail());
+				this.pstmt.setString(1, buyerEmail);
 				this.pstmt.setInt(2, beansDO.getBeansNum());
 				this.pstmt.setInt(3, qty);
 				

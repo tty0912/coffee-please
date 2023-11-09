@@ -1,43 +1,38 @@
+//package main.java.controller;
 package controller;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.http.HttpRequest;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
 import java.util.Enumeration;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import javax.servlet.http.HttpSession;
+
 
 
 import model.cart.CartDAO;
 import model.service.ImgUpload;
 
+
+import model.service.LikeService;
+import model.service.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-
-
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-
-
 import model.product.BeansDAO;
 import model.product.BeansDO;
 import model.member.SellerDAO;
 import model.product.*;
-
-
 /*
  * 	구매자 메서드
  * 	1) GET	|	/goProdcutList		->	mainLoginBuyer, mainLoginSeller랑 각각 설정? -> productList.jsp
@@ -48,9 +43,11 @@ import model.product.*;
  *  5) POST	|	/paymentComplete	->	결제 완료시 -> paymentComplete.jsp
  *  6) POST	|	/mainLogin			->	결제 완료 페이지에서 버튼 누르면 메인으로 이동(멤버 컨트롤러에 메서드 정의되어있음) -> mainLoginBuyer
  *  7) POST	|	/cart				->	어디서 누르는지는 모르겟지만 카트로 이동 -> cart.jsp
+
  *  
  *  장바구니는 마이페이지로 이동하게 만들면 될듯
  *  
+
  *  판매자 메서드
  *  8) GET	|	/goRegisterProd		->	상품등록 페이지로 이동 -> registerProduct.jsp
  *  9) GET	|	/goRegisterProdGroup->	공동구매 상품등록 페이지로 이동 -> registerProductGroup.jsp
@@ -58,16 +55,17 @@ import model.product.*;
  *  11)POST	|	/registerProdGroup	->	공동구매 상품 등록 -> mainLoginSeller.jsp
  *  
  */
-
-
 @Controller
 public class ProductController {
 	
 	private BeansDO beans;
+
 	private final BeansDAO beansDAO = new BeansDAO();
 	private final SellerDAO sellerDAO = new SellerDAO();
 	private final ImgUpload imgUpload = new ImgUpload();
 	private final CartDAO cartDAO = new CartDAO();
+	private final OrderService orderService = new OrderService();
+	private final LikeService likeService = new LikeService();
 	
 	public ProductController() {
 	}
@@ -104,17 +102,19 @@ public class ProductController {
 
 // 상품 목록 페이지로 이동
 	@GetMapping("/goProductList")
-	public String goProductList(Model model,
+	public String ProductList(Model model,
 							  @RequestParam(value = "page", required = false, defaultValue = "1") int page, 
 		            @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize,
 		            @RequestParam(value = "category", required = false, defaultValue = "0") String categoryNum,
 		            @RequestParam(value = "sort", required = false, defaultValue = "recent") String sort,
-		            @RequestParam(value = "search", required = false , defaultValue = "") String search) {
+		            @RequestParam(value = "search", required = false , defaultValue = "") String search,
+							  HttpSession session, HttpServletRequest request) throws SQLException {
+
 		// 상품 목록을 가져오는 기본 메서드
 		System.out.println(sort + ":" + search + ":" + categoryNum);
         ArrayList<BeansDO> beansList = beansDAO.sortedPage(sort, search, Integer.parseInt(categoryNum));
-                            
-        // 페이징 처리를 위한 전체 상품 수 계산
+
+		// 페이징 처리를 위한 전체 상품 수 계산
         int totalRows = beansList.size();
         int totalPages = (int) Math.ceil((double) totalRows / pageSize);
 
@@ -129,15 +129,21 @@ public class ProductController {
         int startRow = 1 + (page - 1) * pageSize;
         int endRow = pageSize * page;
         ArrayList<BeansDO> pagedBeansList = new ArrayList<>(beansList.subList(
-        	    Math.max(startRow - 1, 0), Math.min(endRow, totalRows))); 
+        	    Math.max(startRow - 1, 0), Math.min(endRow, totalRows)));
 
-        // 모델에 데이터 추가
+		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+
+		ArrayList<LikeBeans> likeBeans = likeService.likeBeans(sessionBuyer, pagedBeansList);
+
+		// 모델에 데이터 추가
         model.addAttribute("categoryNum", categoryNum);
         model.addAttribute("sortOption", sort);
-        model.addAttribute("beansList", pagedBeansList);
+        model.addAttribute("beansList", likeBeans);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("currentPage", page);
         model.addAttribute("search", search);
+
+
 
 		return "productList";
 	}
@@ -180,10 +186,18 @@ public class ProductController {
 
 // 일반 상품 상세페이지로 이동
 	@GetMapping("/goListDetail")
-	public String goListDetail(@RequestParam("beansNum") int beansNum, Model model) {
+	public String goListDetail(@RequestParam("beansNum") int beansNum, Model model, HttpSession session) throws SQLException {
 
-			model.addAttribute("productListDetail", beansDAO.getBean(beansNum));
-			return "productListDetail";
+		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+		boolean b = likeService.checkLike(sessionBuyer, beansNum);
+
+		LikeBeans likeBeans = new LikeBeans();
+		likeBeans.setBeansDO(beansDAO.getBean(beansNum));
+		likeBeans.setaBoolean(b);
+
+
+		model.addAttribute("productListDetail", likeBeans);
+		return "productListDetail";
 	}
 
 // 공동 상품 상세 페이지로 이동
@@ -192,17 +206,66 @@ public class ProductController {
 		beans = beansDAO.getBean(beansNum);
 
 
-			model.addAttribute("beans", beansDAO.getGroupBean(beansNum));
+			model.addAttribute("productListDetailGroup", beansDAO.getGroupBean(beansNum));
 			return "productListDetailGroup";
 	}
 
 // *  4) POST	|	/payment			->	상세 페이지에서 결제 누르면 바로이동 -> payment.jsp
+	//결제페이지로 이동
+	@PostMapping("/cartOrPayment")
+	public String payment(@RequestParam("beansNum") int beansNum,
+						  @RequestParam("qty") int qty,
+						  @RequestParam("action") String action,
+						  HttpSession session,
+						  Model model) throws SQLException {
+		System.out.println(beansNum);
+		if(action.equals("onePayment")){
+			BeansDO bean = beansDAO.getBean(beansNum);
+			model.addAttribute(bean);
+			model.addAttribute(qty);
+
+			return "payment";
+		}
+		else if (action.equals("cart")){
+
+			BeansDO bean = beansDAO.getBean(beansNum);
+			String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+			cartDAO.addItem(sessionBuyer, bean, qty);
+
+				return "goProductList";
+		}
+		else {
+			return "error";
+		}
+	}
+
+
+	//즉시 결제
+	@PostMapping("/")
+	public String payment1(@RequestParam("beansNum") int beansNum,
+	 					  @RequestParam("qty") int qty,
+						  Model model, HttpSession session) throws SQLException {
+
+		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+
+		boolean b = orderService.onlyOnePayment(beansNum, qty, sessionBuyer);
+
+		if(b){
+			return "paymentComplete";
+		}
+		return null;
+	}
+
+	//장바구니 결제
 
 
 // *  5) POST	|	/paymentComplete	->	결제 완료시 -> paymentComplete.jsp
 
 
 // *  6) POST	|	/mainLogin			->	결제 완료 페이지에서 버튼 누르면 메인으로 이동(멤버 컨트롤러에 메서드 정의되어있음) -> mainLoginBuyer
+
+
+	//장바구니에 담기
 
 
 // 장바구니로 이동
@@ -218,9 +281,7 @@ public class ProductController {
 	@GetMapping("/goRegisterProd")
 	public String resisterProduct(@RequestParam("action") String action) {
 
-		System.out.println("-----------------------------");
 		if(action.equals("normal")) {
-			System.out.println("===========================");
 			return "registerProduct";
 		}
 		else if(action.equals("group")) {
@@ -238,51 +299,31 @@ public class ProductController {
 	@PostMapping("/registerProd")
 	public String resisterProduct(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
 
-//		System.out.println(request.getParameter("categoryNum"));
-//		int categoryNum = Integer.parseInt(request.getParameter("categoryNum"));
-
-
-		String categoryName = beansDAO.getCategoryName(10);
-		// String directory = "C:\\\\Users\\Jun\\Desktop\\finalproject\\coffee-please\\src\\main\\webapp\\uploadTest";
-		String directory = "C:/Users/H40/finalCoffee/coffee-please/src/main/webapp/registerData/sellerData/beans/" + categoryName;
+		String directory = "C:/Users/H40/finalCoffee/coffee-please/src/main/webapp/registerData/sellerData/beans";
 		int sizeLimit = 1024 * 1024 * 5;
+
 		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
 				"UTF-8", new DefaultFileRenamePolicy());
 
+		int categoryNum = Integer.parseInt(multi.getParameter("categoryNum"));
+		System.out.println(categoryNum);
 
 		String action = multi.getParameter("action");
 		if (action != null && action.equals("register")) {
 
-			// 파일 업로드 액션
-			System.out.println(directory);
-			// 디렉토리 생성w
-			File uploadDir = new File(directory);
-			if (!uploadDir.exists()) {
-				uploadDir.mkdirs();
-			}
-			String savedName = "";
-			String savedName1 = "";
-			@SuppressWarnings("unchecked")
-			Enumeration<String> fileNames = multi.getFileNames();
-			if (fileNames.hasMoreElements()) {
-				String paramName = fileNames.nextElement();
-				savedName = multi.getFilesystemName(paramName);
-			}
-			if (fileNames.hasMoreElements()) {
-				String paramName = fileNames.nextElement();
-				savedName1 = multi.getFilesystemName(paramName);
-			}
+			System.out.println(2);
+			String[] img = imgUpload.saveImg(multi, directory);
+			System.out.println(3);
 			// 세션이메일을 받아서 판매자 이메일로 저장
 			String sellerEmail = String.valueOf(session.getAttribute("sellerEmail"));
 
 			String beanName = multi.getParameter("beanName");
 			int beanPrice = Integer.parseInt(multi.getParameter("beanPrice"));
-
 			int deliveryCharge = Integer.parseInt(multi.getParameter("deliveryCharge"));
 
 //			"\\finalProject\\uploadTest" + savedName; //
-			String beanImg = "/coffee-please/registerData/sellerData/beans/" + categoryName + "/" + savedName; // 웹 경로로 수정
-			String descript = "/coffee-please/registerData/sellerData/beans/" + categoryName + "/" + savedName1; // 웹 경로로 수정
+			String beanImg = "/coffee-please/registerData/sellerData/beans/" + img[0]; // 웹 경로로 수정
+			String descript = "/coffee-please/registerData/sellerData/beans/" + img[1]; // 웹 경로로 수정
 			// 게시물 생성
 			BeansDO newBeans = new BeansDO();
 			newBeans.setBeanImg(beanImg);
@@ -293,17 +334,50 @@ public class ProductController {
 			newBeans.setCategoryNum(10);
 			newBeans.setDeliveryCharge(deliveryCharge);
 
-			// id 설정 - 필요한 경우 수정
-	//            newBeans.setId((String)request.getSession().getAttribute("userId"));
 			// 데이터베이스에 새 게시물 추가
 			beansDAO.insertBeans(newBeans);
 
-	//            request.setAttribute("uploadedPhoto", photo);
 		}
 		return "redirect:/mainLoginSeller";
 	}
 
 // *  11)POST	|	/registerProdGroup	->	공동구매 상품 등록 -> mainLoginSeller.jsp
+
+
+	//찜하기
+	@PostMapping("/like")
+	public String like(HttpSession session, Model model, HttpServletRequest request) throws SQLException {
+
+		String buyerEmail = String.valueOf(session.getAttribute("buyerEmail"));
+		String beansNum = request.getParameter("beansNum");
+		System.out.println("================");
+		System.out.println(beansNum);
+		System.out.println(buyerEmail);
+		String beansNum2 = request.getParameter("beansNum2");
+		System.out.println(beansNum2);
+
+		Enumeration<String> names = request.getParameterNames();
+		String s = names.nextElement();
+
+		//상품 목록에서 like 누르면
+		if(s.equals("beansNum")) {
+
+			likeService.clickLike(buyerEmail, Integer.parseInt(beansNum));
+
+
+			return "redirect:/goProductList";
+
+			//상품 상세에서 like 누르면
+		} else if (s.equals("beansNum2")){
+
+			likeService.clickLike(buyerEmail, Integer.parseInt(beansNum2));
+
+			model.addAttribute("beansNum", Integer.parseInt(beansNum2));
+
+			return "redirect:/goListDetail";
+		}
+		else return "error";
+	}
 
 
 }

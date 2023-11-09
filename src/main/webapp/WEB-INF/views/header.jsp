@@ -21,26 +21,46 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
-    <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script>
-    <script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
-    <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script>
+<%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
+    
+<%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
+    <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
+     <%--<script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script> --%>
 </head>
 <body>
     <!-- Header -->
     <header class="header">
         <nav class="header__nav">
             <ul class="header__menu">
-
-                <li><a class="header__menu__item" href="#about">STORE</a></li>
+                <li><a class="header__menu__item" href="${pageContext.request.contextPath}/goProdcutList">STORE</a></li>
                 <div class="header__menu__item header__logo">
                     <img class="header__logo__img" src="images/logoName.png" alt="logo" />
                 </div>
-                <li><a class="header__menu__item" href="#about">GROUP</a></li>
+                <li><a class="header__menu__item" href="${pageContext.request.contextPath}/goProdcutListGroup">GROUP</a></li>
             </ul>
             <ul class="header__side">
-                <li><a class="header__menu__item header__cart" href="#about"><i class="fa-solid fa-cart-shopping"></i></a></li>
-                <li><a class="header__menu__item header__user" href="#about"><i class="fa-regular fa-user"></i></a></li>
-
-            </ul>
+            <c:choose>
+                <c:when test="${not empty sellerEmail}">
+                    <li class="header__userSeller">
+                        <a class="header__menu__item" href="${pageContext.request.contextPath}/myPageSeller">
+                            <i class="fa-regular fa-user"></i>
+                        </a>
+                    </li>
+                </c:when>
+                <c:when test="${not empty buyerEmail}">
+                    <li class="header__cart">
+                        <a class="header__menu__item" href="${pageContext.request.contextPath}/cart">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </a>
+                    </li>
+                    <li class="header__userBuyer">
+                        <a class="header__menu__item" href="${pageContext.request.contextPath}/myPageBuyer">
+                            <i class="fa-regular fa-user"></i>
+                        </a>
+                    </li>
+                </c:when>
+            </c:choose>
+        </ul>
         </nav>
     </header>

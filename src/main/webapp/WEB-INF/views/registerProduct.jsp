@@ -12,7 +12,7 @@
                     <h4 class="signup__description">맛있는 원두를 등록해주세요!</h4>
                     <form id="signup__form" enctype="multipart/form-data" method="post" action="registerProd">
                         <label for="beanName" class="signup__label">
-                            <img src="${pageContext.request.contextPath}/images/bean.png" alt="" class="bean__img">
+                            <img src="${pageContext.request.contextPath}/images/bean.png" alt="" class="bean__img signup__icon">
                             <input
                                 class="signup__input"
                                 type="text"
@@ -22,7 +22,7 @@
                             />
                         </label>
                         <label for="beanPrice" class="signup__label">
-                            <i class="fa-solid fa-tags"></i>
+                            <i class="fa-solid fa-tags signup__icon"></i>
                             <input
                                 class="signup__input"
                                 type="text"
@@ -32,19 +32,14 @@
                             />
                         </label>
                         <label for="cName" class="signup__label">
-                            <i class="fa-solid fa-flag-checkered"></i>
-                            <input
-                                class="signup__input"
-                                type="text"
-
-                                id="cName"
-                                name="categoryNum"
-
-                                placeholder="원산지 입력"
-                            />
+                            <i class="fa-solid fa-flag-checkered signup__icon"></i>
+                            <select class="signup__input" name="categoryNum">
+                            	<option value="0">원산지를 선택해주세요.</option>
+                            	<option value="1">베트남</option>
+                            </select>
                         </label>
                         <label for="deliveryCharge" class="signup__label">
-                            <i class="fa-solid fa-truck-fast"></i>
+                            <i class="fa-solid fa-truck-fast signup__icon"></i>
                             <input
                                 class="signup__input"
                                 type="text"
