@@ -9,8 +9,16 @@
     <section id="mainIntro" class="section">
         <div class="max-container">
             <div class="mainIntro">
-                <div class="mainIntro__intro">
-                    <img class="mainIntro__introImg" src="/coffee/images/mainTest1.gif" alt="">
+                <div id="slideShow" class="mainIntro__intro">
+                    <ul class="slides">
+                        <li><img class="introImg" src="images/main1.gif" alt=""></li>
+                        <li><img class="introImg" src="images/main2.png" alt=""></li>
+                        <li><img class="introImg" src="images/main3.png" alt=""></li>
+                    </ul>  
+                    <div class="controller">
+                        <span class="prev">&lang;</span>  
+                        <span class="next">&rang;</span>
+                    </div>
                 </div>
                 <div class="mainIntro__loginAll">
                     <h2 class="mainIntro__loginTitle">Login</h2>
@@ -42,18 +50,19 @@
                                 />
                             </label>
                             <div class="mainIntro__loginFormButton">
-                                <button class="mainIntro__loginButton" type="submit" name="action" value="login">로그인</button>
+                                <button id="loginButton" class="mainIntro__loginButton" type="submit" name="action" value="login">로그인</button>
                                 <button class="mainIntro__loginButton" type="submit" name="action" value="signup">회원가입</button>
                             </div>
                         </form>
                     </div>
-                     <h4 class="loginErrorMsg" id="msg"></h4>
+                     <h4 class="loginErrorMsg" id="loginMsg"></h4>
                 </div>
             </div>
         </div>
 
     </section>
     <!-- Category 버튼 꾸미기?? -->
+    <!-- Category -->
     <section id="mainCategory" class="section">
        <div class="max-container">
         <h1 class="mainCategory__title">Category</h1>
@@ -72,8 +81,7 @@
          <div class="max-container">
         <h1 class="mainBeanBest__title">Best</h1>
             <div class="mainBeanBest">
-  
-                    <c:forEach items="${bestBean}" var="beansDO" >
+  				<c:forEach items="${bestBean}" var="beansDO" >
                     <div class="mainBeanBest__product">
                     	<img src="" alt="" class="beanBest__number">
         				<img src="${beansDO.beanImg}"  alt="" class="mainBeanBest__productImg" >
@@ -82,18 +90,18 @@
                         	<p class="mainBeanBest__productLikeCount">${beansDO.likeCount}</p>
                     	</div>
                     </div>
-    				</c:forEach>
-                </div>
-                	<div class="mainBeanBest__button">
-                	<h2 class="mainBeanBest__buttonTitle">더 많은 원두를 보려면?</h2>
-                	<form method="get" action="goProdcutList">
-                	    <button class="mainBeanBest__plusButton"><i class="fa-solid fa-angles-right"></i></button>
-                	</form>
-
-                
+    			</c:forEach>
+            </div>
+ 	         <div class="mainBeanBest__button">
+ 	         	<h2 class="mainBeanBest__buttonTitle">더 많은 원두를 보려면?</h2>
+ 	         	<form method="get" action="goProdcutList">
+ 	         	    <button class="mainBeanBest__plusButton"><i class="fa-solid fa-angles-right"></i></button>	
+ 	         	</form>
             </div>
         </div>
     </section>
-
+    
+	<!-- Javascript -->
+    <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
     
 <%@ include file = "/WEB-INF/views/footer.jsp" %>

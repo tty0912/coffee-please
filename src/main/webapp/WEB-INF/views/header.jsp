@@ -21,41 +21,23 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
-    <script>
-    let sellerEmail = `${sellerEmail}`;
-    let buyerEmail = `${buyerEmail}`;
-
+<%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
-    let cart = document.querySelector('.header__cart');
-    let userSeller = document.querySelector('.header__userSeller');
-    let userBuyer = document.querySelector(''.header__userBuyer');
-    
-    function headerHandler(event) {
-    	if(sellerEmail) {
-    		userSeller.style.display = 'block'; 
-    	}
-    	else if(buyerEmail) {
-    		cart.style.display = 'block'; 
-    		userBuyer.style.display = 'block'; 
-    	}
-    }
-    
-    
-    </script>
-    <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script>
-    <script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
-    <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script>
+<%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
+    <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
+     <%--<script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script> --%>
 </head>
 <body>
     <!-- Header -->
     <header class="header">
         <nav class="header__nav">
             <ul class="header__menu">
-                <li><a class="header__menu__item" href="http://localhost:8080/coffee/goProdcutList">STORE</a></li>
+                <li><a class="header__menu__item" href="${pageContext.request.contextPath}/goProdcutList">STORE</a></li>
                 <div class="header__menu__item header__logo">
                     <img class="header__logo__img" src="images/logoName.png" alt="logo" />
                 </div>
-                <li><a class="header__menu__item" href="http://localhost:8080/coffee/goProdcutListGroup">GROUP</a></li>
+                <li><a class="header__menu__item" href="${pageContext.request.contextPath}/goProdcutListGroup">GROUP</a></li>
             </ul>
             <ul class="header__side">
             <c:choose>

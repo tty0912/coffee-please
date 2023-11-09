@@ -14,7 +14,7 @@
                     <h4 class="signup__description">맛있는 원두를 등록해주세요!</h4> 
                     <form id="signup__form" action="Controller">
                         <label for="new-beanName" class="signup__label">
-                            <img src="${pageContext.request.contextPath}/images/bean.png" alt="" class="bean__img">
+                            <img src="${pageContext.request.contextPath}/images/bean.png" alt="" class="bean__img signup__icon">
                             <input
                                 class="signup__input"
                                 type="text"
@@ -24,7 +24,7 @@
                             />
                         </label> 
                         <label for="new-beanPrice" class="signup__label">
-                            <i class="fa-solid fa-tags"></i>
+                            <i class="fa-solid fa-tags signup__icon"></i>
                             <input
                                 class="signup__input"
                                 type="text"
@@ -34,7 +34,7 @@
                             />
                         </label>
                         <label for="new-goalPrice" class="signup__label">
-                            <img src="${pageContext.request.contextPath}/images/sale.png" alt="" class="sale__img">
+                            <img src="${pageContext.request.contextPath}/images/sale.png" alt="" class="sale__img signup__icon">
                             <input
                                 class="signup__input"
                                 type="text"
@@ -45,7 +45,7 @@
                         </label>
                        
                         <label for="new-cName" class="signup__label">
-                            <i class="fa-solid fa-flag-checkered"></i>
+                            <i class="fa-solid fa-flag-checkered signup__icon"></i>
                             <input
                                 class="signup__input"
                                 type="text"
@@ -56,7 +56,7 @@
                         </label>
 
                         <label for="new-goalQty" class="signup__label">
-                            <i class="fa-solid fa-medal"></i>
+                            <i class="fa-solid fa-medal signup__icon"></i>
                             <input
                                 class="signup__input"
                                 type="text"
@@ -67,7 +67,7 @@
                         </label>
 
                         <label for="new-deadline" class="signup__label">
-                            <i class="fa-regular fa-clock"></i>
+                            <i class="fa-regular fa-clock signup__icon"></i>
                             <input
                                 class="signup__input"
                                 type="text"
@@ -78,7 +78,7 @@
                         </label>
 
                         <label for="new-deliveryCharge" class="signup__label">
-                            <i class="fa-solid fa-truck-fast"></i>
+                            <i class="fa-solid fa-truck-fast signup__icon"></i>
                             <input
                                 class="signup__input"
                                 type="text"
