@@ -3,12 +3,32 @@
 <%@ page import="model.product.BeansDO"%>
 <%@ page import="java.util.List"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Group Beans List</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Seo -->
+    <title>Bean2B</title>
+	<%@ include file = "/WEB-INF/views/header.jsp" %>
+	<!-- CSS -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/signupStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/productStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/myPageStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
+    <!-- Javascript -->
+    <script type="module" src="${pageContext.request.contextPath }/js/category.js" defer></script>
+<%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
+    
+<%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
+    <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
+     <%--<script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script> --%>
 </head>
 <body>
+<%@ include file = "/WEB-INF/views/headerNav.jsp" %>
 	<h1>Group Beans List</h1>
 
 	<form action="/coffee/goProductListGroup" method="GET">
@@ -71,28 +91,7 @@
 		</c:url>
 		<a href="<c:out value='${nextUrl}'/>">Next</a>
 	</c:if>
-	
-	<script>	
-	function categoryHandler () {
-		document.querySelector('#sorting').submit();
-	}
-	
-	function prodDetailHandler(event) {
-		let beans = event.target.getAttribute('id');
-		
-		let url = '/coffee/goListDetailGroup?beansNum=' + beans;
-		
-		location.href = url;
-	}
 
-	function init() {
-		document.querySelector('#category').addEventListener('change', categoryHandler);
-		document.querySelector('#beansTable').addEventListener('click', prodDetailHandler);
-		
-	}
-
-	window.addEventListener('load', init);
-	</script>
-
+<%@ include file = "/WEB-INF/views/footer.jsp" %>
 </body>
 </html>
