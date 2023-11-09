@@ -38,6 +38,12 @@
                                 <option value="3" ${param.category == '3' ? 'selected' : '' }>에티오피아</option>
                                 <option value="4" ${param.category == '4' ? 'selected' : '' }>온두라스</option>
                                 <option value="5" ${param.category == '5' ? 'selected' : '' }>인도</option>
+                                <option value="6" ${param.category == '6' ? 'selected' : '' }>인도네시아</option>
+                                <option value="7" ${param.category == '7' ? 'selected' : '' }>멕시코</option>
+                                <option value="8" ${param.category == '8' ? 'selected' : '' }>페루</option>
+                                <option value="9" ${param.category == '9' ? 'selected' : '' }>우간다</option>
+                                <option value="10" ${param.category == '10' ? 'selected' : '' }>베트남</option>
+                                
 						    </select>
 	                        <button class="productList__sort" name="sort" value="recent" type="submit">최신순</button>
 	                        <button class="productList__sort" name="sort" value="mostLiked" type="submit">인기순</button>
