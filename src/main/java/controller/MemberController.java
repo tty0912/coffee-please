@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import model.product.OrderBeans;
 import model.service.ImgUpload;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,6 +62,7 @@ public class MemberController {
 	private final BeansDAO beansDAO = new BeansDAO();
 	private final LikeDAO likeDAO = new LikeDAO();
 	private final OrderProductDAO orderProductDAO = new OrderProductDAO();
+	private final OrderProductDetailDAO orderProductDetailDAO = new OrderProductDetailDAO();
 	private final ImgUpload imgUpload = new ImgUpload();
 	
 	public MemberController() {}
@@ -216,10 +218,40 @@ public class MemberController {
 		
 		// 구매내역
 		ArrayList<OrderProductDO> orderListInfo = orderProductDAO.getBuyerOrderList(sessionBuyer);
-		model.addAttribute("orderList", orderListInfo);
+		ArrayList<OrderBeans> orderBeansList = new ArrayList<>();
+
+		for (OrderProductDO i : orderListInfo){
+			OrderBeans orderBeans = new OrderBeans();
+			ArrayList<OrderBeans> orderProductDetailList = orderProductDetailDAO.getOrderProductDetailList(sessionBuyer, i.getOrderDatetime());
+			BeansDO beans = orderProductDetailList.get(0).getBeansDO();
+			orderBeans.setOrderProductDO(i);
+			orderBeans.setBeansDO(beans);
+
+			System.out.println(i.getOrderDatetime());
+			System.out.println(orderBeans.getOrderProductDO().getOrderTotalPrice());
+			System.out.println(orderBeans.getOrderProductDO().getOrderDatetime());
+
+			orderBeansList.add(orderBeans);
+		}
+
+		model.addAttribute("orderList", orderBeansList);
 		
 		
 		return "myPageBuyer";
+	}
+
+
+	// 구매 내역 상세보기
+	@PostMapping("/paymentDetail")
+	public String paymentDetail(@RequestParam("orderDatetime") String orderDatetime, HttpSession session, Model model) {
+		
+		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
+		
+		model.addAttribute("bean", orderProductDetailDAO.getOrderProductDetailList(sessionBuyer, orderDatetime));
+		
+		
+		return "paymentDetail";
 	}
 	
 //	// 로그아웃  		확인하고 지우기 가영
@@ -240,8 +272,12 @@ public class MemberController {
 			model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
 			
 			return "buyerModify";
-		}
-		else if(action.equals("logout")) {
+		} else if (action.equals("sellerModify")) {
+			String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
+			model.addAttribute("seller", sellerDAO.getSeller(sessionSeller));
+
+			return "sellerModify";
+		} else if(action.equals("logout")) {
 			session.invalidate();
 			
 			return "redirect:/main";
@@ -291,8 +327,8 @@ public class MemberController {
 			return "myPageBuyer";
 		}
 		else if(action.equals("previousPage")) {
-			String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
-			return "myPageBuyer";
+
+			return "redirect:/myPageBuyer";
 		}
 		
 		return "error";
@@ -310,9 +346,10 @@ public class MemberController {
 		String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
 		model.addAttribute("seller", sellerDAO.getSeller(sessionSeller));
 		
+
 		// 판매 중인 상품
-		
-		
+		model.addAttribute("sellList", beansDAO.getSellList(sessionSeller));
+
 		// 판매 내역
 		
 		
@@ -365,9 +402,8 @@ public class MemberController {
 			return "myPageSeller";
 		}
 		else if(action.equals("previousPage")) {
-			String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
 			
-		    return "myPageSeller";
+		    return "redirect:/myPageSeller";
 		}		
 		return "error";
 	}

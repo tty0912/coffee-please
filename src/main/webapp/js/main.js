@@ -93,28 +93,25 @@ function autoCycleCategoryListHandler(){
     categoryImg[5].style.display = 'inline-flex';
 }
 
-/*
+
 function getCategoryHandler(event){
-    let categoryNum = event.target.getAttribute('categoryNum');
-    categoryNum =  String(categoryNum);
-    let url = '/coffee/goProductList?category=' + categoryNum;
+    let id = event.currentTarget.id;
+    let url = '/coffee/goProductList?category=' + id;
     location.href = url;
 }
-*/
+
 function init(){
 	let categoryList = document.querySelector('#categoryList');
-	//let getCategory = document.querySelectorAll('.mainCategory__detail');
+	let category = document.querySelectorAll('.mainCategory__detail');
 	
 	let nextBtn = document.querySelector('#nextBtn');
 	let prevBtn = document.querySelector('#prevBtn');
 
+	category.forEach(categoryElement => {
+    categoryElement.addEventListener('click', getCategoryHandler);
+	});
 		
 	categoryList.addEventListener('load', autoCycleCategoryListHandler);
-	
-	/*getCategory.forEach(category => {
-		 category.addEventListener('click', getCategoryHandler);
-		});
-	*/
 	
 	//국기이미지 옆 버튼
 	nextBtn.addEventListener('click', nextBtnHandler);

@@ -188,6 +188,18 @@ button:focus {
 	border-bottom: 1.5px solid var(--color-darkbrown);
 	
 }
+
+#myPageLike {
+    display: block;
+}
+
+#myPagePurchase {
+    display: none;
+}
+
+#myPagePurchaseGroup {
+    display: none;
+}
   
   
 
