@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
     <script type="module" src="${pageContext.request.contextPath }/js/category.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/sortActive.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
@@ -55,9 +56,9 @@
                                 <option value="10" ${param.category == '10' ? 'selected' : '' }>베트남</option>
                                 
 						    </select>
-	                        <button class="productList__sort" name="sort" value="recent" type="submit">최신순</button>
-	                        <button class="productList__sort" name="sort" value="mostLiked" type="submit">인기순</button>
-	                        <button class="productList__sort" name="sort" value="bestSelling" type="submit">판매량순</button>
+	                        <button class="productList__sortRecent productList__sort productActive" name="sort" value="recent" type="submit">최신순</button>
+	                        <button class="productList__sortLike productList__sort" name="sort" value="mostLiked" type="submit">인기순</button>
+	                        <button class="productList__sortBest productList__sort" name="sort" value="bestSelling" type="submit">판매량순</button>
                         </form>
                     </div>
                     <form class="productList__search">
@@ -131,7 +132,7 @@
     </section>
 
 
-<script>
+<!-- <script>
     function categoryHandler () {
         document.querySelector('#sorting').submit();
     }
@@ -160,7 +161,7 @@
 
     }
     window.addEventListener('load', init);
-</script>
+</script> -->
 <%@ include file="/WEB-INF/views/footer.jsp"%>
 </body>
 </html>

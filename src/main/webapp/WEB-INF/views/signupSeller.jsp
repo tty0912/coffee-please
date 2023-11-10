@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
-    <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/signupSeller.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
@@ -36,7 +36,7 @@
                 <div class="signup__form-div">
                     <h2 class="signup__title">Bean2B 비즈니스 회원 가입을 진행합니다.</h2> 
                     <h4 class="signup__description">커피도시 부산의 신선하고 맛있는 원두를 공급할 사장님들을 기다리고 있습니다.</h4> 
-                    <form id="signup__form" method="post" action="signupSeller">
+                    <form id="signupSeller__form" class="signup__form" method="post" action="signupSeller">
                         <label for="new-userId" class="signup__label">
                             <i class="fa-regular fa-envelope signup__icon"></i>
                             <input
@@ -78,9 +78,9 @@
                             <input
                                 class="signup__input"
                                 type="text"
-                                id="new-sellerName"
+                                id="new-nickname"
                                 name="nickname"
-                                placeholder="2자리 이상 입력해주세요."
+                                placeholder="닉네임을 입력해주세요."
                             />
                         </label>
                         <label for="new-phoneNumber" class="signup__label">
@@ -88,7 +88,7 @@
                             <input
                                 class="signup__input"
                                 type="text"
-                                id="new-phoneNumber"
+                                id="new-tel"
                                 name="tel"
                                 placeholder="휴대폰번호를 입력해주세요."
                             />
@@ -128,50 +128,12 @@
                             />
                         </label>
                         <button class="signup__button" id="signup-button" type="submit">회원가입</button>
-                      
                     </form>
+                    <div id="signUpMsg">${msg}</div>
                 </div>
             </div>
         </div>
     </section>
-    <script type="text/javascript">
- 	/* /* var input_val=0;
-    $('#btn1').on('click',function(){
-    	$('#tel').val(input_val);
-    	//document.
-    	console.log(input_val);
-    }); */
-    
-    const businessNumber = (target) => {
-        
-        const phoneNumberValue = target.value.replace(/[^0-9]/g, '');
-        let formattedNumber = "";
-		
-        
-        if (phoneNumberValue.length >= 3 && phoneNumberValue.length <= 5) {
-            formattedNumber = phoneNumberValue.replace(/(\d{3})(\d{1,2})/g, "$1-$2");
-        } else if (phoneNumberValue.length > 5) {
-            formattedNumber = phoneNumberValue.replace(/(\d{3})(\d{2})(\d{0,5})/g, "$1-$2-$3");
-        } else {
-            formattedNumber = phoneNumberValue;
-        }
-        
-
-        target.value = formattedNumber;
-        input_val=phoneNumberValue;
-        //target.value=Number(phoneNumberValue);
-    }
-    function uf_aa(){
-    	console.log('input_val',input_val);
-    	console.log('input_val', Number(input_val));
-    }
-    function js_sub(){
-    	$('#tel').value=input_val;
-    	//console.log('input_val',input_val);
-    	
-    } 
-    
-	</script>
 
 <%@ include file = "/WEB-INF/views/footer.jsp" %>
 </body>

@@ -9,6 +9,8 @@ function categoryHandler () {
 		
 		location.href = url;
 	}
+	
+	
 
 	function init() {
 		document.querySelector('#category').addEventListener('change', categoryHandler);

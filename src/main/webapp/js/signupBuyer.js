@@ -8,8 +8,8 @@ let idCheckMsg = document.getElementById('idCheckMsg');
 function checkPasswordStrength(){
 	
 	let password = document.getElementById('new-password');
-	let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})');
-	let mediumPassword = new RegExp('((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))');
+	let strongPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/;
+	let mediumPassword = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/;
 	let strengthBadge = document.getElementById('strengthDisp');
 	let strengthMsg = document.getElementById('strengthMsg');
 	
@@ -72,7 +72,7 @@ function telHyphen() {
   tel.value = formattedNumber; 
 };
 
-function submitHandler(event) {
+function signupBuyerSubmitHandler(event) {
     let userId = document.getElementById('new-userId');
     let username = document.getElementById('new-username');
     let password = document.getElementById('new-password');
@@ -84,7 +84,7 @@ function submitHandler(event) {
     let signupLabels = document.querySelectorAll('.signup__label');
     let signupIcons = document.querySelectorAll('.signup__icon');
     let msg = '';
-
+	let allckCnt = 0;
     msgDiv.innerHTML = '';
 
     signupLabels.forEach(label => label.classList.remove('error'));
@@ -96,29 +96,35 @@ function submitHandler(event) {
             signupLabels[index].classList.add('error');
             signupIcons[index].classList.add('error');
             msg = '<i class="fa-solid fa-triangle-exclamation"></i> 모든 정보를 필수로 입력해야 합니다.';
-        }
+           console.log(1);
+        }else {
+			allckCnt++;
+		}
     });
-
-    if (password.value.length < 4) {
-        msg = '<i class="fa-solid fa-triangle-exclamation"></i> 비밀번호는 4글자 이상이어야 합니다!';
-        password.value = '';
-        passwordConfirm.value = '';
-        signupLabels[2].classList.add('error');
-        signupIcons[2].classList.add('error');
-    } else if (password.value !== passwordConfirm.value) {
-        msg = '<i class="fa-solid fa-triangle-exclamation"></i> 비밀번호와 비밀번호 확인은 서로 일치해야 합니다!';
-        password.value = '';
-        passwordConfirm.value = '';
-        signupLabels[2].classList.add('error');
-        signupIcons[2].classList.add('error');
-        signupLabels[3].classList.add('error');
-        signupIcons[3].classList.add('error');
-    } else if (username.value.length < 2 || nickname.value.length < 2) {
-        msg = '<i class="fa-solid fa-triangle-exclamation"></i> 이름은 2글자 이상이어야 합니다!';
-        username.value = '';
-        nickname.value = '';
-        signupLabels[1].classList.add('error');
-        signupIcons[1].classList.add('error');
+	if(allckCnt==7){
+	    if (password.value.length < 4) {
+	        console.log(2);
+	        msg = '<i class="fa-solid fa-triangle-exclamation"></i> 비밀번호는 4글자 이상이어야 합니다!';
+	        password.value = '';
+	        passwordConfirm.value = '';
+	        signupLabels[2].classList.add('error');
+	        signupIcons[2].classList.add('error');
+	    } else if (password.value !== passwordConfirm.value) {
+	        msg = '<i class="fa-solid fa-triangle-exclamation"></i> 비밀번호와 비밀번호 확인은 서로 일치해야 합니다!';
+	        password.value = '';
+	        passwordConfirm.value = '';
+	        signupLabels[2].classList.add('error');
+	        signupIcons[2].classList.add('error');
+	        signupLabels[3].classList.add('error');
+	        signupIcons[3].classList.add('error');
+	    } else if (username.value.length < 2 || nickname.value.length < 2) {
+	        msg = '<i class="fa-solid fa-triangle-exclamation"></i> 이름은 2글자 이상이어야 합니다!';
+	        username.value = '';
+	        nickname.value = '';
+	        signupLabels[1].classList.add('error');
+	        signupIcons[1].classList.add('error');
+	    }
+	    allckCnt=0;
     }
 
     if (msg !== '') {
@@ -131,16 +137,17 @@ function submitHandler(event) {
     }
 }
 
+
+
 		
 function init() {
-	let signUpForm = document.getElementById('signup__form');
+	let signUpBuyerForm = document.getElementById('signupBuyer__form');
     let password = document.getElementById('new-password');
     let passwordConfirm = document.getElementById('new-passwordConfirm');
     let tel = document.getElementById('new-tel');
 	
-	console.log(signUpForm);
 	
-	signUpForm.addEventListener('submit', submitHandler);
+	signUpBuyerForm.addEventListener('submit', signupBuyerSubmitHandler);
 	password.addEventListener('input', checkPasswordStrength);
 	passwordConfirm.addEventListener('input', confirmPassword);
 	tel.addEventListener('input', telHyphen);

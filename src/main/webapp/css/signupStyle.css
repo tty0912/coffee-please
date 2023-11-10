@@ -217,7 +217,7 @@ button:focus {
     margin: 5px 0px 40px 0px;
     color: var(--color-light-gray);
 }
-#signup__form {
+.signup__form {
     display: inline-grid;
 }
 
