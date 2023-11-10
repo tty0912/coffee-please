@@ -7,7 +7,15 @@ function buyHandler() {
 	hiddenForm.setAttribute('action', '/coffee/paymentComplete');
 	hiddenForm.submit();
 }
+
+function cancelHandler(){
+	let beansNum = document.querySelector('#beansNum').getAttribute('value')
+
+	location.href = '/coffee/goListDetail?beansNum=' + beansNum;
+}
 function init() {
 	document.querySelector('#buy').addEventListener('click', buyHandler);
+	document.querySelector('#cancel').addEventListener('click', cancelHandler);
+
 }
 window.addEventListener('load', init);

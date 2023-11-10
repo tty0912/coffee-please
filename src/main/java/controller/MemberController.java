@@ -257,8 +257,12 @@ public class MemberController {
 			model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
 			
 			return "buyerModify";
-		}
-		else if(action.equals("logout")) {
+		} else if (action.equals("sellerModify")) {
+			String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
+			model.addAttribute("seller", sellerDAO.getSeller(sessionSeller));
+
+			return "sellerModify";
+		} else if(action.equals("logout")) {
 			session.invalidate();
 			
 			return "redirect:/main";
@@ -308,8 +312,8 @@ public class MemberController {
 			return "myPageBuyer";
 		}
 		else if(action.equals("previousPage")) {
-			String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
-			return "myPageBuyer";
+
+			return "redirect:/myPageBuyer";
 		}
 		
 		return "error";
@@ -328,7 +332,7 @@ public class MemberController {
 		model.addAttribute("seller", sellerDAO.getSeller(sessionSeller));
 		
 		// 판매 중인 상품
-		
+		model.addAttribute("sellList", beansDAO.getSellList(sessionSeller));
 		
 		// 판매 내역
 		
@@ -382,9 +386,8 @@ public class MemberController {
 			return "myPageSeller";
 		}
 		else if(action.equals("previousPage")) {
-			String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
 			
-		    return "myPageSeller";
+		    return "redirect:/myPageSeller";
 		}		
 		return "error";
 	}

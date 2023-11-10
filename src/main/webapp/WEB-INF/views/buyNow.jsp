@@ -44,7 +44,7 @@
                     <p class="cartTotalPrice">${beansDO.beanPrice * qty}</p>
                 </div>
                 <div class="paymentPrice">
-                    <button class="cartPayment">취소</button>
+                    <button class="cartPayment" id="cancel">취소</button>
 	                <button class="cartPayment" id="buy">결제</button>
                 </div>
                 <form method="post" id="hiddenForm">

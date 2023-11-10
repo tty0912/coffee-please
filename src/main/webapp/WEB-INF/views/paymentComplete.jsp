@@ -56,7 +56,7 @@
                     <p class="cartTotalPriceText">현재 잔액 : <p class="cartTotalPrice">${orderList.beforeOrderPoint}</p></p>
                 </div>
                 <div class="paymentCompletePrice">
-                    <form method="get" action="goProductList">
+                    <form class="paymentCompletePrice" method="get" action="goProductList">
                         <button class="cartPayment">확인</button>
                     </form>
                 </div>

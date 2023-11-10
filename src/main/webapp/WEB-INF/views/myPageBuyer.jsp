@@ -49,8 +49,8 @@
                         <button class="myPageInfo__modify"><i class="fa-solid fa-gear"></i></button>
                     </form>
                     <!-- 수정 부분 -->
-                    <form method="get" action="logout">
-	                    <button class="myPageInfo__logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+                    <form method="get" action="loginAfter">
+	                    <button name="action" value="logout" class="myPageInfo__logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
                     </form>
                      
                           <!-- 

@@ -231,9 +231,6 @@ public class ProductController {
 	@PostMapping("/buyNow")
 	public String buyNow(CartDTO cartDTO, HttpSession session, Model model) throws SQLException {
 
-		System.out.println("=======================");
-		System.out.println(cartDTO.getBeansNum());
-
 		BeansDO beansDO = beansDAO.getBean(cartDTO.getBeansNum());
 		
 		
@@ -478,5 +475,13 @@ public class ProductController {
 	}
 
 
+	// 상품 정보 수정하기
+	@GetMapping("/productModify")
+	public String productModify(@RequestParam("beansNum") int beansNum, Model model, HttpSession session){
+
+		model.addAttribute("bean", beansDAO.getBean(beansNum));
+
+		return "productModify";
+	}
 }
 
