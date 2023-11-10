@@ -12,7 +12,6 @@ function showCategoryHandler() {
 
 //1~5등 이미지 연결//
 
-
 function bestBeansImgHandler(){
 	const images = ["/coffee/images/number1.png", "/coffee/images/number2.png", 
 					"/coffee/images/number3.png", "/coffee/images/number4.png", 
@@ -44,9 +43,7 @@ function nextBtnHandler(){
     categoryList.insertBefore(firstChild,categoryImg[9]);
     categoryImg[5].style.display = 'inline-flex';
 }
-	
 
-	
 //국기 이미지 이전(<) 버튼 기능
 function prevBtnHandler() {
 	let categoryList = document.querySelector('#categoryList');
@@ -71,29 +68,6 @@ function prevBtnHandler() {
  	categoryImg[4].style.display = 'none';
 	}
 
-
-
-//자동 전환 국기 이미지
-
-function autoCycleCategoryListHandler(){
-	
-	let categoryList = document.querySelector('#categoryList');
-	let categoryImg = document.querySelectorAll('.mainCategory__detail');
-    let firstChild = categoryList.firstElementChild;
-	
-	for (let i = 0; i < categoryImg.length; i++) {
-        if (i < 5) {
-            categoryImg[i].style.display = 'inline-flex';
-        } else {
-            categoryImg[i].style.display = 'none';
-        }
-    }
-    firstChild.style.display = 'none'
-    categoryList.insertBefore(firstChild,categoryImg[9]);
-    categoryImg[5].style.display = 'inline-flex';
-}
-
-
 function getCategoryHandler(event){
     let id = event.currentTarget.id;
     let url = '/coffee/goProductList?category=' + id;
@@ -101,17 +75,15 @@ function getCategoryHandler(event){
 }
 
 function init(){
-	let categoryList = document.querySelector('#categoryList');
 	let category = document.querySelectorAll('.mainCategory__detail');
 	
-	let nextBtn = document.querySelector('#nextBtn');
-	let prevBtn = document.querySelector('#prevBtn');
+	let nextBtn = document.querySelector('#categoryNextBtn');
+	let prevBtn = document.querySelector('#categoryPrevBtn');
 
 	category.forEach(categoryElement => {
     categoryElement.addEventListener('click', getCategoryHandler);
 	});
 		
-	categoryList.addEventListener('load', autoCycleCategoryListHandler);
 	
 	//국기이미지 옆 버튼
 	nextBtn.addEventListener('click', nextBtnHandler);
@@ -122,7 +94,5 @@ function init(){
 		
 window.addEventListener('load', init);
 
-//국기이미지 자동으로 넘어가기, 8초(8000ms)로 설정
-setInterval(autoCycleCategoryListHandler, 8000);
 showCategoryHandler();
 bestBeansImgHandler();
