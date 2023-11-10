@@ -73,10 +73,16 @@
             <h1 class="mainBeanBest__title">Best</h1>
             <div class="mainBeanBest">
 
-                <c:forEach items="${bestBean}" var="beansDO" >
+                <c:forEach items="${bestBean}" var="beansDO">
                     <div class="mainBeanBest__product">
                         <img src="" alt="" class="beanBest__number">
-                        <img src="${beansDO.beanImg}"  alt="" class="mainBeanBest__productImg" >
+                        <!-- 수정 부분 -->
+                        <form method="get" action="goListDetail">
+	                        <input type="hidden" id="beansNum" name="beansNum" value="${beansDO.beansNum}" />
+                        	<button>
+	                        	<img src="${beansDO.beanImg}"  alt="" class="mainBeanBest__productImg">
+                        	</button>
+                        </form>
                         <div class="likeButton">
                             <button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
                             <p class="mainBeanBest__productLikeCount">${beansDO.likeCount}</p>

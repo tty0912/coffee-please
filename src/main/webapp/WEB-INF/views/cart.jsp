@@ -36,7 +36,7 @@
                 <h2 class="cartTitle">님의 장바구니</h2>
                 <c:forEach items="${cart}" var="cart" varStatus="index">
                 	<div class="cartProduct" id="checkBoxes${index.count}">
-                    	<input type="checkbox" class="cartProduct__check" id="checkBox${index.count}" value="${cart.beansDO.beanName}" checked />          
+                    	<input type="checkbox" class="cartProduct__check" id="checkBox${index.count}" value="${cart.beansDO.beanPrice}" checked />          
                     	<img class="cartProduct__img" src="" alt="">
                     	<div class="cartProductInfo">
                         	<p class="cartProductInfo__Name">${cart.beansDO.beanName}</p>
@@ -52,7 +52,7 @@
                 </c:forEach>
 
                 <div class="cartPrice">
-                    <p class="cartTotalPriceText" id="totalPrice">합산 금액: </p>
+                    <p class="cartTotalPriceText" id="totalPrice"></p>
                     <button class="cartPayment">결제</button>
                 </div>
             </div>

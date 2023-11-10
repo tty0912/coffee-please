@@ -60,6 +60,9 @@ function changeHandler(e) {
 		plus.disabled = false;
 		minus.disabled = false;
 
+		console.log(qty.innerHTML * 1);
+		console.log(price * 1);
+
 		sum += (price * 1) * (qty.innerHTML * 1);
 	}
 	else {
@@ -68,6 +71,8 @@ function changeHandler(e) {
 
 		sum -= (price * 1) * (qty.innerHTML * 1);
 	}
+
+	alert(typeof(sum));
 
 	document.querySelector('#totalPrice').innerHTML = '합산 금액: ' + sum + '원';
 }
@@ -79,6 +84,9 @@ function init() {
 		checkBox.addEventListener('click', clickHandler);
 	});
 	console.log('오류가 안났니?');
+	
+	
+	document.querySelector('#totalPrice').innerHTML = '합산 금액: ' + sum + '원';
 }
 
 window.addEventListener('load', init);
