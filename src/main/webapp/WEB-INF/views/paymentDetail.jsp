@@ -33,25 +33,23 @@
     <section id="cart" class="section">
         <div class="max-container">
             <div class="cart">
-                <h2 class="signup__title">${buyerDO.buyerName}님의 구매 내역</h2>
-                <c:forEach items="${test}" var="test">
+                <h2 class="signup__title">${buyer.buyerName}님의 구매 내역</h2>
+                <c:forEach items="${bean}" var="beans">
                 	<div class="paymentProduct">
-                    	<img class="cartProduct__img" src="${beansDO.beanImg}" alt="">
+                    	<img class="cartProduct__img" src="${beans.beansDO.beanImg}" alt="">
                     	<div class="cartProductInfo">
-                        	<p class="cartProductInfo__Name">${beansDO.beanName}</p>
+                        	<p class="cartProductInfo__Name">${beans.beansDO.beanName}</p>
                         	<div class="cartProductInfo__QtyDiv">
-                            	<button class="cartProductInfo__QtyButton"><i class="fa-solid fa-plus"></i></button>
-                            	<input type="text" class="cartProductInfo__QtyText" value="${beansDO.beanPrice}" />	
-                            	<button class="cartProductInfo__QtyButton"><i class="fa-solid fa-minus"></i></button>
+                            	<p class="cartProductInfo__QtyText">${beans.orderProductDetailDO.qty} 개</p>	
                         	</div>
-                        	<p class="cartProductInfo__price">${beansDO.beanPrice}원</p>
+                        	<p class="cartProductInfo__price">${beans.beansDO.beanPrice}원</p>
                     	</div>
                 	</div>
                 </c:forEach>
 
                 <div class="paymentCompletePrice">
-                    <p class="cartTotalPriceText">결제 금액 : <p class="cartTotalPrice">${beansDO.beanPrice}</p></p>
-                    <p class="cartTotalPriceText">현재 잔액 : <p class="cartTotalPrice">${buyerDO.point}</p></p>
+                    <p class="cartTotalPriceText">결제 금액 : <p class="cartTotalPrice"></p></p>
+                    <p class="cartTotalPriceText">현재 잔액 : <p class="cartTotalPrice">${buyer.point}</p></p>
                 </div>
                 <div class="paymentCompletePrice">
                     <button class="cartPayment">확인</button>

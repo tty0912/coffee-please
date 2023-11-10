@@ -46,8 +46,8 @@
                     <form method="get" action="sellerModify">
                         <button class="myPageInfo__modify"><i class="fa-solid fa-gear"></i></button>
                     </form>
-                    <form method="get" action="logout">
-                        <button class="myPageInfo__logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+                    <form method="get" action="loginAfter">
+                        <button name="action" value="logout" class="myPageInfo__logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
                     </form>
                     </div>
                 </div>
@@ -69,15 +69,17 @@
         <div class="max-container">
         	<div>
         		<h2 class="myPageLike__title">판매 중인 게시물을 확인해보세요!</h2> 
-            	<div class="myPageLike">
-            		<c:forEach items="${likeList}" var="beansDO">
-                		<div class="myPageLike__product">
+            	<div id="sellList" class="myPageLike">
+            		<c:forEach items="${sellList}" var="beansDO">
+                		<div id="${beansDO.beansNum}" class="myPageLike__product" onclick="let that = this; sellListHandler(that)">
                     		<img class="myPageLike__productImg" src="${beansDO.beanImg}" alt="buyerImg" />
                     		<div class="myPageLike__productInfo">
                         		<p class="myPageLike__productName">${beansDO.beanName}</p>
-                        		<p class="myPageLike__productPrice">${beansDO.beanPrice}</p>
+                        		<p class="myPageLike__productPrice">${beansDO.beanPrice}원</p>
                     		</div>
-                    		<button class="myPageLike__hate"><i class="fa-solid fa-heart"></i></button>
+                            <form method="get" action="productModify">
+                              <button name="beansNum" value="${beansDO.beansNum}" class="myPageLike__hate"><i class="fa-solid fa-heart"></i></button>
+                            </form>
                 		</div>
                 	</c:forEach>
             	</div>
@@ -124,6 +126,33 @@
     <div class="myPageSources">
         출처 <a href="https://kr.freepik.com/free-vector/flat-design-profile-icon-set_29332702.htm#query=%EC%82%AC%EC%9A%A9%EC%9E%90&position=4&from_view=search&track=sph">Freepik</a>
     </div>
+<<script>
+
+
+    function sellListHandler(that) {
+        //alert('div가 눌려졌음');
+
+        let beans = that.getAttribute('id');
+        // alert(beans);
+
+        let url = '/coffee/goListDetail?beansNum=' + beans;
+        location.href = url;
+    }
+
+    // function prodDetailHandler(event) {
+    //     let beans = event.getAttribute('id');
+    //     alert(beans);
+    //
+    //     let url = '/coffee/goListDetail?beansNum=' + beans;
+    //     location.href = url;
+    // }
+
+    function init() {
+        document.querySelector('#sellList').addEventListener('click', sellListHandler);
+
+    }
+    window.addEventListener('load', init);
+</script>
 
 <%@ include file = "/WEB-INF/views/footer.jsp" %>
 </body>

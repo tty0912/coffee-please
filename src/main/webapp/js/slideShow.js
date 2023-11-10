@@ -15,10 +15,6 @@ function moveSlide(num) {
   currentIdx = num;
 }
 
-function moveCategory(event) {
-	const slides = document.querySelector('.slides'); 
-}
-
 //자동 전환 국기 이미지
 function autoCycleCategoryListHandler(){
 	

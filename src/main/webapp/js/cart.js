@@ -54,6 +54,7 @@ function changeHandler(e) {
 		plusButton.disabled = false;
 		minusButton.disabled = false;
 
+
 		sum += (price * 1) * (qtySpan.innerHTML * 1);
 	} else {
 		plusButton.disabled = true;
@@ -62,7 +63,9 @@ function changeHandler(e) {
 		sum -= (price * 1) * (qtySpan.innerHTML * 1);
 	}
 
+
 	document.querySelector('#totalPrice').innerHTML = sum;
+
 }
 
 function init() {

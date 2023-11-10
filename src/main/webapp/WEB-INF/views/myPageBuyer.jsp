@@ -18,7 +18,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
-    <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/active.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
@@ -48,8 +49,8 @@
                         <button class="myPageInfo__modify"><i class="fa-solid fa-gear"></i></button>
                     </form>
                     <!-- 수정 부분 -->
-                    <form method="get" action="logout">
-	                    <button class="myPageInfo__logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+                    <form method="get" action="loginAfter">
+	                    <button name="action" value="logout" class="myPageInfo__logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
                     </form>
                      
                           <!-- 
@@ -67,7 +68,7 @@
     <section id="myPageNav" class="section">
         <div class="max-container">
             <div class="myPageNav">
-                <button id="myPageNav__likeButton" class="myPageNav__button" >찜 내역</button>
+                <button id="myPageNav__likeButton" class="myPageNav__button active" >찜 내역</button>
                 <button id="myPageNav__purchaseButton" class="myPageNav__button">구매내역</button>
                 <button id="myPageNav__purchaseGroupButton" class="myPageNav__button">공동구매내역</button>
             </div>
@@ -81,7 +82,13 @@
             	<div class="myPageLike">
             		<c:forEach items="${likeList}" var="beansDO">
                 		<div class="myPageLike__product">
-                    		<img class="myPageLike__productImg" src="${beansDO.beanImg}" alt="buyerImg" />
+                		<!-- 수정 부분 -->
+                		<form method="get" action="goListDetail">
+                			<input type="hidden" id="beansNum" name="beansNum" value="${beansDO.beansNum}" />
+                			<button>
+	                    		<img class="myPageLike__productImg" src="${beansDO.beanImg}" alt="buyerImg" />
+                			</button>
+                   		</form>
                     		<div class="myPageLike__productInfo">
                         		<p class="myPageLike__productName">${beansDO.beanName}</p>
                         		<p class="myPageLike__productPrice">${beansDO.beanPrice}</p>
@@ -100,12 +107,17 @@
         <div class="max-container">	
         		<h2 class="myPagePurchase__title">구매한 내역을 확인해보세요!</h2> 
             	<div class="myPagePurchase">
-            		<c:forEach items="${orderList}" var="OrderProductDO">
+            		<c:forEach items="${orderList}" var="orderLists">
                 		<div class="myPagePurchase__product">
-                    		
+                			<form method="post" action="paymentDetail">
+                				<input type="hidden" id="orderDatetime" name="orderDatetime" value="${orderLists.orderProductDO.orderDatetime}">
+                				<button>
+		                            <img class="myPagePurchase__productImg" src="${orderLists.beansDO.beanImg}" alt="buyerImg" />
+                				</button>
+                			</form>
                     		<div class="myPagePurchase__productInfo">
-                        		<p class="myPagePurchase__productName">${OrderProductDO.orderDatetime}</p>
-                        		<p class="myPagePurchase__productPrice">${OrderProductDO.orderTotalPrice}</p>
+                        		<p class="myPagePurchase__productName">${orderLists.orderProductDO.orderDatetime}</p>
+                        		<p class="myPagePurchase__productPrice">${orderLists.orderProductDO.orderTotalPrice}원</p>
                     		</div>
                     		<button class="myPagePurchase__detail"><i class="fa-solid fa-heart"></i></button>
                 		</div>

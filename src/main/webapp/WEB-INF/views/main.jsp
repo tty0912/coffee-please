@@ -19,9 +19,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
-<%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
-    
-<%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
+	<script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script>
+	 <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script>
     <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
      <%--<script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script> --%>
@@ -46,14 +45,14 @@
                 <div class="mainIntro__loginAll">
                     <h2 class="mainIntro__loginTitle">Login</h2>
                     <div class="mainIntro__login">
-                        <form class="mainIntro__loginForm" method="post" action="mainLogin">
+                        <form id="loginForm" class="mainIntro__loginForm" method="post" action="mainLogin">
                             <div class="loginRadio">
-                                <input type="radio" name="user" value="buyer" /><label class="radioLabel">구매자</label>
+                                <input type="radio" name="user" value="buyer" checked/><label class="radioLabel">구매자</label>
                                 <input type="radio" name="user" value="seller" /><label class="radioLabel">판매자</label>
                             </div>
                                    
                             <label for="id" class="login__label">
-                                <i class="fa-regular fa-user"></i>
+                                <i class="fa-regular fa-user login__icon"></i>
                                 <input
                                     class="login__input"
                                     type="email"
@@ -63,7 +62,7 @@
                                 />
                             </label> 
                             <label for="password" class="login__label">
-                                <i class="fa-solid fa-lock"></i>
+                                <i class="fa-solid fa-lock login__icon"></i>
                                 <input
                                     class="login__input"
                                     type="password"
@@ -78,13 +77,29 @@
                             </div>
                         </form>
                     </div>
-                     <h4 class="loginErrorMsg" id="loginMsg"></h4>
+                     <div class="loginErrorMsg" id="loginMsg"></div>
                 </div>
             </div>
         </div>
 
     </section>
-    <!-- Category 버튼 꾸미기?? -->
+    <!-- Category -->
+
+    <section id="mainCategory" class="section">
+       <div class="max-container">
+        <h1 class="mainCategory__title">Category</h1>
+            	<div id="categoryList" class="mainCategory" >
+                    <c:forEach items="${categoryList}" var="categoryDO" >
+        			<div class="mainCategory__detail" id="${categoryDO.categoryNum}">
+        				<img alt="" class="mainCategory__detailImg" src="${categoryDO.categoryImg}" />
+        				<p class="mainCategory__detailTitle">${categoryDO.categoryName}</p>
+        			</div>
+        			</c:forEach>
+            	</div>
+        </div>
+        <button id="prevBtn"> <<<< </button>
+        <button id="nextBtn"> >>>> </button>
+    </section>
     <!-- Category -->
     <%@ include file = "/WEB-INF/views/category.jsp" %>
     <!-- BeanBest -->
@@ -106,7 +121,7 @@
             </div>
  	         <div class="mainBeanBest__button">
  	         	<h2 class="mainBeanBest__buttonTitle">더 많은 원두를 보려면?</h2>
- 	         	<form method="get" action="goProdcutList">
+ 	         	<form method="get" action="goProductList">
  	         	    <button class="mainBeanBest__plusButton"><i class="fa-solid fa-angles-right"></i></button>	
  	         	</form>
 

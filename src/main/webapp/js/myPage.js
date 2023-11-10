@@ -1,35 +1,22 @@
+const likeButton = document.getElementById('myPageNav__likeButton');
+const purchaseButton = document.getElementById('myPageNav__purchaseButton');
+const purchaseGroupButton = document.getElementById('myPageNav__purchaseGroupButton');
+const myPageLike = document.querySelector('#myPageLike');
+const myPagePurchase = document.querySelector('#myPagePurchase');
+const myPagePurchaseGroup = document.querySelector('#myPagePurchaseGroup');
 
-
-
-function likeButtonHandler(event) {
-	let myPageLike = document.getElementById('myPageLike');
-	
-	myPageLike.style.display = 'block'; 
-}
-
-function purchaseButtonHandler(event) {
-	let myPagePurchase = document.getElementById('myPagePurchase');
-	
-	myPagePurchase.style.display = 'block'; 
-}
-
-function purchaseGroupButtonHandler(event) {
-	let myPagePurchaseGroup = document.getElementById('myPagePurchaseGroup');
-	
-	myPagePurchaseGroup.style.display = 'block'; 
-	
-}
-
-function init() {
-//	let likeButton = document.getElementById('myPageNav__likeButton');
-	let purchaseButton = document.getElementById('myPageNav__purchaseButton');
-	let purchaseGroupButton = document.getElementById('myPageNav__purchaseGroupButton');
-	
-//	likeButton.addEventListener('click', likeButtonHandler);
-	purchaseButton.addEventListener('click', purchaseButtonHandler);
-	purchaseGroupButton.addEventListener('click', purchaseGroupButtonHandler);
-}
-
-window.addEventListener('load', init);
-
-
+likeButton.addEventListener("click", function() {
+    myPageLike.style.display = "block";
+    myPagePurchase.style.display = "none";
+    myPagePurchaseGroup.style.display = "none";
+});
+purchaseButton.addEventListener("click", function() {
+    myPageLike.style.display = "none";
+    myPagePurchase.style.display = "block";
+    myPagePurchaseGroup.style.display = "none";
+});
+purchaseGroupButton.addEventListener("click", function() {
+    myPageLike.style.display = "none";
+    myPagePurchase.style.display = "none";
+    myPagePurchaseGroup.style.display = "block";
+});
