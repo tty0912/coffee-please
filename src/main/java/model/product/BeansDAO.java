@@ -615,7 +615,7 @@ public class BeansDAO {
 	// 카테고리 번호목록(국기 리스트)가져오기
 	public ArrayList<CategoryDO> getAllCategory() {
 		ArrayList<CategoryDO> categoryList = new ArrayList<CategoryDO>();
-		this.sql = "select category_name, category_img from category";
+		this.sql = "select category_name, category_img, category_num from category";
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
@@ -626,6 +626,7 @@ public class BeansDAO {
 
 				category.setCategoryName(rs.getString("category_name"));
 				category.setCategoryImg(rs.getString("category_img"));
+				category.setCategoryNum(rs.getInt("category_num"));
 
 				categoryList.add(category);
 			}
