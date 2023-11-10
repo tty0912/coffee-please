@@ -32,10 +32,10 @@
     <section id="signup__buyerModify" class="section">
         <div class="max-container">
             <div class="signup__buyerModify">
-                <div class="signup__form-div">
+                <div class="modify__form-div">
                     <h2 class="signup__title">Bean2B 구매자 회원 정보를 수정해주세요.</h2> 
                     <!-- 수정부분 form에서 method, action, input name속성 수정 -->
-                    <form id="signup__form" enctype="multipart/form-data" method="post" action="buyerModifyChange">
+                    <form id="modify__form" enctype="multipart/form-data" method="post" action="buyerModifyChange">
                         <label for="new-userId" class="signup__label">
                             <i class="fa-regular fa-envelope"></i>
                             <input

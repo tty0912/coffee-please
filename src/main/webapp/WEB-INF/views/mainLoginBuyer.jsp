@@ -70,6 +70,7 @@
     <!-- Category -->
     <%@ include file = "/WEB-INF/views/category.jsp" %>
     <!-- BeanBest -->
+
     <%@ include file = "/WEB-INF/views/bestBean.jsp" %>
     <div class="sources">
         출처 <a href="https://kr.freepik.com/free-vector/number-collection-with-golden-style_2304153.htm#query=%EC%88%9C%EC%9C%84&from_query=%EB%93%B1%EC%88%98&position=7&from_view=search&track=sph">Freepik</a>

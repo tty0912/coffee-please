@@ -57,7 +57,7 @@
                         <div class="mainIntro__button">
                             <form method="Get" action="loginAfter">
                                   <button class="mainIntro__AfterButton" type="submit" name="action" value="logout">로그아웃</button>
-                            	  <button class="mainIntro__AfterButton" type="submit" name="action" value="buyerModify">정보수정</button>
+                            	  <button class="mainIntro__AfterButton" type="submit" name="action" value="sellerModify">정보수정</button>
                             </form>
                         </div>
                     </div>

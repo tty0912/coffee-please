@@ -168,7 +168,6 @@ public class BeansDAO {
 				beansDO.setBeanPrice(rs.getInt("bean_price"));
 				beansDO.setBeansNum(rs.getInt("beans_num"));
 				beanList.add(beansDO);
-
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -367,7 +366,7 @@ public class BeansDAO {
 			allBeanList = getBeansList(categoryNum, searchStr);
 		}
 
-		System.out.println(allBeanList.size());
+		//System.out.println(allBeanList.size());
 
 		if (sort != null && sort.equals("bestSelling")) {
 			// 판매량 순 정렬
@@ -596,7 +595,7 @@ public class BeansDAO {
 			pstmt.setLong(3, beansDO.getDeliveryCharge());
 			pstmt.setString(4, beansDO.getBeanImg());
 			pstmt.setString(5, beansDO.getDescript());
-			pstmt.setInt(7, beansDO.getBeansNum());
+			pstmt.setInt(6, beansDO.getBeansNum());
 			rowCount = pstmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -828,46 +827,50 @@ public class BeansDAO {
 	}
 
 	//판매 내역 조회
-	public ArrayList<BeansDO> getSellList(String sellerEmail, int statusNum, String groupOrOther) {
+	public ArrayList<BeansDO> getSellList(String sellerEmail) {
 
 		ArrayList<BeansDO> sellList = new ArrayList<>();
 
+
+		this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount " +
+						"from beans where seller_email = ? " +
+						"order by beans_num desc";
 		//statusNum 판매종료 - 1, 판매중 - 0
 		//groupOrOther 공동구매 - "group", 일반구매 - other
-		if (statusNum == 0) {
-            //공동구매 판매중
-            if (groupOrOther.equals("group")) {
-				this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount " +
-						"from beans where seller_email = ? " +
-						"and status_num = 0 " +
-						"and deadline is not null " +
-						"order by beans_num desc";
-			}
-			else {
-				//일반구매 판매중
-				this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount " +
-						"from beans where seller_email = ? and status_num = 0 and deadline is null " +
-						"order by beans_num desc";
-			}
-		} else {
-			if (groupOrOther.equals("group")) {
-				//공동구매 판매종료
-				this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount " +
-						"from beans where seller_email = ? and status_num = 1 and deadline is not null " +
-						"order by beans_num desc";
-			} else {
-				//일반구매 판매종료
-				this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount " +
-						"from beans where seller_email = ? and status_num = 1 and deadline is null " +
-						"order by beans_num desc";
-			}
-		}
+//		if (statusNum == 0) {
+//            //공동구매 판매중
+//            if (groupOrOther.equals("group")) {
+//				this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount " +
+//						"from beans where seller_email = ? " +
+//						"and status_num = 0 " +
+//						"and deadline is not null " +
+//						"order by beans_num desc";
+//			}
+//			else {
+//				//일반구매 판매중
+//				this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount " +
+//						"from beans where seller_email = ? and status_num = 0 and deadline is null " +
+//						"order by beans_num desc";
+//			}
+//		} else {
+//			if (groupOrOther.equals("group")) {
+//				//공동구매 판매종료
+//				this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount " +
+//						"from beans where seller_email = ? and status_num = 1 and deadline is not null " +
+//						"order by beans_num desc";
+//			} else {
+//				//일반구매 판매종료
+//				this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount " +
+//						"from beans where seller_email = ? and status_num = 1 and deadline is null " +
+//						"order by beans_num desc";
+//			}
+//		}
 			try {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, sellerEmail);
 				rs = pstmt.executeQuery();
 
-				BeansDO beans = null;
+				BeansDO beans;
 
 				while (rs.next()) {
 					beans = new BeansDO();

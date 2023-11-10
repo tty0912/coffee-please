@@ -60,13 +60,13 @@
                         <div class="cartProductInfo__QtyDiv">
                             <button class="cartProductInfo__QtyButton"><i class="fa-solid fa-plus"></i></button>
                             <label>
-                                <input type="number" name="qty" class="cartProductInfo__QtyText"/>
+                                <input type="number" name="qty" class="cartProductInfo__QtyText" value="1" min="1" max="999"/>
                             </label>
                             <button class="cartProductInfo__QtyButton"><i class="fa-solid fa-minus"></i></button>
                         </div>
                         <div class="productListDetail__button">
                             <button class="productListDetail__cart" id="cart">장바구니</button>
-                            <button class="productListDetail__pay" id="onePayment">바로구매</button>
+                            <button class="productListDetail__pay" id="buyNow">바로구매</button>
                         </div>
                     </div>
                 <form method="post" id="hiddenForm">

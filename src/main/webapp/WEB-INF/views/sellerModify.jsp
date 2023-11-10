@@ -30,12 +30,12 @@
 <%@ include file = "/WEB-INF/views/headerNav.jsp" %>
 
  <!-- SellerModify -->
-    <section id="signup" class="section">
+    <section id="signup__sellerModify" class="section">
         <div class="max-container">
             <div class="signup">
-                <div class="signup__form-div">
+                <div class="modify__form-div">
                     <h2 class="signup__title">Bean2B 비즈니스 회원 정보를 수정해주세요.</h2> 
-                    <form id="signup__form" enctype="multipart/form-data" method="post" action="sellerModifyChange">
+                    <form id="modify__form" enctype="multipart/form-data" method="post" action="sellerModifyChange">
                         <label for="new-userId" class="signup__label">
                             <i class="fa-regular fa-envelope"></i>
                             <input

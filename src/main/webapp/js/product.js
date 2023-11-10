@@ -1,3 +1,4 @@
+
 function categoryHandler () {
         document.querySelector('#sorting').submit();
     }
