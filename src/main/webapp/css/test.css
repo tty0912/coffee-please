@@ -306,6 +306,14 @@
     display: inline-block;
 }
 
+.productList__nextPrev {
+	display: flex;
+    gap: 35rem;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20rem;
+}
+
 /* 베스트 상품 목록 */
 .product-container {
     width: 100%;

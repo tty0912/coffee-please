@@ -123,7 +123,7 @@ public class MemberController {
 				//비밀번호 틀림
 				else if(!sellerEmail.getPasswd().equals(pw)){  
 					System.out.println("login fail2");
-					
+					model.addAttribute("login", "fail");
 				    return "main";
 				}
 				//아이디 비밀번호 전부일치
@@ -157,7 +157,8 @@ public class MemberController {
 				//비밀번호 틀림
 				else if(!buyerEmail.getPasswd().equals(pw)){  
 					System.out.println("login fail2");
-					return "redirect:/main";
+					model.addAttribute("login", "fail");
+				    return "main";
 				}
 				//아이디 비밀번호 전부일치
 				else { 

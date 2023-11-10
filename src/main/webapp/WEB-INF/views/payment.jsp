@@ -29,8 +29,8 @@
 <body>
 <%@ include file = "/WEB-INF/views/headerNav.jsp" %>
 
-<<!-- Cart -->
-    <section id="cart" class="section">
+<<!-- Payment -->
+    <section id="cart" >
         <div class="max-container">
             <div class="cart">
                 <h2 class="cartTitle">결제진행</h2>
