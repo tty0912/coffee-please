@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.order.OrderProductDO;
+import model.product.BeansQty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,6 +55,7 @@ import model.service.OrderService;
 public class ProductController {
 	
 	private BeansDO beans;
+	private BeansQty beansQty;
 
 	private final BeansDAO beansDAO = new BeansDAO();
 	private final SellerDAO sellerDAO = new SellerDAO();
@@ -60,6 +63,7 @@ public class ProductController {
 	private final CartDAO cartDAO = new CartDAO();
 	private final OrderService orderService = new OrderService();
 	private final LikeService likeService = new LikeService();
+
 	
 	public ProductController() {
 	}
@@ -223,9 +227,11 @@ public class ProductController {
 	
 	@PostMapping("/buyNow")
 	public String buyNow(CartDTO cartDTO, HttpSession session, Model model) throws SQLException {
-		
-		BeansDO beansDO = new BeansDO();
-		beansDO = beansDAO.getBean(cartDTO.getBeansNum());
+
+		System.out.println("=======================");
+		System.out.println(cartDTO.getBeansNum());
+
+		BeansDO beansDO = beansDAO.getBean(cartDTO.getBeansNum());
 		
 		
 		model.addAttribute("qty", cartDTO.getQty());
@@ -236,11 +242,25 @@ public class ProductController {
 	}
 	
 	@PostMapping("/paymentComplete")
-	public String paymentComplete(CartDTO cartDTO , HttpSession session) throws SQLException {
+	public String paymentComplete(CartDTO cartDTO , HttpSession session, Model model) throws SQLException {
 		
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 		System.out.println(cartDTO.toString());
-		orderService.onlyOnePayment(cartDTO.getBeansNum(), cartDTO.getQty(), sessionBuyer);
+		OrderProductDO orderProductDO = orderService.onlyOnePayment(cartDTO.getBeansNum(), cartDTO.getQty(), sessionBuyer);
+
+		ArrayList<BeansQty> beanList = new ArrayList<>();
+
+		beansQty = new BeansQty();
+
+		beansQty.setBeansDO(beansDAO.getBean(cartDTO.getBeansNum()));
+		beansQty.setQty(cartDTO.getQty());
+
+		beanList.add(beansQty);
+
+		orderProductDO.setBeforeOrderPoint(orderProductDO.getBeforeOrderPoint() - orderProductDO.getOrderTotalPrice());
+
+		model.addAttribute("beansList", beanList);
+		model.addAttribute("orderList", orderProductDO);
 		
 		return "paymentComplete";
 	}
@@ -303,9 +323,9 @@ public class ProductController {
 
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 
-		boolean b = orderService.onlyOnePayment(beansNum, qty, sessionBuyer);
+		OrderProductDO orderProductDO = orderService.onlyOnePayment(beansNum, qty, sessionBuyer);
 
-		if(b){
+		if(orderProductDO != null){
 			return "paymentComplete";
 		}
 		return null;

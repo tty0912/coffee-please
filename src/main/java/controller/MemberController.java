@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import model.product.OrderBeans;
 import model.service.ImgUpload;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,6 +62,7 @@ public class MemberController {
 	private final BeansDAO beansDAO = new BeansDAO();
 	private final LikeDAO likeDAO = new LikeDAO();
 	private final OrderProductDAO orderProductDAO = new OrderProductDAO();
+	private final OrderProductDetailDAO orderProductDetailDAO = new OrderProductDetailDAO();
 	private final ImgUpload imgUpload = new ImgUpload();
 	
 	public MemberController() {}
@@ -215,7 +217,23 @@ public class MemberController {
 		
 		// 구매내역
 		ArrayList<OrderProductDO> orderListInfo = orderProductDAO.getBuyerOrderList(sessionBuyer);
-		model.addAttribute("orderList", orderListInfo);
+		ArrayList<OrderBeans> orderBeansList = new ArrayList<>();
+
+		for (OrderProductDO i : orderListInfo){
+			OrderBeans orderBeans = new OrderBeans();
+			ArrayList<OrderBeans> orderProductDetailList = orderProductDetailDAO.getOrderProductDetailList(sessionBuyer, i.getOrderDatetime());
+			BeansDO beans = orderProductDetailList.get(0).getBeansDO();
+			orderBeans.setOrderProductDO(i);
+			orderBeans.setBeansDO(beans);
+
+			System.out.println(i.getOrderDatetime());
+			System.out.println(orderBeans.getOrderProductDO().getOrderTotalPrice());
+			System.out.println(orderBeans.getOrderProductDO().getOrderDatetime());
+
+			orderBeansList.add(orderBeans);
+		}
+
+		model.addAttribute("orderList", orderBeansList);
 		
 		
 		return "myPageBuyer";
