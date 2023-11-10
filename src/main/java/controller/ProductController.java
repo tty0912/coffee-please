@@ -219,7 +219,31 @@ public class ProductController {
 		cartDAO.addItem(sessionBuyer, bean, cartDTO.getQty());	   
 	    return "productList";
 	 }
+
 	
+	@PostMapping("/buyNow")
+	public String buyNow(CartDTO cartDTO, HttpSession session, Model model) throws SQLException {
+		
+		BeansDO beansDO = new BeansDO();
+		beansDO = beansDAO.getBean(cartDTO.getBeansNum());
+		
+		
+		model.addAttribute("qty", cartDTO.getQty());
+		model.addAttribute("beansDO", beansDO);
+		
+		
+		return "buyNow";
+	}
+	
+	@PostMapping("/paymentComplete")
+	public String paymentComplete(CartDTO cartDTO , HttpSession session) throws SQLException {
+		
+		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+		System.out.println(cartDTO.toString());
+		orderService.onlyOnePayment(cartDTO.getBeansNum(), cartDTO.getQty(), sessionBuyer);
+		
+		return "paymentComplete";
+	}
 	/*
 	@PostMapping("/cartOrPayment")
 	 public String payment(@RequestBody String beansNum,

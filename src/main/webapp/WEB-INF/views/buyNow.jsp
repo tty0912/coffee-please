@@ -18,13 +18,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
-   <%--  <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>--%>
-<%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
-    
-<%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
-    <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
-     <%--<script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
-    <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script> --%>
+    <script type="module" src="${pageContext.request.contextPath }/js/buyNow.js" defer></script>
 </head>
 <body>
 <%@ include file = "/WEB-INF/views/headerNav.jsp" %>
@@ -33,34 +27,33 @@
     <section id="cart" class="section">
         <div class="max-container">
             <div class="cart">
-                <h2 class="signup__title">상품 결제가 완료되었습니다.</h2> 
-                <h4 class="signup__description">즐거운 쇼핑 되세요.</h4>
-                <c:forEach items="${test}" var="test">
+                <h2 class="cartTitle">결제진행</h2>
                 	<div class="paymentProduct">
                     	<img class="cartProduct__img" src="${beansDO.beanImg}" alt="">
                     	<div class="cartProductInfo">
                         	<p class="cartProductInfo__Name">${beansDO.beanName}</p>
                         	<div class="cartProductInfo__QtyDiv">
-                            	<button class="cartProductInfo__QtyButton"><i class="fa-solid fa-plus"></i></button>
-                            	<input type="text" class="cartProductInfo__QtyText" value="${beansDO.beanPrice}" />	
-                            	<button class="cartProductInfo__QtyButton"><i class="fa-solid fa-minus"></i></button>
+                            	<p class="cartProductInfo__QtyText" >수량 : ${qty}</p>	
                         	</div>
                         	<p class="cartProductInfo__price">${beansDO.beanPrice}원</p>
                     	</div>
                 	</div>
-                </c:forEach>
 
-                <div class="paymentCompletePrice">
-                    <p class="cartTotalPriceText">결제 금액 : <p class="cartTotalPrice">${beansDO.beanPrice}</p></p>
-                    <p class="cartTotalPriceText">현재 잔액 : <p class="cartTotalPrice">${buyerDO.point}</p></p>
+                <div class="paymentPrice">
+                    <p class="cartTotalPriceText">합산 금액 :</p>
+                    <p class="cartTotalPrice">${beansDO.beanPrice * qty}</p>
                 </div>
-                <div class="paymentCompletePrice">
-                    <button class="cartPayment">확인</button>
+                <div class="paymentPrice">
+                    <button class="cartPayment">취소</button>
+	                <button class="cartPayment" id="buy">결제</button>
                 </div>
+                <form method="post" id="hiddenForm">
+                    <input type="hidden" id="beansNum" name="beansNum" value="${ beansDO.beansNum }">
+                    <input type="hidden" id="qty" name="qty" value="${ qty }">
+                </form>
             </div>
         </div>
     </section>
-
 
 <%@ include file = "/WEB-INF/views/footer.jsp" %>
 </body>
