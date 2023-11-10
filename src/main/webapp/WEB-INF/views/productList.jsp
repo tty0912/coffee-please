@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
+
     <script type="module" src="${pageContext.request.contextPath }/js/category.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/sortActive.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
@@ -29,9 +30,10 @@
 </head>
 <body>
 <%@ include file = "/WEB-INF/views/headerNav.jsp" %>
+	
      <!-- Category -->
-    <%@ include file = "/WEB-INF/views/category.jsp" %> 
-
+     <%@ include file = "/WEB-INF/views/category.jsp" %>
+     
     <!--productList  -->
     <section id="productList" class="section">
         <div class="max-container">

@@ -136,6 +136,7 @@ public class ProductController {
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("currentPage", page);
         model.addAttribute("search", search);
+        model.addAttribute("categoryList", beansDAO.getAllCategory());
 
 
 

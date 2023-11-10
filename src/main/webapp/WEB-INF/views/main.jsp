@@ -20,7 +20,8 @@
     <!-- Javascript -->
     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
 	<script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script>
-	 <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script>
+	<script type="module" src="${pageContext.request.contextPath }/js/category.js" defer></script>
+	<script type="module" src="${pageContext.request.contextPath }/js/bestBean.js" defer></script>
     <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
      <%--<script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script> --%>
@@ -84,52 +85,10 @@
 
     </section>
     <!-- Category -->
-
-    <section id="mainCategory" class="section">
-       <div class="max-container">
-        <h1 class="mainCategory__title">Category</h1>
-            	<div id="categoryList" class="mainCategory" >
-                    <c:forEach items="${categoryList}" var="categoryDO" >
-        			<div class="mainCategory__detail" id="${categoryDO.categoryNum}">
-        				<img alt="" class="mainCategory__detailImg" src="${categoryDO.categoryImg}" />
-        				<p class="mainCategory__detailTitle">${categoryDO.categoryName}</p>
-        			</div>
-        			</c:forEach>
-            	</div>
-        </div>
-        <button id="prevBtn"> <<<< </button>
-        <button id="nextBtn"> >>>> </button>
-    </section>
-    <!-- Category -->
-    <%@ include file = "/WEB-INF/views/category.jsp" %>
+	<%@ include file = "/WEB-INF/views/category.jsp" %> 
     <!-- BeanBest -->
-    <section id="mainBeanBest" class="section">
-         <div class="max-container">
-        <h1 class="mainBeanBest__title">Best</h1>
-            <div class="mainBeanBest">
-  				<c:forEach items="${bestBean}" var="beansDO" >
-                    <div class="mainBeanBest__product">
-                    	<img src="" alt="" class="beanBest__number">
-        				<img src="${beansDO.beanImg}"  alt="" class="mainBeanBest__productImg" >
-        				<div class="likeButton">
-                        	<button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
-                        	<p class="mainBeanBest__productLikeCount">${beansDO.likeCount}</p>
-                    	</div>
-                    </div>
-
-    			</c:forEach>
-            </div>
- 	         <div class="mainBeanBest__button">
- 	         	<h2 class="mainBeanBest__buttonTitle">더 많은 원두를 보려면?</h2>
- 	         	<form method="get" action="goProductList">
- 	         	    <button class="mainBeanBest__plusButton"><i class="fa-solid fa-angles-right"></i></button>	
- 	         	</form>
-
-            </div>
-        </div>
-    </section>
+    <%@ include file = "/WEB-INF/views/bestBean.jsp" %>
     
-
     
 <%@ include file = "/WEB-INF/views/footer.jsp" %>
 </body>

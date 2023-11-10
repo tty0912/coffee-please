@@ -151,8 +151,8 @@ public class BeansDAO {
 	public ArrayList<BeansDO> bestBeanArray() {
 
 		ArrayList<BeansDO> beanList = new ArrayList<BeansDO>();
-		sql = "select bean_img, like_count, rownum from"
-				+ "(select bean_img, like_count, rownum from beans order by like_count desc)"
+		sql = "select bean_img, like_count, bean_name, bean_price , rownum from"
+				+ "(select bean_img, like_count, bean_name, bean_price , rownum from beans order by like_count desc)"
 				+ "where rownum between 1 and 5";
 		try {
 			stmt = conn.createStatement();
@@ -164,7 +164,8 @@ public class BeansDAO {
 
 				beansDO.setBeanImg(rs.getString("bean_img"));
 				beansDO.setLikeCount(rs.getInt("like_count"));
-
+				beansDO.setBeanName(rs.getString("bean_name"));
+				beansDO.setBeanPrice(rs.getInt("bean_price"));;
 				beanList.add(beansDO);
 
 			}
