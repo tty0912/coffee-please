@@ -366,7 +366,7 @@ public class BeansDAO {
 			allBeanList = getBeansList(categoryNum, searchStr);
 		}
 
-		System.out.println(allBeanList.size());
+		//System.out.println(allBeanList.size());
 
 		if (sort != null && sort.equals("bestSelling")) {
 			// 판매량 순 정렬

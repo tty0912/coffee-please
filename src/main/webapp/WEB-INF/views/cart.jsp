@@ -29,39 +29,41 @@
 <body>
 <%@ include file = "/WEB-INF/views/headerNav.jsp" %>
 
-<<!-- Cart -->
+<!-- Cart -->
     <section id="cart" class="section">
         <div class="max-container">
             <div class="cart" id="cartList">
                 <h2 class="cartTitle">님의 장바구니</h2>
                 <c:forEach items="${cart}" var="cart" varStatus="index">
-                	<div class="cartProduct" id="checkBoxes${index.count}">
-                    	<input type="checkbox" class="cartProduct__check" id="checkBox${index.count}" value="${cart.beansDO.beanPrice}" checked />          
-                    	<img class="cartProduct__img" src="" alt="">
+
+                	<div class="cartProduct" id="checkBoxes">
+                    	<input type="checkbox" class="cartProduct__check" id="checkBox${index.count}" value="${cart.beansDO.beanPrice}" data-index="${index.count}"/>          
+                    	<img class="cartProduct__img" src="${cart.beansDO.beanImg}" alt="">
                     	<div class="cartProductInfo">
                         	<p class="cartProductInfo__Name">${cart.beansDO.beanName}</p>
                         	<div class="cartProductInfo__QtyDiv" id="qtyBtn">
-                            	<button class="cartProductInfo__plus cartProduct__check" disabled><i class="fa-solid fa-plus"></i></button>
+                            	<button class="cartProductInfo__plus cartProduct__check" id="plus${index.count}" data-index="${index.count}" disabled><i class="fa-solid fa-plus"></i></button>
                             	<span class="qty cartProduct__check">${cart.cartDO.qty}</span>개
-                            	<button class="cartProductInfo__minus cartProduct__check" disabled><i class="fa-solid fa-minus"></i></button>
+                            	<button class="cartProductInfo__minus cartProduct__check" id="minus${index.count}" data-index="${index.count}" disabled><i class="fa-solid fa-minus"></i></button>
                         	</div>
                         	<p class="cartProductInfo__price">${cart.beansDO.beanPrice}</p>
                     	</div>
-                    	<button class="cartProductInfo__delete"><i class="fa-solid fa-trash"></i></button>
+                    	<form method="POST" type="hidden" id="hiddenForm" action="/deleteItem">
+                    	<input type="hidden" name="beansNum" value="${cart.beansDO.beansNum}" />
+                    	<button type="submit" class="cartProductInfo__delete" id="delete${index.count}" data-index="${index.count}" data-beans-num="${cart.beansDO.beansNum}"><i class="fa-solid fa-trash"></i></button>
+                    	</form>
                 	</div>
                 </c:forEach>
 
                 <div class="cartPrice">
-                    <p class="cartTotalPriceText" id="totalPrice"></p>
+                    <p class="cartTotalPriceText">합산 금액: <span id="totalPrice">${totalPrice}</span>원</p>
+
                     <button class="cartPayment">결제</button>
                 </div>
             </div>
         </div>
     </section>
-
-
-
-
+    
 <%@ include file = "/WEB-INF/views/footer.jsp" %>
 </body>
 </html>

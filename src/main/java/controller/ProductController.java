@@ -216,13 +216,19 @@ public class ProductController {
 	public String payment(CartDTO cartDTO,
 	        HttpSession session,
 	        Model model) throws SQLException {
-		 System.out.println(cartDTO.toString());
+		 //System.out.println(cartDTO.toString());
 		 
 		BeansDO bean = beansDAO.getBean(cartDTO.getBeansNum());
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 		
 		// cart 추가
+		int totalPrice = cartDAO.totalPrice(sessionBuyer);
+		
+		System.out.println(totalPrice);
+		
+		
 		cartDAO.addItem(sessionBuyer, bean, cartDTO.getQty());
+		model.addAttribute("totalPrice", totalPrice);
 		model.addAttribute("cart", cartDAO.getCartList(sessionBuyer));
 	    return "cart";
 	 }
@@ -241,12 +247,37 @@ public class ProductController {
 		return "buyNow";
 	}
 	
+
+	@PostMapping("/cart")
+	public String deleteItem (@RequestParam(name = "beansNum") int beansNum, HttpSession session, Model model) {
+		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+		BeansDO bean = beansDAO.getBean(beansNum);
+		System.out.println("번호: " + beansNum);
+		
+		cartDAO.deleteItem(sessionBuyer, bean);
+		model.addAttribute("cart", cartDAO.getCartList(sessionBuyer));
+		return "redirect:/cart";
+	}
+	/*
+	@PostMapping("/cartOrPayment")
+	 public String payment(@RequestBody String beansNum,
+			 @RequestBody String qty,
+	        HttpSession session,
+	        Model model) throws SQLException {
+	  System.out.println(Integer.parseInt(beansNum));
+	  System.out.println(Integer.parseInt(qty));
+	  
+	   BeansDO bean = beansDAO.getBean(Integer.parseInt(beansNum));
+	   String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+	   cartDAO.addItem(sessionBuyer, bean, Integer.parseInt(qty));
+
 	@PostMapping("/paymentComplete")
 	public String paymentComplete(CartDTO cartDTO , HttpSession session, Model model) throws SQLException {
 		
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 		System.out.println(cartDTO.toString());
 		OrderProductDO orderProductDO = orderService.onlyOnePayment(cartDTO.getBeansNum(), cartDTO.getQty(), sessionBuyer);
+
 
 		ArrayList<BeansQty> beanList = new ArrayList<>();
 
@@ -257,6 +288,9 @@ public class ProductController {
 
 		beanList.add(beansQty);
 
+
+	
+
 		orderProductDO.setBeforeOrderPoint(orderProductDO.getBeforeOrderPoint() - orderProductDO.getOrderTotalPrice());
 
 		model.addAttribute("beansList", beanList);
@@ -265,7 +299,6 @@ public class ProductController {
 		return "paymentComplete";
 	}
 	
-
 	//즉시 결제
 	/*
 	@PostMapping("/")
@@ -281,6 +314,27 @@ public class ProductController {
 			return "paymentComplete";
 		}
 		return null;
+	}
+
+
+// *  5) POST	|	/paymentComplete	->	결제 완료시 -> paymentComplete.jsp
+
+
+// *  6) POST	|	/mainLogin			->	결제 완료 페이지에서 버튼 누르면 메인으로 이동(멤버 컨트롤러에 메서드 정의되어있음) -> mainLoginBuyer
+
+
+	//장바구니에 담기
+	/*
+	@PostMapping("/addCart")
+	public String addCart(HttpSession session, 
+						 Model model,
+						 @RequestParam("beansNum") int beansNum,
+						 @RequestParam("qty") int qty) {
+		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+		
+		cartDAO.addItem(sessionBuyer, beans, qty);
+		
+		return "redirect:/cart";
 	}
 	*/
 	//장바구니 결제
