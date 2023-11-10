@@ -1,30 +1,18 @@
+function showCategoryHandler() {
+    let categoryList = document.querySelectorAll('.mainCategory__detail');
 
-
-//로그인 유효성 검사 + 메시지(임시)
-function loginCheckHandler(){
-	let msg = '';
-	let loginCheck = true;
-	let userId = document.querySelector('#userId');
-	let userPasswd = document.querySelector('#userPasswd');
-	
-	if(userId.value === '' || userPasswd.value === ''  ){
-		msg = '계정이 잘못되었습니다!';
-		userId.value = '';
-		userPasswd.value = '';
-		
-		loginCheck = false;
-	}
-	
-	if(loginCheck){
-		
-		userId.value = '';
-		userPasswd.value = '';
-	}
-	else {		
-		document.querySelector('#msg').innerHTML = msg;
-	}
+    for (let i = 0; i < categoryList.length; i++) {
+        if (i < 5) {
+            categoryList[i].style.display = 'inline-flex';
+        } else {
+            categoryList[i].style.display = 'none';
+        }
+    }
 }
-//1~5등 이미지 연결
+
+//1~5등 이미지 연결//
+
+
 function bestBeansImgHandler(){
 	const images = ["/coffee/images/number1.png", "/coffee/images/number2.png", 
 					"/coffee/images/number3.png", "/coffee/images/number4.png", 
@@ -42,62 +30,95 @@ function bestBeansImgHandler(){
 function nextBtnHandler(){
 	
 	let categoryList = document.querySelector('#categoryList');
+	let categoryImg = document.querySelectorAll('.mainCategory__detail');
     let firstChild = categoryList.firstElementChild;
+	
+	for (let i = 0; i < categoryImg.length; i++) {
+        if (i < 5) {
+            categoryImg[i].style.display = 'inline-flex';
+        } else {
+            categoryImg[i].style.display = 'none';
+        }
+    }
+    firstChild.style.display = 'none'
+    categoryList.insertBefore(firstChild,categoryImg[9]);
+    categoryImg[5].style.display = 'inline-flex';
+}
+	
 
-    categoryList.insertBefore(firstChild , null);
-	}
 	
 //국기 이미지 이전(<) 버튼 기능
 function prevBtnHandler() {
-    let categoryList = document.querySelector('#categoryList');
-    let lastChild = categoryList.lastElementChild;
+	let categoryList = document.querySelector('#categoryList');
+	let categoryImg = document.querySelectorAll('.mainCategory__detail');
     let firstChild = categoryList.firstElementChild;
+	let lastChild = categoryList.lastElementChild;
+	let nextChild = firstChild.nextElementSibling;
+	
+	for (let i = 0; i < categoryImg.length; i++) {
+        if (i < 5) {
+            categoryImg[i].style.display = 'inline-flex';
+        } 
+        else {
+            categoryImg[i].style.display = 'none';
+        }
+    }
+    if (nextChild) {
+        categoryList.insertBefore(firstChild, nextChild);
+    }
+    categoryList.insertBefore(lastChild, categoryList.firstElementChild);
+ 	lastChild.style.display = 'inline-flex';
+ 	categoryImg[4].style.display = 'none';
+	}
 
-    categoryList.insertBefore(lastChild, firstChild);
-}
+
 
 //자동 전환 국기 이미지
+
 function autoCycleCategoryListHandler(){
 	
 	let categoryList = document.querySelector('#categoryList');
+	let categoryImg = document.querySelectorAll('.mainCategory__detail');
     let firstChild = categoryList.firstElementChild;
-
-    categoryList.insertBefore(firstChild , null);
-}
 	
-	
-function seeMoreHandler(){
-	let url = '/coffee/beansList';
-	
-	location.href = url;
-}
-
-function categoryListHandler(event){
-	let categoryName = event.target.getAttribute('categoryName');
-	let url = '/coffee/beansList?categoryName=' + categoryName;
-	
-	location.href = url;
+	for (let i = 0; i < categoryImg.length; i++) {
+        if (i < 5) {
+            categoryImg[i].style.display = 'inline-flex';
+        } else {
+            categoryImg[i].style.display = 'none';
+        }
+    }
+    firstChild.style.display = 'none'
+    categoryList.insertBefore(firstChild,categoryImg[9]);
+    categoryImg[5].style.display = 'inline-flex';
 }
 
+/*
+function getCategoryHandler(event){
+    let categoryNum = event.target.getAttribute('categoryNum');
+    categoryNum =  String(categoryNum);
+    let url = '/coffee/goProductList?category=' + categoryNum;
+    location.href = url;
+}
+*/
 function init(){
 	let categoryList = document.querySelector('#categoryList');
+	//let getCategory = document.querySelectorAll('.mainCategory__detail');
 	
 	let nextBtn = document.querySelector('#nextBtn');
 	let prevBtn = document.querySelector('#prevBtn');
-	let loginCheck = document.querySelector('#mainIntro__loginForm');
-	
-	let seeMore = document.querySelector('mainBeanBest__plusButton');
 
-	categoryList.addEventListener('click', categoryListHandler);
+		
 	categoryList.addEventListener('load', autoCycleCategoryListHandler);
+	
+	/*getCategory.forEach(category => {
+		 category.addEventListener('click', getCategoryHandler);
+		});
+	*/
 	
 	//국기이미지 옆 버튼
 	nextBtn.addEventListener('click', nextBtnHandler);
 	prevBtn.addEventListener('click', prevBtnHandler);
-	
-	loginCheck.addEventListener('submit', loginCheckHandler);
-
-	seeMore.addEventListener('click', seeMoreHandler);
 	
 	
 		}
@@ -106,5 +127,5 @@ window.addEventListener('load', init);
 
 //국기이미지 자동으로 넘어가기, 8초(8000ms)로 설정
 setInterval(autoCycleCategoryListHandler, 8000);
-
+showCategoryHandler();
 bestBeansImgHandler();

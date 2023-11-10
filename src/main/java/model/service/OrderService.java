@@ -30,11 +30,11 @@ public class OrderService {
 
         // 일반 상품 구매 시
         if(bean.getDeadline().isEmpty()){
-            totalPrice = (long) bean.getBeanPrice() * qty;
+            totalPrice = bean.getBeanPrice() * qty;
         }
         // 공동 구매 상품 구매시
         else {
-            totalPrice = (long) bean.getGoalPrice() * qty;
+            totalPrice = bean.getGoalPrice() * qty;
         }
         long buyerPoint = checkPoint(buyerEmail);
 

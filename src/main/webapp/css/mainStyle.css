@@ -85,22 +85,80 @@ button:focus {
 /* Main */
 
 #mainIntro {
-    margin-top: 90px;
+    margin-top: 50px;
 }
 
 .mainIntro{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 1rem;
-    
 }
-.mainIntro__intro {
-    width: 48rem;
-}
-.mainIntro__introImg {
-    width: 100%;
-}
+
+#slideShow{
+    width: 900px;
+    height: 390px;
+    position: relative;
+    margin: 50px auto;
+    overflow: hidden;   
+  }
+  
+  .introImg {
+    width: 700px;
+  }
+  
+  .slides{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 10000px; 
+    transition: left 0.5s ease-out; 
+  }
+  
+  .slides li:first-child{
+    margin-left: 90px;
+  }
+  
+  .slides li:not(:last-child){
+    float: left;
+    margin-right: 90px;
+  }
+  
+  .slides li{
+    float: left;
+  }
+  
+  .controller span{
+    position:absolute;
+    background-color: transparent;
+    color: black;
+    text-align: center;
+    border-radius: 50%;
+    padding: 10px 20px;
+    top: 50%;
+    font-size: 1.3em;
+    cursor: pointer;
+  }
+  
+  .controller span:hover{
+    background-color: rgba(128, 128, 128, 0.11);
+  }
+  
+  .prev{
+    left: 10px;
+  }
+
+  .prev:hover{
+    transform: translateX(-10px);
+  }
+  
+  .next{
+    right: 10px;
+  }
+
+  .next:hover{
+    transform: translateX(10px);
+  }
+
 .mainIntro__loginAll {
     display: grid;
     align-items: center;
@@ -205,6 +263,25 @@ input[type='radio']:checked {
     margin-top: 2rem;
 }
 
+  
+  .error {
+    border: 1px solid red;
+   }
+   
+   @keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+  .error .login__icon {
+    color: red;
+    border: none;
+    animation: shake 0.5s ease-in-out;
+  }
+  
+
 
 /* Category */
 
@@ -216,10 +293,14 @@ input[type='radio']:checked {
     color: var(--color-darkgreen);
     margin-bottom: 3rem;
 }
-.mainCategory {
-    display: flex;
-    justify-content: space-between;
+.category {
+	display: flex;
 }
+.mainCategory {
+    display: inline-flex;
+    gap: 7rem;    
+}	
+
 .mainCategory__detail {
     width: 10rem;
     position: relative;
@@ -330,6 +411,8 @@ input[type='radio']:checked {
 }
 .mainIntro__buyer {
     margin-top: 5rem;
+    display: grid;
+    gap: 4.7rem;
 }
 .mainIntro__loginPoint{
     font-size: 1.2rem;
@@ -340,7 +423,9 @@ input[type='radio']:checked {
 }
 
 .mainIntro__button {
-    margin-top: 4.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .mainIntro__AfterButton {
@@ -412,6 +497,14 @@ input[type='radio']:checked {
 .productList__sort {
     color: var(--color-darkgreen);
     font-size: 1rem;
+}
+
+.productList__sort:hover {
+	color: var(--color-darkbrown);
+}
+
+.productActive {
+	color:  var(--color-darkbrown);
 }
 
 .productList__search {

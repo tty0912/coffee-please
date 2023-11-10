@@ -2,8 +2,32 @@
 	import="java.util.*"
     	  %>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
- 
-<%@ include file = "/WEB-INF/views/header.jsp" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Seo -->
+    <title>Bean2B</title>
+	<%@ include file = "/WEB-INF/views/header.jsp" %>
+	<!-- CSS -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/signupStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/productStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/myPageStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
+    <!-- Javascript -->
+    <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
+<%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
+    
+<%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
+    <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
+     <%--<script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script> --%>
+</head>
+<body>
+<%@ include file = "/WEB-INF/views/headerNav.jsp" %>
 
  <!-- SellerModify -->
     <section id="signup" class="section">
@@ -11,7 +35,7 @@
             <div class="signup">
                 <div class="signup__form-div">
                     <h2 class="signup__title">Bean2B 비즈니스 회원 정보를 수정해주세요.</h2> 
-                    <form id="signup__form" method="post" action="sellerModifyChange">
+                    <form id="signup__form" enctype="multipart/form-data" method="post" action="sellerModifyChange">
                         <label for="new-userId" class="signup__label">
                             <i class="fa-regular fa-envelope"></i>
                             <input
@@ -83,13 +107,11 @@
                                 placeholder="주소를 입력해주세요."
                             />
                         </label>
-                        <input type="file" class="fileInput" />
+                        <input type="file" class="fileInput" name="sellerImg"/>
                         <div class="signup__button-div">
-                            <button class="signup__button" id="signup-button" type="submit">수정</button>
+                            <button class="signup__button" type="submit" name="action" value="sellerModifyChange">수정</button>
+                            <button class="signup__button" type="submit" name="action" value="previousPage">취소</button>
                         </div>
-                    </form>
-                    <form method="get" action="myPageSeller">
-	                	<button class="signup__button" id="signup-button">취소</button>
                     </form>
                 </div>
             </div>
@@ -97,3 +119,5 @@
     </section>
 
 <%@ include file = "/WEB-INF/views/footer.jsp" %>
+</body>
+</html>

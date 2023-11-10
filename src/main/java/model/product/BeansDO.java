@@ -7,25 +7,17 @@ public class BeansDO {
 	private String sellerEmail;
 	private int categoryNum;
 	private String beanName;
-	private int beanPrice;
+	private long beanPrice;
 	private String beanImg;
 	private String descript;
-	private int deliveryCharge;
+	private long deliveryCharge;
 	private int likeCount;
 	private String deadline;
 	private int goalQty;
-	private int goalPrice;
+	private long goalPrice;
 	private int statusNumber;
 	private int beanTotalSellCount;
-	private String beanThumbnail;
-	private String categoryName;
 	
-	public String getCategoryName() {
-		return categoryName;
-	}
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
 	public int getBeansNum() {
 		return beansNum;
 	}
@@ -56,10 +48,10 @@ public class BeansDO {
 	public void setBeanName(String beanName) {
 		this.beanName = beanName;
 	}
-	public int getBeanPrice() {
+	public long getBeanPrice() {
 		return beanPrice;
 	}
-	public void setBeanPrice(int beanPrice) {
+	public void setBeanPrice(long beanPrice) {
 		this.beanPrice = beanPrice;
 	}
 	public String getBeanImg() {
@@ -74,10 +66,10 @@ public class BeansDO {
 	public void setDescript(String descript) {
 		this.descript = descript;
 	}
-	public int getDeliveryCharge() {
+	public long getDeliveryCharge() {
 		return deliveryCharge;
 	}
-	public void setDeliveryCharge(int deliveryCharge) {
+	public void setDeliveryCharge(long deliveryCharge) {
 		this.deliveryCharge = deliveryCharge;
 	}
 	public int getLikeCount() {
@@ -98,10 +90,10 @@ public class BeansDO {
 	public void setGoalQty(int goalQty) {
 		this.goalQty = goalQty;
 	}
-	public int getGoalPrice() {
+	public long getGoalPrice() {
 		return goalPrice;
 	}
-	public void setGoalPrice(int goalPrice) {
+	public void setGoalPrice(long goalPrice) {
 		this.goalPrice = goalPrice;
 	}
 	public int getStatusNumber() {
@@ -116,10 +108,4 @@ public class BeansDO {
 	public void setBeanTotalSellCount(int beanTotalSellCount) {
 		this.beanTotalSellCount = beanTotalSellCount;
 	}
-	public String getBeanThumbnail() {
-		return beanThumbnail;
-	}
-	public void setBeanThumbnail(String beanThumbnail) {
-		this.beanThumbnail = beanThumbnail;
-	}	
 }

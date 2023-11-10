@@ -140,6 +140,7 @@ button:focus {
     font-weight: bold;
 }
 .myPageInfo__button {
+	display: flex;
     margin-left: auto;
 }
 
@@ -175,13 +176,17 @@ button:focus {
     left: 0;
     bottom: 0;
     width: 0;
-    height: 2px;
+    height: 1px;
     background-color: var(--color-darkbrown);
     transition: width 0.5s; 
 }
   
 .myPageNav__button:hover::before, .myPageNav__button:focus::before {
     width: 100%; 
+}
+.active {
+	border-bottom: 1.5px solid var(--color-darkbrown);
+	
 }
   
   
@@ -194,7 +199,7 @@ button:focus {
 /* myPageLike */
 #myPageLike {
     background-color: var(--color-beige);
-    visibility: hidden;
+   	display: block;
 }
 
 .myPageLike__title {
@@ -266,7 +271,7 @@ button:focus {
 /* myPagePurchase */
 #myPagePurchase {
     background-color: var(--color-beige);
-    visibility: hidden;
+    display: none;
 }
 
 .myPagePurchase__title {
@@ -331,7 +336,7 @@ button:focus {
 /* myPagePurchase */
 #myPagePurchaseGroup {
     background-color: var(--color-beige);
-    visibility: hidden;
+    display: none;
 }
 
 .myPagePurchaseGroup__title {
