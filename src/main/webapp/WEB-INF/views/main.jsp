@@ -20,6 +20,7 @@
     <!-- Javascript -->
     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
 	<script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script>
+	 <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script>
     <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
      <%--<script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script> --%>
@@ -82,14 +83,14 @@
         </div>
 
     </section>
-    <!-- Category 버튼 꾸미기?? -->
+    <!-- Category -->
 
     <section id="mainCategory" class="section">
        <div class="max-container">
         <h1 class="mainCategory__title">Category</h1>
             	<div id="categoryList" class="mainCategory" >
                     <c:forEach items="${categoryList}" var="categoryDO" >
-        			<div class="mainCategory__detail">
+        			<div class="mainCategory__detail" id="${categoryDO.categoryNum}">
         				<img alt="" class="mainCategory__detailImg" src="${categoryDO.categoryImg}" />
         				<p class="mainCategory__detailTitle">${categoryDO.categoryName}</p>
         			</div>
@@ -120,7 +121,7 @@
             </div>
  	         <div class="mainBeanBest__button">
  	         	<h2 class="mainBeanBest__buttonTitle">더 많은 원두를 보려면?</h2>
- 	         	<form method="get" action="goProdcutList">
+ 	         	<form method="get" action="goProductList">
  	         	    <button class="mainBeanBest__plusButton"><i class="fa-solid fa-angles-right"></i></button>	
  	         	</form>
 
