@@ -23,6 +23,8 @@ import model.cart.CartDTO;
 import model.member.SellerDAO;
 import model.product.BeansDAO;
 import model.product.BeansDO;
+import model.product.CartBeans;
+import model.product.CartDO;
 import model.product.LikeBeans;
 import model.service.ImgUpload;
 import model.service.LikeService;
@@ -216,8 +218,9 @@ public class ProductController {
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 		
 		// cart 추가
-		cartDAO.addItem(sessionBuyer, bean, cartDTO.getQty());	   
-	    return "productList";
+		cartDAO.addItem(sessionBuyer, bean, cartDTO.getQty());
+		model.addAttribute("cart", cartDAO.getCartList(sessionBuyer));
+	    return "cart";
 	 }
 
 	
@@ -321,6 +324,7 @@ public class ProductController {
 
 
 	//장바구니에 담기
+	/*
 	@PostMapping("/addCart")
 	public String addCart(HttpSession session, 
 						 Model model,
@@ -332,13 +336,16 @@ public class ProductController {
 		
 		return "redirect:/cart";
 	}
+	*/
 
 	// 장바구니로 이동
-	@PostMapping("/cart")
+	@GetMapping("/cart")
 	public String goCart(HttpSession session, Model model){
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 		
-		model.addAttribute("cart", cartDAO.getCartList(sessionBuyer));
+		ArrayList<CartBeans> cartList = cartDAO.getCartList(sessionBuyer);
+		
+		model.addAttribute("cart", cartList);
 
 		return "cart";
 	}
