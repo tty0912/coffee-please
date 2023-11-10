@@ -132,7 +132,7 @@
     </section>
 
 
-<!-- <script>
+<<script>
     function categoryHandler () {
         document.querySelector('#sorting').submit();
     }
@@ -161,7 +161,7 @@
 
     }
     window.addEventListener('load', init);
-</script> -->
+</script>
 <%@ include file="/WEB-INF/views/footer.jsp"%>
 </body>
 </html>

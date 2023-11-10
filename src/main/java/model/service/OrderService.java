@@ -23,8 +23,9 @@ public class OrderService {
 
 
     // 상품 즉시 구매
-    public boolean onlyOnePayment(int beansNum, int qty, String buyerEmail) throws SQLException {
+    public OrderProductDO onlyOnePayment(int beansNum, int qty, String buyerEmail) throws SQLException {
 
+        OrderProductDO orderProductDO = new OrderProductDO();
         BeansDO bean = beansDAO.getBean(beansNum);
         long totalPrice = 0;
 
@@ -44,9 +45,12 @@ public class OrderService {
             insertOrderProductDAO(buyerPoint, totalPrice, buyerEmail);
             insertOrderProductDetailDAO(buyerEmail, beansNum, qty);
 
-            return true;
+            orderProductDO.setBeforeOrderPoint(buyerPoint);
+            orderProductDO.setOrderTotalPrice(totalPrice);
+
+            return orderProductDO;
         }
-        else return false;
+        else return null;
     }
 
     //여러상품  결제

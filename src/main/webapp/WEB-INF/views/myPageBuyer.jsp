@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
     <script type="module" src="${pageContext.request.contextPath }/js/active.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
@@ -100,12 +101,12 @@
         <div class="max-container">	
         		<h2 class="myPagePurchase__title">구매한 내역을 확인해보세요!</h2> 
             	<div class="myPagePurchase">
-            		<c:forEach items="${orderList}" var="OrderProductDO">
+            		<c:forEach items="${orderList}" var="orderLists">
                 		<div class="myPagePurchase__product">
-                    		
+                            <img class="myPagePurchase__productImg" src="${orderLists.beansDO.beanImg}" alt="buyerImg" />
                     		<div class="myPagePurchase__productInfo">
-                        		<p class="myPagePurchase__productName">${OrderProductDO.orderDatetime}</p>
-                        		<p class="myPagePurchase__productPrice">${OrderProductDO.orderTotalPrice}</p>
+                        		<p class="myPagePurchase__productName">${orderLists.orderProductDO.orderDatetime}</p>
+                        		<p class="myPagePurchase__productPrice">${orderLists.orderProductDO.orderTotalPrice}원</p>
                     		</div>
                     		<button class="myPagePurchase__detail"><i class="fa-solid fa-heart"></i></button>
                 		</div>
