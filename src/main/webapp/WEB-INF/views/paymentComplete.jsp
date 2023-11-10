@@ -30,7 +30,7 @@
 <%@ include file = "/WEB-INF/views/headerNav.jsp" %>
 
 <<!-- Cart -->
-    <section id="cart" class="section">
+    <section id="cart" >
         <div class="max-container">
             <div class="cart">
                 <h2 class="signup__title">상품 결제가 완료되었습니다.</h2> 

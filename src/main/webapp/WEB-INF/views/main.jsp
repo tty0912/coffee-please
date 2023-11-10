@@ -19,6 +19,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
+    <script>
+    	let loginResult = '${login}';
+    </script>
 	<script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script>
     <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
      <%--<script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
@@ -72,11 +75,11 @@
                             </label>
                             <div class="mainIntro__loginFormButton">
                                 <button id="loginButton" class="mainIntro__loginButton" type="submit" name="action" value="login">로그인</button>
-                                <button class="mainIntro__loginButton" type="submit" name="action" value="signup">회원가입</button>
+                                <button class="mainIntro__loginButton " type="submit" name="action" value="signup">회원가입</button>
                             </div>
                         </form>
                     </div>
-                     <div class="loginErrorMsg" id="loginMsg"></div>
+                   <div class="loginErrorMsg" id="loginMsg"></div>
                 </div>
             </div>
         </div>
