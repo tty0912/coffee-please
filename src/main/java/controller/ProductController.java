@@ -1,38 +1,32 @@
 //package main.java.controller;
 package controller;
-import java.io.File;
 import java.io.IOException;
-import java.net.http.HttpRequest;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Enumeration;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSession;
 
-
-
-import model.cart.CartDAO;
-import model.service.ImgUpload;
-
-
-import model.service.LikeService;
-import model.service.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+import model.cart.CartDAO;
+import model.cart.CartDTO;
+import model.member.SellerDAO;
 import model.product.BeansDAO;
 import model.product.BeansDO;
-import model.member.SellerDAO;
-import model.product.*;
+import model.product.LikeBeans;
+import model.service.ImgUpload;
+import model.service.LikeService;
+import model.service.OrderService;
 /*
  * 	구매자 메서드
  * 	1) GET	|	/goProdcutList		->	mainLoginBuyer, mainLoginSeller랑 각각 설정? -> productList.jsp
@@ -111,7 +105,7 @@ public class ProductController {
 							  HttpSession session, HttpServletRequest request) throws SQLException {
 
 		// 상품 목록을 가져오는 기본 메서드
-		System.out.println(sort + ":" + search + ":" + categoryNum);
+		//System.out.println(sort + ":" + search + ":" + categoryNum);
         ArrayList<BeansDO> beansList = beansDAO.sortedPage(sort, search, Integer.parseInt(categoryNum));
 
 		// 페이징 처리를 위한 전체 상품 수 계산
@@ -213,14 +207,49 @@ public class ProductController {
 // *  4) POST	|	/payment			->	상세 페이지에서 결제 누르면 바로이동 -> payment.jsp
 	//결제페이지로 이동
 	@PostMapping("/cartOrPayment")
-	public String payment(@RequestParam("beansNum") int beansNum,
-						  @RequestParam("qty") int qty,
+	 public String payment(CartDTO cartDTO,
+	        HttpSession session,
+	        Model model) throws SQLException {
+		 System.out.println(cartDTO.toString());
+		 
+		BeansDO bean = beansDAO.getBean(cartDTO.getBeansNum());
+		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+		
+		// cart 추가
+		cartDAO.addItem(sessionBuyer, bean, cartDTO.getQty());	   
+	    return "productList";
+	 }
+	
+	/*
+	@PostMapping("/cartOrPayment")
+	 public String payment(@RequestBody String beansNum,
+			 @RequestBody String qty,
+	        HttpSession session,
+	        Model model) throws SQLException {
+	  System.out.println(Integer.parseInt(beansNum));
+	  System.out.println(Integer.parseInt(qty));
+	  
+	   BeansDO bean = beansDAO.getBean(Integer.parseInt(beansNum));
+	   String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+	   cartDAO.addItem(sessionBuyer, bean, Integer.parseInt(qty));
+
+	    return "goProductList";
+	  
+
+	 }
+	 */
+	/*
+	@PostMapping("/cartOrPayment")
+	public String payment(@RequestParam("beansNum") String beansNum,
+						  @RequestParam("qty") String qty,
 						  @RequestParam("action") String action,
 						  HttpSession session,
 						  Model model) throws SQLException {
 		System.out.println(beansNum);
+		System.out.println(action);
+		System.out.println(qty);
 		if(action.equals("onePayment")){
-			BeansDO bean = beansDAO.getBean(beansNum);
+			BeansDO bean = beansDAO.getBean(Integer.parseInt(beansNum));
 			model.addAttribute(bean);
 			model.addAttribute(qty);
 
@@ -228,9 +257,10 @@ public class ProductController {
 		}
 		else if (action.equals("cart")){
 
-			BeansDO bean = beansDAO.getBean(beansNum);
+			BeansDO bean = beansDAO.getBean(Integer.parseInt(beansNum));
 			String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
-			cartDAO.addItem(sessionBuyer, bean, qty);
+			cartDAO.addItem(sessionBuyer, bean, Integer.parseInt(qty));
+			System.out.println("----------------------------");
 
 				return "goProductList";
 		}
@@ -238,6 +268,7 @@ public class ProductController {
 			return "error";
 		}
 	}
+	*/
 
 
 	//즉시 결제
@@ -266,12 +297,23 @@ public class ProductController {
 
 
 	//장바구니에 담기
+	@PostMapping("/addCart")
+	public String addCart(HttpSession session, 
+						 Model model,
+						 @RequestParam("beansNum") int beansNum,
+						 @RequestParam("qty") int qty) {
+		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+		
+		cartDAO.addItem(sessionBuyer, beans, qty);
+		
+		return "redirect:/cart";
+	}
 
-
-// 장바구니로 이동
-	@GetMapping("/goCart")
+	// 장바구니로 이동
+	@PostMapping("/cart")
 	public String goCart(HttpSession session, Model model){
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+		
 		model.addAttribute("cart", cartDAO.getCartList(sessionBuyer));
 
 		return "cart";

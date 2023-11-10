@@ -30,7 +30,7 @@
 <body>
 <%@ include file = "/WEB-INF/views/headerNav.jsp" %>
      <!-- Category -->
-    <%@ include file = "/WEB-INF/views/category.jsp" %>
+    <%@ include file = "/WEB-INF/views/category.jsp" %> 
 
     <!--productList  -->
     <section id="productList" class="section">
@@ -138,7 +138,7 @@
     }
 
     function prodDetail2Handler(that) {
-        // alert('div가 눌려졌음');
+        //alert('div가 눌려졌음');
 
         let beans = that.getAttribute('id');
         // alert(beans);
