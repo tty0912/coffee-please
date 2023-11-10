@@ -212,17 +212,33 @@ public class ProductController {
 	 public String payment(CartDTO cartDTO,
 	        HttpSession session,
 	        Model model) throws SQLException {
-		 System.out.println(cartDTO.toString());
+		 //System.out.println(cartDTO.toString());
 		 
 		BeansDO bean = beansDAO.getBean(cartDTO.getBeansNum());
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 		
 		// cart 추가
+		int totalPrice = cartDAO.totalPrice(sessionBuyer);
+		
+		System.out.println(totalPrice);
+		
+		
 		cartDAO.addItem(sessionBuyer, bean, cartDTO.getQty());
+		model.addAttribute("totalPrice", totalPrice);
 		model.addAttribute("cart", cartDAO.getCartList(sessionBuyer));
 	    return "cart";
 	 }
 	
+	@PostMapping("/cart")
+	public String deleteItem (@RequestParam(name = "beansNum") int beansNum, HttpSession session, Model model) {
+		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+		BeansDO bean = beansDAO.getBean(beansNum);
+		System.out.println("번호: " + beansNum);
+		
+		cartDAO.deleteItem(sessionBuyer, bean);
+		model.addAttribute("cart", cartDAO.getCartList(sessionBuyer));
+		return "redirect:/cart";
+	}
 	/*
 	@PostMapping("/cartOrPayment")
 	 public String payment(@RequestBody String beansNum,
@@ -273,7 +289,7 @@ public class ProductController {
 	}
 	*/
 
-
+	
 	//즉시 결제
 	@PostMapping("/")
 	public String payment1(@RequestParam("beansNum") int beansNum,
@@ -289,8 +305,8 @@ public class ProductController {
 		}
 		return null;
 	}
+	
 
-	//장바구니 결제
 
 
 // *  5) POST	|	/paymentComplete	->	결제 완료시 -> paymentComplete.jsp
