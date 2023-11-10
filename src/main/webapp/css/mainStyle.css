@@ -263,6 +263,25 @@ input[type='radio']:checked {
     margin-top: 2rem;
 }
 
+  
+  .error {
+    border: 1px solid red;
+   }
+   
+   @keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+  .error .login__icon {
+    color: red;
+    border: none;
+    animation: shake 0.5s ease-in-out;
+  }
+  
+
 
 /* Category */
 
@@ -478,6 +497,14 @@ input[type='radio']:checked {
 .productList__sort {
     color: var(--color-darkgreen);
     font-size: 1rem;
+}
+
+.productList__sort:hover {
+	color: var(--color-darkbrown);
+}
+
+.productActive {
+	color:  var(--color-darkbrown);
 }
 
 .productList__search {

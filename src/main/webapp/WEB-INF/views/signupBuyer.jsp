@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
     <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-   	<script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script>
+   	<script type="module" src="${pageContext.request.contextPath }/js/signupBuyer.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
@@ -38,7 +38,7 @@
                 <div class="signup__form-div">
                     <h2 class="signup__title">Bean2B 구매자 회원 가입을 진행합니다.</h2> 
                     <h4 class="signup__description">맛있는 커피를 찾고 계신가요? 커피도시 부산의 신선한 원두로 여러분을 기다리고 있습니다.</h4> 
-                    <form id="signup__form" >
+                    <form method="post" action="signupBuyer" id="signupBuyer__form" class="signup__form">
                         <label for="new-userId" class="signup__label">
                             <i class="fa-regular fa-envelope signup__icon"></i>
                             <input
