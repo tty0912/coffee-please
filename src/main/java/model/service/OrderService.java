@@ -29,7 +29,7 @@ public class OrderService {
         long totalPrice = 0;
 
         // 일반 상품 구매 시
-        if(bean.getDeadline().isEmpty()){
+        if(bean.getDeadline() == null){
             totalPrice = bean.getBeanPrice() * qty;
         }
         // 공동 구매 상품 구매시
@@ -37,7 +37,7 @@ public class OrderService {
             totalPrice = bean.getGoalPrice() * qty;
         }
         long buyerPoint = checkPoint(buyerEmail);
-
+        
         if(buyerPoint >= totalPrice){
             movePoint(bean.getSellerEmail(), buyerEmail, totalPrice);
 

@@ -66,7 +66,7 @@
                         </div>
                         <div class="productListDetail__button">
                             <button class="productListDetail__cart" id="cart">장바구니</button>
-                            <button class="productListDetail__pay" id="onePayment">바로구매</button>
+                            <button class="productListDetail__pay" id="buyNow">바로구매</button>
                         </div>
                     </div>
                 <form method="post" id="hiddenForm">
