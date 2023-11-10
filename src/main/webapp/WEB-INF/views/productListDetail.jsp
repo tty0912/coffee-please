@@ -60,7 +60,7 @@
                         <div class="cartProductInfo__QtyDiv">
                             <button class="cartProductInfo__QtyButton"><i class="fa-solid fa-plus"></i></button>
                             <label>
-                                <input type="number" name="qty" class="cartProductInfo__QtyText"/>
+                                <input type="number" name="qty" class="cartProductInfo__QtyText" value="1" min="1" max="999"/>
                             </label>
                             <button class="cartProductInfo__QtyButton"><i class="fa-solid fa-minus"></i></button>
                         </div>
