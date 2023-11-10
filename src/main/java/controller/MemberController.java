@@ -238,6 +238,20 @@ public class MemberController {
 		
 		return "myPageBuyer";
 	}
+
+
+	// 구매 내역 상세보기
+	@PostMapping("/paymentDetail")
+	public String paymentDetail(@RequestParam("orderDatetime") String orderDatetime, HttpSession session, Model model) {
+		
+		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
+		
+		model.addAttribute("bean", orderProductDetailDAO.getOrderProductDetailList(sessionBuyer, orderDatetime));
+		
+		
+		return "paymentDetail";
+	}
 	
 //	// 로그아웃  		확인하고 지우기 가영
 //		@GetMapping("/loginAfter")
@@ -326,9 +340,6 @@ public class MemberController {
 		
 		String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
 		model.addAttribute("seller", sellerDAO.getSeller(sessionSeller));
-		
-		// 판매 중인 상품
-		
 		
 		// 판매 내역
 		

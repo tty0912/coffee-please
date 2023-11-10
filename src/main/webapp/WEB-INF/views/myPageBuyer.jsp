@@ -82,7 +82,13 @@
             	<div class="myPageLike">
             		<c:forEach items="${likeList}" var="beansDO">
                 		<div class="myPageLike__product">
-                    		<img class="myPageLike__productImg" src="${beansDO.beanImg}" alt="buyerImg" />
+                		<!-- 수정 부분 -->
+                		<form method="get" action="goListDetail">
+                			<input type="hidden" id="beansNum" name="beansNum" value="${beansDO.beansNum}" />
+                			<button>
+	                    		<img class="myPageLike__productImg" src="${beansDO.beanImg}" alt="buyerImg" />
+                			</button>
+                   		</form>
                     		<div class="myPageLike__productInfo">
                         		<p class="myPageLike__productName">${beansDO.beanName}</p>
                         		<p class="myPageLike__productPrice">${beansDO.beanPrice}</p>
@@ -103,7 +109,12 @@
             	<div class="myPagePurchase">
             		<c:forEach items="${orderList}" var="orderLists">
                 		<div class="myPagePurchase__product">
-                            <img class="myPagePurchase__productImg" src="${orderLists.beansDO.beanImg}" alt="buyerImg" />
+                			<form method="post" action="paymentDetail">
+                				<input type="hidden" id="orderDatetime" name="orderDatetime" value="${orderLists.orderProductDO.orderDatetime}">
+                				<button>
+		                            <img class="myPagePurchase__productImg" src="${orderLists.beansDO.beanImg}" alt="buyerImg" />
+                				</button>
+                			</form>
                     		<div class="myPagePurchase__productInfo">
                         		<p class="myPagePurchase__productName">${orderLists.orderProductDO.orderDatetime}</p>
                         		<p class="myPagePurchase__productPrice">${orderLists.orderProductDO.orderTotalPrice}원</p>
