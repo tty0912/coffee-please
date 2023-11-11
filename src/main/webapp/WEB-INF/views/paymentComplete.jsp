@@ -2,6 +2,7 @@
 	import="java.util.*"
     	  %>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -52,8 +53,8 @@
                 </c:forEach>
 
                 <div class="paymentCompletePrice">
-                    <p class="cartTotalPriceText">결제 금액 : <p class="cartTotalPrice">${orderList.orderTotalPrice}</p></p>
-                    <p class="cartTotalPriceText">현재 잔액 : <p class="cartTotalPrice">${orderList.beforeOrderPoint}</p></p>
+                    <p class="cartTotalPriceText">결제 금액 : <p class="cartTotalPrice"><fmt:formatNumber pattern="#,###" value="${orderList.orderTotalPrice}"/>원</p></p>
+                    <p class="cartTotalPriceText">현재 잔액 : <p class="cartTotalPrice"><fmt:formatNumber pattern="#,###" value="${orderList.beforeOrderPoint}"/>원</p></p>
                 </div>
                 <div class="paymentCompletePrice">
                     <form class="paymentCompletePrice" method="get" action="goProductList">

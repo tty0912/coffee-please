@@ -2,6 +2,7 @@
 	import="java.util.*"
     	  %>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +55,7 @@
                 </c:forEach>
 
                 <div class="cartPrice">
-                    <p class="cartTotalPriceText">합산 금액: <span id="totalPrice">${totalPrice}</span>원</p>
+                    <p class="cartTotalPriceText">합산 금액: <span id="totalPrice"><fmt:formatNumber pattern="#,###" value="${totalPrice}"/></span>원</p>
 
                     <button class="cartPayment">결제</button>
                 </div>

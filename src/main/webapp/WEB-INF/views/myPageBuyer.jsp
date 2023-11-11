@@ -2,6 +2,7 @@
 	import="java.util.*"
     	  %>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +41,7 @@
                 </div>
                 <div class="myPageInfo__po-mo">
                     <div class="myPageInfo__pointDiv">
-                        <p class="myPageInfo__balance">${buyer.point}</p>
+                        <p class="myPageInfo__balance"><fmt:formatNumber pattern="#,###" value="${buyer.point}"/></p>
                         <p class="myPageInfo__point">point</p>
                     </div>
                     <div class="myPageInfo__button">
@@ -91,7 +92,7 @@
                    		</form>
                     		<div class="myPageLike__productInfo">
                         		<p class="myPageLike__productName">${beansDO.beanName}</p>
-                        		<p class="myPageLike__productPrice">${beansDO.beanPrice}</p>
+                        		<p class="myPageLike__productPrice"><fmt:formatNumber pattern="#,###" value="${beansDO.beanPrice}"/></p>
                     		</div>
                     		<form method="get" action="like">
                                 <input type="hidden" name="sort" value="myPage">
@@ -117,7 +118,7 @@
                 			</form>
                     		<div class="myPagePurchase__productInfo">
                         		<p class="myPagePurchase__productName">${orderLists.orderProductDO.orderDatetime}</p>
-                        		<p class="myPagePurchase__productPrice">${orderLists.orderProductDO.orderTotalPrice}원</p>
+                        		<p class="myPagePurchase__productPrice"><fmt:formatNumber pattern="#,###" value="${orderLists.orderProductDO.orderTotalPrice}"/>원</p>
                     		</div>
                     		<button class="myPagePurchase__detail"><i class="fa-solid fa-heart"></i></button>
                 		</div>

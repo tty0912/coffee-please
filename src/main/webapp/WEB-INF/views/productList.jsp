@@ -2,6 +2,7 @@
 	import="java.util.*"
     	  %>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,7 +77,7 @@
                         <img class="productList__productImg" src="${bean.beansDO.beanImg}" alt="">
                         <div class="productList__productText">
                             <p class="productList__productTitle">${bean.beansDO.beanName}</p>
-                            <p class="productList__productPrice">${bean.beansDO.beanPrice}원</p>
+                            <p class="productList__productPrice"><fmt:formatNumber pattern="#,###" value="${bean.beansDO.beanPrice}"/>원</p>
 
                            <c:choose>
                                <c:when test="${not empty buyerEmail}">
@@ -160,14 +161,6 @@
     function init() {
         document.querySelector('#category').addEventListener('change', categoryHandler);
         document.querySelector('#beansTable').addEventListener('click', prodDetailHandler);
-        if (event.target.classList.contains('productList__sort')) {
-            // 'clicked' 클래스를 추가하여 색상 변경
-            event.target.classList.add('clicked');
-        }
-        
-        // prodDetail2Handler 함수 호출
-        prodDetail2Handler(event.currentTarget);
-    });
     }
     window.addEventListener('load', init);
 </script>

@@ -2,6 +2,7 @@
 	import="java.util.*"
     	  %>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +42,7 @@
 
                 <div class="paymentPrice">
                     <p class="cartTotalPriceText">합산 금액 :</p>
-                    <p class="cartTotalPrice">${beansDO.beanPrice * qty}</p>
+                    <p class="cartTotalPrice"><fmt:formatNumber pattern="#,###" value="${beansDO.beanPrice * qty}"/>원</p>
                 </div>
                 <div class="paymentPrice">
                     <button class="cartPayment" id="cancel">취소</button>
