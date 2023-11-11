@@ -33,25 +33,23 @@
     <section id="cart" class="section">
         <div class="max-container">
             <div class="cart" id="cartList">
-                <h2 class="cartTitle">님의 장바구니</h2>
-                <c:forEach items="${cart}" var="cart" varStatus="index">
+                <h2 class="cartTitle">${buyer.nickname}님의 장바구니</h2>
+                <c:forEach items="${cart}" var="cartList" varStatus="index">
 
                 	<div class="cartProduct" id="checkBoxes">
-                    	<input type="checkbox" class="cartProduct__check" id="checkBox${index.count}" value="${cart.beansDO.beanPrice}" data-index="${index.count}"/>          
-                    	<img class="cartProduct__img" src="${cart.beansDO.beanImg}" alt="">
+                    	<input type="checkbox" class="cartProduct__check" id="checkBox${index.count}" value="${cartList.beansDO.beanPrice}" data-index="${index.count}" checked/>
+                    	<img class="cartProduct__img" src="${cartList.beansDO.beanImg}" alt="">
                     	<div class="cartProductInfo">
-                        	<p class="cartProductInfo__Name">${cart.beansDO.beanName}</p>
+                        	<p class="cartProductInfo__Name">${cartList.beansDO.beanName}</p>
                         	<div class="cartProductInfo__QtyDiv" id="qtyBtn">
                             	<button class="cartProductInfo__plus cartProduct__check" id="plus${index.count}" data-index="${index.count}" disabled><i class="fa-solid fa-plus"></i></button>
-                            	<span class="qty cartProduct__check">${cart.cartDO.qty}</span>개
+                            	<span class="qty cartProduct__check">${cartList.cartDO.qty}</span>개
                             	<button class="cartProductInfo__minus cartProduct__check" id="minus${index.count}" data-index="${index.count}" disabled><i class="fa-solid fa-minus"></i></button>
                         	</div>
-                        	<p class="cartProductInfo__price">${cart.beansDO.beanPrice}</p>
+                        	<p class="cartProductInfo__price">${cartList.beansDO.beanPrice}</p>
                     	</div>
-                    	<form method="POST" type="hidden" id="hiddenForm" action="/deleteItem">
-                    	<input type="hidden" name="beansNum" value="${cart.beansDO.beansNum}" />
-                    	<button type="submit" class="cartProductInfo__delete" id="delete${index.count}" data-index="${index.count}" data-beans-num="${cart.beansDO.beansNum}"><i class="fa-solid fa-trash"></i></button>
-                    	</form>
+                        <input type="hidden" name="beansNum" id="num" value="${cartList.beansDO.beansNum}" />
+                    	<button type="submit" class="cartProductInfo__delete" id="delete${index.count}" data-index="${index.count}" data-beans-num="${cartList.beansDO.beansNum}"><i class="fa-solid fa-trash"></i></button>
                 	</div>
                 </c:forEach>
 
