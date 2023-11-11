@@ -1,6 +1,14 @@
 let totalPrice = document.querySelector('#totalPrice');
 let sum = totalPrice.innerHTML * 1;
 function clickHandler(e) {
+
+	if (e.target.className === 'fa-solid fa-trash'){
+		if (confirm('장바구니에서 삭제 하시겠습니까?')) {
+			let beansNum = document.querySelector('#num').getAttribute('value')
+			location.href = '/coffee/deleteItem?beansNum=' + beansNum;
+		}
+	}
+
 	if (e.target.nodeName !== 'BUTTON') {
 		return;
 	}
@@ -23,19 +31,25 @@ function clickHandler(e) {
 		}
 	}
 
+
+
 	document.querySelector('#totalPrice').innerHTML = sum;
 
-	if (e.target.classList.contains('cartProductInfo__delete')) {
+	if (e.target.classList.contains('cartProductInfo__delete') ) {
         if (confirm('장바구니에서 삭제 하시겠습니까?')) {
-            let hiddenForm = document.querySelector('#hiddenForm');
+            // let hiddenForm = document.querySelector('#hiddenForm');
 
-            if (hiddenForm) {
-               hiddenForm.submit();
-            } else {
-                console.error('#hiddenForm이 존재하지 않습니다.');
-            }
+            // if (hiddenForm) {
+				let beansNum = document.querySelector('#num').getAttribute('value')
+				alert(beansNum)
+				location.href = '/coffee/deleteItem?beansNum=' + beansNum;
+            // } else {
+            //     console.error('#hiddenForm이 존재하지 않습니다.');
+            // }
         }
     }
+
+
 }
 
 function changeHandler(e) {
@@ -68,6 +82,11 @@ function changeHandler(e) {
 
 }
 
+function payHandler(){
+	let beansNum = document.querySelector('#num').getAttributeNames()
+	alert(beansNum)
+}
+
 function init() {
 	const cartProducts = document.querySelectorAll('.cartProduct');
 
@@ -83,6 +102,7 @@ function init() {
 		cartProduct.addEventListener('click', clickHandler);
 		cartProduct.addEventListener('change', changeHandler);
 	});
+	document.querySelector('.cartPayment').addEventListener('click', payHandler);
 }
 
 window.addEventListener('load', init);
