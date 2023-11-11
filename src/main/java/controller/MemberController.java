@@ -137,7 +137,7 @@ public class MemberController {
 
 					model.addAttribute("categoryList", beansDAO.getAllCategory());
 					model.addAttribute("bestBean", beansDAO.bestBeanArray());
-					
+					model.addAttribute("login", "true");
 					return "mainLoginSeller";
 				}
 				
@@ -171,7 +171,7 @@ public class MemberController {
 
 					model.addAttribute("categoryList", beansDAO.getAllCategory());
 					model.addAttribute("bestBean", beansDAO.bestBeanArray());
-					
+					model.addAttribute("login", "true");
 					return "mainLoginBuyer";
 				}
 				
