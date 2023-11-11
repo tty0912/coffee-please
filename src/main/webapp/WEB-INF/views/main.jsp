@@ -20,7 +20,41 @@
     <!-- Javascript -->
     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
     <script>
-    	let loginResult = '${login}';
+        let loginResult = '${login}';
+        window.onload = function (){
+
+
+            let userId = document.querySelector('#userId');
+            let userPassword = document.querySelector('#userPassword');
+            let loginMsg = document.querySelector('#loginMsg');
+            let loginLabels = document.querySelectorAll('.login__label');
+            let loginIcons = document.querySelectorAll('.login__icon');
+
+            let msg = '';
+
+            loginMsg.innerHTML = '';
+
+            loginLabels.forEach(label => label.classList.remove('error'));
+            loginIcons.forEach(icon => icon.classList.remove('error'));
+
+            console.log('userId value:', userId.value);
+            console.log('userPassword value:', userPassword.value);
+
+
+                    if (loginResult === 'fail') {
+                        msg = '<i class="fa-solid fa-triangle-exclamation"></i> 비밀번호 틀렸습니다.';
+                        userPassword.value = '';
+                        loginLabels[1].classList.add('error');
+                        loginIcons[1].classList.add('error');
+                        console.log('Error: 비밀번호 틀렸습니다.');
+                        console.log(loginResult)
+                    }
+            if (msg !== '') {
+                loginMsg.innerHTML = msg;
+
+                loginResult = ''
+            }
+        }
     </script>
 	<script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script>
 	<script type="module" src="${pageContext.request.contextPath }/js/category.js" defer></script>
