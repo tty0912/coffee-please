@@ -34,7 +34,9 @@
         <div class="max-container">
             <div class="cart">
                 <h2 class="signup__title">${buyer.buyerName}님의 구매 내역</h2>
+                <c:set var="totalPrice" value="0"/>
                 <c:forEach items="${bean}" var="beans">
+                	<c:set var="totalPrice" value="${ beans.beansDO.beanPrice * beans.orderProductDetailDO.qty }" />
                 	<div class="paymentProduct">
                     	<img class="cartProduct__img" src="${beans.beansDO.beanImg}" alt="">
                     	<div class="cartProductInfo">
@@ -48,7 +50,7 @@
                 </c:forEach>
 
                 <div class="paymentCompletePrice">
-                    <p class="cartTotalPriceText">결제 금액 : <p class="cartTotalPrice"></p></p>
+                    <p class="cartTotalPriceText">결제 금액 : <p class="cartTotalPrice">${totalPrice}</p></p>
                     <p class="cartTotalPriceText">현재 잔액 : <p class="cartTotalPrice">${buyer.point}</p></p>
                 </div>
                 <div class="paymentCompletePrice">
