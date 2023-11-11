@@ -164,15 +164,14 @@ button:focus {
     align-items: center;
     justify-items: center;
 }
-.mainIntro__loginTitle {
-    color: var(--color-darkgreen);
-    margin-bottom: 20px;
-    font-size: 1.8rem;
-}
+
 .mainIntro__login {
-    display: flex;
+    display: grid;
     padding: 1.5rem 2rem;
     box-shadow: 0 3px 10px rgb(0,0,0,0.2);
+    width: 21rem;
+    height: 20rem;
+    margin-top: 4.3rem;
 }
 .loginRadio {
     width: 16rem;
@@ -237,11 +236,23 @@ input[type='radio']:checked {
     width: 100%;
     padding: 10px;
 }
+.userImgDiv {
+     width: 10rem;
+    position: absolute;
+    
+}
+.userImg {
+        width: 10rem;
+    border-radius: 50%;
+    top: -100px;
+    position: relative;
+}
 .mainIntro__loginForm {
     display: grid;
     align-items: center;
-    gap: 1rem;
+
     justify-items: center;
+    margin-top: 2rem;
 }
 
 .mainIntro__loginFormButton{
@@ -502,6 +513,11 @@ input[type='radio']:checked {
 .productList__sort:hover {
 	color: var(--color-darkbrown);
 }
+
+.productList__sort.clicked {
+    color: var(--color-darkbrown); 
+}
+
 
 .productActive {
 	color:  var(--color-darkbrown);

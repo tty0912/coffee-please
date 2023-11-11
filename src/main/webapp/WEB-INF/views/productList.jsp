@@ -50,7 +50,7 @@
                                 <option value="9" ${param.category == '9' ? 'selected' : '' }>우간다</option>
                                 <option value="10" ${param.category == '10' ? 'selected' : '' }>베트남</option>
 						    </select>
-	                        <button class="productList__sort" name="sort" value="recent" type="submit">최신순</button>
+	                        <button class="productList__sort clicked" name="sort" value="recent" type="submit">최신순</button>
 	                        <button class="productList__sort" name="sort" value="mostLiked" type="submit">인기순</button>
 	                        <button class="productList__sort" name="sort" value="bestSelling" type="submit">판매량순</button>
 	                       	<div class="productList__search">
@@ -153,6 +153,14 @@
     function init() {
         document.querySelector('#category').addEventListener('change', categoryHandler);
         document.querySelector('#beansTable').addEventListener('click', prodDetailHandler);
+        if (event.target.classList.contains('productList__sort')) {
+            // 'clicked' 클래스를 추가하여 색상 변경
+            event.target.classList.add('clicked');
+        }
+        
+        // prodDetail2Handler 함수 호출
+        prodDetail2Handler(event.currentTarget);
+    });
     }
     window.addEventListener('load', init);
 </script>

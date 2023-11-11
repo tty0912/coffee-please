@@ -18,7 +18,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
-    <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/imgUpload.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
@@ -29,13 +30,13 @@
 <body>
 <%@ include file = "/WEB-INF/views/headerNav.jsp" %>
  <!-- registerProduct -->
-   <section id="signup" class="section">
-        <div class="max-<div class="max-container">">
-            <div class="signup">
+   <section id="signup__buyerModify" class="section">
+        <div class="max-container">"
+            <div class="signup__buyerModify">
                 <div class="signup__form-div">
                     <h2 class="signup__title">Bean2B 일반 상품 등록을 진행합니다.</h2>
                     <h4 class="signup__description">맛있는 원두를 등록해주세요!</h4>
-                    <form id="signup__form" enctype="multipart/form-data" method="post" action="registerProd">
+                    <form id="product__form" enctype="multipart/form-data" method="post" action="registerProd">
                         <label for="beanName" class="signup__label">
                             <img src="${pageContext.request.contextPath}/images/bean.png" alt="" class="bean__img signup__icon">
                             <input
@@ -74,8 +75,18 @@
                                 placeholder="배송료 입력"
                             />
                         </label>
-                        <input type="file" class="fileInput" name="beanImg" />
-                        <input type="file" class="fileInput" name="descript" />
+                        <div class="filebox">
+						    <input class="beanImg-name" value="대표이미지를 넣어주세요." placeholder="대표이미지를 넣어주세요.">
+						    <label for="beanImgFile">파일찾기</label> 
+						    <input type="file" class="fileInput" name="beanImg" id="beanImgFile"/>
+						</div>
+						
+						<div class="filebox">
+						    <input class="descript-name" value="상세설명 이미지를 넣어주세요." placeholder="상세설명 이미지를 넣어주세요.">
+						    <label for="descriptFile">파일찾기</label> 
+						    <input type="file" class="fileInput" name="descript" id="descriptFile"/>
+						</div>
+
                         <div class="signup__button-div">
                             <button class="signup__button" id="signup-button" name="action" value="cancel" type="submit">취소</button>
                             <button class="signup__button" id="signup-button" name="action" value="register" type="submit">등록</button>
