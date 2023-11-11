@@ -138,7 +138,7 @@ button:focus {
     font-size: 1.3em;
     cursor: pointer;
   }
-  
+
   .controller span:hover{
     background-color: rgba(128, 128, 128, 0.11);
   }
@@ -304,22 +304,50 @@ input[type='radio']:checked {
     color: var(--color-darkgreen);
     margin-bottom: 3rem;
 }
+#categoryList{
+    width: 1200px;
+    height: 130px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .categoryLists{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 8000px;
+    transition: left 0.5s ease-out;
+    top: 20%;
+  }
+  .categoryLists li:not(:last-child){
+    float: left;
+    margin-left: 40px;
+  }
+  .categoryLists li{
+    float: left;
+  }
 .category {
 	display: flex;
 }
+
 .mainCategory {
     display: inline-flex;
-    gap: 7rem;    
+    gap: 5rem;
+    width: 1200PX;
+    height: 130px;
+    position: relative;
+    overflow: hidden;
 }	
 
 .mainCategory__detail {
     width: 10rem;
     position: relative;
     text-align: center;
+
 }
 
 .mainCategory__detailImg {
-    width: 100%;
+    width: 120px;
     border-radius: 20px;
 }
 
@@ -335,12 +363,71 @@ input[type='radio']:checked {
     display: none; 
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 37.5%;
     transform: translate(-50%, -50%);
     color: var(--color-white);
     text-shadow:3px 3px 3px var(--color-gray);
     font-size: 2rem;
     font-weight: bold;
+}
+  #categoryPrev{
+    position:relative;
+    background-color: transparent;
+    color: black;
+    text-align: left;
+    border-radius: 50%;
+    padding: 10px 20px;
+    top: 170px;
+    font-size: 1.3em;
+    cursor: pointer;
+    left: -730px;
+    margin-left:80px;
+  }
+  
+  #categoryNext{
+	position:relative;
+    background-color: transparent;
+    color: black;
+    text-align:right;
+    border-radius: 50%;
+    padding: 10px 20px;
+    top: 170px;
+    font-size: 1.3em;
+    cursor: pointer;
+    right: -650px;
+  }
+  
+  /*
+   #categoryNext{
+    position:absolute;
+    background-color: transparent;
+    color: black;
+    text-align: center;
+    border-radius: 50%;
+    padding: 10px 20px;
+    top: 93%;
+    font-size: 1.3em;
+    cursor: pointer;
+    right: 240px;
+  }
+  
+  #categoryPrev{
+    position:absolute;
+    background-color: transparent;
+    color: black;
+    text-align: center;
+    border-radius: 50%;
+    padding: 10px 20px;
+    top: 93%;
+    font-size: 1.3em;
+    cursor: pointer;
+    left: 150px;
+    margin-left:80px;
+  }
+  */
+  
+  .mainCategory__detail:first-child{
+	margin-left: 60px;
 }
 
 /* BeanBest */
@@ -354,7 +441,6 @@ input[type='radio']:checked {
     justify-content: center;
     align-items: center;
 }
-
 .mainBeanBest__product {
     display: grid;
     width: 15rem;
@@ -472,12 +558,11 @@ input[type='radio']:checked {
     
 }
 
-
 /* productList */
 
 #listCategory {
     background-color: var(--color-beige);
-    margin-top: 105px;
+    margin-top: 90px;
 }
 
 .productList {

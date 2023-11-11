@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
+
     <script type="module" src="${pageContext.request.contextPath }/js/category.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
@@ -26,7 +27,8 @@
 </head>
 <body>
 <%@ include file = "/WEB-INF/views/headerNav.jsp" %>
-     <!-- Category -->
+	
+   <!-- Category -->
     <%@ include file = "/WEB-INF/views/category.jsp" %>
     <!--productList  -->
     <section id="productList" class="section">
@@ -75,25 +77,30 @@
                         <div class="productList__productText">
                             <p class="productList__productTitle">${bean.beansDO.beanName}</p>
                             <p class="productList__productPrice">${bean.beansDO.beanPrice}원</p>
-                            <div class="productList__likeButton">
-                            <c:choose>
-                				<c:when test="${bean.aBoolean == false}">
-                                    <form method="GET" action="like" >
-                                        <input type="hidden" name="sort" value=${sortOption}>
-                                        <input type="hidden" name="page" value=${currentPage}>
-                                        <button name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
-                                    </form>
-                				</c:when>
-                				<c:when test="${bean.aBoolean == true}">
-                                    <form method="GET" action="like">
-                                        <input type="hidden" name="sort" value=${sortOption}>
-                                        <input type="hidden" name="page" value=${currentPage}>
-                                        <button name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
-                                    </form>
-                				</c:when>
-                			</c:choose>
-                                <p class="mainBeanBest__productLikeCount">${bean.beansDO.likeCount}</p>
-                            </div>
+
+                           <c:choose>
+                               <c:when test="${not empty buyerEmail}">
+                                    <div class="productList__likeButton">
+                                    <c:choose>
+                                        <c:when test="${bean.aBoolean == false}">
+                                            <form method="GET" action="like" >
+                                                <input type="hidden" name="sort" value=${sortOption}>
+                                                <input type="hidden" name="page" value=${currentPage}>
+                                                <button name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
+                                            </form>
+                                        </c:when>
+                                        <c:when test="${bean.aBoolean == true}">
+                                            <form method="GET" action="like">
+                                                <input type="hidden" name="sort" value=${sortOption}>
+                                                <input type="hidden" name="page" value=${currentPage}>
+                                                <button name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                                            </form>
+                                        </c:when>
+                                    </c:choose>
+                                        <p class="mainBeanBest__productLikeCount">${bean.beansDO.likeCount}</p>
+                                    </div>
+                               </c:when>
+                           </c:choose>
                         </div>
                     </div>
                 </c:forEach>

@@ -20,10 +20,45 @@
     <!-- Javascript -->
     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
     <script>
-    	let loginResult = '${login}';
+        let loginResult = '${login}';
+        window.onload = function (){
+
+
+            let userId = document.querySelector('#userId');
+            let userPassword = document.querySelector('#userPassword');
+            let loginMsg = document.querySelector('#loginMsg');
+            let loginLabels = document.querySelectorAll('.login__label');
+            let loginIcons = document.querySelectorAll('.login__icon');
+
+            let msg = '';
+
+            loginMsg.innerHTML = '';
+
+            loginLabels.forEach(label => label.classList.remove('error'));
+            loginIcons.forEach(icon => icon.classList.remove('error'));
+
+            console.log('userId value:', userId.value);
+            console.log('userPassword value:', userPassword.value);
+
+
+                    if (loginResult === 'fail') {
+                        msg = '<i class="fa-solid fa-triangle-exclamation"></i> 비밀번호 틀렸습니다.';
+                        userPassword.value = '';
+                        loginLabels[1].classList.add('error');
+                        loginIcons[1].classList.add('error');
+                        console.log('Error: 비밀번호 틀렸습니다.');
+                        console.log(loginResult)
+                    }
+            if (msg !== '') {
+                loginMsg.innerHTML = msg;
+
+                loginResult = ''
+            }
+        }
     </script>
 	<script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script>
-	 <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script>
+	<script type="module" src="${pageContext.request.contextPath }/js/category.js" defer></script>
+	<script type="module" src="${pageContext.request.contextPath }/js/bestBean.js" defer></script>
     <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
      <%--<script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script> --%>
@@ -91,52 +126,10 @@
 
     </section>
     <!-- Category -->
-
-    <section id="mainCategory" class="section">
-       <div class="max-container">
-        <h1 class="mainCategory__title">Category</h1>
-            	<div id="categoryList" class="mainCategory" >
-                    <c:forEach items="${categoryList}" var="categoryDO" >
-        			<div class="mainCategory__detail" id="${categoryDO.categoryNum}">
-        				<img alt="" class="mainCategory__detailImg" src="${categoryDO.categoryImg}" />
-        				<p class="mainCategory__detailTitle">${categoryDO.categoryName}</p>
-        			</div>
-        			</c:forEach>
-            	</div>
-        </div>
-        <button id="prevBtn"> <<<< </button>
-        <button id="nextBtn"> >>>> </button>
-    </section>
-    <!-- Category -->
-    <%@ include file = "/WEB-INF/views/category.jsp" %>
+	<%@ include file = "/WEB-INF/views/category.jsp" %> 
     <!-- BeanBest -->
-    <section id="mainBeanBest" class="section">
-         <div class="max-container">
-        <h1 class="mainBeanBest__title">Best</h1>
-            <div class="mainBeanBest">
-  				<c:forEach items="${bestBean}" var="beansDO" >
-                    <div class="mainBeanBest__product">
-                    	<img src="" alt="" class="beanBest__number">
-        				<img src="${beansDO.beanImg}"  alt="" class="mainBeanBest__productImg" >
-        				<div class="likeButton">
-                        	<button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
-                        	<p class="mainBeanBest__productLikeCount">${beansDO.likeCount}</p>
-                    	</div>
-                    </div>
-
-    			</c:forEach>
-            </div>
- 	         <div class="mainBeanBest__button">
- 	         	<h2 class="mainBeanBest__buttonTitle">더 많은 원두를 보려면?</h2>
- 	         	<form method="get" action="goProductList">
- 	         	    <button class="mainBeanBest__plusButton"><i class="fa-solid fa-angles-right"></i></button>	
- 	         	</form>
-
-            </div>
-        </div>
-    </section>
+    <%@ include file = "/WEB-INF/views/bestBean.jsp" %>
     
-
     
 <%@ include file = "/WEB-INF/views/footer.jsp" %>
 </body>
