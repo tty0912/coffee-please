@@ -1,4 +1,23 @@
-
+function categoryFontSizeHanlder(){
+	
+	let categoryFontSize = document.querySelectorAll('.mainCategory__detailTitle');
+	
+	for(let i=0;i<categoryFontSize.length;i++){
+		let textLength = categoryFontSize[i].textContent.length;
+		
+		if(textLength < 4 ){
+			
+			categoryFontSize[i].style.fontSize = '1.6rem';
+		}
+		else if(textLength >= 4 && textLength <5 ){
+			
+			categoryFontSize[i].style.fontSize = '1.5rem';
+		}
+		else{
+			categoryFontSize[i].style.fontSize = '1.2rem';
+		}
+	}
+}
 
 function showCategoryHandler() {
     let categoryList = document.querySelectorAll('.mainCategory__detail');
@@ -66,7 +85,7 @@ function init(){
 	
 	let nextBtn = document.querySelector('#categoryNextBtn');
 	let prevBtn = document.querySelector('#categoryPrevBtn');
-
+	
 	category.forEach(categoryElement => {
     categoryElement.addEventListener('click', getCategoryHandler);
 	});
@@ -76,9 +95,9 @@ function init(){
 	nextBtn.addEventListener('click', nextBtnHandler);
 	prevBtn.addEventListener('click', prevBtnHandler);
 	
-	
+
 		}
 		
 window.addEventListener('load', init);
-
+categoryFontSizeHanlder();
 showCategoryHandler();
