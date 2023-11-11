@@ -306,12 +306,13 @@ public class MemberController {
 		String action = multi.getParameter("action");
 
 		BuyerDO buyer = new BuyerDO();
+		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 
 		if(action.equals("buyerModifyChange")) {
 
 			String[] img = imgUpload.saveImg(multi, directory);
 
-			String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+
 			buyer.setBuyerEmail(sessionBuyer);
       
       String buyerImg = "/coffee/registerData/buyerData/buyer/" + img[0];
@@ -326,6 +327,7 @@ public class MemberController {
 		}
 		else if(action.equals("previousPage")) {
 
+			model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
 			return "redirect:/myPageBuyer";
 		}
 		
@@ -377,12 +379,13 @@ public class MemberController {
 		String action = multi.getParameter("action");
 
 		SellerDO seller = new SellerDO();
+		String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
 
 		if(action.equals("sellerModifyChange")) {
 
 			String[] img = imgUpload.saveImg(multi, directory);
 
-			String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
+
 			seller.setSellerEmail(sessionSeller);
       
 			String sellerImg = "/coffee/registerData/sellerData/seller/" + img[0];
@@ -400,7 +403,8 @@ public class MemberController {
 			return "myPageSeller";
 		}
 		else if(action.equals("previousPage")) {
-			
+
+			model.addAttribute("seller", sellerDAO.getSeller(sessionSeller));
 		    return "redirect:/myPageSeller";
 		}		
 		return "error";

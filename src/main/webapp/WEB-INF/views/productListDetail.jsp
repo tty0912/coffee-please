@@ -2,6 +2,7 @@
 	import="java.util.*"
     	  %>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -62,7 +63,7 @@
                 </div>
                     <div class="productListDetail__topRight">
                         <p class="productListDetail__beanName">${ productListDetail.beansDO.beanName }</p>
-                        <p class="productListDetail__deliveryPrice">${ productListDetail.beansDO.beanPrice }원</p>
+                        <p class="productListDetail__deliveryPrice"><fmt:formatNumber pattern="#,###" value="${productListDetail.beansDO.beanPrice}"/>원</p>
 
                         <c:choose>
                             <c:when test="${not empty buyerEmail}">
