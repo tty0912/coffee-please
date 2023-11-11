@@ -47,8 +47,11 @@
                     </div>
                 </div>
                 <div class="mainIntro__loginAll">
-                    <h2 class="mainIntro__loginTitle">Login</h2>
+                    
                     <div class="mainIntro__login">
+                    	<div class="userImgDiv">
+                            <img src="images/test1.jpg" alt="" class="userImg">
+                        </div>
                         <form id="loginForm" class="mainIntro__loginForm" method="post" action="mainLogin">
                             <div class="loginRadio">
                                 <input type="radio" name="user" value="buyer" checked/><label class="radioLabel">구매자</label>
@@ -80,8 +83,9 @@
                                 <button class="mainIntro__loginButton " type="submit" name="action" value="signup">회원가입</button>
                             </div>
                         </form>
+                        <div class="loginErrorMsg" id="loginMsg"></div>
                     </div>
-                   <div class="loginErrorMsg" id="loginMsg"></div>
+                   
                 </div>
             </div>
         </div>

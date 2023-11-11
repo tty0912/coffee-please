@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
-    <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
+	<script type="module" src="${pageContext.request.contextPath }/js/userImgUpload.js" defer></script> 
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
@@ -107,7 +107,11 @@
                                 placeholder="주소를 입력해주세요."
                             />
                         </label>
-                        <input type="file" class="fileInput" name="sellerImg"/>
+                        <div class="filebox">
+						    <input class="beanImg-name" value="대표이미지를 넣어주세요." placeholder="대표이미지를 넣어주세요.">
+						    <label for="beanImgFile">파일찾기</label> 
+						    <input type="file" class="fileInput" name="sellerImg" id="beanImgFile"/>
+						</div>
                         <div class="signup__button-div">
                             <button class="signup__button" type="submit" name="action" value="sellerModifyChange">수정</button>
                             <button class="signup__button" type="submit" name="action" value="previousPage">취소</button>
