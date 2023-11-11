@@ -250,7 +250,6 @@ public class MemberController {
 		
 		model.addAttribute("bean", orderProductDetailDAO.getOrderProductDetailList(sessionBuyer, orderDatetime));
 		
-		
 		return "paymentDetail";
 	}
 	
