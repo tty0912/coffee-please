@@ -20,57 +20,45 @@
     <!-- Javascript -->
     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/popup.js" defer></script>
-    <script>
-        let loginResult = '${login}';
-        window.onload = function (){
-
-
-            let userId = document.querySelector('#userId');
-            let userPassword = document.querySelector('#userPassword');
-            let loginMsg = document.querySelector('#loginMsg');
-            let loginLabels = document.querySelectorAll('.login__label');
-            let loginIcons = document.querySelectorAll('.login__icon');
-
-            let msg = '';
-
-            loginMsg.innerHTML = '';
-
-            loginLabels.forEach(label => label.classList.remove('error'));
-            loginIcons.forEach(icon => icon.classList.remove('error'));
-
-            console.log('userId value:', userId.value);
-            console.log('userPassword value:', userPassword.value);
-
-            if (loginResult === 'fail1') {
-                msg = '<i class="fa-solid fa-triangle-exclamation"></i> 해당 아이디가 존재하지 않습니다.';
-                userId.value = '';
-                loginLabels[0].classList.add('error');
-                loginIcons[0].classList.add('error');
-                console.log('Error: 비밀번호 틀렸습니다.');
-                console.log(loginResult)
-            }
-            else if (loginResult === 'fail2') {
-                        msg = '<i class="fa-solid fa-triangle-exclamation"></i> 비밀번호 틀렸습니다.';
-                        userPassword.value = '';
-                        loginLabels[1].classList.add('error');
-                        loginIcons[1].classList.add('error');
-                        console.log('Error: 비밀번호 틀렸습니다.');
-                        console.log(loginResult)
-                    }
-                    
-            if (msg !== '') {
-                loginMsg.innerHTML = msg;
-
-                loginResult = ''
-            }
-        }
-    </script>
-	<script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script>
 	<script type="module" src="${pageContext.request.contextPath }/js/category.js" defer></script>
 	<script type="module" src="${pageContext.request.contextPath }/js/bestBean.js" defer></script>
-    <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
-     <%--<script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
-    <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script> --%>
+    <script>
+    let loginResult = '${login}';
+    window.onload = function (){
+        let userId = document.querySelector('#userId');
+        let userPassword = document.querySelector('#userPassword');
+        let loginMsg = document.querySelector('#loginMsg');
+        let loginLabels = document.querySelectorAll('.login__label');
+        let loginIcons = document.querySelectorAll('.login__icon');
+        let msg = '';
+        loginMsg.innerHTML = '';
+        loginLabels.forEach(label => label.classList.remove('error'));
+        loginIcons.forEach(icon => icon.classList.remove('error'));
+        console.log('userId value:', userId.value);
+        console.log('userPassword value:', userPassword.value);
+        if (loginResult === 'fail1') {
+            msg = '<i class="fa-solid fa-triangle-exclamation"></i> 해당 아이디가 존재하지 않습니다.';
+            userId.value = '';
+            loginLabels[0].classList.add('error');
+            loginIcons[0].classList.add('error');
+            console.log('Error: 비밀번호 틀렸습니다.');
+            console.log(loginResult)
+        }
+        else if (loginResult === 'fail2') {
+                    msg = '<i class="fa-solid fa-triangle-exclamation"></i> 비밀번호 틀렸습니다.';
+                    userPassword.value = '';
+                    loginLabels[1].classList.add('error');
+                    loginIcons[1].classList.add('error');
+                    console.log('Error: 비밀번호 틀렸습니다.');
+                    console.log(loginResult)
+                }
+        if (msg !== '') {
+            loginMsg.innerHTML = msg;
+            loginResult = ''
+        }
+    }
+    </script>
 </head>
 <body>
 <%@ include file = "/WEB-INF/views/headerNav.jsp" %>
