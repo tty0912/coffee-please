@@ -305,7 +305,7 @@ public class ProductController {
 
 		
 		beanList.add(beansQty);
-		orderProductDO.setBeforeOrderPoint(orderProductDO.getBeforeOrderPoint() - orderProductDO.getOrderTotalPrice());
+		orderProductDO.setBeforeOrderPoint(orderProductDO.getBeforeOrderPoint());
 
 		model.addAttribute("beansList", beanList);
 		model.addAttribute("orderList", orderProductDO);
@@ -372,7 +372,7 @@ public class ProductController {
 	@PostMapping("/registerProd")
 	public String resisterProduct(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
 
-		String directory = "C:\\Users\\Jun\\Desktop\\finalProject/coffee-please/src/main/webapp/registerData/sellerData/beans";
+		String directory = "C:\\Users\\은식\\Desktop/coffee-please/src/main/webapp/registerData/sellerData/beans";
 		int sizeLimit = 1024 * 1024 * 5;
 
 		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
@@ -457,8 +457,13 @@ public class ProductController {
 	// 상품 정보 수정하기로 이동
 	@GetMapping("/productModify")
 	public String productModify(@RequestParam("beansNum") int beansNum, Model model, HttpSession session){
-
-		model.addAttribute("bean", beansDAO.getBean(beansNum));
+		BeansDO beansDO= beansDAO.getBean(beansNum);
+		String categoryName = beansDAO.getCategoryName(beansDO.getCategoryNum());
+		
+		System.out.println("categoryName" + categoryName);
+		
+		model.addAttribute("bean", beansDO);
+		model.addAttribute("cname", categoryName);
 
 		return "productModify";
 	}

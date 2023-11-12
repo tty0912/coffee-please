@@ -78,6 +78,8 @@ public class BeansDAO {
 			rs = this.pstmt.executeQuery();
 
 			if (rs.next()) {
+				
+				beans.setCategoryNum(rs.getInt("category_num"));
 				beans.setSellerEmail(rs.getString("seller_email"));
 				beans.setBeanName(rs.getString("bean_name"));
 				beans.setBeanPrice(rs.getLong("bean_price"));
