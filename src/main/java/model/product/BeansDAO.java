@@ -585,17 +585,19 @@ public class BeansDAO {
 	// 상품 정보 수정하기
 	public int modifyBeans(BeansDO beansDO) {
 		int rowCount = 0;
-		this.sql = "update beans set bean_name = ?, bean_price = ?, "
-				+ "delivery_charge =?, bean_img = ?, descript = ? where beans_num = ?";
+		this.sql = "update beans set bean_name = ?, bean_price = ?, category_num = ?, "
+				+ "delivery_charge = ?, bean_img = ?, descript = ? "
+				+ "where beans_num = ?";
 		try {
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, beansDO.getBeanName());
 			pstmt.setLong(2, beansDO.getBeanPrice());
-			pstmt.setLong(3, beansDO.getDeliveryCharge());
-			pstmt.setString(4, beansDO.getBeanImg());
-			pstmt.setString(5, beansDO.getDescript());
-			pstmt.setInt(6, beansDO.getBeansNum());
+			pstmt.setInt(3, beansDO.getCategoryNum());
+			pstmt.setLong(4, beansDO.getDeliveryCharge());
+			pstmt.setString(5, beansDO.getBeanImg());
+			pstmt.setString(6, beansDO.getDescript());
+			pstmt.setInt(7, beansDO.getBeansNum());
 			rowCount = pstmt.executeUpdate();
 
 		} catch (Exception e) {

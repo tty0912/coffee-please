@@ -78,7 +78,9 @@
                         		<p class="myPageLike__productPrice">${beansDO.beanPrice}원</p>
                     		</div>
                             <form method="get" action="productModify">
-                              <button name="beansNum" value="${beansDO.beansNum}" class="myPageLike__hate"><i class="fa-solid fa-heart"></i></button>
+                            <input type="hidden" name="beansNum" value="${beansDO.beansNum }" />
+                             <button type="submit" class="myPageLike__hate">
+                             <i class="fa-solid fa-heart"></i></button>
                             </form>
                 		</div>
                 	</c:forEach>
@@ -126,8 +128,7 @@
     <div class="myPageSources">
         출처 <a href="https://kr.freepik.com/free-vector/flat-design-profile-icon-set_29332702.htm#query=%EC%82%AC%EC%9A%A9%EC%9E%90&position=4&from_view=search&track=sph">Freepik</a>
     </div>
-<<script>
-
+<script>
 
     function sellListHandler(that) {
         //alert('div가 눌려졌음');
@@ -149,7 +150,7 @@
 
     function init() {
         document.querySelector('#sellList').addEventListener('click', sellListHandler);
-
+        
     }
     window.addEventListener('load', init);
 </script>

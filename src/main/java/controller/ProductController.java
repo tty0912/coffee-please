@@ -15,6 +15,7 @@ import model.product.BeansQty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -379,8 +380,8 @@ public class ProductController {
 	// 일반 상품 등록
 	@PostMapping("/registerProd")
 	public String resisterProduct(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
-
-		String directory = "D:/multicampus_project/coffee//coffee-please/src/main/webapp/registerData/sellerData/beans";
+		String directory = "C:/Users/jsseo/git/coffee-please/src/main/webapp/registerData/sellerData/beans";
+		//String directory = "D:/multicampus_project/coffee//coffee-please/src/main/webapp/registerData/sellerData/beans";
 		int sizeLimit = 1024 * 1024 * 5;
 
 		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
@@ -461,7 +462,7 @@ public class ProductController {
 
 		}
 	}
-
+/*
 	// 상품 정보 수정하기
 	@GetMapping("/productModify")
 	public String productModify(@RequestParam("beansNum") int beansNum, Model model, HttpSession session){
@@ -470,6 +471,66 @@ public class ProductController {
 
 		return "productModify";
 	}
+*/
+	
+	@GetMapping("/productModify")
+	public String productModify(@RequestParam("beansNum") String beansNum, Model model,  HttpServletRequest request) {
+		
+		model.addAttribute("bean", beansDAO.getBean(Integer.parseInt(beansNum)));
+		
+		return "productModify";
+	}
+	
+	
+	// 상품 정보 수정하기
+	@PostMapping("/doProductModify")
+	public String doProductModify(
+			@ModelAttribute BeansDO command,
+			Model model, 
+			HttpServletRequest request, HttpServletResponse response, 
+			HttpSession session, String[] img) 
+			throws ServletException, IOException {
+		
+		String directory = "C:/Users/jsseo/git/coffee-please/src/main/webapp/registerData/sellerData/beans" ;
+		//String directory = "D:/multicampus_project/coffee//coffee-please/src/main/webapp/registerData/sellerData/beans";
+			int sizeLimit = 1024 * 1024 * 5;
+			
+			MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
+					"UTF-8", new DefaultFileRenamePolicy());
 
-}
+			//int categoryNum = Integer.parseInt(multi.getParameter("categoryNum"));
+
+			String action = multi.getParameter("action");
+			if (action != null && action.equals("doProductModify")) {
+				
+				String sellerEmail = String.valueOf(session.getAttribute("sellerEmail"));
+				String beansNum = multi.getParameter("beansNum");
+				String beanName = multi.getParameter("beanName");
+				String categoryNum = multi.getParameter("categoryNum");
+				int beanPrice = Integer.parseInt(multi.getParameter("beanPrice"));
+				int deliveryCharge = Integer.parseInt(multi.getParameter("deliveryCharge"));
+								
+				img = imgUpload.saveImg(multi, directory);
+				
+				String beanImg = "/coffee/registerData/sellerData/beans/" + img[1];  
+				String descript = "/coffee/registerData/sellerData/beans/"+ img[0];  
+				
+				
+				command.setCategoryNum(Integer.parseInt(categoryNum));
+				command.setBeansNum(Integer.parseInt(beansNum));
+				command.setSellerEmail(sellerEmail);
+				command.setBeanName(beanName);
+				command.setBeanPrice(beanPrice);
+				command.setDeliveryCharge(deliveryCharge);
+				command.setBeanImg(beanImg);
+				command.setDescript(descript);
+
+				beansDAO.modifyBeans(command);
+				
+				
+			}
+			return "redirect:/myPageSeller";
+		}
+	}
+
 

@@ -35,7 +35,9 @@
         <div class="signup__form-div">
             <h2 class="signup__title">Bean2B 일반 상품 수정을 진행합니다.</h2>
             <h4 class="signup__description">수정 가능한 부분을 수정해주세요!</h4>
-            <form id="signup__form" enctype="multipart/form-data" method="post" action="registerProd">
+            <!-- <form id="signup__form" enctype="multipart/form-data" method="post" action="registerProd"> -->
+            <form id="signup__form" enctype="multipart/form-data" method="post" action="${pageContext.request.contextPath}/doProductModify">
+				<input type="hidden" name="beansNum" value="${bean.beansNum}" />
                 <label for="beanName" class="signup__label">
                     <img src="${pageContext.request.contextPath}/images/bean.png" alt="" class="bean__img signup__icon">
                     <input
@@ -44,6 +46,7 @@
                             id="beanName"
                             name="beanName"
                             placeholder="상품 이름 입력"
+                            value="${bean.beanName}"
                     />
                 </label>
                 <label for="beanPrice" class="signup__label">
@@ -54,13 +57,24 @@
                             id="beanPrice"
                             name="beanPrice"
                             placeholder="상품 가격 입력"
+                            value="${bean.beanPrice}"
                     />
                 </label>
                 <label for="cName" class="signup__label">
                     <i class="fa-solid fa-flag-checkered signup__icon"></i>
                     <select class="signup__input" name="categoryNum">
                         <option value="0">원산지를 선택해주세요.</option>
-                        <option value="1">베트남</option>
+                        <option value="1">대한민국</option>
+                        <option value="2">벨기에</option>
+                        <option value="3">덴마크</option>
+                        <option value="4">프랑스</option>
+                        <option value="5">인도</option>
+                        <option value="6">인도네시아</option>
+                        <option value="7">스페인</option>
+                        <option value="8">핀란드</option>
+                        <option value="9">노르웨이</option>
+                        <option value="10">체코</option>
+                        
                     </select>
                 </label>
                 <label for="deliveryCharge" class="signup__label">
@@ -71,13 +85,14 @@
                             id="deliveryCharge"
                             name="deliveryCharge"
                             placeholder="배송료 입력"
+                            value="${bean.deliveryCharge}"
                     />
                 </label>
                 <input type="file" class="fileInput" name="beanImg" />
                 <input type="file" class="fileInput" name="descript" />
                 <div class="signup__button-div">
                     <button class="signup__button" id="signup-button" name="action" value="cancel" type="submit">취소</button>
-                    <button class="signup__button" id="signup-button" name="action" value="register" type="submit">등록</button>
+                    <button class="signup__button" id="signup-button" name="action" value="doProductModify" type="submit">수정</button>
                 </div>
             </form>
         </div>
