@@ -41,6 +41,7 @@
 
                 </div>
                     <div class="productListDetail__topRight">
+
                     	<h3 class="productListDetail__topTitle">상품정보</h3>
 	                    <table class="productListDetail__table">
 	                        <tr>

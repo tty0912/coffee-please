@@ -23,7 +23,7 @@
                 </c:when>
                 <c:when test="${not empty buyerEmail}">
                     <li class="header__cart">
-                        <a class="header__menu__item" href="${pageContext.request.contextPath}/cart">
+                        <a class="header__menu__item" href="${pageContext.request.contextPath}/cartOrPayment">
                             <i class="fa-solid fa-cart-shopping"></i>
                         </a>
                     </li>
