@@ -21,6 +21,7 @@
 
     <script type="module" src="${pageContext.request.contextPath }/js/category.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/popupSeller2.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/like.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
     <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
@@ -56,23 +57,8 @@
             <div class="productList">
                 <div class="productList__sortSerch">
                     <div class="productList__sortDiv">
-                        <span class="productList__sortText">정렬 :</span>
                         <form action="goProductList" method="GET" id="sorting" class="goProductList">
 	                        <div>
-	                    		<label for="category">카테고리:</label>	
-								<select id="category" name="category">
-	                                <option value="0" ${param.category == '0' ? 'selected' : '' }>전체</option>
-	                                <option value="1" ${param.category == '1' ? 'selected' : '' }>브라질</option>
-	                                <option value="2" ${param.category == '2' ? 'selected' : '' }>콜롬비아</option>
-	                                <option value="3" ${param.category == '3' ? 'selected' : '' }>에티오피아</option>
-	                                <option value="4" ${param.category == '4' ? 'selected' : '' }>온두라스</option>
-	                                <option value="5" ${param.category == '5' ? 'selected' : '' }>인도</option>
-	                                <option value="6" ${param.category == '6' ? 'selected' : '' }>인도네시아</option>
-	                                <option value="7" ${param.category == '7' ? 'selected' : '' }>멕시코</option>
-	                                <option value="8" ${param.category == '8' ? 'selected' : '' }>페루</option>
-	                                <option value="9" ${param.category == '9' ? 'selected' : '' }>우간다</option>
-	                                <option value="10" ${param.category == '10' ? 'selected' : '' }>베트남</option>
-							    </select>
 		                        <button class="productList__sort clicked" name="sort" value="recent" type="submit">최신순</button>
 		                        <button class="productList__sort" name="sort" value="mostLiked" type="submit">인기순</button>
 		                        <button class="productList__sort" name="sort" value="bestSelling" type="submit">판매량순</button>
@@ -95,11 +81,28 @@
                 <div id="beansTable" class="productList__productDiv">
                 <c:forEach items="${beansList}" var="bean">
                     <div id=${bean.beansDO.beansNum} class="productList__product" onclick="let that = this; prodDetail2Handler(that)">
-                        <img class="productList__productImg" src="${bean.beansDO.beanImg}" alt="">
+                    	<img class="productList__productImg" src="${bean.beansDO.beanImg}" alt="">
                         <div class="productList__productText">
-                            <p class="productList__productTitle">${bean.beansDO.beanName}</p>
-                            <p class="productList__productPrice"><fmt:formatNumber pattern="#,###" value="${bean.beansDO.beanPrice}"/>원</p>
-
+                            <table class="productList__table">
+                                <tr>
+                                    <th class="productList__productTitle">상품명 </th>
+                                    <td class="productList__productTitle">${bean.beansDO.beanName}</td>
+                                </tr>
+                                <tr>
+                                    <th class="productList__productPrice">가격 </th>
+                                    <td class="productList__productPrice"><fmt:formatNumber pattern="#,###" value="${bean.beansDO.beanPrice}"/>원</td>
+                                </tr>
+                                <tr>
+                                    <th class="productList__productDelivery">배송비</th>
+                                    <td class="productList__productDelivery">Free </td>
+                                </tr>
+                                <tr>
+                                    <th class="productList__productCategory">원산지</th>
+                                    <td class="productList__productCategory">???</td>
+                                </tr>
+                            </table>
+                            
+                        </div>
                            <c:choose>
                                <c:when test="${not empty buyerEmail}">
                                     <div class="productList__likeButton">
@@ -108,14 +111,14 @@
                                             <form method="GET" action="like" >
                                                 <input type="hidden" name="sort" value=${sortOption}>
                                                 <input type="hidden" name="page" value=${currentPage}>
-                                                <button name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
+                                                <button id="likeButton" name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
                                             </form>
                                         </c:when>
                                         <c:when test="${bean.aBoolean == true}">
                                             <form method="GET" action="like">
                                                 <input type="hidden" name="sort" value=${sortOption}>
                                                 <input type="hidden" name="page" value=${currentPage}>
-                                                <button name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                                                <button id="likeButton" name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
                                             </form>
                                         </c:when>
                                     </c:choose>
@@ -123,12 +126,12 @@
                                     </div>
                                </c:when>
 	                           <c:when test="${not empty sellerEmail}">
-	                            <div class="productList__likeButton">
-                                    <button id="sellerLikeButton" name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
-                                    <p class="mainBeanBest__productLikeCount">${bean.beansDO.likeCount}</p>
-                               	</div>
-	                        </c:when>
-	                    </c:choose>
+		                           	<div class="productList__likeButton">
+			                            <button id="sellerLikeButton" name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+			                            <p class="product__productLikeCount">${bean.beansDO.likeCount}</p>
+			                        </div>
+		                        </c:when>
+		                    </c:choose>
                         </div>
                     </div>
                 </c:forEach>
