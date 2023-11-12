@@ -35,7 +35,9 @@
         <div class="modify__form-div">
             <h2 class="signup__title">Bean2B 일반 상품 수정을 진행합니다.</h2>
             <h4 class="signup__description">수정 가능한 부분을 수정해주세요!</h4>
-            <form id="modify__form" enctype="multipart/form-data" method="post" action="registerProd">
+
+            <form id="signup__form" enctype="multipart/form-data" method="post" action="setStatus">
+
                 <label for="beanName" class="signup__label">
                     <img src="${pageContext.request.contextPath}/images/bean.png" alt="" class="bean__img signup__icon">
                     <input

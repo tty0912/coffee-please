@@ -456,7 +456,7 @@ public class ProductController {
 		}
 	}
 
-	// 상품 정보 수정하기
+	// 상품 정보 수정하기로 이동
 	@GetMapping("/productModify")
 	public String productModify(@RequestParam("beansNum") int beansNum, Model model, HttpSession session){
 
@@ -464,6 +464,46 @@ public class ProductController {
 
 		return "productModify";
 	}
+	
+	// 상품 정보 수정
+	@PostMapping("/setStatus")
+	public String setStatus(@RequestParam("action") String action,
+							@RequestParam("beansNum") int beansNum,
+							@RequestParam("status") int status) {
+		
+		
+		
+		if(action.equals("register")) {
+			if(status==0) {
+				beansDAO.beansRestore(beansNum);
+				
+			} else if(status==1) {
+				beansDAO.beansSoldout(beansNum);
+			}
+		}
+		else if(action.equals("cancel")) {
+			
+			return "redirect:/myPageSeller";
+		}
+		
+		return "redirect:/myPageSeller";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
 
