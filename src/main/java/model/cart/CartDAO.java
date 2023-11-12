@@ -120,6 +120,7 @@ public class CartDAO {
 				cart = new CartDO();
 				beansDO = new BeansDO();
 
+				beansDO.setBeansNum(rs.getInt("beans_num"));
 				beansDO.setBeanName(rs.getString("bean_name"));
 	            beansDO.setBeanPrice(rs.getInt("bean_price"));
 	            beansDO.setBeanImg(rs.getString("bean_img"));
@@ -151,20 +152,10 @@ public class CartDAO {
 	}
 	
 	// 장바구니 상품 총 금액
-	public int totalPrice(String buyerEmail) {
-		ArrayList<CartBeans> cartList = getCartList(buyerEmail);
+	public Long totalPrice(BeansDO beansDO, int qty) {
+		Long qtyL = (long) qty;
+		return beansDO.getBeanPrice() * qtyL;
 		
-		int total = 0;
-		
-		 for (CartBeans cart : cartList) {
-		        BeansDO beansDO = cart.getBeansDO();
-				CartDO cartDO = cart.getCartDO();
-		        int qty = cartDO.getQty();
-		        double price = beansDO.getBeanPrice();
-
-		        total += price * qty;
-		    }
-		return total;
 	}
 	
 	// 결제 후 장바구니 비우기 (결제 완료에서 메서드 호출)
@@ -193,5 +184,34 @@ public class CartDAO {
 			}
 		}
 	    return rowCount;
+	}
+	
+	// 상품 여부 조회
+	public boolean checkItem(String buyerEmail, int beansNum) {
+		int rowCount = 0;
+		this.sql = "select * from cart where buyer_email = ? and beans_num = ?";
+		
+		try {
+	        this.pstmt = conn.prepareStatement(this.sql);
+	        this.pstmt.setString(1, buyerEmail);
+	        this.pstmt.setInt(2, beansNum);
+
+	        rowCount = this.pstmt.executeUpdate();
+	    }
+	    catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (!this.pstmt.isClosed()) {
+					this.pstmt.close();
+				}
+			} 
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+		
+		return rowCount == 0 ? false : true;
 	}
 }
