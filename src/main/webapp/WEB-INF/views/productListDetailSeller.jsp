@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
-    <script type="module" src="${pageContext.request.contextPath }/js/productDetail.js" defer></script> 
+    <%-- <script type="module" src="${pageContext.request.contextPath }/js/productDetail.js" defer></script> --%>
     <script type="module" src="${pageContext.request.contextPath }/js/popupSeller.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
@@ -27,6 +27,7 @@
     <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
      <%--<script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script> --%>
+    
 </head>
 <body>
 <%@ include file = "/WEB-INF/views/headerNav.jsp" %>
@@ -38,29 +39,7 @@
                 <div class="productListDetail__topLeft">
                     <img src="${productListDetail.beansDO.beanImg}" alt="" class="productListDetail__img">
 
-                    <c:choose>
-                        <c:when test="${not empty buyerEmail}">
-                            <div class="productListDetail__likeButton">
-                                <c:choose>
-                                    <c:when test="${productListDetail.aBoolean == false}">
-                                        <form method="get" action="like">
-                                            <input type="hidden" name="sort" value="detail">
-                                            <button name="beansNum" value="${productListDetail.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
-                                        </form>
-                                    </c:when>
-                                    <c:when test="${productListDetail.aBoolean == true}">
-                                        <form method="get" action="like">
-                                            <input type="hidden" name="sort" value="detail">
-                                            <button name="beansNum" value="${productListDetail.beansDO.beansNum}" class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
-                                        </form>
-                                    </c:when>
-                                </c:choose>
-
-                                <p class="mainBeanBest__productLikeCount">${productListDetail.beansDO.likeCount}</p>
-                            </div>
-                        </c:when>
-                    </c:choose>
-
+                    
 
                 </div>
                     <div class="productListDetail__topRight">
@@ -91,43 +70,14 @@
 			                     <button class="cartProductInfo__QtyButton" id="decrease"><i class="fa-solid fa-minus"></i></button>
 					        </div>
 	                        <div class="productListDetail__button">
-	                                <c:choose>
-				                        <c:when test="${not empty buyerEmail}">
-				                        	<button class="productListDetail__pay" id="buyNow">BUY NOW</button>
-				                            <div class="productListDetail__button-div">
-				                                <button class="productListDetail__cart" id="cartbuyer">CART</button>
-					                            <div class="productListDetailDetail__likeButton">
-					                                <c:choose>
-					                                    <c:when test="${productListDetail.aBoolean == false}">
-					                                        <form method="get" action="like">
-					                                            <input type="hidden" name="sort" value="detail">
-					                                            <button name="beansNum" value="${productListDetail.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
-					                                        </form>
-					                                    </c:when>
-					                                    <c:when test="${productListDetail.aBoolean == true}">
-					                                        <form method="get" action="like">
-					                                            <input type="hidden" name="sort" value="detail">
-					                                            <button name="beansNum" value="${productListDetail.beansDO.beansNum}" class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
-					                                        </form>
-					                                    </c:when>
-					                                </c:choose>
-					                                <p class="prodductListDetail__productLikeCount">${productListDetail.beansDO.likeCount}</p>
-					                            </div>
-				                            </div>
-				                        </c:when>
-				                        <c:when test="${not empty sellerEmail}">
 				                        	<button class="productListDetail__pay" id="buyNowSeller">BUY NOW</button>
 				                            <div class="productListDetail__button-div">
-				                                <button class="productListDetail__cart" id="cartSeller">CART</button>
-					                            <div class="productListDetailDetail__likeButton">
+				                                <button class="productListDetail__cart" id="buyNowSeller">CART</button>
+					                            <div class="productListDetail__likeButton">
 					                                <button id="sellerLikeButton" name="beansNum" value="${productListDetail.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
 					                                <p class="prodductListDetail__productLikeCount">${productListDetail.beansDO.likeCount}</p>
 					                            </div>
 				                            </div>
-				                        </c:when>
-				                    </c:choose>
-	                            
-	                            
 	                        </div>
 	                    </div>
                 <form method="post" id="hiddenForm" action="/coffee/cartOrPayment">

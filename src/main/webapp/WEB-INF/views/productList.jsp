@@ -20,6 +20,7 @@
     <!-- Javascript -->
 
     <script type="module" src="${pageContext.request.contextPath }/js/category.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/popupSeller2.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
     <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
@@ -122,7 +123,13 @@
                                         <p class="mainBeanBest__productLikeCount">${bean.beansDO.likeCount}</p>
                                     </div>
                                </c:when>
-                           </c:choose>
+	                           <c:when test="${not empty sellerEmail}">
+	                            <div class="productList__likeButton">
+                                    <button id="sellerLikeButton" name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
+                                    <p class="mainBeanBest__productLikeCount">${bean.beansDO.likeCount}</p>
+                               	</div>
+	                        </c:when>
+	                    </c:choose>
                         </div>
                     </div>
                 </c:when>
@@ -183,7 +190,7 @@
     // }
     function init() {
         document.querySelector('#category').addEventListener('change', categoryHandler);
-        document.querySelector('#beansTable').addEventListener('click', prodDetailHandler);
+        /* document.querySelector('#beansTable').addEventListener('click', prodDetailHandler); */
     }
     window.addEventListener('load', init);
 </script>

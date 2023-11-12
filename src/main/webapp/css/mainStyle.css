@@ -773,7 +773,7 @@ input[type='radio']:checked {
 .productListDetail__img {
     width: 30rem;
 }
-.productListDetail__likeButton{
+.productListDetailDetail__likeButton{
     margin-left: 1rem;
     display: flex;
     align-items: center;
@@ -783,7 +783,7 @@ input[type='radio']:checked {
     width: 6.5rem;
     border: 2px solid var(--color-gray);
 }
-.productListDetail__likeButton:hover, .productListDetail__cart:hover {
+.productListDetailDetail__likeButton:hover, .productListDetail__cart:hover {
     border: none;
 }
 .prodductListDetail__productLikeCount {
