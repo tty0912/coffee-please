@@ -1,3 +1,4 @@
+
 function cartHandler() {
     	let qty1 = document.querySelector('.cartProductInfo__QtyText');
     	let hiddenForm = document.querySelector('#hiddenForm');
@@ -50,3 +51,4 @@ function cartHandler() {
         
     }
     window.addEventListener('load', init);
+

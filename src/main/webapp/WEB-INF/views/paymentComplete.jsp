@@ -31,19 +31,21 @@
                 <h2 class="signup__title">상품 결제가 완료되었습니다.</h2> 
                 <h4 class="signup__description">즐거운 쇼핑 되세요.</h4>
                 <c:forEach items="${beansList}" var="list">
-                    <div class="paymentProduct">
-                        <img class="cartProduct__img" src="${list.beansDO.beanImg}" alt="">
-                        <div class="cartProductInfo">
-                            <p class="cartProductInfo__Name">${list.beansDO.beanName}</p>
-                            <p class="cartProductInfo__Name">${list.qty}</p>
-                            <p class="cartProductInfo__price">${list.beansDO.beanPrice}원</p>
-                        </div>
-                    </div>
+
+                	<div class="paymentProduct">
+                    	<img class="cartProduct__img" src="${list.beansDO.beanImg}" alt="">
+                    	<div class="cartProductInfo">
+                        	<p class="cartProductInfo__Name">${list.beansDO.beanName}</p>
+                        	<p class="cartProductInfo__Name">${list.cartDO.qty}</p>
+                        	<p class="cartProductInfo__price">${list.beansDO.beanPrice}원</p>
+                    	</div>
+                	</div>
+
                 </c:forEach>
 
                 <div class="paymentCompletePrice">
                     <p class="cartTotalPriceText">결제 금액 : <p class="cartTotalPrice"><fmt:formatNumber pattern="#,###" value="${orderList.orderTotalPrice}"/>원</p></p>
-                    <p class="cartTotalPriceText">현재 잔액 : <p class="cartTotalPrice"><fmt:formatNumber pattern="#,###" value="${orderList.beforeOrderPoint}"/>원</p></p>
+                    <p class="cartTotalPriceText">주문 후 잔액 : <p class="cartTotalPrice"><fmt:formatNumber pattern="#,###" value="${orderList.beforeOrderPoint - orderList.orderTotalPrice}"/>원</p></p>
                 </div>
                 <div class="paymentCompleteButton">
                     <form id="completeForm" method="get" action="goProductList">

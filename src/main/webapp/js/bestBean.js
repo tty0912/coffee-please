@@ -1,3 +1,33 @@
+//이미지 크기 고정
+function bestBeanCenterHandler(){
+	let bestBeanCenter = document.querySelectorAll('.mainBeanBest');
+	
+	for(let i=0;i<bestBeanCenter.length;i++){
+		bestBeanCenter[i].style.margin = 'auto';	
+		}
+}
+function fixedBestBeanImgHandler(){
+	let fixedBestBeanImg = document.querySelectorAll('.mainBeanBest__productImg');
+	
+	for(let i=0;i<fixedBestBeanImg.length;i++){
+		fixedBestBeanImg[i].style.width = '150px';
+		fixedBestBeanImg[i].style.height = '120px';
+		fixedBestBeanImg[i].style.margin = 'auto';
+	
+	}
+}
+
+function fixedBestBeanFontBoxHandler(){
+	let fixedBestBeanFontBox = document.querySelectorAll('.productList__productTitle');
+	
+	for(let i=0;i<fixedBestBeanFontBox.length;i++){
+		fixedBestBeanFontBox[i].style.width = '100px';
+		fixedBestBeanFontBox[i].style.height = '69px';
+		fixedBestBeanFontBox[i].style.margin = 'auto';
+		
+	}
+}
+
 //베스트 상품 클릭하면 상품 상세로 가기
 function goBestBeanDetailHandler(event){
     let id = event.currentTarget.id;
@@ -28,6 +58,8 @@ function init(){
 	});
 }
 
-
+bestBeanCenterHandler();
+fixedBestBeanFontBoxHandler();
+fixedBestBeanImgHandler();
 bestBeansImgHandler();
 window.addEventListener('load', init);
