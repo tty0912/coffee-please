@@ -9,9 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
 import model.member.BuyerDAO;
 import model.order.OrderProductDO;
 import model.product.BeansQty;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,11 +25,13 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import model.cart.CartDAO;
 import model.cart.CartDTO;
+import model.member.BuyerDAO;
+import model.member.BuyerDO;
 import model.member.SellerDAO;
 import model.product.BeansDAO;
 import model.product.BeansDO;
+import model.product.BeansQty;
 import model.product.CartBeans;
-import model.product.CartDO;
 import model.product.LikeBeans;
 import model.service.ImgUpload;
 import model.service.LikeService;
@@ -67,7 +71,6 @@ public class ProductController {
 	private final OrderService orderService = new OrderService();
 	private final LikeService likeService = new LikeService();
 	private final BuyerDAO buyerDAO = new BuyerDAO();
-
 	
 	public ProductController() {
 	}
@@ -190,7 +193,7 @@ public class ProductController {
 // 일반 상품 상세페이지로 이동
 	@GetMapping("/goListDetail")
 	public String goListDetail(@RequestParam("beansNum") int beansNum, Model model, HttpSession session) throws SQLException {
-
+		//System.out.println("번호: " + beansNum);
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 		boolean b = likeService.checkLike(sessionBuyer, beansNum);
 
@@ -225,10 +228,19 @@ public class ProductController {
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 
 		// cart 추가
-		cartDAO.addItem(sessionBuyer, bean, cartDTO.getQty());
-		int totalPrice = cartDAO.totalPrice(sessionBuyer);
 
+		long totalPrice = cartDAO.totalPrice(bean, cartDTO.getQty());
+		
+		System.out.println("" + totalPrice);
+		
+		// bean에 해당하는 상품이 cartDAO에 있는지 체크한다
+		if(cartDAO.checkItem(sessionBuyer, cartDTO.getBeansNum())) {
+			// 있다면 제거한다.
+			cartDAO.deleteItem(sessionBuyer, bean);
+		}
+		cartDAO.addItem(sessionBuyer, bean, cartDTO.getQty());
 		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
+		model.addAttribute("checkedBeansNum", cartDTO.getBeansNum());
 		model.addAttribute("totalPrice", totalPrice);
 		model.addAttribute("cart", cartDAO.getCartList(sessionBuyer));
 	    return "cart";
@@ -249,16 +261,16 @@ public class ProductController {
 	}
 	
 
-	@GetMapping("/deleteItem")
-	public String deleteItem (@RequestParam("beansNum") int beansNum, HttpSession session, Model model) {
+
+	@PostMapping("/cart/deleteItem")
+	public String deleteItem (@RequestParam(name = "beansNum") int beansNum, HttpSession session, Model model) {
 
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 		System.out.println("번호: " + beansNum);
 		
-		cartDAO.deleteItem(sessionBuyer, beansNum);
+		cartDAO.deleteItem(sessionBuyer, bean);
+		System.out.println("삭제됨");
 
-		model.addAttribute("totalPrice", cartDAO.totalPrice(sessionBuyer));
-		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
 		model.addAttribute("cart", cartDAO.getCartList(sessionBuyer));
 		return "cart";
 	}

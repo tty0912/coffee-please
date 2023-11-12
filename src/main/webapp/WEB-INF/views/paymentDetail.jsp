@@ -2,6 +2,7 @@
 	import="java.util.*"
     	  %>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,14 +45,14 @@
                         	<div class="cartProductInfo__QtyDiv">
                             	<p class="cartProductInfo__QtyText">${beans.orderProductDetailDO.qty} 개</p>	
                         	</div>
-                        	<p class="cartProductInfo__price">${beans.beansDO.beanPrice}원</p>
+                        	<p class="cartProductInfo__price"><fmt:formatNumber pattern="#,###" value="${beans.beansDO.beanPrice}"/>원</p>
                     	</div>
                 	</div>
                 </c:forEach>
 
                 <div class="paymentCompletePrice">
-                    <p class="cartTotalPriceText">결제 금액 : <p class="cartTotalPrice">${totalPrice}</p></p>
-                    <p class="cartTotalPriceText">현재 잔액 : <p class="cartTotalPrice">${buyer.point}</p></p>
+                    <p class="cartTotalPriceText">결제 금액 : <p class="cartTotalPrice"><fmt:formatNumber pattern="#,###" value="${totalPrice}"/>원</p></p>
+                    <p class="cartTotalPriceText">현재 잔액 : <p class="cartTotalPrice"><fmt:formatNumber pattern="#,###" value="${buyer.point}"/>원</p></p>
                 </div>
                 <div class="paymentCompletePrice">
                     <button class="cartPayment">확인</button>

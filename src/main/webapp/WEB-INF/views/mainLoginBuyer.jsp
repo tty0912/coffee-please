@@ -2,6 +2,7 @@
 	import="java.util.*"
     	  %>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +55,7 @@
                              	<p class="mainIntro__loginId">${buyer.nickname } <span class="mainIntro__loginIdText">님</span></p>
                          	</div>
                          	<div class="mainIntro__buyer">
-                             	<p class="mainIntro__loginPoint">${buyer.point} <span class="mainIntro__loginPointText"> point</span></p>
+                             	<p class="mainIntro__loginPoint"><fmt:formatNumber pattern="#,###" value="${buyer.point}"/> <span class="mainIntro__loginPointText"> point</span></p>
                              	<div class="mainIntro__button">
                                 	<form method="Get" action="loginAfter">
                                   		<button class="mainIntro__AfterButton" type="submit" name="action" value="logout">로그아웃</button>

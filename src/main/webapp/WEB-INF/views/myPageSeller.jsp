@@ -2,6 +2,7 @@
 	import="java.util.*"
     	  %>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -75,7 +76,7 @@
                     		<img class="myPageLike__productImg" src="${beansDO.beanImg}" alt="buyerImg" />
                     		<div class="myPageLike__productInfo">
                         		<p class="myPageLike__productName">${beansDO.beanName}</p>
-                        		<p class="myPageLike__productPrice">${beansDO.beanPrice}원</p>
+                        		<p class="myPageLike__productPrice"><fmt:formatNumber pattern="#,###" value="${beansDO.beanPrice}"/>원</p>
                     		</div>
                             <form method="get" action="productModify">
                               <button name="beansNum" value="${beansDO.beansNum}" class="myPageLike__hate"><i class="fa-solid fa-heart"></i></button>
@@ -95,7 +96,7 @@
                     		
                     		<div class="myPagePurchase__productInfo">
                         		<p class="myPagePurchase__productName">${OrderProductDO.orderDatetime}</p>
-                        		<p class="myPagePurchase__productPrice">${OrderProductDO.orderTotalPrice}</p>
+                        		<p class="myPagePurchase__productPrice"><fmt:formatNumber pattern="#,###" value="${OrderProductDO.orderTotalPrice}"/>원</p>
                     		</div>
                     		<button class="myPagePurchase__detail"><i class="fa-solid fa-heart"></i></button>
                 		</div>
