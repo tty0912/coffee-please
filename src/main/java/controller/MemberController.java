@@ -247,28 +247,33 @@ public class MemberController {
 	// 구매 내역 상세보기
 	@PostMapping("/paymentDetail")
 	public String paymentDetail(@RequestParam("orderDatetime") String orderDatetime, HttpSession session, Model model) {
-		
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
-		
+
 		OrderProductDO order = new OrderProductDO();
-		
 		for(OrderProductDO i : orderProductDAO.getBuyerOrderList(sessionBuyer)) {
 			if(i.getOrderDatetime().equals(orderDatetime)) {
-				
 				order.setBeforeOrderPoint(i.getBeforeOrderPoint() - i.getOrderTotalPrice());
-				
+				order.setOrderTotalPrice(i.getOrderTotalPrice());
 			}
 		}
-		
 		model.addAttribute("beforeOrderPoint", order);
-		
+
 		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
-		
 		model.addAttribute("bean", orderProductDetailDAO.getOrderProductDetailList(sessionBuyer, orderDatetime));
 		model.addAttribute("order", orderProductDAO.getBuyerOrderList(sessionBuyer));
-		
+
 		return "paymentDetail";
 	}
+//	@PostMapping("/paymentDetail")
+//	public String paymentDetail(@RequestParam("orderDatetime") String orderDatetime, HttpSession session, Model model) {
+//		
+//		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+//		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
+//		
+//		model.addAttribute("bean", orderProductDetailDAO.getOrderProductDetailList(sessionBuyer, orderDatetime));
+//		
+//		return "paymentDetail";
+//	}
 	
 //	// 로그아웃  		확인하고 지우기 가영
 //		@GetMapping("/loginAfter")
