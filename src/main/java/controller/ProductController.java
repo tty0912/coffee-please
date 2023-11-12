@@ -466,14 +466,15 @@ public class ProductController {
 	}
 	
 	// 상품 정보 수정
-	@PostMapping("/setStatus")
-	public String setStatus(@RequestParam("action") String action,
-							@RequestParam("beansNum") int beansNum,
-							@RequestParam("status") int status) {
+	@GetMapping("/setStatus")
+	public String setStatus(HttpServletRequest request) {
+		
+		String command = request.getParameter("command");
+		int beansNum = Integer.parseInt(request.getParameter("beansNum"));
+		int status = Integer.parseInt(request.getParameter("statusNumber"));
 		
 		
-		
-		if(action.equals("register")) {
+		if(command.equals("register")) {
 			if(status==0) {
 				beansDAO.beansRestore(beansNum);
 				
@@ -481,7 +482,7 @@ public class ProductController {
 				beansDAO.beansSoldout(beansNum);
 			}
 		}
-		else if(action.equals("cancel")) {
+		else if(command.equals("cancel")) {
 			
 			return "redirect:/myPageSeller";
 		}
