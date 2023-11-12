@@ -49,7 +49,7 @@
                                 <option value="5" ${param.category == '5' ? 'selected' : '' }>인도</option>
                                 <option value="6" ${param.category == '6' ? 'selected' : '' }>인도네시아</option>
                                 <option value="7" ${param.category == '7' ? 'selected' : '' }>멕시코</option>
-                                <option value="8" ${param.category == '8' ? 'selected' : '' }>페루</option>
+                                <option value="8" ${param.category == '8' ? 'selected' : '' }>핀란드</option>
                                 <option value="9" ${param.category == '9' ? 'selected' : '' }>우간다</option>
                                 <option value="10" ${param.category == '10' ? 'selected' : '' }>베트남</option>
 						    </select>

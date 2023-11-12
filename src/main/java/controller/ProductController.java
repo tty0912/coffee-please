@@ -218,6 +218,7 @@ public class ProductController {
 
 // *  4) POST	|	/payment			->	상세 페이지에서 결제 누르면 바로이동 -> payment.jsp
 	//장바구니에 담기
+
 	@GetMapping("/cartOrPayment")
 	public String goCartList(HttpSession session,
 	        Model model) throws SQLException {
@@ -264,6 +265,7 @@ public class ProductController {
 	    return "cart";
 	 }
 
+
 	//하나 바로 결제
 	@PostMapping("/buyNow")
 	public String buyNow(CartDTO cartDTO, HttpSession session, Model model) throws SQLException {
@@ -279,6 +281,7 @@ public class ProductController {
 	}
 	
 
+
 /*
 	@PostMapping("/cart/deleteItem")
 	public String deleteItem (@RequestParam(name = "beansNum") int beansNum, HttpSession session, Model model) {
@@ -293,6 +296,20 @@ public class ProductController {
 		return "cart";
 	}
 */
+
+//	@PostMapping("/cart/deleteItem")
+//	public String deleteItem (@RequestParam(name = "beansNum") int beansNum, HttpSession session, Model model) {
+//
+//		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+//		System.out.println("번호: " + beansNum);
+//		
+//		cartDAO.deleteItem(sessionBuyer, bean);
+//		System.out.println("삭제됨");
+//
+//		model.addAttribute("cart", cartDAO.getCartList(sessionBuyer));
+//		return "cart";
+//	}
+
 	@PostMapping("/paymentComplete")
 	public String paymentComplete(CartDTO cartDTO , HttpSession session, Model model) throws SQLException {
 		
@@ -320,17 +337,20 @@ public class ProductController {
 	//장바구니 결제
 
 	// 장바구니로 이동
-	@GetMapping("/cart")
-	public String goCart(HttpSession session, Model model){
-		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
-		
-		ArrayList<CartBeans> cartList = cartDAO.getCartList(sessionBuyer);
 
-		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
-		model.addAttribute("cart", cartList);
-
-		return "cart";
-	}
+//	@GetMapping("/cart")
+//	public String goCart(HttpSession session, Model model){
+//		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+//		
+//		ArrayList<CartBeans> cartList = cartDAO.getCartList(sessionBuyer);
+//		int totalPrice = cartDAO.totalPrice(sessionBuyer);
+//
+//		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
+//		model.addAttribute("cart", cartList);
+//		model.addAttribute("totalPrice", totalPrice);
+//
+//		return "cart";
+//	}
 
 // 상품등록(일반, 공동) 페이지로 이동
 	@GetMapping("/goRegisterProd")
@@ -354,7 +374,7 @@ public class ProductController {
 	@PostMapping("/registerProd")
 	public String resisterProduct(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
 
-		String directory = "D:/multicampus_project/coffee//coffee-please/src/main/webapp/registerData/sellerData/beans";
+		String directory = "C:\\Users\\Jun\\Desktop\\finalProject/coffee-please/src/main/webapp/registerData/sellerData/beans";
 		int sizeLimit = 1024 * 1024 * 5;
 
 		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,

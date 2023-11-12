@@ -65,6 +65,8 @@
                         <p class="productListDetail__beanName">${ productListDetail.beansDO.beanName }</p>
 
                         <p class="productListDetail__deliveryPrice"><fmt:formatNumber pattern="#,###" value="${productListDetail.beansDO.beanPrice}"/>원</p>
+                         <c:choose>
+                            <c:when test="${not empty buyerEmail}">
                         <div class="cartProductInfo__QtyDiv">
                             <button class="cartProductInfo__QtyButton" id="increase"><i class="fa-solid fa-plus"></i></button>
                             <label>
@@ -76,6 +78,9 @@
                             <button class="productListDetail__cart" id="cart">장바구니</button>
                             <button class="productListDetail__pay" id="buyNow">바로구매</button>
                         </div>
+                               </c:when>
+                        </c:choose>
+
 
                     </div>
                 <form method="post" id="hiddenForm" action="/coffee/cartOrPayment">
