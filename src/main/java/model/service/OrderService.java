@@ -41,7 +41,7 @@ public class OrderService {
         
         if(buyerPoint >= totalPrice){
             movePoint(bean.getSellerEmail(), buyerEmail, totalPrice);
-
+            beansDAO.updateBeanTotalSellCount(beansNum, qty);
             insertOrderProductDAO(buyerPoint, totalPrice, buyerEmail);
             insertOrderProductDetailDAO(buyerEmail, beansNum, qty);
 
@@ -76,6 +76,7 @@ public class OrderService {
                 String sellerEmail = beansDAO.getBean(beansDO.getBeansNum()).getSellerEmail();
                 long price = (long) beansDO.getBeanPrice() * cartDO.getQty();
                 movePoint(sellerEmail, email, price);
+                beansDAO.updateBeanTotalSellCount(beansDO.getBeansNum(), cartDO.getQty());
                                 
             }
 	            orderProductDO.setBeforeOrderPoint(buyerPoint);
