@@ -39,7 +39,7 @@ public class SellerDAO {
             this.rs = pstmt.executeQuery();
 
             if(!rs.next()){
-                this.sql = "insert into seller (seller_email, business_name, business_num, nickname, passwd, tel, adr) values (?, ?, ?, ?, ?, ?, ?)";
+                this.sql = "insert into seller (seller_email, business_name, business_num, nickname, passwd, tel, adr, seller_img) values (?, ?, ?, ?, ?, ?, ?, ?)";
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1, seller.getSellerEmail());
                 pstmt.setString(2, seller.getBusinessName());
@@ -48,6 +48,7 @@ public class SellerDAO {
                 pstmt.setString(5, seller.getPasswd());
                 pstmt.setString(6, seller.getTel());
                 pstmt.setString(7, seller.getAddress());
+                pstmt.setString(8, seller.getSellerImg());
 
                 rowCount = pstmt.executeUpdate();
                 this.conn.commit();

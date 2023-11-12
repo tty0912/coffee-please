@@ -108,7 +108,7 @@
         <div class="max-container">	
         		<h2 class="myPagePurchase__title">구매한 내역을 확인해보세요!</h2> 
             	<div class="myPagePurchase">
-            		<c:forEach items="${orderList}" var="orderLists">
+            		<c:forEach items="${orderList}" var="orderLists" varStatus="status">
                 		<div class="myPagePurchase__product">
                 			<form method="post" action="paymentDetail">
                 				<input type="hidden" id="orderDatetime" name="orderDatetime" value="${orderLists.orderProductDO.orderDatetime}">
@@ -117,6 +117,7 @@
                 				</button>
                 			</form>
                     		<div class="myPagePurchase__productInfo">
+                    			<p class="myPagePurchase__productName">${status.count}</p>
                         		<p class="myPagePurchase__productName">${orderLists.orderProductDO.orderDatetime}</p>
                         		<p class="myPagePurchase__productPrice"><fmt:formatNumber pattern="#,###" value="${orderLists.orderProductDO.orderTotalPrice}"/>원</p>
                     		</div>

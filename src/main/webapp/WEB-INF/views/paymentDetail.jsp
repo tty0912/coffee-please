@@ -52,10 +52,13 @@
 
                 <div class="paymentCompletePrice">
                     <p class="cartTotalPriceText">결제 금액 : <p class="cartTotalPrice"><fmt:formatNumber pattern="#,###" value="${beforeOrderPoint.orderTotalPrice}"/>원</p></p>
+
                     <p class="cartTotalPriceText">주문 후 잔액 : <p class="cartTotalPrice"><fmt:formatNumber pattern="#,###" value="${beforeOrderPoint.beforeOrderPoint}"/>원</p></p>
                 </div>
                 <div class="paymentCompletePrice">
+                <form class="paymentCompletePrice" method="get" action="goProductList">
                     <button class="cartPayment">확인</button>
+                </form>
                 </div>
             </div>
         </div>

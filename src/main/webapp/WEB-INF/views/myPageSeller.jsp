@@ -19,7 +19,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
-    <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/active.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
@@ -59,7 +60,7 @@
     <section id="myPageNav" class="section">
         <div class="max-container">
             <div class="myPageNav">
-                <button id="myPageNav__likeButton" class="myPageNav__button" >판매 중 게시물</button>
+                <button id="myPageNav__likeButton" class="myPageNav__button" >등록한 상품</button>
                 <button id="myPageNav__purchaseButton" class="myPageNav__button">일반상품판매내역</button>
                 <button id="myPageNav__purchaseGroupButton" class="myPageNav__button">공동구매판매내역</button>
             </div>
@@ -71,17 +72,36 @@
         	<div>
         		<h2 class="myPageLike__title">판매 중인 게시물을 확인해보세요!</h2> 
             	<div id="sellList" class="myPageLike">
-            		<c:forEach items="${sellList}" var="beansDO">
-                		<div id="${beansDO.beansNum}" class="myPageLike__product" onclick="let that = this; sellListHandler(that)">
-                    		<img class="myPageLike__productImg" src="${beansDO.beanImg}" alt="buyerImg" />
-                    		<div class="myPageLike__productInfo">
-                        		<p class="myPageLike__productName">${beansDO.beanName}</p>
-                        		<p class="myPageLike__productPrice"><fmt:formatNumber pattern="#,###" value="${beansDO.beanPrice}"/>원</p>
-                    		</div>
-                            <form method="get" action="productModify">
-                              <button name="beansNum" value="${beansDO.beansNum}" class="myPageLike__hate"><i class="fa-solid fa-heart"></i></button>
-                            </form>
-                		</div>
+            		<c:forEach items="${sellList}" var="beansDO" >
+            		<c:choose>
+            			<c:when test="${beansDO.statusNumber == 0}">
+	                		<div id="${beansDO.beansNum}" class="myPageLike__product" onclick="let that = this; sellListHandler(that)">
+	                    		<img class="myPageLike__productImg" src="${beansDO.beanImg}" alt="buyerImg" />
+	                    		<div class="myPageLike__productInfo">
+	                        		<p class="myPageLike__productName">${beansDO.beanName}</p>
+	                        		<p class="myPageLike__productPrice"><fmt:formatNumber pattern="#,###" value="${beansDO.beanPrice}"/>원</p>
+	                    		</div>
+	                            <form method="get" action="productModify">
+	                              <button name="beansNum" value="${beansDO.beansNum}" class="myPageLike__hate"><i class="fa-solid fa-heart"></i></button>
+	                            </form>
+	                		</div>
+            			</c:when>
+            			<c:when test="${beansDO.statusNumber == 1}">
+	                		<div id="${beansDO.beansNum}" class="myPageLike__product" onclick="let that = this; sellListHandler(that)">
+	                    		<img class="myPageLike__productImg" src="${beansDO.beanImg}" alt="buyerImg" />
+		                    		<div class="sold-out">
+		                    			<p>판매 종료</p>
+		                    		</div>
+	                    		<div class="myPageLike__productInfo">
+	                        		<p class="myPageLike__productName">${beansDO.beanName}</p>
+	                        		<p class="myPageLike__productPrice"><fmt:formatNumber pattern="#,###" value="${beansDO.beanPrice}"/>원</p>
+	                    		</div>
+	                            <form method="get" action="productModify">
+	                              <button name="beansNum" value="${beansDO.beansNum}" class="myPageLike__hate"><i class="fa-solid fa-heart"></i></button>
+	                            </form>
+	                		</div>
+            			</c:when>
+            		</c:choose>
                 	</c:forEach>
             	</div>
         	</div>
@@ -91,14 +111,19 @@
         <div class="max-container">	
         		<h2 class="myPagePurchase__title">일반상품 판매내역을 확인해보세요!</h2> 
             	<div class="myPagePurchase">
-            		<c:forEach items="${orderList}" var="OrderProductDO">
-                		<div class="myPagePurchase__product">
-                    		
-                    		<div class="myPagePurchase__productInfo">
-                        		<p class="myPagePurchase__productName">${OrderProductDO.orderDatetime}</p>
-                        		<p class="myPagePurchase__productPrice"><fmt:formatNumber pattern="#,###" value="${OrderProductDO.orderTotalPrice}"/>원</p>
+            		<c:forEach items="${sellList}" var="beansDO">
+                		<div id="${beansDO.beansNum}" class="myPageLike__product" onclick="let that = this; sellListHandler(that)">
+                    		<img class="myPageLike__productImg" src="${beansDO.beanImg}" alt="buyerImg" />
+                    		<div class="myPageLike__productInfo">
+                        		<p class="myPageLike__productName">${beansDO.beanName}</p>
+                        		<p class="myPageLike__productPrice"><fmt:formatNumber pattern="#,###" value="${beansDO.beanPrice}"/>원</p>
+                        		<!-- class 수정해주세요!! 임시class!! -->
+                        		<p class="myPageLike__productPrice">판매 수량: ${beansDO.beanTotalSellCount}</p>
+                        		<p class="myPageLike__productPrice">총판매 금액: <fmt:formatNumber pattern="#,###" value="${beansDO.beanTotalSellCount * beansDO.beanPrice}"/></p>
                     		</div>
-                    		<button class="myPagePurchase__detail"><i class="fa-solid fa-heart"></i></button>
+                            <form method="get" action="productModify">
+                              <button name="beansNum" value="${beansDO.beansNum}" class="myPageLike__hate"><i class="fa-solid fa-heart"></i></button>
+                            </form>
                 		</div>
                 	</c:forEach>
             	</div>

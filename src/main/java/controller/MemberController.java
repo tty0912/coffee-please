@@ -3,6 +3,7 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -62,6 +63,7 @@ public class MemberController {
 	private final BeansDAO beansDAO = new BeansDAO();
 	private final LikeDAO likeDAO = new LikeDAO();
 	private final OrderProductDAO orderProductDAO = new OrderProductDAO();
+	private final OrderProductDO orderProductDO = new OrderProductDO();
 	private final OrderProductDetailDAO orderProductDetailDAO = new OrderProductDetailDAO();
 	private final ImgUpload imgUpload = new ImgUpload();
 	
@@ -117,12 +119,13 @@ public class MemberController {
 				// 겹치면 true = DB에 id가 있다는 뜻
 				if(sellerDAO.checkSellerId(id) == true) { 
 					System.out.println("login fail1");
-					return "redirect:/main";
+					model.addAttribute("login", "fail1");
+					return "/main";
 				}
 				//비밀번호 틀림
 				else if(!sellerEmail.getPasswd().equals(pw)){  
 					System.out.println("login fail2");
-					model.addAttribute("login", "fail");
+					model.addAttribute("login", "fail2");
 				    return "/main";
 				}
 				//아이디 비밀번호 전부일치
@@ -136,7 +139,7 @@ public class MemberController {
 
 					model.addAttribute("categoryList", beansDAO.getAllCategory());
 					model.addAttribute("bestBean", beansDAO.bestBeanArray());
-					
+					model.addAttribute("login", "true");
 					return "mainLoginSeller";
 				}
 				
@@ -151,7 +154,8 @@ public class MemberController {
 				// 겹치면 true = DB에 id가 있다는 뜻
 				if(buyerDAO.checkBuyerId(id)) {
 					System.out.println("login fail1");
-					return "redirect:/main";
+					model.addAttribute("login", "fail1");
+					return "/main";
 				}
 				//비밀번호 틀림
 				else if(!buyerDO.getPasswd().equals(pw)){
@@ -170,7 +174,7 @@ public class MemberController {
 
 					model.addAttribute("categoryList", beansDAO.getAllCategory());
 					model.addAttribute("bestBean", beansDAO.bestBeanArray());
-					
+					model.addAttribute("login", "true");
 					return "mainLoginBuyer";
 				}
 				
@@ -244,6 +248,7 @@ public class MemberController {
 	@PostMapping("/paymentDetail")
 	public String paymentDetail(@RequestParam("orderDatetime") String orderDatetime, HttpSession session, Model model) {
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+
 		OrderProductDO order = new OrderProductDO();
 		for(OrderProductDO i : orderProductDAO.getBuyerOrderList(sessionBuyer)) {
 			if(i.getOrderDatetime().equals(orderDatetime)) {
@@ -252,9 +257,11 @@ public class MemberController {
 			}
 		}
 		model.addAttribute("beforeOrderPoint", order);
+
 		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
 		model.addAttribute("bean", orderProductDetailDAO.getOrderProductDetailList(sessionBuyer, orderDatetime));
 		model.addAttribute("order", orderProductDAO.getBuyerOrderList(sessionBuyer));
+
 		return "paymentDetail";
 	}
 //	@PostMapping("/paymentDetail")
@@ -312,7 +319,7 @@ public class MemberController {
 	@PostMapping("/buyerModifyChange")
 
 	public String buyerModifyChange(HttpServletRequest request, HttpSession session, Model model) throws IOException {
-		String directory = "C:/Users/H40/finalCoffee/coffee-please/src/main/webapp/registerData/buyerData/buyer";
+		String directory = "C:\\Users\\Jun\\Desktop\\finalProject/coffee-please/src/main/webapp/registerData/buyerData/buyer";
 
 
 		int sizeLimit = 1024 * 1024 * 5;
@@ -386,7 +393,7 @@ public class MemberController {
 	@PostMapping("/sellerModifyChange")
 	public String sellerModifyChange(HttpServletRequest request, HttpSession session, Model model) throws IOException {
 
-		String directory =  "C:/Users/H40/finalCoffee/coffee-please/src/main/webapp/registerData/sellerData/seller";
+		String directory =  "C:\\Users\\Jun\\Desktop\\finalProject/coffee-please/src/main/webapp/registerData/sellerData/seller";
 
 		int sizeLimit = 1024 * 1024 * 5;
 		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
@@ -442,7 +449,7 @@ public class MemberController {
 	@PostMapping("/signupSeller")
 	public String signupSeller(@ModelAttribute SellerDO seller) throws Exception {
 
-		seller.setSellerImg("/coffee-please/images/userImginit.png");
+		seller.setSellerImg("/coffee/images/userImginit.png");
 		sellerDAO.insertSeller(seller);
 		return "redirect:/main";
 	}
@@ -457,7 +464,7 @@ public class MemberController {
 	@PostMapping("signupBuyer")
 	public String signupBuyer(@ModelAttribute BuyerDO buyer) throws Exception{
 
-		buyer.setBuyerImg("/coffee-please/images/userImginit.png");
+		buyer.setBuyerImg("/coffee/images/userImginit.png");
 		buyerDAO.insertBuyer(buyer);
 		return "redirect:/main";
 	}
