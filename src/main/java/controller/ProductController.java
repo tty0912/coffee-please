@@ -194,6 +194,7 @@ public class ProductController {
 	@GetMapping("/goListDetail")
 	public String goListDetail(@RequestParam("beansNum") int beansNum, Model model, HttpSession session) throws SQLException {
 		//System.out.println("번호: " + beansNum);
+		
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 		boolean b = likeService.checkLike(sessionBuyer, beansNum);
 

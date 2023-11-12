@@ -83,8 +83,6 @@
                         <option value="1">판매 종료</option>
                     </select>
                 </label>
-                <input type="file" class="fileInput" name="beanImg" disabled/>
-                <input type="file" class="fileInput" name="descript" disabled/>
                 <div class="signup__button-div">
                     <button class="signup__button" id="signup-button" name="action" value="cancel" type="submit">취소</button>
                     <button class="signup__button" id="signup-button" name="action" value="register" type="submit">등록</button>
