@@ -205,6 +205,7 @@ public class BeansDAO {
 				beans.setGoalQty(rs.getInt("goal_qty"));
 				beans.setGoalPrice(rs.getInt("goal_price"));
 				beans.setBeanTotalSellCount(rs.getInt("bean_total_selcount"));
+				beans.setStatusNumber(rs.getInt("status"));
 
 				if (str == null || beans.getBeanName().contains(str)) {
 					resultList.add(beans);
@@ -250,6 +251,7 @@ public class BeansDAO {
 				beans.setGoalQty(rs.getInt("goal_qty"));
 				beans.setGoalPrice(rs.getInt("goal_price"));
 				beans.setBeanTotalSellCount(rs.getInt("bean_total_selcount"));
+				beans.setStatusNumber(rs.getInt("status"));
 
 				if (str == null || beans.getBeanName().contains(str)) {
 					resultList.add(beans);
@@ -558,14 +560,39 @@ public class BeansDAO {
 	}
 
 	// 등록한 물품을 판매종료 로 만들기 -> status를 바꾸기, 1이면 판매종료
-	public int beansSoldout(BeansDO beansDO) {
+	public int beansSoldout(int num) {
 		int rowCount = 0;
 
 		this.sql = "update beans set status = 1 where beans_num = ?";
 
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, beansDO.getBeansNum());
+			pstmt.setInt(1, num);
+			rowCount = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (!pstmt.isClosed()) {
+					pstmt.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return rowCount;
+	}
+
+	// 판매종료 -> 판매중
+	public int beansRestore(int num) {
+		int rowCount = 0;
+
+		this.sql = "update beans set status = 0 where beans_num = ?";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
 			rowCount = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -832,7 +859,7 @@ public class BeansDAO {
 		ArrayList<BeansDO> sellList = new ArrayList<>();
 
 
-		this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount " +
+		this.sql = "select beans_num, bean_name, bean_price, bean_img, bean_total_selcount, status " +
 						"from beans where seller_email = ? " +
 						"order by beans_num desc";
 		//statusNum 판매종료 - 1, 판매중 - 0
@@ -879,6 +906,7 @@ public class BeansDAO {
 					beans.setBeanPrice(rs.getInt("bean_price"));
 					beans.setBeanImg(rs.getString("bean_img"));
 					beans.setBeanTotalSellCount(rs.getInt("bean_total_selcount"));
+					beans.setStatusNumber(rs.getInt("status"));
 
 					sellList.add(beans);
 				}

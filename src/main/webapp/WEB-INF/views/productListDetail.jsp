@@ -36,7 +36,6 @@
             <div class="productListDetail__top">
                 <div class="productListDetail__topLeft">
                     <img src="${productListDetail.beansDO.beanImg}" alt="" class="productListDetail__img">
-
                     <c:choose>
                         <c:when test="${not empty buyerEmail}">
                             <div class="productListDetail__likeButton">

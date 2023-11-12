@@ -73,6 +73,8 @@
                 </div>
                 <div id="beansTable" class="productList__productDiv">
                 <c:forEach items="${beansList}" var="bean">
+                <c:choose>
+                <c:when test="${ bean.beansDO.statusNumber == 0 }">
                     <div id=${bean.beansDO.beansNum} class="productList__product" onclick="let that = this; prodDetail2Handler(that)">
                         <img class="productList__productImg" src="${bean.beansDO.beanImg}" alt="">
                         <div class="productList__productText">
@@ -104,6 +106,8 @@
                            </c:choose>
                         </div>
                     </div>
+                </c:when>
+                </c:choose>
                 </c:forEach>
                 </div>
                 <div class="productList__buttonDiv">
