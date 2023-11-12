@@ -55,7 +55,9 @@
                     <p class="cartTotalPriceText">현재 잔액 : <p class="cartTotalPrice"><fmt:formatNumber pattern="#,###" value="${buyer.point}"/>원</p></p>
                 </div>
                 <div class="paymentCompletePrice">
+                <form class="paymentCompletePrice" method="get" action="goProductList">
                     <button class="cartPayment">확인</button>
+                </form>
                 </div>
             </div>
         </div>
