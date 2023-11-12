@@ -305,7 +305,7 @@ public class ProductController {
 
 		
 		beanList.add(beansQty);
-		orderProductDO.setBeforeOrderPoint(orderProductDO.getBeforeOrderPoint() - orderProductDO.getOrderTotalPrice());
+		orderProductDO.setBeforeOrderPoint(orderProductDO.getBeforeOrderPoint());
 
 		model.addAttribute("beansList", beanList);
 		model.addAttribute("orderList", orderProductDO);
