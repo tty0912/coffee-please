@@ -41,8 +41,15 @@
             console.log('userId value:', userId.value);
             console.log('userPassword value:', userPassword.value);
 
-
-                    if (loginResult === 'fail') {
+            if (loginResult === 'fail1') {
+                msg = '<i class="fa-solid fa-triangle-exclamation"></i> 해당 아이디가 존재하지 않습니다.';
+                userId.value = '';
+                loginLabels[0].classList.add('error');
+                loginIcons[0].classList.add('error');
+                console.log('Error: 비밀번호 틀렸습니다.');
+                console.log(loginResult)
+            }
+            else if (loginResult === 'fail2') {
                         msg = '<i class="fa-solid fa-triangle-exclamation"></i> 비밀번호 틀렸습니다.';
                         userPassword.value = '';
                         loginLabels[1].classList.add('error');
@@ -50,6 +57,7 @@
                         console.log('Error: 비밀번호 틀렸습니다.');
                         console.log(loginResult)
                     }
+                    
             if (msg !== '') {
                 loginMsg.innerHTML = msg;
 

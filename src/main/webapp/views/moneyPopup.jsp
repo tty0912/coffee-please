@@ -8,20 +8,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로그인 해주세요.</title>
+    <title>잔액이 부족합니다.</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css"> 
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/signupStyle.css"> 
 </head>
 <body>
     <div class="popup">
-    	<img class="popupImg" src="${pageContext.request.contextPath }/images/popupSignup.png" alt="">
-        <p>로그인 후 이용가능합니다.</p>
+    	<img class="popupImg" src="${pageContext.request.contextPath }/images/moneyPopup.png" alt="">
+        <p>잔액이 부족합니다.</p>
         <button id="closePopupButton">닫기</button>
     </div>
     <div class="sources">
-        출처 <a href="https://kr.freepik.com/free-vector/online-registration-concept-with-flat-design_3301524.htm#query=%EB%93%B1%EB%A1%9D&position=29&from_view=search&track=sph#position=29&query=%EB%93%B1%EB%A1%9D">Freepik</a>
-    </div>
-
+   		 출처 <a href="https://kr.freepik.com/free-vector/character-losing-money_9990002.htm#query=%EA%B8%88%EC%95%A1%20%EB%B6%80%EC%A1%B1&position=1&from_view=search&track=ais">Freepik</a>
+	</div>
     <script>
         document.getElementById('closePopupButton').addEventListener('click', function () {
             var popup = document.querySelector('.popup');

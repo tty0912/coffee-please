@@ -20,11 +20,25 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
     <script type="module" src="${pageContext.request.contextPath }/js/buyNow.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let money = '${money}';
+
+            if (money === 'fail') {
+                var popup = window.open('/coffee/views/moneyPopup.jsp', 'popup', 'width=600,height=400');
+
+                if (popup && !popup.closed) {
+                    console.log('팝업이 성공적으로 열렸습니다.');
+                    popup.focus();
+                }
+            }
+        });
+    </script>
 </head>
 <body>
 <%@ include file = "/WEB-INF/views/headerNav.jsp" %>
 
-<<!-- Cart -->
+<!-- Cart -->
     <section id="cart" class="section">
         <div class="max-container">
             <div class="cart">

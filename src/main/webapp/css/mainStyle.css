@@ -20,7 +20,7 @@
     --color-darkgreen: #2B351C;
     --color-gray: #7d7c7c;
     --color-light-gray: #b9b5b5;
-    --color-red: rgb(241, 150, 136);
+    --color-red: #F19688;
     /* Size */
     --size-max-width: 1200px;
 }
@@ -534,32 +534,63 @@ input[type='radio']:checked {
 
 /* mainSeller */
 
-#resisterProduct{
+#registerProduct, .categorySources {
     background-color: var(--color-beige);
 }
+.registerProduct__title {
+    font-size: 2rem;
+    color: var(--color-darkgreen);
+    margin-bottom: 2rem;
+}
 
-.resisterProduct {
+.registerProduct {
+    position: relative;
     display: flex;
-    align-items: center;
     justify-content: center;
 }
 
-.resisterProductImg {
-    width: 10rem;
+.registerProductImgWrapper {
+    position: relative;
 }
-.resisterProductButton{
+
+.registerProductButton__form {
+	display: grid;
+	gap: 1rem;
+}
+
+.registerProductImg {
+    width: 40rem;
+    display: block;
+}
+
+.registerProductButton {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(100px, -30px);
     display: flex;
-    gap: 1.4rem;
+    gap: 2rem;
+    width: 30rem;
 }
-.resisterProductButton__detail{
-    font-size: 1.1rem;
+
+.registerProductButton__detail {
+    font-size: 1.2rem;
     padding: 0.7rem;
     border-radius: 10px;
-    font-weight: bold;
-    color: var(--color-darkgreen);
+    color: var(--color-white);
     background-color: var(--color-green);
+    margin-right: 1rem;
     
 }
+
+.registerProductButton__detail:hover {
+    color: var(--color-text);
+    background-color: var(--color-beige);
+    border: 2px solid var(--color-accent);
+    font-size: 1.1rem;
+  }
+
+
 
 /* productList */
 
@@ -620,10 +651,10 @@ input[type='radio']:checked {
     align-items: center;
     border: 1px solid #ccc;
     border-radius: 20px;
-    width: 15rem;
+    width: 230px;
     height: 2.4rem;
     padding: 4px;
-    margin-left: 30rem;
+    margin-left: 600px;
 
 }
 
@@ -743,14 +774,92 @@ input[type='radio']:checked {
     width: 30rem;
 }
 .productListDetail__likeButton{
-    margin-left: 9.5rem;
+    margin-left: 1rem;
     display: flex;
     align-items: center;
+    font-size: 1rem;
+    justify-content: center;
+    padding: 3px 3.7px 2.8px 3px;
+    width: 6.5rem;
+    border: 2px solid var(--color-gray);
 }
+.productListDetail__likeButton:hover, .productListDetail__cart:hover {
+    border: none;
+}
+.prodductListDetail__productLikeCount {
+    margin-right: 4px;
+    font-size: 1.1rem;
+    color: var(--color-darkgreen);
+}
+
+.productListDetail__cart {
+    width: 6.5rem;
+    color: var(--color-darkgreen);
+    font-size: 1.1rem;
+    border: 2px solid var(--color-gray);
+}
+.productListDetail__pay {
+    width: 14rem;
+    color: var(--color-white);
+    background-color: var(--color-darkgreen);
+    height: 2.5rem;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+    border:none;
+    position:relative;
+}
+.productListDetail__button-div {
+    display: flex;
+    justify-content: center;
+    /* gap: 0.5rem; */
+    
+}
+
+.productListDetail__pay:hover{
+    background: white;
+    color: var(--color-darkgreen);
+  }
+  .productListDetail__pay:before, .productListDetail__pay:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: var(--color-darkgreen);
+    transition:400ms ease all;
+  }
+  .productListDetail__pay:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  .productListDetail__pay:hover:before,.productListDetail__pay:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
 
 .productListDetail__topRight {
     display: grid;
-    margin: 6rem 10rem 0rem 0rem;
+    margin: 0rem 10rem 0rem 0rem;
+}
+.productListDetail__topTitle {
+    margin-right: 20px;
+}
+.productListDetail__table {
+    height: 17rem;
+
+}
+.cartProductInfo__QtyDivButton {
+    bottom: 35%;
+    /* position: fixed; */
+}
+.cartProductInfo__QtyDiv {
+    margin-bottom: 2rem;
 }
 
 #productListDetail__bottom {
