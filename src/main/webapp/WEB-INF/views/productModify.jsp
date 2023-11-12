@@ -35,14 +35,15 @@
         <div class="modify__form-div">
             <h2 class="signup__title">Bean2B 일반 상품 수정을 진행합니다.</h2>
             <h4 class="signup__description">수정 가능한 부분을 수정해주세요!</h4>
-            <form id="modify__form" enctype="multipart/form-data" method="post" action="registerProd">
+
+            <form id="modify__form" enctype="multipart/form-data" method="get" action="setStatus">
                 <label for="beanName" class="signup__label">
                     <img src="${pageContext.request.contextPath}/images/bean.png" alt="" class="bean__img signup__icon">
                     <input
                             class="signup__input"
                             type="text"
-                            id="beanName"
-                            name="beanName"
+                            id="beansNum"
+                            name="beansNum"
                             placeholder="상품 이름 입력"
                             disabled
                     />
@@ -84,8 +85,9 @@
                     </select>
                 </label>
                 <div class="signup__button-div">
-                    <button class="signup__button" id="signup-button" name="action" value="cancel" type="submit">취소</button>
-                    <button class="signup__button" id="signup-button" name="action" value="register" type="submit">등록</button>
+                    <button class="signup__button" id="signup-button" name="command" value="cancel" type="submit">취소</button>
+                    <button class="signup__button" id="signup-button" name="command" value="register" type="submit">등록</button>
+                    <input type="hidden" id="beansNum" name="beansNum" value="${bean.beansNum }"/>
                 </div>
             </form>
         </div>

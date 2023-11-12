@@ -54,28 +54,39 @@ public class OrderService {
     }
 
     //여러상품  결제
-    public boolean cartPayment(ArrayList<CartBeans> cartBeans, String email){
+    public OrderProductDO cartPayment(String email) throws SQLException{
 
-        long totalPrice = 0;
-
-        for(CartBeans c : cartBeans){
-            long l = (long) c.getCartDO().getQty() * c.getBeansDO().getBeanPrice();
-            totalPrice += l;
-        }
-        if(checkPoint(email)>=totalPrice){
+        long totalPrice= cartDAO.totalPrice(email);
+        
+        long buyerPoint = checkPoint(email);
+        OrderProductDO orderProductDO = new OrderProductDO();
+      
+        if(buyerPoint>=totalPrice){
+        	
+        	  insertOrderProductDAO(buyerPoint, totalPrice, email);
+         
+        
+        	ArrayList<CartBeans> cartBeans = cartDAO.getCartList(email);
+        	
             for(CartBeans c : cartBeans) {
                 BeansDO beansDO = c.getBeansDO();
                 CartDO cartDO = c.getCartDO();
-
-                cartDAO.deleteItem(email, beansDO.getBeansNum());
+                insertOrderProductDetailDAO(email, beansDO.getBeansNum(), cartDO.getQty());
 
                 String sellerEmail = beansDAO.getBean(beansDO.getBeansNum()).getSellerEmail();
                 long price = (long) beansDO.getBeanPrice() * cartDO.getQty();
                 movePoint(sellerEmail, email, price);
+                                
             }
+	            orderProductDO.setBeforeOrderPoint(buyerPoint);
+	            orderProductDO.setOrderTotalPrice(totalPrice);
+	            cartDAO.clearCart(email);
+	            return orderProductDO;
+            
+            
             //잔액부족
-        } else return false;
-        return true;
+        }
+        return null;
     }
 
 

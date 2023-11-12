@@ -2,14 +2,14 @@ let totalPrice = document.querySelector('#totalPrice');
 let sum = totalPrice.innerHTML * 1;
 
 function clickHandler(e) {
-
-	if (e.target.className === 'fa-solid fa-trash'){
-		if (confirm('장바구니에서 삭제 하시겠습니까?')) {
-			let beansNum = document.querySelector('#num').getAttribute('value')
-			location.href = '/coffee/deleteItem?beansNum=' + beansNum;
-		}
-	}
-
+	
+	 if (e.target.className === 'fa-solid fa-trash'){
+       if (confirm('장바구니에서 삭제 하시겠습니까?')) {
+          let beansNum = e.target.parentElement.value;
+          location.href = '/coffee/deleteItem?beansNum=' + beansNum;
+       }
+    }
+	
 	if (e.target.nodeName !== 'BUTTON') {
 		return;
 	}
@@ -29,9 +29,20 @@ function clickHandler(e) {
 		}
 	}
 
-
-
 	document.querySelector('#totalPrice').innerHTML = sum;
+	
+	if (e.target.classList.contains('cartProductInfo__delete') ) {
+        if (confirm('장바구니에서 삭제 하시겠습니까?')) {
+            // let hiddenForm = document.querySelector('#hiddenForm');
+            // if (hiddenForm) {
+             let beansNum = e.target.value;
+             location.href = '/coffee/deleteItem?beansNum=' + beansNum;
+            // } else {
+            //     console.error('#hiddenForm이 존재하지 않습니다.');
+            // }
+        }
+    }
+
 }
 
 function changeHandler(e) {
@@ -45,38 +56,28 @@ function changeHandler(e) {
 	let qtySpan = cartProduct.querySelector('.qty');
 	let plusButton = cartProduct.querySelector('.cartProductInfo__plus');
 	let minusButton = cartProduct.querySelector('.cartProductInfo__minus');
+
 	
 	if (e.target.checked) {
 		plusButton.disabled = false;
 		minusButton.disabled = false;
 
+
 		sum += (price * 1) * (qtySpan.innerHTML * 1);
 	} else {
 		plusButton.disabled = true;
 		minusButton.disabled = true;
-
 		sum -= (price * 1) * (qtySpan.innerHTML * 1);
 	}
-
-
 	document.querySelector('#totalPrice').innerHTML = sum;
-
 }
-
-function payHandler(){
-	let beansNum = document.querySelector('#num').getAttributeNames()
-	alert(beansNum)
-}
-
 function init() {
 	const cartProducts = document.querySelectorAll('.cartProduct');
 
 	cartProducts.forEach(function(cartProduct) {
-		//console.log('cart box id:', cartProduct.id);
+		const checkbox = cartProduct.querySelector('.cartProduct__check');
 		cartProduct.addEventListener('click', clickHandler);
 		cartProduct.addEventListener('change', changeHandler);
 	});
-	document.querySelector('.cartPayment').addEventListener('click', payHandler);
 }
-
 window.addEventListener('load', init);
