@@ -426,7 +426,7 @@ public class MemberController {
 	@PostMapping("/signupSeller")
 	public String signupSeller(@ModelAttribute SellerDO seller) throws Exception {
 
-		seller.setSellerImg("/coffee-please/images/userImginit.png");
+		seller.setSellerImg("/coffee/images/userImginit.png");
 		sellerDAO.insertSeller(seller);
 		return "redirect:/main";
 	}
@@ -441,7 +441,7 @@ public class MemberController {
 	@PostMapping("signupBuyer")
 	public String signupBuyer(@ModelAttribute BuyerDO buyer) throws Exception{
 
-		buyer.setBuyerImg("/coffee-please/images/userImginit.png");
+		buyer.setBuyerImg("/coffee/images/userImginit.png");
 		buyerDAO.insertBuyer(buyer);
 		return "redirect:/main";
 	}

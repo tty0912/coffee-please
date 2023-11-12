@@ -41,7 +41,7 @@ public class BuyerDAO {
             this.rs = pstmt.executeQuery();
 
             if(!rs.next()){
-                this.sql = "insert into buyer (buyer_email, buyer_name, nickname, passwd, point, tel, adr) values (?, ?, ?, ?, ?, ?, ?)";
+                this.sql = "insert into buyer (buyer_email, buyer_name, nickname, passwd, point, tel, adr, buyer_img) values (?, ?, ?, ?, ?, ?, ?, ?)";
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1, buyer.getBuyerEmail());
                 pstmt.setString(2, buyer.getBuyerName());
@@ -50,7 +50,8 @@ public class BuyerDAO {
                 pstmt.setLong(5, buyer.getPoint());
                 pstmt.setString(6, buyer.getTel());
                 pstmt.setString(7, buyer.getAddress());
-
+                pstmt.setString(8, buyer.getBuyerImg());
+                
                 rowCount = pstmt.executeUpdate();
                 this.conn.commit();
             }
