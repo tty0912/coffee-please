@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/popup.js" defer></script>
     <script>
         let loginResult = '${login}';
         window.onload = function (){
@@ -40,8 +41,15 @@
             console.log('userId value:', userId.value);
             console.log('userPassword value:', userPassword.value);
 
-
-                    if (loginResult === 'fail') {
+            if (loginResult === 'fail1') {
+                msg = '<i class="fa-solid fa-triangle-exclamation"></i> 해당 아이디가 존재하지 않습니다.';
+                userId.value = '';
+                loginLabels[0].classList.add('error');
+                loginIcons[0].classList.add('error');
+                console.log('Error: 비밀번호 틀렸습니다.');
+                console.log(loginResult)
+            }
+            else if (loginResult === 'fail2') {
                         msg = '<i class="fa-solid fa-triangle-exclamation"></i> 비밀번호 틀렸습니다.';
                         userPassword.value = '';
                         loginLabels[1].classList.add('error');
@@ -49,6 +57,7 @@
                         console.log('Error: 비밀번호 틀렸습니다.');
                         console.log(loginResult)
                     }
+                    
             if (msg !== '') {
                 loginMsg.innerHTML = msg;
 
@@ -128,7 +137,39 @@
     <!-- Category -->
 	<%@ include file = "/WEB-INF/views/category.jsp" %> 
     <!-- BeanBest -->
-    <%@ include file = "/WEB-INF/views/bestBean.jsp" %>
+    <section id="mainBeanBest" class="section">
+         <div class="max-container">
+        <h1 class="mainBeanBest__title">Best</h1>
+            <div class="mainBeanBest">
+  				<c:forEach items="${bestBean}" var="beansDO" >
+                    <div class="mainBeanBest__product">
+                    	<img src="" alt="" class="beanBest__number">
+
+        				<img src="${beansDO.beanImg}"  alt="" class="mainBeanBest__productImg" id="${ beansDO.beansNum}" >
+                    	<form method="get" action="goListDetail">
+                			<input type="hidden" id="beansNum" name="beansNum" value="${beansDO.beansNum}" />
+                			<button>
+                			</button>
+                   		</form>
+        				<div class="productList__productTitle">${beansDO.beanName }</div>
+        				<div class="productList__productPrice">${beansDO.beanPrice}원</div>
+        				<div class="likeButton">
+                        	<button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                        	<p class="mainBeanBest__productLikeCount">${beansDO.likeCount}</p>
+                    	</div>
+                    </div>
+
+    			</c:forEach>
+            </div>
+ 	         <div class="mainBeanBest__button">
+ 	         	<h2 class="mainBeanBest__buttonTitle">더 많은 원두를 보려면?</h2>
+ 	         	
+ 	         	    <button id="popupButton"  class="mainBeanBest__plusButton"><i class="fa-solid fa-angles-right"></i></button>	
+ 	 
+
+            </div>
+        </div>
+    </section>
     
     
 <%@ include file = "/WEB-INF/views/footer.jsp" %>

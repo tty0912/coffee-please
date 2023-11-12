@@ -29,13 +29,15 @@
 <body>
 <%@ include file = "/WEB-INF/views/headerNav.jsp" %>
 <!-- registerProduct -->
-<section id="signup" class="section">
-    <div class="max-<div class="max-container">">
-    <div class="signup">
-        <div class="signup__form-div">
+<section id="signup__buyerModify" class="section">
+    <div class="max-container">
+    <div class="signup__buyerModify">
+        <div class="modify__form-div">
             <h2 class="signup__title">Bean2B 일반 상품 수정을 진행합니다.</h2>
             <h4 class="signup__description">수정 가능한 부분을 수정해주세요!</h4>
+
             <form id="signup__form" enctype="multipart/form-data" method="post" action="setStatus">
+
                 <label for="beanName" class="signup__label">
                     <img src="${pageContext.request.contextPath}/images/bean.png" alt="" class="bean__img signup__icon">
                     <input
@@ -44,6 +46,7 @@
                             id="beanName"
                             name="beanName"
                             placeholder="상품 이름 입력"
+                            disabled
                     />
                 </label>
                 <label for="beanPrice" class="signup__label">
@@ -54,11 +57,12 @@
                             id="beanPrice"
                             name="beanPrice"
                             placeholder="상품 가격 입력"
+                            disabled
                     />
                 </label>
                 <label for="cName" class="signup__label">
                     <i class="fa-solid fa-flag-checkered signup__icon"></i>
-                    <select class="signup__input" name="categoryNum">
+                    <select class="signup__input" name="categoryNum" disabled>
                         <option value="0">원산지를 선택해주세요.</option>
                         <option value="1">베트남</option>
                     </select>
@@ -71,10 +75,18 @@
                             id="deliveryCharge"
                             name="deliveryCharge"
                             placeholder="배송료 입력"
+                            disabled
                     />
                 </label>
-                <input type="file" class="fileInput" name="beanImg" />
-                <input type="file" class="fileInput" name="descript" />
+                <label for="cName" class="signup__label">
+                    <i class="fa-solid fa-flag-checkered signup__icon"></i>
+                    <select class="signup__input" name="statusNumber">
+                        <option value="0" >판매 중</option>
+                        <option value="1">판매 종료</option>
+                    </select>
+                </label>
+                <input type="file" class="fileInput" name="beanImg" disabled/>
+                <input type="file" class="fileInput" name="descript" disabled/>
                 <div class="signup__button-div">
                     <button class="signup__button" id="signup-button" name="action" value="cancel" type="submit">취소</button>
                     <button class="signup__button" id="signup-button" name="action" value="register" type="submit">등록</button>
