@@ -29,32 +29,52 @@
 <%@ include file = "/WEB-INF/views/headerNav.jsp" %>
 	
    <!-- Category -->
-    <%@ include file = "/WEB-INF/views/category.jsp" %>
+    <section id="mainCategory" class="section mainCategorySection">
+       <div class="max-container" >
+       		<div class="controller" >
+                        <button id="categoryPrevBtn"><span id="categoryPrev" >&lang;</span></button>
+                        <button id="categoryNextBtn"><span id="categoryNext" >&rang;</span></button>
+            </div>
+        <h1 class="mainCategory__title">Category</h1>
+            	<ul id="categoryList" class="mainCategory" >
+					
+                    <c:forEach items="${categoryList}" var="categoryDO" >
+        			<li class="mainCategory__detail" id="${categoryDO.categoryNum}">
+        				<img alt="" class="mainCategory__detailImg" src="${categoryDO.categoryImg}" />
+        				<p class="mainCategory__detailTitle">${categoryDO.categoryName}</p>
+        			</li>
+        			</c:forEach>			
+               </ul>
+              		
+              </div>   	
+    </section>
     <!--productList  -->
     <section id="productList" class="section">
         <div class="max-container">
             <div class="productList">
                 <div class="productList__sortSerch">
                     <div class="productList__sortDiv">
-                        <span class="productList__sortText">정렬</span>
+                        <span class="productList__sortText">정렬 :</span>
                         <form action="goProductList" method="GET" id="sorting" class="goProductList">
-                        <label for="category">카테고리:</label>	
-							<select id="category" name="category">
-                                <option value="0" ${param.category == '0' ? 'selected' : '' }>전체</option>
-                                <option value="1" ${param.category == '1' ? 'selected' : '' }>브라질</option>
-                                <option value="2" ${param.category == '2' ? 'selected' : '' }>콜롬비아</option>
-                                <option value="3" ${param.category == '3' ? 'selected' : '' }>에티오피아</option>
-                                <option value="4" ${param.category == '4' ? 'selected' : '' }>온두라스</option>
-                                <option value="5" ${param.category == '5' ? 'selected' : '' }>인도</option>
-                                <option value="6" ${param.category == '6' ? 'selected' : '' }>인도네시아</option>
-                                <option value="7" ${param.category == '7' ? 'selected' : '' }>멕시코</option>
-                                <option value="8" ${param.category == '8' ? 'selected' : '' }>페루</option>
-                                <option value="9" ${param.category == '9' ? 'selected' : '' }>우간다</option>
-                                <option value="10" ${param.category == '10' ? 'selected' : '' }>베트남</option>
-						    </select>
-	                        <button class="productList__sort clicked" name="sort" value="recent" type="submit">최신순</button>
-	                        <button class="productList__sort" name="sort" value="mostLiked" type="submit">인기순</button>
-	                        <button class="productList__sort" name="sort" value="bestSelling" type="submit">판매량순</button>
+	                        <div>
+	                    		<label for="category">카테고리:</label>	
+								<select id="category" name="category">
+	                                <option value="0" ${param.category == '0' ? 'selected' : '' }>전체</option>
+	                                <option value="1" ${param.category == '1' ? 'selected' : '' }>브라질</option>
+	                                <option value="2" ${param.category == '2' ? 'selected' : '' }>콜롬비아</option>
+	                                <option value="3" ${param.category == '3' ? 'selected' : '' }>에티오피아</option>
+	                                <option value="4" ${param.category == '4' ? 'selected' : '' }>온두라스</option>
+	                                <option value="5" ${param.category == '5' ? 'selected' : '' }>인도</option>
+	                                <option value="6" ${param.category == '6' ? 'selected' : '' }>인도네시아</option>
+	                                <option value="7" ${param.category == '7' ? 'selected' : '' }>멕시코</option>
+	                                <option value="8" ${param.category == '8' ? 'selected' : '' }>페루</option>
+	                                <option value="9" ${param.category == '9' ? 'selected' : '' }>우간다</option>
+	                                <option value="10" ${param.category == '10' ? 'selected' : '' }>베트남</option>
+							    </select>
+		                        <button class="productList__sort clicked" name="sort" value="recent" type="submit">최신순</button>
+		                        <button class="productList__sort" name="sort" value="mostLiked" type="submit">인기순</button>
+		                        <button class="productList__sort" name="sort" value="bestSelling" type="submit">판매량순</button>
+	                    	</div>
 	                       	<div class="productList__search">
 	                       		<input type="text" class="productList__searchInput" id="searchInput" name="search" placeholder="검색어를 입력해주세요." /><i class="fa-solid fa-magnifying-glass"></i>
 	                       	</div>
