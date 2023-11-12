@@ -64,7 +64,7 @@
                     <div class="productListDetail__topRight">
                         <p class="productListDetail__beanName">${ productListDetail.beansDO.beanName }</p>
 
-                        <p class="productListDetail__deliveryPrice">${ productListDetail.beansDO.beanPrice }원</p>
+                        <p class="productListDetail__deliveryPrice"><fmt:formatNumber pattern="#,###" value="${productListDetail.beansDO.beanPrice}"/>원</p>
                         <div class="cartProductInfo__QtyDiv">
                             <button class="cartProductInfo__QtyButton" id="increase"><i class="fa-solid fa-plus"></i></button>
                             <label>
