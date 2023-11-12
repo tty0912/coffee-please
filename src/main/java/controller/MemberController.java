@@ -119,12 +119,13 @@ public class MemberController {
 				// 겹치면 true = DB에 id가 있다는 뜻
 				if(sellerDAO.checkSellerId(id) == true) { 
 					System.out.println("login fail1");
-					return "redirect:/main";
+					model.addAttribute("login", "fail1");
+					return "/main";
 				}
 				//비밀번호 틀림
 				else if(!sellerEmail.getPasswd().equals(pw)){  
 					System.out.println("login fail2");
-					model.addAttribute("login", "fail");
+					model.addAttribute("login", "fail2");
 				    return "/main";
 				}
 				//아이디 비밀번호 전부일치
@@ -138,7 +139,7 @@ public class MemberController {
 
 					model.addAttribute("categoryList", beansDAO.getAllCategory());
 					model.addAttribute("bestBean", beansDAO.bestBeanArray());
-					
+					model.addAttribute("login", "true");
 					return "mainLoginSeller";
 				}
 				
@@ -153,7 +154,8 @@ public class MemberController {
 				// 겹치면 true = DB에 id가 있다는 뜻
 				if(buyerDAO.checkBuyerId(id)) {
 					System.out.println("login fail1");
-					return "redirect:/main";
+					model.addAttribute("login", "fail1");
+					return "/main";
 				}
 				//비밀번호 틀림
 				else if(!buyerDO.getPasswd().equals(pw)){
@@ -172,7 +174,7 @@ public class MemberController {
 
 					model.addAttribute("categoryList", beansDAO.getAllCategory());
 					model.addAttribute("bestBean", beansDAO.bestBeanArray());
-					
+					model.addAttribute("login", "true");
 					return "mainLoginBuyer";
 				}
 				

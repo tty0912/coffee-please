@@ -37,9 +37,9 @@
         <div class="mainIntro">
             <div id="slideShow" class="mainIntro__intro">
                 <ul class="slides">
-                  <li><img class="introImg" src="images/main1.gif" alt=""></li>
-                  <li><img class="introImg" src="images/main2.png" alt=""></li>
-  	              <li><img class="introImg" src="images/main3.png" alt=""></li>
+                  <li><img class="introImg" src="${pageContext.request.contextPath}/images/main1.gif" alt=""></li>
+                  <li><img class="introImg" src="${pageContext.request.contextPath}/images/main2.png" alt=""></li>
+  	              <li><img class="introImg" src="${pageContext.request.contextPath}/images/main3.png" alt=""></li>
                 </ul>  
                 <div class="controller">
                     <span class="prev">&lang;</span>  
@@ -75,20 +75,25 @@
 <%@ include file = "/WEB-INF/views/bestBean.jsp" %>
 
 <!-- ResisterProduct -->
-<section id="resisterProduct" class="section">
+<section id="registerProduct" class="section">
     <div class="max-container">
-        <div class="resisterProduct">
-            <img class="resisterProductImg" src="images/test1.jpg" alt="">
-            <div class="resisterProductButton">
-                <form method="get" action="goRegisterProd">
-                    <button name="action" value="normal" class="resisterProductButton__detail">일반상품판매등록</button>
-                    <button name="action" value="group" class="resisterProductButton__detail">공동상품판매등록</button>
-                </form>
+    <h1 class="registerProduct__title">Register your product right now!</h1>
+        <div class="registerProduct">
+        	
+            <div class="registerProductImgWrapper">
+                <img class="registerProductImg" src="${pageContext.request.contextPath}/images/sellerRegister.gif" alt="">
+                <div class="registerProductButton">
+                    <form method="get" action="goRegisterProd" class="registerProductButton__form">
+                        <button name="action" value="normal" class="registerProductButton__detail">일반상품판매등록</button>
+                        <button name="action" value="group" class="registerProductButton__detail">공동상품판매등록</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </section>
-<div class="sources">
+<div class="sources categorySources">
+	<a href="https://kr.freepik.com/free-vector/tiny-people-and-big-coffee-grinder_8610416.htm#query=%EC%9B%90%EB%91%90%EB%A5%BC%20%EC%B0%BE%EB%8B%A4&position=27&from_view=search&track=ais">작가 pch.vector</a> 출처 Freepik
     출처 <a href="https://kr.freepik.com/free-vector/number-collection-with-golden-style_2304153.htm#query=%EC%88%9C%EC%9C%84&from_query=%EB%93%B1%EC%88%98&position=7&from_view=search&track=sph">Freepik</a>
 </div>
 

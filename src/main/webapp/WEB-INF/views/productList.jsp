@@ -30,14 +30,32 @@
 <%@ include file = "/WEB-INF/views/headerNav.jsp" %>
 	
    <!-- Category -->
-    <%@ include file = "/WEB-INF/views/category.jsp" %>
+    <section id="mainCategory" class="section mainCategorySection">
+       <div class="max-container" >
+       		<div class="controller" >
+                        <button id="categoryPrevBtn"><span id="categoryPrev" >&lang;</span></button>
+                        <button id="categoryNextBtn"><span id="categoryNext" >&rang;</span></button>
+            </div>
+        <h1 class="mainCategory__title">Category</h1>
+            	<ul id="categoryList" class="mainCategory" >
+					
+                    <c:forEach items="${categoryList}" var="categoryDO" >
+        			<li class="mainCategory__detail" id="${categoryDO.categoryNum}">
+        				<img alt="" class="mainCategory__detailImg" src="${categoryDO.categoryImg}" />
+        				<p class="mainCategory__detailTitle">${categoryDO.categoryName}</p>
+        			</li>
+        			</c:forEach>			
+               </ul>
+              		
+              </div>   	
+    </section>
     <!--productList  -->
     <section id="productList" class="section">
         <div class="max-container">
             <div class="productList">
                 <div class="productList__sortSerch">
                     <div class="productList__sortDiv">
-                        <span class="productList__sortText">정렬</span>
+                        <span class="productList__sortText">정렬 :</span>
                         <form action="goProductList" method="GET" id="sorting" class="goProductList">
                         <label for="category">카테고리:</label>	
 							<select id="category" name="category">
@@ -56,6 +74,7 @@
 	                        <button class="productList__sort clicked" name="sort" value="recent" type="submit">최신순</button>
 	                        <button class="productList__sort" name="sort" value="mostLiked" type="submit">인기순</button>
 	                        <button class="productList__sort" name="sort" value="bestSelling" type="submit">판매량순</button>
+
 	                       	<div class="productList__search">
 	                       		<input type="text" class="productList__searchInput" id="searchInput" name="search" placeholder="검색어를 입력해주세요." /><i class="fa-solid fa-magnifying-glass"></i>
 	                       	</div>
