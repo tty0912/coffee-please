@@ -41,7 +41,7 @@
                     	<img class="cartProduct__img" src="${list.beansDO.beanImg}" alt="">
                     	<div class="cartProductInfo">
                         	<p class="cartProductInfo__Name">${list.beansDO.beanName}</p>
-                        	<p class="cartProductInfo__Name">${list.qty}</p>
+                        	<p class="cartProductInfo__Name">${list.cartDO.qty}</p>
 <%--                        	<div class="cartProductInfo__QtyDiv">--%>
 <%--                            	<button class="cartProductInfo__QtyButton"><i class="fa-solid fa-plus"></i></button>--%>
 <%--                            	<input type="text" class="cartProductInfo__QtyText" value="${beansDO.beanPrice}" />	--%>
@@ -54,7 +54,7 @@
 
                 <div class="paymentCompletePrice">
                     <p class="cartTotalPriceText">결제 금액 : <p class="cartTotalPrice"><fmt:formatNumber pattern="#,###" value="${orderList.orderTotalPrice}"/>원</p></p>
-                    <p class="cartTotalPriceText">현재 잔액 : <p class="cartTotalPrice"><fmt:formatNumber pattern="#,###" value="${orderList.beforeOrderPoint}"/>원</p></p>
+                    <p class="cartTotalPriceText">현재 잔액 : <p class="cartTotalPrice"><fmt:formatNumber pattern="#,###" value="${orderList.beforeOrderPoint - orderList.orderTotalPrice}"/>원</p></p>
                 </div>
                 <div class="paymentCompletePrice">
                     <form class="paymentCompletePrice" method="get" action="goProductList">
