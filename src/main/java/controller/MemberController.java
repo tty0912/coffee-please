@@ -168,8 +168,8 @@ public class MemberController {
 					System.out.println("login fail2");
 					model.addAttribute("categoryList", beansDAO.getAllCategory());
 					model.addAttribute("bestBean", beansDAO.bestBeanArray());
-					model.addAttribute("login", "fail");
-				    return "main";
+					model.addAttribute("login", "fail2");
+				    return "/main";
 				}
 				//아이디 비밀번호 전부일치
 				else { 
