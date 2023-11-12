@@ -67,7 +67,7 @@ public class OrderService {
                 BeansDO beansDO = c.getBeansDO();
                 CartDO cartDO = c.getCartDO();
 
-                cartDAO.deleteItem(email, beansDO);
+                cartDAO.deleteItem(email, beansDO.getBeansNum());
 
                 String sellerEmail = beansDAO.getBean(beansDO.getBeansNum()).getSellerEmail();
                 long price = (long) beansDO.getBeanPrice() * cartDO.getQty();

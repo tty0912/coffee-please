@@ -9,6 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
+import model.member.BuyerDAO;
+import model.order.OrderProductDO;
+import model.product.BeansQty;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -218,10 +223,12 @@ public class ProductController {
 	        HttpSession session,
 	        Model model) throws SQLException {
 		 //System.out.println(cartDTO.toString());
+
 		BeansDO bean = beansDAO.getBean(cartDTO.getBeansNum());
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
-		
+
 		// cart 추가
+
 		long totalPrice = cartDAO.totalPrice(bean, cartDTO.getQty());
 		
 		System.out.println("" + totalPrice);
@@ -254,29 +261,19 @@ public class ProductController {
 	}
 	
 
+
 	@PostMapping("/cart/deleteItem")
 	public String deleteItem (@RequestParam(name = "beansNum") int beansNum, HttpSession session, Model model) {
+
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
-		BeansDO bean = beansDAO.getBean(beansNum);
 		System.out.println("번호: " + beansNum);
 		
 		cartDAO.deleteItem(sessionBuyer, bean);
 		System.out.println("삭제됨");
+
 		model.addAttribute("cart", cartDAO.getCartList(sessionBuyer));
-		return "redirect:/cart";
+		return "cart";
 	}
-	/*
-	@PostMapping("/cartOrPayment")
-	 public String payment(@RequestBody String beansNum,
-			 @RequestBody String qty,
-	        HttpSession session,
-	        Model model) throws SQLException {
-	  System.out.println(Integer.parseInt(beansNum));
-	  System.out.println(Integer.parseInt(qty));
-	  
-	   BeansDO bean = beansDAO.getBean(Integer.parseInt(beansNum));
-	   String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
-	   cartDAO.addItem(sessionBuyer, bean, Integer.parseInt(qty));
 
 	@PostMapping("/paymentComplete")
 	public String paymentComplete(CartDTO cartDTO , HttpSession session, Model model) throws SQLException {
@@ -294,10 +291,6 @@ public class ProductController {
 		beansQty.setQty(cartDTO.getQty());
 
 		beanList.add(beansQty);
-
-
-	
-
 		orderProductDO.setBeforeOrderPoint(orderProductDO.getBeforeOrderPoint() - orderProductDO.getOrderTotalPrice());
 
 		model.addAttribute("beansList", beanList);
@@ -305,45 +298,7 @@ public class ProductController {
 		
 		return "paymentComplete";
 	}
-	
-	//즉시 결제
-	/*
-	@PostMapping("/")
-	public String payment1(@RequestParam("beansNum") int beansNum,
-	 					  @RequestParam("qty") int qty,
-						  Model model, HttpSession session) throws SQLException {
 
-		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
-
-		OrderProductDO orderProductDO = orderService.onlyOnePayment(beansNum, qty, sessionBuyer);
-
-		if(orderProductDO != null){
-			return "paymentComplete";
-		}
-		return null;
-	}
-
-
-// *  5) POST	|	/paymentComplete	->	결제 완료시 -> paymentComplete.jsp
-
-
-// *  6) POST	|	/mainLogin			->	결제 완료 페이지에서 버튼 누르면 메인으로 이동(멤버 컨트롤러에 메서드 정의되어있음) -> mainLoginBuyer
-
-
-	//장바구니에 담기
-	/*
-	@PostMapping("/addCart")
-	public String addCart(HttpSession session, 
-						 Model model,
-						 @RequestParam("beansNum") int beansNum,
-						 @RequestParam("qty") int qty) {
-		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
-		
-		cartDAO.addItem(sessionBuyer, beans, qty);
-		
-		return "redirect:/cart";
-	}
-	*/
 	//장바구니 결제
 
 	// 장바구니로 이동
@@ -352,8 +307,11 @@ public class ProductController {
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 		
 		ArrayList<CartBeans> cartList = cartDAO.getCartList(sessionBuyer);
-		
+		int totalPrice = cartDAO.totalPrice(sessionBuyer);
+
+		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
 		model.addAttribute("cart", cartList);
+		model.addAttribute("totalPrice", totalPrice);
 
 		return "cart";
 	}
@@ -380,7 +338,7 @@ public class ProductController {
 	@PostMapping("/registerProd")
 	public String resisterProduct(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
 
-		String directory = "C:/Users/H40/finalCoffee/coffee-please/src/main/webapp/registerData/sellerData/beans";
+		String directory = "D:/multicampus_project/coffee//coffee-please/src/main/webapp/registerData/sellerData/beans";
 		int sizeLimit = 1024 * 1024 * 5;
 
 		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,

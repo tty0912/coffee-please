@@ -88,7 +88,7 @@ public class MemberController {
 
 			SellerDO sellerDO = sellerDAO.getSeller(sessionSeller);
 
-			model.addAttribute("buyer", sellerDO);
+			model.addAttribute("seller", sellerDO);
 
 			return "mainLoginSeller";
 		}
@@ -101,12 +101,11 @@ public class MemberController {
 	
 	// 메인 로그인 페이지 (가영 수정)
 	@PostMapping("/mainLogin")
-
 	public String mainLoginBuyer(@RequestParam("action") String action, HttpServletRequest request, HttpSession session, Model model) {
 		String user = request.getParameter("user");
 		
 		if(action.equals("login")) {
-			System.out.print("1");
+			System.out.println("1");
 			if(user.equals("seller")) {
 				String id = request.getParameter("id");
 				String pw = request.getParameter("passwd");
@@ -124,7 +123,7 @@ public class MemberController {
 				else if(!sellerEmail.getPasswd().equals(pw)){  
 					System.out.println("login fail2");
 					model.addAttribute("login", "fail");
-				    return "main";
+				    return "/main";
 				}
 				//아이디 비밀번호 전부일치
 				else { 
@@ -146,16 +145,16 @@ public class MemberController {
 				String id = request.getParameter("id");
 				String pw = request.getParameter("passwd");
 				
-				BuyerDO buyerEmail = buyerDAO.getBuyer(id);
-				model.addAttribute("buyer", buyerEmail);
+				BuyerDO buyerDO = buyerDAO.getBuyer(id);
+				model.addAttribute("buyer", buyerDO);
 				
 				// 겹치면 true = DB에 id가 있다는 뜻
-				if(buyerDAO.checkBuyerId(id) == true) { 
+				if(buyerDAO.checkBuyerId(id)) {
 					System.out.println("login fail1");
 					return "redirect:/main";
 				}
 				//비밀번호 틀림
-				else if(!buyerEmail.getPasswd().equals(pw)){  
+				else if(!buyerDO.getPasswd().equals(pw)){
 					System.out.println("login fail2");
 					model.addAttribute("login", "fail");
 				    return "main";
@@ -164,7 +163,7 @@ public class MemberController {
 				else { 
 					System.out.println("login all clear");
 					
-					session.setAttribute("buyerEmail", buyerEmail.getBuyerEmail());
+					session.setAttribute("buyerEmail", buyerDO.getBuyerEmail());
 					String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 					System.out.printf(sessionBuyer);
 					System.out.println();
@@ -250,7 +249,6 @@ public class MemberController {
 		
 		model.addAttribute("bean", orderProductDetailDAO.getOrderProductDetailList(sessionBuyer, orderDatetime));
 		
-		
 		return "paymentDetail";
 	}
 	
@@ -308,12 +306,13 @@ public class MemberController {
 		String action = multi.getParameter("action");
 
 		BuyerDO buyer = new BuyerDO();
+		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 
 		if(action.equals("buyerModifyChange")) {
 
 			String[] img = imgUpload.saveImg(multi, directory);
 
-			String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+
 			buyer.setBuyerEmail(sessionBuyer);
       
       String buyerImg = "/coffee/registerData/buyerData/buyer/" + img[0];
@@ -328,6 +327,7 @@ public class MemberController {
 		}
 		else if(action.equals("previousPage")) {
 
+			model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
 			return "redirect:/myPageBuyer";
 		}
 		
@@ -379,12 +379,13 @@ public class MemberController {
 		String action = multi.getParameter("action");
 
 		SellerDO seller = new SellerDO();
+		String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
 
 		if(action.equals("sellerModifyChange")) {
 
 			String[] img = imgUpload.saveImg(multi, directory);
 
-			String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
+
 			seller.setSellerEmail(sessionSeller);
       
 			String sellerImg = "/coffee/registerData/sellerData/seller/" + img[0];
@@ -402,7 +403,8 @@ public class MemberController {
 			return "myPageSeller";
 		}
 		else if(action.equals("previousPage")) {
-			
+
+			model.addAttribute("seller", sellerDAO.getSeller(sessionSeller));
 		    return "redirect:/myPageSeller";
 		}		
 		return "error";

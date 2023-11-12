@@ -48,7 +48,8 @@ function loginHandler(event) {
         }
     } else if (event.submitter && event.submitter.value === 'signup') {
         console.log('Changing action for signup');
-        document.forms["loginForm"].action = "mainLogin"; 
+		document.forms["loginForm"].action = "/coffee/mainLogin";
+        document.forms["loginForm"].submit();
     }
 
     if (msg !== '') {

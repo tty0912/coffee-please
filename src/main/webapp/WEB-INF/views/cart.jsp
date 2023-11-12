@@ -4,6 +4,7 @@
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix = "f"  %>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,25 +48,28 @@
                 	</c:otherwise>              	
                 	</c:choose>
                     	<img class="cartProduct__img" src="${cart.beansDO.beanImg}" alt="">
+
                     	<div class="cartProductInfo">
-                        	<p class="cartProductInfo__Name">${cart.beansDO.beanName}</p>
+                        	<p class="cartProductInfo__Name">${cartList.beansDO.beanName}</p>
                         	<div class="cartProductInfo__QtyDiv" id="qtyBtn">
                             	<button class="cartProductInfo__plus cartProduct__check" id="plus" disabled><i class="fa-solid fa-plus"></i></button>
                             	<span class="qty cartProduct__check">${cart.cartDO.qty}</span>개
                             	<button class="cartProductInfo__minus cartProduct__check" id="minus" disabled><i class="fa-solid fa-minus"></i></button>
                         	</div>
-                        	<p class="cartProductInfo__price">${cart.beansDO.beanPrice}</p>
+                        	<p class="cartProductInfo__price">${cartList.beansDO.beanPrice}</p>
                     	</div>
                     	<form method="POST" type="hidden" id="hiddenForm" action="/deleteItem">
                     	<input type="hidden" name="beansNum" value="${cart.beansDO.beansNum}" />
                     	<button type="submit" class="cartProductInfo__delete" id="delete"><i class="fa-solid fa-trash"></i></button>
-                    	</form>
+                    </form>
                 	</div>
                 </c:forEach>
 
                 <div class="cartPrice">
+
                     <p class="cartTotalPriceText">합산 금액: <span id="totalPrice">${totalPrice}</span>원</p>
                     <button type="submit" class="cartPayment">결제</button>
+
                 </div>
             </div>
         </div>

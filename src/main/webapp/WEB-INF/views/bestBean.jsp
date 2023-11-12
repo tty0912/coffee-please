@@ -9,7 +9,13 @@
   				<c:forEach items="${bestBean}" var="beansDO" >
                     <div class="mainBeanBest__product">
                     	<img src="" alt="" class="beanBest__number">
-        				<img src="${beansDO.beanImg}"  alt="" class="mainBeanBest__productImg" >
+
+        				<img src="${beansDO.beanImg}"  alt="" class="mainBeanBest__productImg" id="${ beansDO.beansNum}" >
+                    	<form method="get" action="goListDetail">
+                			<input type="hidden" id="beansNum" name="beansNum" value="${beansDO.beansNum}" />
+                			<button>
+                			</button>
+                   		</form>
         				<div class="productList__productTitle">${beansDO.beanName }</div>
         				<div class="productList__productPrice">${beansDO.beanPrice}원</div>
         				<div class="likeButton">

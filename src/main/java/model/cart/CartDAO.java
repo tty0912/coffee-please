@@ -68,7 +68,7 @@ public class CartDAO {
 	}
 	
 	// 장바구니 상품 삭제
-	public int deleteItem(String buyerEmail, BeansDO beansDO) {
+	public int deleteItem(String buyerEmail, int beansNum) {
 		int rowCount = 0;
 		
 		this.sql = "delete from cart where buyer_email = ? and beans_num = ?";
@@ -76,7 +76,7 @@ public class CartDAO {
 		try {
 				this.pstmt = conn.prepareStatement(this.sql);
 				this.pstmt.setString(1, buyerEmail);
-				this.pstmt.setInt(2, beansDO.getBeansNum());
+				this.pstmt.setInt(2, beansNum);
 				
 				rowCount = this.pstmt.executeUpdate();				
 		}
@@ -124,6 +124,7 @@ public class CartDAO {
 				beansDO.setBeanName(rs.getString("bean_name"));
 	            beansDO.setBeanPrice(rs.getInt("bean_price"));
 	            beansDO.setBeanImg(rs.getString("bean_img"));
+				beansDO.setBeansNum(rs.getInt("beans_num"));
 	            
 	            cart.setBeansDO(beansDO);
 	            cart.setQty(rs.getInt("qty"));
