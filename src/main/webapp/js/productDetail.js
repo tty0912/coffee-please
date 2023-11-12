@@ -24,9 +24,23 @@ function buyNowHandler() {
 	}
 }
 
+function qtyHandler(e) {
+	let quantityInput = document.querySelector('#quantityInput');
+	let currentValue = parseInt(quantityInput.value);
+
+	if (e.target.id === 'increase') {
+		currentValue++;
+	} else if (e.target.id === 'decrease' && currentValue > 1) {
+		currentValue--;
+	}
+
+	quantityInput.value = currentValue;
+}
 
 function init() {
 	document.querySelector('#cart').addEventListener('click', cartHandler);
 	document.querySelector('#buyNow').addEventListener('click', buyNowHandler);
+	document.querySelector('.cartProductInfo__QtyDiv').addEventListener('click', qtyHandler);
+    
 }
 window.addEventListener('load', init);
