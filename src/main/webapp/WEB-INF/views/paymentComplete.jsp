@@ -36,7 +36,7 @@
                     	<img class="cartProduct__img" src="${list.beansDO.beanImg}" alt="">
                     	<div class="cartProductInfo">
                         	<p class="cartProductInfo__Name">${list.beansDO.beanName}</p>
-                        	<p class="cartProductInfo__Name">${list.cartDO.qty}</p>
+                        	<p class="cartProductInfo__Name">${list.qty}</p>
                         	<p class="cartProductInfo__price">${list.beansDO.beanPrice}원</p>
                     	</div>
                 	</div>

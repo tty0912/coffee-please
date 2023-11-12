@@ -44,7 +44,7 @@
                             type="text"
                             id="beansNum"
                             name="beansNum"
-                            placeholder="상품 이름 입력"
+                            placeholder="${bean.beanName}"
                             disabled
                     />
                 </label>
@@ -55,14 +55,14 @@
                             type="text"
                             id="beanPrice"
                             name="beanPrice"
-                            placeholder="상품 가격 입력"
+                            placeholder="${bean.beanPrice}"
                             disabled
                     />
                 </label>
                 <label for="cName" class="signup__label">
                     <i class="fa-solid fa-flag-checkered signup__icon"></i>
                     <select class="signup__input" name="categoryNum" disabled>
-                        <option value="0">원산지를 선택해주세요.</option>
+                        <option value="0">${cname}</option>
                         <option value="1">베트남</option>
                     </select>
                 </label>
@@ -73,7 +73,7 @@
                             type="text"
                             id="deliveryCharge"
                             name="deliveryCharge"
-                            placeholder="배송료 입력"
+                            placeholder="배송료: Free"
                             disabled
                     />
                 </label>
