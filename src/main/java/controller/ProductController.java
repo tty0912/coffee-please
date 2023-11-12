@@ -218,33 +218,33 @@ public class ProductController {
 
 // *  4) POST	|	/payment			->	상세 페이지에서 결제 누르면 바로이동 -> payment.jsp
 	//장바구니에 담기
-	@PostMapping("/cartOrPayment")
-	public String payment(CartDTO cartDTO,
-	        HttpSession session,
-	        Model model) throws SQLException {
-		 //System.out.println(cartDTO.toString());
-
-		BeansDO bean = beansDAO.getBean(cartDTO.getBeansNum());
-		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
-
-		// cart 추가
-
-		long totalPrice = cartDAO.totalPrice(bean, cartDTO.getQty());
-		
-		System.out.println("" + totalPrice);
-		
-		// bean에 해당하는 상품이 cartDAO에 있는지 체크한다
-		if(cartDAO.checkItem(sessionBuyer, cartDTO.getBeansNum())) {
-			// 있다면 제거한다.
-			cartDAO.deleteItem(sessionBuyer, bean);
-		}
-		cartDAO.addItem(sessionBuyer, bean, cartDTO.getQty());
-		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
-		model.addAttribute("checkedBeansNum", cartDTO.getBeansNum());
-		model.addAttribute("totalPrice", totalPrice);
-		model.addAttribute("cart", cartDAO.getCartList(sessionBuyer));
-	    return "cart";
-	 }
+//	@PostMapping("/cartOrPayment")
+//	public String payment(CartDTO cartDTO,
+//	        HttpSession session,
+//	        Model model) throws SQLException {
+//		 //System.out.println(cartDTO.toString());
+//
+//		BeansDO bean = beansDAO.getBean(cartDTO.getBeansNum());
+//		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+//
+//		// cart 추가
+//
+//		long totalPrice = cartDAO.totalPrice(bean, cartDTO.getQty());
+//		
+//		System.out.println("" + totalPrice);
+//		
+//		// bean에 해당하는 상품이 cartDAO에 있는지 체크한다
+//		if(cartDAO.checkItem(sessionBuyer, cartDTO.getBeansNum())) {
+//			// 있다면 제거한다.
+//			cartDAO.deleteItem(sessionBuyer, bean);
+//		}
+//		cartDAO.addItem(sessionBuyer, bean, cartDTO.getQty());
+//		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
+//		model.addAttribute("checkedBeansNum", cartDTO.getBeansNum());
+//		model.addAttribute("totalPrice", totalPrice);
+//		model.addAttribute("cart", cartDAO.getCartList(sessionBuyer));
+//	    return "cart";
+//	 }
 
 	//하나 바로 결제
 	@PostMapping("/buyNow")
@@ -262,18 +262,18 @@ public class ProductController {
 	
 
 
-	@PostMapping("/cart/deleteItem")
-	public String deleteItem (@RequestParam(name = "beansNum") int beansNum, HttpSession session, Model model) {
-
-		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
-		System.out.println("번호: " + beansNum);
-		
-		cartDAO.deleteItem(sessionBuyer, bean);
-		System.out.println("삭제됨");
-
-		model.addAttribute("cart", cartDAO.getCartList(sessionBuyer));
-		return "cart";
-	}
+//	@PostMapping("/cart/deleteItem")
+//	public String deleteItem (@RequestParam(name = "beansNum") int beansNum, HttpSession session, Model model) {
+//
+//		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+//		System.out.println("번호: " + beansNum);
+//		
+//		cartDAO.deleteItem(sessionBuyer, bean);
+//		System.out.println("삭제됨");
+//
+//		model.addAttribute("cart", cartDAO.getCartList(sessionBuyer));
+//		return "cart";
+//	}
 
 	@PostMapping("/paymentComplete")
 	public String paymentComplete(CartDTO cartDTO , HttpSession session, Model model) throws SQLException {
@@ -302,19 +302,19 @@ public class ProductController {
 	//장바구니 결제
 
 	// 장바구니로 이동
-	@GetMapping("/cart")
-	public String goCart(HttpSession session, Model model){
-		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
-		
-		ArrayList<CartBeans> cartList = cartDAO.getCartList(sessionBuyer);
-		int totalPrice = cartDAO.totalPrice(sessionBuyer);
-
-		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
-		model.addAttribute("cart", cartList);
-		model.addAttribute("totalPrice", totalPrice);
-
-		return "cart";
-	}
+//	@GetMapping("/cart")
+//	public String goCart(HttpSession session, Model model){
+//		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+//		
+//		ArrayList<CartBeans> cartList = cartDAO.getCartList(sessionBuyer);
+//		int totalPrice = cartDAO.totalPrice(sessionBuyer);
+//
+//		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
+//		model.addAttribute("cart", cartList);
+//		model.addAttribute("totalPrice", totalPrice);
+//
+//		return "cart";
+//	}
 
 // 상품등록(일반, 공동) 페이지로 이동
 	@GetMapping("/goRegisterProd")
