@@ -79,9 +79,11 @@
                 <div class="mainIntro__loginAll">
                     
                     <div class="mainIntro__login">
+                    <%--
                     	<div class="userImgDiv">
                             <img src="images/test1.jpg" alt="" class="userImg">
                         </div>
+                     --%>
                         <form id="loginForm" class="mainIntro__loginForm" method="post" action="mainLogin">
                             <div class="loginRadio">
                                 <input type="radio" name="user" value="buyer" checked/><label class="radioLabel">구매자</label>
