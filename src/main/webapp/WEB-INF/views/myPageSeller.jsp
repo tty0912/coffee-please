@@ -57,7 +57,7 @@
         </div>
     </section>
     <!-- nav -->
-    <section id="myPageNav" class="section">
+    <section id="myPageNav">
         <div class="max-container">
             <div class="myPageNav">
                 <button id="myPageNav__likeButton" class="myPageNav__button active" >등록한 상품</button>
@@ -98,7 +98,7 @@
 			                            </tr>
 			                        </table>
 	                    		</div>
-	                            <form method="get" action="productModify">
+	                            <form method="get" action="productModify" class="productList__likeButton">
 	                              <button name="beansNum" value="${beansDO.beansNum}" class="myPageLike__hate"><i class="fa-solid fa-gear"></i></button>
 	                            </form>
 	                		</div>
@@ -129,7 +129,7 @@
 				                            </tr>
 				                        </table>
 		                    		</div>
-		                            <form method="get" action="productModify">
+		                            <form method="get" action="productModify" class="productList__likeButton">
 		                              <button name="beansNum" value="${beansDO.beansNum}" class="myPageLike__hate"><i class="fa-solid fa-gear"></i></button>
 		                            </form>
 	                		</div>
@@ -163,7 +163,7 @@
 		                            </tr>
 		                            <tr>
 		                                <th class="productList__productCategory">총 판매 금액</th>
-		                                <td class="productList__productCategory"><fmt:formatNumber pattern="#,###" value="${beansDO.beanTotalSellCount * beansDO.beanPrice}"/></td>
+		                                <td class="productList__productCategory"><fmt:formatNumber pattern="#,###" value="${beansDO.beanTotalSellCount * beansDO.beanPrice}"/>원</td>
 		                            </tr>
 		                        </table>
                     		</div>

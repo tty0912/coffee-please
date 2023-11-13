@@ -480,6 +480,11 @@ public class MemberController {
 			model.addAttribute("idCheck", msg);
 			return "signupBuyer";
 		} 
+		else if(buyerDAO.checkBuyerId(buyer.getBuyerEmail()) && command.equals("idCheck")) {
+			String msg = "사용가능한 아이디 입니다.";
+			model.addAttribute("idCheck", msg);
+			return "signupBuyer";
+		}
 		else if(command.equals("signup")){
 			buyer.setBuyerImg("/coffee/images/userImginit.png");
 			buyerDAO.insertBuyer(buyer);

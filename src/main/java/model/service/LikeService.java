@@ -46,6 +46,10 @@ public class LikeService {
                 likeBeans.setBeansDO(b);
                 likeBeans.setaBoolean(false);
 
+                likeBeans.setCategoryName(beansDAO.getCategoryName(b.getCategoryNum()));
+
+                System.out.println(likeBeans.getCategoryName());
+
                 likeBeansList.add(likeBeans);
             }
         }
@@ -54,6 +58,10 @@ public class LikeService {
                 LikeBeans likeBeans = new LikeBeans();
                 likeBeans.setBeansDO(b);
                 likeBeans.setaBoolean(likeDAO.checkLike(buyerEmail, b.getBeansNum()));
+
+                likeBeans.setCategoryName(beansDAO.getCategoryName(b.getCategoryNum()));
+
+                System.out.println(likeBeans.getCategoryName());
 
                 likeBeansList.add(likeBeans);
             }
