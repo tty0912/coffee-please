@@ -123,6 +123,7 @@ public class LikeDAO {
 
         ArrayList<LikeBeans> likeBeansList = new ArrayList<>();
 
+
         this.sql = "select beans.bean_name, beans.bean_price, beans.beans_num, beans.category_num, " +
                 "beans.bean_img, beans.like_count " +
                 "from bean_like " +
@@ -137,6 +138,7 @@ public class LikeDAO {
             BeansDO beansDO;
             LikeBeans likeBeans;
 
+
             while(rs.next()) {
                 beansDO = new BeansDO();
                 likeBeans = new LikeBeans();
@@ -146,9 +148,7 @@ public class LikeDAO {
                 beansDO.setBeanPrice(rs.getInt("bean_price"));
                 beansDO.setBeansNum(rs.getInt("beans_num"));
 
-                String categoryName = beansDAO.getCategoryName(rs.getInt("category_num"));
 
-                likeBeans.setCategoryName(categoryName);
                 likeBeans.setBeansDO(beansDO);
                 likeBeansList.add(likeBeans);
             }
