@@ -57,7 +57,7 @@
         </div>
     </section>
     <!-- nav -->
-    <section id="myPageNav" class="section">
+    <section id="myPageNav">
         <div class="max-container">
             <div class="myPageNav">
                 <button id="myPageNav__likeButton" class="myPageNav__button active" >등록한 상품</button>

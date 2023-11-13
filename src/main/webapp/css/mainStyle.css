@@ -274,9 +274,9 @@ input[type='radio']:checked {
     margin-top: 2rem;
 }
 
-  
+  w
   .error {
-    border: 1px solid red;
+    border-bottom: 1px solid var(--color-red);
    }
    
    @keyframes shake {
@@ -626,7 +626,7 @@ input[type='radio']:checked {
 
 .productList__sort {
     color: var(--color-darkgreen);
-    font-size: 1rem;
+    font-size: 15px;
 }
 
 .productList__sort:hover {
@@ -651,10 +651,10 @@ input[type='radio']:checked {
     align-items: center;
     border: 1px solid #ccc;
     border-radius: 20px;
-    width: 230px;
+    width: 250px;
     height: 2.4rem;
     padding: 4px;
-    margin-left: 600px;
+    margin-left: 750px;
 
 }
 
@@ -705,6 +705,7 @@ input[type='radio']:checked {
 
 .productList__productImg {
     width: 13rem;
+    height: 12rem;
     border-radius: 10px;
 }
 
@@ -717,7 +718,7 @@ input[type='radio']:checked {
 .productList__productDelivery, .productList__productCategory, .productList__productPrice, .productList__productTitle{
     padding: 10px;
     color: var(--color-darkgreen);
-    font-size: 1.1rem;
+    font-size: 14.3px;
 }
 
 .productList__likeButton {

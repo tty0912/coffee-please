@@ -15,7 +15,7 @@ function resetIcon() {
     }
 }
 
-var likeButton = document.getElementById('likeButton');
+var likeButton = document.querySelector('.likeButton');
 if (likeButton) {
     likeButton.addEventListener('mouseover', changeIcon);
     likeButton.addEventListener('mouseout', resetIcon);

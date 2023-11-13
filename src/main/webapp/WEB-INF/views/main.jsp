@@ -19,7 +19,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
-    <script type="module" src="${pageContext.request.contextPath }/js/popup.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script>
 	<script type="module" src="${pageContext.request.contextPath }/js/category.js" defer></script>
 	<script type="module" src="${pageContext.request.contextPath }/js/bestBean.js" defer></script>
@@ -151,9 +150,9 @@
             </div>
  	         <div class="mainBeanBest__button">
  	         	<h2 class="mainBeanBest__buttonTitle">더 많은 원두를 보려면?</h2>
- 	         	
+ 	         	<form method="get" action="goProductList">
  	         	    <button id="popupButton"  class="mainBeanBest__plusButton"><i class="fa-solid fa-angles-right"></i></button>	
- 	 
+ 	 			</form>
 
             </div>
         </div>
