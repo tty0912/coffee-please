@@ -109,7 +109,7 @@ public class ProductController {
 	@GetMapping("/goProductList")
 	public String ProductList(Model model,
 							  @RequestParam(value = "page", required = false, defaultValue = "1") int page, 
-		            @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize,
+		            @RequestParam(value = "pageSize", required = false, defaultValue = "14") int pageSize,
 		            @RequestParam(value = "category", required = false, defaultValue = "0") String categoryNum,
 		            @RequestParam(value = "sort", required = false, defaultValue = "recent") String sort,
 		            @RequestParam(value = "search", required = false , defaultValue = "") String search,
@@ -118,6 +118,13 @@ public class ProductController {
 		// 상품 목록을 가져오는 기본 메서드
 		//System.out.println(sort + ":" + search + ":" + categoryNum);
         ArrayList<BeansDO> beansList = beansDAO.sortedPage(sort, search, Integer.parseInt(categoryNum));
+        if (sort != null && sort.equals("recent")) {
+        	model.addAttribute("sort", "recent");
+        }else if (sort != null && sort.equals("mostLiked")) {
+        	model.addAttribute("sort", "mostLiked");
+        }else if (sort != null && sort.equals("bestSelling")) {
+        	model.addAttribute("sort", "bestSelling");
+        }
 
 		// 페이징 처리를 위한 전체 상품 수 계산
         int totalRows = beansList.size();
@@ -158,7 +165,7 @@ public class ProductController {
 	@GetMapping("/goProductListGroup")
 	public String goProductListGroup(Model model, 
             @RequestParam(value = "page", required = false, defaultValue = "1") int page, 
-            @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize,
+            @RequestParam(value = "pageSize", required = false, defaultValue = "14") int pageSize,
             @RequestParam(value = "category", required = false, defaultValue = "0") String categoryNum,
             @RequestParam(value = "sort", required = false, defaultValue = "recent") String sort, 
             @RequestParam(value = "search", required = false) String search) {

@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script type="module" src="${pageContext.request.contextPath }/js/imgUpload.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/lmgUpload.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
@@ -61,10 +61,16 @@
                             <i class="fa-solid fa-flag-checkered signup__icon"></i>
                             <select class="signup__input" name="categoryNum">
                             	<option value="0">원산지를 선택해주세요.</option>
-                            	<option value="1">베트남</option>
-                            	<option value="2">브라질</option>
-                            	<option value="3">과테말라</option>
-                            	<option value="4">인도</option>
+                            	<option value="1">대한민국</option>
+                            	<option value="2">벨기에</option>
+                            	<option value="3">덴마크</option>
+                            	<option value="4">프랑스</option>
+                            	<option value="5">인도</option>
+                            	<option value="6">인도네시아</option>
+                            	<option value="7">스페인</option>
+                            	<option value="8">핀란드</option>
+                            	<option value="9">노르웨이</option>
+                            	<option value="10">체코</option>
                             	
                             </select>
                         </label>

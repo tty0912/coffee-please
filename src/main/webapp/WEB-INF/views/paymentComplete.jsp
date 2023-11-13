@@ -35,9 +35,9 @@
                 	<div class="paymentProduct">
                     	<img class="cartProduct__img" src="${list.beansDO.beanImg}" alt="">
                     	<div class="cartProductInfo">
-                        	<p class="cartProductInfo__Name">${list.beansDO.beanName}</p>
-                        	<p class="cartProductInfo__Name">${list.qty}</p>
-                        	<p class="cartProductInfo__price">${list.beansDO.beanPrice}원</p>
+                        	<p class="cartProductInfo__Name">상품명 : ${list.beansDO.beanName}</p>
+                        	<p class="cartProductInfo__Name">수량 : ${list.qty}개</p>
+                        	<p class="cartProductInfo__price">상품 가격 : ${list.beansDO.beanPrice}원</p>
                     	</div>
                 	</div>
 

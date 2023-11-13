@@ -133,13 +133,13 @@
                     	<img src="" alt="" class="beanBest__number">
 
         				<img src="${beansDO.beanImg}"  alt="" class="mainBeanBest__productImg" id="${ beansDO.beansNum}" >
-                    	<form method="get" action="goListDetail">
+                    	<form method="get" action="goListDetail" class="bestBeanForm">
                 			<input type="hidden" id="beansNum" name="beansNum" value="${beansDO.beansNum}" />
                 			<button>
                 			</button>
                    		</form>
-        				<div class="productList__productTitle">${beansDO.beanName }</div>
-        				<div class="productList__productPrice">${beansDO.beanPrice}원</div>
+        				<p class="productList__productTitle"><span class="bestBean__span">상품명</span> ${beansDO.beanName }</p>
+        				<p class="bestBean__productPrice"><span class="bestBean__span">가격</span> ${beansDO.beanPrice}원</p>
         				<div class="likeButton">
                         	<button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
                         	<p class="mainBeanBest__productLikeCount">${beansDO.likeCount}</p>

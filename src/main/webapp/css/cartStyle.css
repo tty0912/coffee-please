@@ -118,17 +118,24 @@ button:focus {
     gap: 2rem;
 }
 .cartProductInfo__Name {
-    font-size: 1.2rem;
+    font-size: 17px;
     font-weight: bold;
     color: var(--color-text);
 }
 .cartProductInfo__price {
-    font-size: 1rem;
+    font-size: 17px;
     font-weight: bold;
     color: var(--color-text);
 }
 .cartProductInfo__delete {
     font-size: 1.2rem;
+}
+.cartProductInfo__QtyText{
+    width: 50px;
+    border-bottom: 2px solid var(--color-darkgreen);
+    border-left: none;
+    border-right: none;
+    border-top: none;
 }
 .cartProductInfo__delete:hover {
     color: var(--color-red);

@@ -21,8 +21,8 @@ function fixedBestBeanFontBoxHandler(){
 	let fixedBestBeanFontBox = document.querySelectorAll('.productList__productTitle');
 	
 	for(let i=0;i<fixedBestBeanFontBox.length;i++){
-		fixedBestBeanFontBox[i].style.width = '100px';
-		fixedBestBeanFontBox[i].style.height = '69px';
+		fixedBestBeanFontBox[i].style.width = '180px';
+		fixedBestBeanFontBox[i].style.height = '0px';
 		fixedBestBeanFontBox[i].style.margin = 'auto';
 		
 	}

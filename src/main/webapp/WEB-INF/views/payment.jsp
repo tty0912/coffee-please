@@ -39,13 +39,13 @@
                 	<div class="paymentProduct">
                     	<img class="cartProduct__img" src="${beansDO.beanImg}" alt="">
                     	<div class="cartProductInfo">
-                        	<p class="cartProductInfo__Name">${beansDO.beanName}</p>
+                        	<p class="cartProductInfo__Name">상품명 : ${beansDO.beanName}</p>
                         	<div class="cartProductInfo__QtyDiv">
                             	<button class="cartProductInfo__QtyButton"><i class="fa-solid fa-plus"></i></button>
-                            	<input type="text" class="cartProductInfo__QtyText" value="${beansDO.beanPrice}" />	
+                            	<input type="text" class="cartProductInfo__QtyText" value="수량 : ${beansDO.beanPrice}개" />	
                             	<button class="cartProductInfo__QtyButton"><i class="fa-solid fa-minus"></i></button>
                         	</div>
-                        	<p class="cartProductInfo__price"><fmt:formatNumber pattern="#,###" value="${beansDO.beanPrice}"/>원</p>
+                        	<p class="cartProductInfo__price"><fmt:formatNumber pattern="#,###" value="가격 : ${beansDO.beanPrice}"/>원</p>
                     	</div>
                 	</div>
                 </c:forEach>
