@@ -29,7 +29,7 @@ public class BuyerDAOTest {
 
         BuyerDO buyer = new BuyerDO();
 
-        buyer.setNickname("흥민흥민흥민");
+        buyer.setNickname("흥민흥민");
         buyer.setTel("777777");
         buyer.setAddress("부산시 부산진구");
         buyer.setBuyerImg("buyerImg-url");
@@ -76,7 +76,7 @@ public class BuyerDAOTest {
 
     @Test
     public void checkBuyerPointTest(){
-        assertThat(buyerDAO.checkBuyerPoint("hmson@naver.com")).isEqualTo(1000000);
+        assertThat(buyerDAO.checkBuyerPoint("hmson@naver.com")).isEqualTo(10000000);
     }
 
     @Test

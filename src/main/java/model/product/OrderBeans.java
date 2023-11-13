@@ -9,6 +9,15 @@ public class OrderBeans {
     private OrderProductDetailDO orderProductDetailDO;
 
     private OrderProductDO orderProductDO;
+    private String categoryName;
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
 
     public OrderProductDO getOrderProductDO() {
         return orderProductDO;
