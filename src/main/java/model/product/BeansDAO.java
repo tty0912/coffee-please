@@ -208,6 +208,7 @@ public class BeansDAO {
 				beans.setGoalPrice(rs.getInt("goal_price"));
 				beans.setBeanTotalSellCount(rs.getInt("bean_total_selcount"));
 				beans.setStatusNumber(rs.getInt("status"));
+				beans.setCategoryNum(rs.getInt("category_num"));
 
 				if (str == null || beans.getBeanName().contains(str)) {
 					resultList.add(beans);
@@ -254,6 +255,7 @@ public class BeansDAO {
 				beans.setGoalPrice(rs.getInt("goal_price"));
 				beans.setBeanTotalSellCount(rs.getInt("bean_total_selcount"));
 				beans.setStatusNumber(rs.getInt("status"));
+				beans.setCategoryNum(rs.getInt("category_num"));
 
 				if (str == null || beans.getBeanName().contains(str)) {
 					resultList.add(beans);
