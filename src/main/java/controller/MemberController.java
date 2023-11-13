@@ -226,6 +226,7 @@ public class MemberController {
 		
 		// 찜 내역 불러오기
 		ArrayList<LikeBeans> likeListInfo = likeDAO.getLikeList(sessionBuyer);
+
 		model.addAttribute("likeList", likeListInfo);
 		
 		// 구매내역
@@ -239,9 +240,6 @@ public class MemberController {
 			orderBeans.setOrderProductDO(i);
 			orderBeans.setBeansDO(beans);
 
-			String categoryName = beansDAO.getCategoryName(beans.getCategoryNum());
-
-			orderBeans.setCategoryName(categoryName);
 			orderBeansList.add(orderBeans);
 		}
 
@@ -376,10 +374,18 @@ public class MemberController {
 		
 		String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
 		model.addAttribute("seller", sellerDAO.getSeller(sessionSeller));
-		
 
+		ArrayList<LikeBeans> sellList = beansDAO.getSellList(sessionSeller);
+		LikeBeans likeBeans;
+
+		for(int i = 0; i < sellList.size(); i++){
+			int categoryNum = sellList.get(i).getBeansDO().getCategoryNum();
+			likeBeans = sellList.get(i);
+			likeBeans.setCategoryName(beansDAO.getCategoryName(categoryNum));
+			sellList.set(i, likeBeans);
+		}
 		// 판매 중인 상품
-		model.addAttribute("sellList", beansDAO.getSellList(sessionSeller));
+		model.addAttribute("sellList", sellList);
 
 		// 판매 내역
 		

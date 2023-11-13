@@ -88,20 +88,20 @@
                 		<div class="myPageLike__product">
                 		<!-- 수정 부분 -->
                 		<form method="get" action="goListDetail" class="myPageLike__productImgForm">
-                			<input type="hidden" id="beansNum" name="beansNum" value="${beansDO.beansNum}" />
+                			<input type="hidden" id="beansNum" name="beansNum" value="${beansDO.beansDO.beansNum}" />
                 			<button class="myPageLike__productImgButton">
-	                    		<img class="myPageLike__productImg" src="${beansDO.beanImg}" alt="buyerImg" />
+	                    		<img class="myPageLike__productImg" src="${beansDO.beansDO.beanImg}" alt="buyerImg" />
                 			</button>
                    		</form>
                     		<div class="productList__productText">
                     			<table class="productList__table">
 		                            <tr>
 		                                <th class="myPage__productText">상품명 </th>
-		                                <td class="myPage__productText">${beansDO.beanName}</td>
+		                                <td class="myPage__productText">${beansDO.beansDO.beanName}</td>
 		                            </tr>
 		                            <tr>
 		                                <th class="myPage__productText">가격 </th>
-		                                <td class="myPage__productText"><fmt:formatNumber pattern="#,###" value="${beansDO.beanPrice}"/>원</td>
+		                                <td class="myPage__productText"><fmt:formatNumber pattern="#,###" value="${beansDO.beansDO.beanPrice}"/>원</td>
 		                            </tr>
 		                            <tr>
 		                                <th class="myPage__productText">배송비</th>
@@ -109,13 +109,13 @@
 		                            </tr>
 		                            <tr>
 		                                <th class="myPage__productText">원두 종류</th>
-		                                <td class="myPage__productText">케냐 ?</td>
+		                                <td class="myPage__productText">${beansDO.categoryName}</td>
 		                            </tr>
 		                        </table>
                     		</div>
                     		<form method="get" action="like" class="productList__likeButton">
                                 <input type="hidden" name="sort" value="myPage">
-                                <button  name="beansNum" value="${beansDO.beansNum}" class="myPageLike__button likeButton"><i class="fa-solid fa-heart"></i></button>
+                                <button  name="beansNum" value="${beansDO.beansDO.beansNum}" class="myPageLike__button likeButton"><i class="fa-solid fa-heart"></i></button>
                             </form>
                 		</div>
                 	</c:forEach>
