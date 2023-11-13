@@ -49,7 +49,10 @@
                                 placeholder="email@example.com"
                             />
                         </label> 
-                        <p id="idCheckMsg"></p>
+                        <c:if test="${not empty idCheck }">
+                        	<p >${idCheck }</p>
+                        </c:if>
+                        <button name="command" value="idCheck">중복체크</button>
                         <label for="new-username" class="signup__label">
                             <i class="fa-regular fa-id-card signup__icon"></i>
                             <input
@@ -116,7 +119,7 @@
                                 placeholder="주소를 입력해주세요."
                             />
                         </label>
-                        <button class="signup__button" type="submit">회원가입</button>
+                        <button class="signup__button" type="submit" name="command" value="signup">회원가입</button>
                     </form>
                     <div id="signUpMsg">${msg}</div>
                 </div>
