@@ -1,6 +1,7 @@
 const myPageNavlikeButton = document.getElementById('myPageNav__likeButton');
 const purchaseButton = document.getElementById('myPageNav__purchaseButton');
 const purchaseGroupButton = document.getElementById('myPageNav__purchaseGroupButton');
+
 const myPageLike = document.querySelector('#myPageLike');
 const myPagePurchase = document.querySelector('#myPagePurchase');
 const myPagePurchaseGroup = document.querySelector('#myPagePurchaseGroup');
