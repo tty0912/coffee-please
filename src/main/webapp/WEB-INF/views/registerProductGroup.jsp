@@ -68,15 +68,21 @@
                             />
                         </label>
                        
-                        <label for="new-cName" class="signup__label">
+                        <label for="cName" class="signup__label">
                             <i class="fa-solid fa-flag-checkered signup__icon"></i>
-                            <input
-                                class="signup__input"
-                                type="text"
-                                id="new-cName"
-                                name="cName"
-                                placeholder="원산지 입력"
-                            />
+                            <select class="signup__input" name="categoryNum">
+                            	<option value="0">원산지를 선택해주세요.</option>
+                            	<option value="1">대한민국</option>
+                            	<option value="2">벨기에</option>
+                            	<option value="3">덴마크</option>
+                            	<option value="4">프랑스</option>
+                            	<option value="5">인도</option>
+                            	<option value="6">인도네시아</option>
+                            	<option value="7">스페인</option>
+                            	<option value="8">핀란드</option>
+                            	<option value="9">노르웨이</option>
+                            	<option value="10">체코</option>
+                            </select>
                         </label>
 
                         <label for="new-goalQty" class="signup__label">
