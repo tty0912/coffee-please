@@ -100,7 +100,7 @@
                                 </tr>
                                 <tr>
                                     <th class="productList__productCategory">원산지</th>
-                                    <td class="productList__productCategory">???</td>
+                                    <td class="productList__productCategory">${bean.categoryName}</td>
                                 </tr>
                             </table>
                             
