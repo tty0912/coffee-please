@@ -62,6 +62,9 @@
                             <select class="signup__input" name="categoryNum">
                             	<option value="0">원산지를 선택해주세요.</option>
                             	<option value="1">베트남</option>
+                            	<option value="2">브라질</option>
+                            	<option value="3">과테말라</option>
+                            	<option value="4">인도</option>
                             	
                             </select>
                         </label>
