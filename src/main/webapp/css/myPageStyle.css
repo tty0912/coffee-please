@@ -230,18 +230,33 @@ button:focus {
 }
 
 .myPageLike__product {
-    display: flex;
-    padding: 2rem;
-    margin: 4rem 0rem 3rem 4.5rem;
-    width: 28rem;
+	margin: 50px 10px 50px 18px;
+    display: grid;
+    grid-template-columns: 2fr 2fr 0.7fr;
+    width: 35rem;
     height: 14rem;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px;
-    
-    position: relative;
+    border-radius: 10px;
+    padding: 1rem 1.5rem 1rem 1.5rem;
+    box-shadow: 4.0px 8.0px 8.0px rgba(0,0,0,0.38);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
-
+.myPage__productText {
+	padding: 10px;
+    color: var(--color-darkgreen);
+    font-size: 16px;
+}
+.myPagePurchase__productText {
+	padding-bottom: 15px;
+    color: var(--color-darkgreen);
+    font-size: 16px;
+}
+.myPagePurchase__detailButtonToMyPage{
+	display: flex;
+	justify-content: center;
+}
+.myPagePurchase__table {
+	margin: 15px 0px;
+}
 .sold-out {
 	position: absolute;
 	left: 0px;
@@ -260,8 +275,30 @@ button:focus {
 	vertical-align: middle;
 }
 
-.myPageLike__productImg {
-    width: 10rem;
+.myPagePurchase__productImg, .myPagePurchase__productImgButton, .myPagePurchase__productImgForm {
+    width: 200px;
+    height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.myPagePurchase__product {
+    margin: 50px 10px 50px 18px;
+    display: grid;
+    grid-template-columns: 1.7fr 2fr 0.7fr;
+    width: 35rem;
+    height: 14rem;
+    border-radius: 10px;
+    padding: 1rem 1.5rem 1rem 1.5rem;
+    box-shadow: 4px 8px 8px rgba(0,0,0,0.38);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+.myPageLike__productImg, .myPageLike__productImgButton, .myPageLike__productImgForm {
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 180px;
 }
 .myPageLike__productInfo {
     display: grid;
@@ -320,19 +357,8 @@ button:focus {
     box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
 }
 
-.myPagePurchase__product {
-    display: flex;
-    padding: 2rem;
-    margin: 4rem 0rem 3rem 4.5rem;
-    width: 28rem;
-    height: 14rem;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: rgba(13, 38, 76, 0.19) 0px 9px 20px;
-}
-.myPagePurchase__productImg {
-    width: 10rem;
-}
+
+
 .myPagePurchase__productInfo {
     display: grid;
     height: 100%;
@@ -356,13 +382,16 @@ button:focus {
 }
 
 .myPagePurchase__detail {
-    color: var(--color-red);
-    font-size: 1.5rem;
+    color: var(--color-darkgreen);
+    font-weight: bold;
+    font-size: 14px;
+}
+.myPagePurchase__detail:hover {
+    color: var(--color-brown);
+    font-size: 14px;
+    font-weight: bold;
 }
 
-.myPagePurchase__detail:hover  {
-    color: var(--color-gray); 
-  }
 
 
 /* myPagePurchase */

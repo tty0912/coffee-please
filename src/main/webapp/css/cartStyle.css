@@ -85,8 +85,8 @@ button:focus {
 /* registerProduct */
 
 #cart {
-    margin-top: 90px;
-    padding: 4rem;
+    margin-top: 70px;
+    padding: 6rem;
     background-color: var(--color-beige);
     text-align: center;
 }
@@ -183,5 +183,15 @@ button:focus {
     align-items: center;
     justify-content: space-between;
     margin: 4rem 4rem 0rem 4rem;
+}
+#completeForm {
+	    margin: 2.4rem 13rem 0rem 13rem;
+}
+
+.paymentCompleteButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3rem;
 }
 

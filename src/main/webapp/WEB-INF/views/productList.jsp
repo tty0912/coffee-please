@@ -120,7 +120,7 @@
                                             <form method="GET" action="like">
                                                 <input type="hidden" name="sort" value=${sortOption}>
                                                 <input type="hidden" name="page" value=${currentPage}>
-                                                <button id="likeButton" name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                                                <button  name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button likeButton"><i class="fa-solid fa-heart"></i></button>
                                             </form>
                                         </c:when>
                                     </c:choose>
@@ -134,7 +134,7 @@
 			                        </div>
 		                        </c:when>
 		                    </c:choose>
-                        </div>
+                       
                     </div>
                 </c:when>
                 </c:choose>
@@ -175,9 +175,6 @@
 
 <script>
 
-    function categoryHandler () {
-        document.querySelector('#sorting').submit();
-    }
     function prodDetail2Handler(that) {
         //alert('div가 눌려졌음');
         let beans = that.getAttribute('id');
@@ -185,18 +182,7 @@
         let url = '/coffee/goListDetail?beansNum=' + beans;
         location.href = url;
     }
-    // function prodDetailHandler(event) {
-    //     let beans = event.getAttribute('id');
-    //     alert(beans);
-    //
-    //     let url = '/coffee/goListDetail?beansNum=' + beans;
-    //     location.href = url;
-    // }
-    function init() {
-        document.querySelector('#category').addEventListener('change', categoryHandler);
-        /* document.querySelector('#beansTable').addEventListener('click', prodDetailHandler); */
-    }
-    window.addEventListener('load', init);
+    
 </script>
 <%@ include file="/WEB-INF/views/footer.jsp"%>
 </body>
