@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import model.product.LikeBeans;
 import model.product.OrderBeans;
 import model.service.ImgUpload;
 import org.springframework.stereotype.Controller;
@@ -224,12 +225,10 @@ public class MemberController {
 		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
 		
 		// 찜 내역 불러오기
-		ArrayList<BeansDO> likeListInfo = likeDAO.getLikeList(sessionBuyer);
+		ArrayList<LikeBeans> likeListInfo = likeDAO.getLikeList(sessionBuyer);
+
 		model.addAttribute("likeList", likeListInfo);
-		for(BeansDO a : likeListInfo) {
-			System.out.println(a.getBeanName());
-		}
-		
+
 		// 구매내역
 		ArrayList<OrderProductDO> orderListInfo = orderProductDAO.getBuyerOrderList(sessionBuyer);
 		ArrayList<OrderBeans> orderBeansList = new ArrayList<>();
@@ -240,10 +239,6 @@ public class MemberController {
 			BeansDO beans = orderProductDetailList.get(0).getBeansDO();
 			orderBeans.setOrderProductDO(i);
 			orderBeans.setBeansDO(beans);
-
-			System.out.println(i.getOrderDatetime());
-			System.out.println(orderBeans.getOrderProductDO().getOrderTotalPrice());
-			System.out.println(orderBeans.getOrderProductDO().getOrderDatetime());
 
 			orderBeansList.add(orderBeans);
 		}
@@ -330,7 +325,7 @@ public class MemberController {
 	@PostMapping("/buyerModifyChange")
 
 	public String buyerModifyChange(HttpServletRequest request, HttpSession session, Model model) throws IOException {
-		String directory = "C:\\Users\\은식\\Desktop/coffee-please/src/main/webapp/registerData/buyerData/buyer";
+		String directory = "D:\\multicampus_project\\coffee/coffee-please/src/main/webapp/registerData/buyerData/buyer";
 
 
 		int sizeLimit = 1024 * 1024 * 5;
@@ -379,10 +374,18 @@ public class MemberController {
 		
 		String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
 		model.addAttribute("seller", sellerDAO.getSeller(sessionSeller));
-		
 
+		ArrayList<LikeBeans> sellList = beansDAO.getSellList(sessionSeller);
+		LikeBeans likeBeans;
+
+		for(int i = 0; i < sellList.size(); i++){
+			int categoryNum = sellList.get(i).getBeansDO().getCategoryNum();
+			likeBeans = sellList.get(i);
+			likeBeans.setCategoryName(beansDAO.getCategoryName(categoryNum));
+			sellList.set(i, likeBeans);
+		}
 		// 판매 중인 상품
-		model.addAttribute("sellList", beansDAO.getSellList(sessionSeller));
+		model.addAttribute("sellList", sellList);
 
 		// 판매 내역
 		
@@ -404,7 +407,7 @@ public class MemberController {
 	@PostMapping("/sellerModifyChange")
 	public String sellerModifyChange(HttpServletRequest request, HttpSession session, Model model) throws IOException {
 
-		String directory =  "C:\\Users\\은식\\Desktop/coffee-please/src/main/webapp/registerData/sellerData/seller";
+		String directory =  "D:\\multicampus_project\\coffee/coffee-please/src/main/webapp/registerData/sellerData/seller";
 
 		int sizeLimit = 1024 * 1024 * 5;
 		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,

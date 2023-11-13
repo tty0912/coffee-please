@@ -2,6 +2,7 @@ package model.like;
 
 import model.product.BeansDAO;
 import model.product.BeansDO;
+import model.product.LikeBeans;
 import model.service.LikeService;
 import org.junit.Test;
 
@@ -20,12 +21,12 @@ public class LikeTest {
 
         likeService.clickLike("kilee@naver.com", 0);
 
-        ArrayList<BeansDO> likeList = likeService.getLikeList("kilee@naver.com");
-        for (BeansDO e : likeList) {
-            String beanName = e.getBeanName();
-            int likeCount = e.getLikeCount();
-            String beanImg = e.getBeanImg();
-            long beanPrice = e.getBeanPrice();
+        ArrayList<LikeBeans> likeList = likeService.getLikeList("kilee@naver.com");
+        for (LikeBeans e : likeList) {
+            String beanName = e.getBeansDO().getBeanName();
+            int likeCount = e.getBeansDO().getLikeCount();
+            String beanImg = e.getBeansDO().getBeanImg();
+            long beanPrice = e.getBeansDO().getBeanPrice();
 
             assertThat(beanName).isEqualTo("코스타리카산");
             assertThat(likeCount).isEqualTo(1);

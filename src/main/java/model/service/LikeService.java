@@ -31,7 +31,7 @@ public class LikeService {
     }
 
     //내가 찜한 목록 불러오기
-    public ArrayList<BeansDO> getLikeList(String email){
+    public ArrayList<LikeBeans> getLikeList(String email){
         return likeDAO.getLikeList(email);
     }
 

@@ -1,7 +1,9 @@
 package model.like;
 
+import model.product.BeansDAO;
 import model.product.BeansDO;
 import model.product.CartDO;
+import model.product.LikeBeans;
 
 
 import java.sql.*;
@@ -13,6 +15,8 @@ public class LikeDAO {
     private PreparedStatement pstmt;
     private ResultSet rs;
     private String sql;
+
+    BeansDAO beansDAO = new BeansDAO();
 
     public LikeDAO(){
 
@@ -115,11 +119,11 @@ public class LikeDAO {
     }
 
     //내가 찜한 목록 불러오기
-    public ArrayList<BeansDO> getLikeList(String email){
+    public ArrayList<LikeBeans> getLikeList(String email){
 
-        ArrayList<BeansDO> likeBeansList = new ArrayList<>();
+        ArrayList<LikeBeans> likeBeansList = new ArrayList<>();
 
-        this.sql = "select beans.bean_name, beans.bean_price, beans.beans_num, " +
+        this.sql = "select beans.bean_name, beans.bean_price, beans.beans_num, beans.category_num, " +
                 "beans.bean_img, beans.like_count " +
                 "from bean_like " +
                 "join beans on bean_like.beans_num = beans.beans_num " +
@@ -131,16 +135,22 @@ public class LikeDAO {
             rs = pstmt.executeQuery();
 
             BeansDO beansDO;
+            LikeBeans likeBeans;
 
             while(rs.next()) {
                 beansDO = new BeansDO();
+                likeBeans = new LikeBeans();
                 beansDO.setBeanName(rs.getString("bean_name"));
                 beansDO.setLikeCount(rs.getInt("like_count"));
                 beansDO.setBeanImg(rs.getString("bean_img"));
                 beansDO.setBeanPrice(rs.getInt("bean_price"));
                 beansDO.setBeansNum(rs.getInt("beans_num"));
 
-                likeBeansList.add(beansDO);
+                String categoryName = beansDAO.getCategoryName(rs.getInt("category_num"));
+
+                likeBeans.setCategoryName(categoryName);
+                likeBeans.setBeansDO(beansDO);
+                likeBeansList.add(likeBeans);
             }
         }
         catch(Exception e) {
