@@ -239,6 +239,7 @@ button:focus {
     padding: 1rem 1.5rem 1rem 1.5rem;
     box-shadow: 4.0px 8.0px 8.0px rgba(0,0,0,0.38);
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    position: relative;
 }
 .myPage__productText {
 	padding: 10px;
