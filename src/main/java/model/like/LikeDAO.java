@@ -2,6 +2,7 @@ package model.like;
 
 import model.product.BeansDO;
 import model.product.CartDO;
+import model.product.LikeBeans;
 
 
 import java.sql.*;
@@ -115,9 +116,10 @@ public class LikeDAO {
     }
 
     //내가 찜한 목록 불러오기
-    public ArrayList<BeansDO> getLikeList(String email){
+    public ArrayList<LikeBeans> getLikeList(String email){
 
-        ArrayList<BeansDO> likeBeansList = new ArrayList<>();
+        ArrayList<LikeBeans> likeBeansList = new ArrayList<>();
+
 
         this.sql = "select beans.bean_name, beans.bean_price, beans.beans_num, " +
                 "beans.bean_img, beans.like_count " +
@@ -131,6 +133,7 @@ public class LikeDAO {
             rs = pstmt.executeQuery();
 
             BeansDO beansDO;
+            LikeBeans likeBeans = new LikeBeans();
 
             while(rs.next()) {
                 beansDO = new BeansDO();
@@ -140,7 +143,8 @@ public class LikeDAO {
                 beansDO.setBeanPrice(rs.getInt("bean_price"));
                 beansDO.setBeansNum(rs.getInt("beans_num"));
 
-                likeBeansList.add(beansDO);
+                likeBeans.setBeansDO(beansDO);
+                likeBeansList.add(likeBeans);
             }
         }
         catch(Exception e) {

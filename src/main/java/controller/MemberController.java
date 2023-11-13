@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import model.product.LikeBeans;
 import model.product.OrderBeans;
 import model.service.ImgUpload;
 import org.springframework.stereotype.Controller;
@@ -224,11 +225,8 @@ public class MemberController {
 		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
 		
 		// 찜 내역 불러오기
-		ArrayList<BeansDO> likeListInfo = likeDAO.getLikeList(sessionBuyer);
+		ArrayList<LikeBeans> likeListInfo = likeDAO.getLikeList(sessionBuyer);
 		model.addAttribute("likeList", likeListInfo);
-		for(BeansDO a : likeListInfo) {
-			System.out.println(a.getBeanName());
-		}
 		
 		// 구매내역
 		ArrayList<OrderProductDO> orderListInfo = orderProductDAO.getBuyerOrderList(sessionBuyer);
@@ -241,10 +239,9 @@ public class MemberController {
 			orderBeans.setOrderProductDO(i);
 			orderBeans.setBeansDO(beans);
 
-			System.out.println(i.getOrderDatetime());
-			System.out.println(orderBeans.getOrderProductDO().getOrderTotalPrice());
-			System.out.println(orderBeans.getOrderProductDO().getOrderDatetime());
+			String categoryName = beansDAO.getCategoryName(beans.getCategoryNum());
 
+			orderBeans.setCategoryName(categoryName);
 			orderBeansList.add(orderBeans);
 		}
 
@@ -330,7 +327,7 @@ public class MemberController {
 	@PostMapping("/buyerModifyChange")
 
 	public String buyerModifyChange(HttpServletRequest request, HttpSession session, Model model) throws IOException {
-		String directory = "C:\\Users\\은식\\Desktop/coffee-please/src/main/webapp/registerData/buyerData/buyer";
+		String directory = "C:\\Users\\H40\\finalCoffee/coffee-please/src/main/webapp/registerData/buyerData/buyer";
 
 
 		int sizeLimit = 1024 * 1024 * 5;
@@ -404,7 +401,7 @@ public class MemberController {
 	@PostMapping("/sellerModifyChange")
 	public String sellerModifyChange(HttpServletRequest request, HttpSession session, Model model) throws IOException {
 
-		String directory =  "C:\\Users\\은식\\Desktop/coffee-please/src/main/webapp/registerData/sellerData/seller";
+		String directory =  "C:\\Users\\H40\\finalCoffee/coffee-please/src/main/webapp/registerData/sellerData/seller";
 
 		int sizeLimit = 1024 * 1024 * 5;
 		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
