@@ -18,15 +18,62 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
-
     <script type="module" src="${pageContext.request.contextPath }/js/category.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/popupSeller2.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/like.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/loginNon2.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
     <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
      <%--<script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script> --%>
+    <script>
+    function updateSortClass(sortValue) {
+        console.log(sortValue);
+
+        let productList__sortRecentButton = document.querySelector('.productList__sortRecentButton');
+        let productList__sortMostLikedButton = document.querySelector('.productList__sortMostLikedButton');
+        let productList__sortBestSellingButton = document.querySelector('.productList__sortBestSellingButton');
+
+        let clickedElement = document.querySelector('.clicked');
+        if (clickedElement) {
+            clickedElement.classList.remove('clicked');
+        }
+
+        if (sortValue === 'recent') {
+            productList__sortRecentButton.classList.add('clicked');
+        } else if (sortValue === 'mostLiked') {
+            productList__sortMostLikedButton.classList.add('clicked');
+        } else if (sortValue === 'bestSelling') {
+            productList__sortBestSellingButton.classList.add('clicked');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        let productList__sortRecentButton = document.querySelector('.productList__sortRecentButton');
+        let productList__sortMostLikedButton = document.querySelector('.productList__sortMostLikedButton');
+        let productList__sortBestSellingButton = document.querySelector('.productList__sortBestSellingButton');
+
+ 
+        productList__sortRecentButton.addEventListener('click', function() {
+            updateSortClass('recent');
+        });
+
+        productList__sortMostLikedButton.addEventListener('click', function() {
+            updateSortClass('mostLiked');
+        });
+
+        productList__sortBestSellingButton.addEventListener('click', function() {
+            updateSortClass('bestSelling');
+        });
+
+
+        updateSortClass('${sort}'); 
+    });
+
+</script>
+
+
 </head>
 <body>
 <%@ include file = "/WEB-INF/views/headerNav.jsp" %>
@@ -59,9 +106,9 @@
                     <div class="productList__sortDiv">
                         <form action="goProductList" method="GET" id="sorting" class="goProductList">
 	                        <div>
-		                        <button class="productList__sort clicked" name="sort" value="recent" type="submit">최신순</button>
-		                        <button class="productList__sort" name="sort" value="mostLiked" type="submit">인기순</button>
-		                        <button class="productList__sort" name="sort" value="bestSelling" type="submit">판매량순</button>
+		                        <button class="productList__sort productList__sortRecentButton clicked" name="sort" value="recent" type="submit">최신순</button>
+		                        <button class="productList__sort productList__sortMostLikedButton" name="sort" value="mostLiked" type="submit">인기순</button>
+		                        <button class="productList__sort productList__sortBestSellingButton" name="sort" value="bestSelling" type="submit">판매량순</button>
 	                    	</div>
 	                       	<div class="productList__search">
 	                       		<input type="text" class="productList__searchInput" id="searchInput" name="search" placeholder="검색어를 입력해주세요." /><i class="fa-solid fa-magnifying-glass"></i>
@@ -130,6 +177,12 @@
 	                           <c:when test="${not empty sellerEmail}">
 		                           	<div class="productList__likeButton">
 			                            <button id="sellerLikeButton" name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+			                            <p class="product__productLikeCount">${bean.beansDO.likeCount}</p>
+			                        </div>
+		                        </c:when>
+		                        <c:when test="${empty buyerEmail and empty sellerEmail}">
+		                           	<div class="productList__likeButton">
+			                            <button id="NonLikeButton" name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
 			                            <p class="product__productLikeCount">${bean.beansDO.likeCount}</p>
 			                        </div>
 		                        </c:when>

@@ -22,6 +22,7 @@
     <script type="module" src="${pageContext.request.contextPath }/js/productDetail.js" defer></script> 
     <script type="module" src="${pageContext.request.contextPath }/js/popupSeller.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/likeDetail.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/loginNon.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
@@ -97,6 +98,16 @@
 				                                <button class="productListDetail__cart" id="cartSeller">CART</button>
 					                            <div class="productListDetailDetail__likeButton">
 					                                <button id="sellerLikeButton" name="beansNum" value="${productListDetail.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
+					                                <p class="prodductListDetail__productLikeCount">${productListDetail.beansDO.likeCount}</p>
+					                            </div>
+				                            </div>
+				                        </c:when>
+				                        <c:when test="${empty buyerEmail and empty sellerEmail}">
+				                        	<button class="productListDetail__pay" id="buyNowNon">BUY NOW</button>
+				                            <div class="productListDetail__button-div">
+				                                <button class="productListDetail__cart" id="cartNon">CART</button>
+					                            <div class="productListDetailDetail__likeButton">
+					                                <button id="NonLikeButton" name="beansNum" value="${productListDetail.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
 					                                <p class="prodductListDetail__productLikeCount">${productListDetail.beansDO.likeCount}</p>
 					                            </div>
 				                            </div>

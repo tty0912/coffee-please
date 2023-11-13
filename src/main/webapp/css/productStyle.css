@@ -124,3 +124,7 @@ button:focus {
     overflow: hidden;
     border: 0;
 }
+
+productListDetail__bottomImg {
+	width: 800px;
+}

@@ -38,9 +38,9 @@
                 	<div class="cartProduct" id="checkBoxes">
                     	<img class="cartProduct__img" src="${cartList.beansDO.beanImg}" alt="">
                     	<div class="cartProductInfo">
-                        	<p class="cartProductInfo__Name">${cartList.beansDO.beanName}</p>
+                        	<p class="cartProductInfo__Name">상품명 : ${cartList.beansDO.beanName}</p>
                         	<div class="cartProductInfo__QtyDiv" id="qtyBtn">
-                            	<span class="qty cartProduct__check">${cartList.cartDO.qty}</span>개
+                            	<span class="qty cartProduct__check cartProductInfo__Name">수량 : ${cartList.cartDO.qty}</span>개
                         	</div>
                         	<p class="cartProductInfo__price">상품 가격 : ${cartList.beansDO.beanPrice}</p>
                     	</div>

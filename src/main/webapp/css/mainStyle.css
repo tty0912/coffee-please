@@ -448,7 +448,11 @@ input[type='radio']:checked {
     display: grid;
     width: 15rem;
     margin: 2rem;
-    gap: 1rem;
+    gap: 10px;
+}
+.bestBean__span {
+	font-weight: bold;
+	font-size: 14px;
 }
 .mainBeanBest__productTitle {
     font-size: 1.2rem;
@@ -912,6 +916,16 @@ input[type='radio']:checked {
 	color: var(--color-red);
 	
 }
+.bestBeanForm {
+	display: none;
+}
+.bestBean__productPrice{
+	padding: 10px;
+    color: var(--color-darkgreen);
+    font-size: 14.3px;
+    height: 30px;
+}
+    
 
 
 

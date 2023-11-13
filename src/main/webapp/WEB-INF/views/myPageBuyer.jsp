@@ -138,21 +138,14 @@
                    		</form>
                     		<div class="myPagePurchase__productText">
                     			<table class="myPagePurchase__table">
+                    				<tr>
+		                                <th class="myPagePurchase__productText">주문번호</th>
+		                                <td class="myPagePurchase__productText">${status.count}</td>
+		                            </tr>
                     				<tr >
 		                                <th class="myPagePurchase__productText">구매날짜 </th>
 		                                <td class="myPagePurchase__productText">${orderLists.orderProductDO.orderDatetime}</td>
 		                            </tr>
-		                            <tr><th></th><td></td></tr>
-		                            <tr>
-		                                <th class="myPagePurchase__productText">상품명 </th>
-		                                <td class="myPagePurchase__productText">${beansDO.beanName}</td>
-		                            </tr>
-		                            <tr></tr>
-		                            <tr>
-		                                <th class="myPagePurchase__productText">수량</th>
-		                                <td class="myPagePurchase__productText">${status.count}</td>
-		                            </tr>
-		                            <tr></tr>
 		                            <tr>
 		                                <th class="myPagePurchase__productText">결제 금액</th>
 		                                <td class="myPagePurchase__productText"><fmt:formatNumber pattern="#,###" value="${orderLists.orderProductDO.orderTotalPrice}"/>원</p>
