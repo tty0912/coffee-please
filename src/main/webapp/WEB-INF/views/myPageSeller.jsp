@@ -60,7 +60,7 @@
     <section id="myPageNav" class="section">
         <div class="max-container">
             <div class="myPageNav">
-                <button id="myPageNav__likeButton" class="myPageNav__button" >등록한 상품</button>
+                <button id="myPageNav__likeButton" class="myPageNav__button active" >등록한 상품</button>
                 <button id="myPageNav__purchaseButton" class="myPageNav__button">일반상품판매내역</button>
                 <button id="myPageNav__purchaseGroupButton" class="myPageNav__button">공동구매판매내역</button>
             </div>
@@ -72,17 +72,34 @@
         	<div>
         		<h2 class="myPageLike__title">판매 중인 게시물을 확인해보세요!</h2> 
             	<div id="sellList" class="myPageLike">
+            		
             		<c:forEach items="${sellList}" var="beansDO" >
             		<c:choose>
             			<c:when test="${beansDO.statusNumber == 0}">
 	                		<div id="${beansDO.beansNum}" class="myPageLike__product" onclick="let that = this; sellListHandler(that)">
 	                    		<img class="myPageLike__productImg" src="${beansDO.beanImg}" alt="buyerImg" />
-	                    		<div class="myPageLike__productInfo">
-	                        		<p class="myPageLike__productName">${beansDO.beanName}</p>
-	                        		<p class="myPageLike__productPrice"><fmt:formatNumber pattern="#,###" value="${beansDO.beanPrice}"/>원</p>
+	                    		<div class="productList__productText">
+	                    			<table class="productList__table">
+			                            <tr>
+			                                <th class="productList__productTitle">상품명 </th>
+			                                <td class="productList__productTitle">${beansDO.beanName}</td>
+			                            </tr>
+			                            <tr>
+			                                <th class="productList__productPrice">가격 </th>
+			                                <td class="productList__productPrice"><fmt:formatNumber pattern="#,###" value="${beansDO.beanPrice}"/>원</td>
+			                            </tr>
+			                            <tr>
+			                                <th class="productList__productDelivery">배송비</th>
+			                                <td class="productList__productDelivery">Free </td>
+			                            </tr>
+			                            <tr>
+			                                <th class="productList__productCategory">원두 종류</th>
+			                                <td class="productList__productCategory">케냐 ?</td>
+			                            </tr>
+			                        </table>
 	                    		</div>
 	                            <form method="get" action="productModify">
-	                              <button name="beansNum" value="${beansDO.beansNum}" class="myPageLike__hate"><i class="fa-solid fa-heart"></i></button>
+	                              <button name="beansNum" value="${beansDO.beansNum}" class="myPageLike__hate"><i class="fa-solid fa-gear"></i></button>
 	                            </form>
 	                		</div>
             			</c:when>
@@ -92,13 +109,29 @@
 		                    		<div class="sold-out">
 		                    			<p>판매 종료</p>
 		                    		</div>
-	                    		<div class="myPageLike__productInfo">
-	                        		<p class="myPageLike__productName">${beansDO.beanName}</p>
-	                        		<p class="myPageLike__productPrice"><fmt:formatNumber pattern="#,###" value="${beansDO.beanPrice}"/>원</p>
-	                    		</div>
-	                            <form method="get" action="productModify">
-	                              <button name="beansNum" value="${beansDO.beansNum}" class="myPageLike__hate"><i class="fa-solid fa-heart"></i></button>
-	                            </form>
+		                    		<div class="productList__productText">
+		                    			<table class="productList__table">
+				                            <tr>
+				                                <th class="productList__productTitle">상품명 </th>
+				                                <td class="productList__productTitle">${beansDO.beanName}</td>
+				                            </tr>
+				                            <tr>
+				                                <th class="productList__productPrice">가격 </th>
+				                                <td class="productList__productPrice"><fmt:formatNumber pattern="#,###" value="${beansDO.beanPrice}"/>원</td>
+				                            </tr>
+				                            <tr>
+				                                <th class="productList__productDelivery">배송비</th>
+				                                <td class="productList__productDelivery">Free </td>
+				                            </tr>
+				                            <tr>
+				                                <th class="productList__productCategory">원두 종류</th>
+				                                <td class="productList__productCategory">케냐 ?</td>
+				                            </tr>
+				                        </table>
+		                    		</div>
+		                            <form method="get" action="productModify">
+		                              <button name="beansNum" value="${beansDO.beansNum}" class="myPageLike__hate"><i class="fa-solid fa-gear"></i></button>
+		                            </form>
 	                		</div>
             			</c:when>
             		</c:choose>
@@ -114,40 +147,63 @@
             		<c:forEach items="${sellList}" var="beansDO">
                 		<div id="${beansDO.beansNum}" class="myPageLike__product" onclick="let that = this; sellListHandler(that)">
                     		<img class="myPageLike__productImg" src="${beansDO.beanImg}" alt="buyerImg" />
-                    		<div class="myPageLike__productInfo">
-                        		<p class="myPageLike__productName">${beansDO.beanName}</p>
-                        		<p class="myPageLike__productPrice"><fmt:formatNumber pattern="#,###" value="${beansDO.beanPrice}"/>원</p>
-                        		<!-- class 수정해주세요!! 임시class!! -->
-                        		<p class="myPageLike__productPrice">판매 수량: ${beansDO.beanTotalSellCount}</p>
-                        		<p class="myPageLike__productPrice">총판매 금액: <fmt:formatNumber pattern="#,###" value="${beansDO.beanTotalSellCount * beansDO.beanPrice}"/></p>
+                          	<div class="productList__productText">
+                    			<table class="productList__table">
+		                            <tr>
+		                                <th class="productList__productTitle">상품명 </th>
+		                                <td class="productList__productTitle">${beansDO.beanName}</td>
+		                            </tr>
+		                            <tr>
+		                                <th class="productList__productPrice">가격 </th>
+		                                <td class="productList__productPrice"><fmt:formatNumber pattern="#,###" value="${beansDO.beanPrice}"/>원</td>
+		                            </tr>
+		                            <tr>
+		                                <th class="productList__productDelivery">판매 수량</th>
+		                                <td class="productList__productDelivery">${beansDO.beanTotalSellCount}</td>
+		                            </tr>
+		                            <tr>
+		                                <th class="productList__productCategory">총 판매 금액</th>
+		                                <td class="productList__productCategory"><fmt:formatNumber pattern="#,###" value="${beansDO.beanTotalSellCount * beansDO.beanPrice}"/></td>
+		                            </tr>
+		                        </table>
                     		</div>
-                            <form method="get" action="productModify">
-                              <button name="beansNum" value="${beansDO.beansNum}" class="myPageLike__hate"><i class="fa-solid fa-heart"></i></button>
-                            </form>
                 		</div>
                 	</c:forEach>
             	</div>
         	</div>
-   		</div>
+   		
     </section>
     <section id="myPagePurchaseGroup" class="section">
-        <div class="max-container">
-        	<div>
-        		<h2 class="myPagePurchaseGroup__title">공동구매 판매내역을 확인해보세요!</h2> 
-            	<div class="myPagePurchaseGroup">
-            		<c:forEach items="${likeList}" var="beansDO">
-                		<div class="myPagePurchaseGroup__product">
-                    		<img class="myPagePurchaseGroup__productImg" src="${beansDO.beanImg}" alt="buyerImg" />
-                    		<div class="myPagePurchaseGroup__productInfo">
-                        		<p class="myPagePurchaseGroup__productName">${beansDO.beanName}</p>
-                        		<p class="myPagePurchaseGroup__productPrice">${beansDO.beanPrice}</p>
+        <div class="max-container">	
+        		<h2 class="myPagePurchase__title">공동구매 판매내역을 확인해보세요!</h2> 
+            	<div class="myPagePurchase">
+            		<c:forEach items="${sellList}" var="beansDO">
+                		<div id="${beansDO.beansNum}" class="myPageLike__product" onclick="let that = this; sellListHandler(that)">
+                    		<img class="myPageLike__productImg" src="${beansDO.beanImg}" alt="buyerImg" />
+                          	<div class="productList__productText">
+                    			<table class="productList__table">
+		                            <tr>
+		                                <th class="productList__productTitle">상품명 </th>
+		                                <td class="productList__productTitle">${beansDO.beanName}</td>
+		                            </tr>
+		                            <tr>
+		                                <th class="productList__productPrice">가격 </th>
+		                                <td class="productList__productPrice"><fmt:formatNumber pattern="#,###" value="${beansDO.beanPrice}"/>원</td>
+		                            </tr>
+		                            <tr>
+		                                <th class="productList__productDelivery">판매 수량</th>
+		                                <td class="productList__productDelivery">${beansDO.beanTotalSellCount}</td>
+		                            </tr>
+		                            <tr>
+		                                <th class="productList__productCategory">총 판매 금액</th>
+		                                <td class="productList__productCategory"><fmt:formatNumber pattern="#,###" value="${beansDO.beanTotalSellCount * beansDO.beanPrice}"/></td>
+		                            </tr>
+		                        </table>
                     		</div>
-                    		<button class="myPagePurchaseGroup__detail"><i class="fa-solid fa-heart"></i></button>
                 		</div>
                 	</c:forEach>
             	</div>
         	</div>
-        </div>
     </section>
     <div class="myPageSources">
         출처 <a href="https://kr.freepik.com/free-vector/flat-design-profile-icon-set_29332702.htm#query=%EC%82%AC%EC%9A%A9%EC%9E%90&position=4&from_view=search&track=sph">Freepik</a>

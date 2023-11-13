@@ -290,9 +290,6 @@ button:focus {
     font-size: 1.5rem;
 }
 
-.myPageLike__hate:hover  {
-    color: var(--color-gray); 
-  }
 
 .myPageSources {
     background-color: var(--color-beige);
