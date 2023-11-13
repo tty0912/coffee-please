@@ -69,6 +69,22 @@ function telHyphen() {
   tel.value = formattedNumber; 
 };
 
+function businessNumberHyphen() {
+  let businessNumber = document.getElementById('new-businessNumber');
+  const phoneNumberValue = businessNumber.value.replace(/[^0-9]/g, ''); 
+  let formattedNumber = '';
+
+  if (phoneNumberValue.length >= 4 && phoneNumberValue.length <= 5) {
+    formattedNumber = phoneNumberValue.replace(/(\d{3})(\d{1,2})/, '$1-$2');
+  } else if (phoneNumberValue.length > 5) {
+    formattedNumber = phoneNumberValue.replace(/(\d{3})(\d{2})(\d{0,5})/, '$1-$2-$3');
+  } else {
+    formattedNumber = phoneNumberValue;
+  }
+
+  businessNumber.value = formattedNumber; 
+};
+
 
 function signupSellerSubmitHandler(event) {
     let userId = document.getElementById('new-userId');
@@ -144,12 +160,14 @@ function init() {
     let password = document.getElementById('new-password');
     let passwordConfirm = document.getElementById('new-passwordConfirm');
     let tel = document.getElementById('new-tel');
+    let businessNumber = document.getElementById('new-businessNumber');
 	
 
 	signUpSellerForm.addEventListener('submit', signupSellerSubmitHandler);
 	password.addEventListener('input', checkPasswordStrength);
 	passwordConfirm.addEventListener('input', confirmPassword);
 	tel.addEventListener('input', telHyphen);
+	businessNumber.addEventListener('input', businessNumberHyphen);
 }
 
 init();
