@@ -113,7 +113,7 @@
                                             <form method="GET" action="like" >
                                                 <input type="hidden" name="sort" value=${sortOption}>
                                                 <input type="hidden" name="page" value=${currentPage}>
-                                                <button id="likeButton" name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
+                                                <button name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
                                             </form>
                                         </c:when>
                                         <c:when test="${bean.aBoolean == true}">

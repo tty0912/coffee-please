@@ -789,7 +789,7 @@ input[type='radio']:checked {
     border: 2px solid var(--color-gray);
 }
 .productListDetailDetail__likeButton:hover, .productListDetail__cart:hover {
-    border: none;
+   border: 2px solid var(--color-white);
 }
 .prodductListDetail__productLikeCount {
     margin-right: 4px;

@@ -21,6 +21,8 @@
     <!-- Javascript -->
     <script type="module" src="${pageContext.request.contextPath }/js/active.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/like.js" defer></script>
+    
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
@@ -81,6 +83,7 @@
         	<div>
         		<h2 class="myPageLike__title">찜한 목록을 확인해보세요!</h2> 
             	<div class="myPageLike">
+            		
             		<c:forEach items="${likeList}" var="beansDO">
                 		<div class="myPageLike__product">
                 		<!-- 수정 부분 -->
@@ -90,13 +93,29 @@
 	                    		<img class="myPageLike__productImg" src="${beansDO.beanImg}" alt="buyerImg" />
                 			</button>
                    		</form>
-                    		<div class="myPageLike__productInfo">
-                        		<p class="myPageLike__productName">${beansDO.beanName}</p>
-                        		<p class="myPageLike__productPrice"><fmt:formatNumber pattern="#,###" value="${beansDO.beanPrice}"/></p>
+                    		<div class="productList__productText">
+                    			<table class="productList__table">
+		                            <tr>
+		                                <th class="productList__productTitle">상품명 </th>
+		                                <td class="productList__productTitle">${beansDO.beanName}</td>
+		                            </tr>
+		                            <tr>
+		                                <th class="productList__productPrice">가격 </th>
+		                                <td class="productList__productPrice"><fmt:formatNumber pattern="#,###" value="${beansDO.beanPrice}"/>원</td>
+		                            </tr>
+		                            <tr>
+		                                <th class="productList__productDelivery">배송비</th>
+		                                <td class="productList__productDelivery">Free </td>
+		                            </tr>
+		                            <tr>
+		                                <th class="productList__productCategory">원두 종류</th>
+		                                <td class="productList__productCategory">케냐 ?</td>
+		                            </tr>
+		                        </table>
                     		</div>
-                    		<form method="get" action="like">
+                    		<form method="get" action="like" class="productList__likeButton">
                                 <input type="hidden" name="sort" value="myPage">
-                                <button name="beansNum" value="${beansDO.beansNum}" class="myPageLike__hate"><i class="fa-solid fa-heart"></i></button>
+                                <button id="likeButton" name="beansNum" value="${beansDO.beansNum}" class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
                             </form>
                 		</div>
                 	</c:forEach>
@@ -109,19 +128,39 @@
         		<h2 class="myPagePurchase__title">구매한 내역을 확인해보세요!</h2> 
             	<div class="myPagePurchase">
             		<c:forEach items="${orderList}" var="orderLists" varStatus="status">
-                		<div class="myPagePurchase__product">
-                			<form method="post" action="paymentDetail">
-                				<input type="hidden" id="orderDatetime" name="orderDatetime" value="${orderLists.orderProductDO.orderDatetime}">
-                				<button>
-		                            <img class="myPagePurchase__productImg" src="${orderLists.beansDO.beanImg}" alt="buyerImg" />
-                				</button>
-                			</form>
-                    		<div class="myPagePurchase__productInfo">
-                    			<p class="myPagePurchase__productName">${status.count}</p>
-                        		<p class="myPagePurchase__productName">${orderLists.orderProductDO.orderDatetime}</p>
-                        		<p class="myPagePurchase__productPrice"><fmt:formatNumber pattern="#,###" value="${orderLists.orderProductDO.orderTotalPrice}"/>원</p>
+            			<div class="myPageLike__product">
+                		<!-- 수정 부분 -->
+                		<form method="post" action="paymentDetail">
+                			<input type="hidden" id="orderDatetime" name="orderDatetime" value="${orderLists.orderProductDO.orderDatetime}">
+                			<button>
+	                    		<img class="myPageLike__productImg" src="${orderLists.beansDO.beanImg}" alt="buyerImg" />
+                			</button>
+                   		</form>
+                    		<div class="productList__productText">
+                    			<table class="productList__table">
+                    				<tr>
+		                                <th class="productList__productTitle">구매날짜 </th>
+		                                <td class="productList__productTitle">${orderLists.orderProductDO.orderDatetime}</td>
+		                            </tr>
+		                            <tr>
+		                                <th class="productList__productTitle">상품명 </th>
+		                                <td class="productList__productTitle">${beansDO.beanName}</td>
+		                            </tr>
+		                            <tr>
+		                                <th class="productList__productDelivery">수량</th>
+		                                <td class="productList__productDelivery">${status.count}</td>
+		                            </tr>
+		                            <tr>
+		                                <th class="productList__productPrice">결제 금액</th>
+		                                <td class="productList__productPrice"><fmt:formatNumber pattern="#,###" value="${orderLists.orderProductDO.orderTotalPrice}"/>원</p>
+		                            </tr>
+		                           
+		                        </table>
                     		</div>
-                    		<button class="myPagePurchase__detail"><i class="fa-solid fa-heart"></i></button>
+                    		<form method="post" action="paymentDetail">
+                				<input type="hidden" id="orderDatetime" name="orderDatetime" value="${orderLists.orderProductDO.orderDatetime}">
+                                <button class="myPagePurchase__detail"><i class="fa-solid fa-heart"></i></button>
+                            </form>
                 		</div>
                 	</c:forEach>
             	</div>
@@ -133,14 +172,40 @@
         	<div>
         		<h2 class="myPagePurchaseGroup__title">공동 구매한 목록을 확인해보세요!</h2> 
             	<div class="myPagePurchaseGroup">
-            		<c:forEach items="${likeList}" var="beansDO">
-                		<div class="myPagePurchaseGroup__product">
-                    		<img class="myPagePurchaseGroup__productImg" src="${beansDO.beanImg}" alt="buyerImg" />
-                    		<div class="myPagePurchaseGroup__productInfo">
-                        		<p class="myPagePurchaseGroup__productName">${beansDO.beanName}</p>
-                        		<p class="myPagePurchaseGroup__productPrice">${beansDO.beanPrice}</p>
+            		<c:forEach items="${orderList}" var="orderLists" varStatus="status">
+            			<div class="myPageLike__product">
+                		<!-- 수정 부분 -->
+                		<form method="post" action="paymentDetail">
+                			<input type="hidden" id="orderDatetime" name="orderDatetime" value="${orderLists.orderProductDO.orderDatetime}">
+                			<button>
+	                    		<img class="myPageLike__productImg" src="${orderLists.beansDO.beanImg}" alt="buyerImg" />
+                			</button>
+                   		</form>
+                    		<div class="productList__productText">
+                    			<table class="productList__table">
+                    				<tr>
+		                                <th class="productList__productTitle">구매날짜 </th>
+		                                <td class="productList__productTitle">${orderLists.orderProductDO.orderDatetime}</td>
+		                            </tr>
+		                            <tr>
+		                                <th class="productList__productTitle">상품명 </th>
+		                                <td class="productList__productTitle">${beansDO.beanName}</td>
+		                            </tr>
+		                            <tr>
+		                                <th class="productList__productDelivery">수량</th>
+		                                <td class="productList__productDelivery">${status.count}</td>
+		                            </tr>
+		                            <tr>
+		                                <th class="productList__productPrice">결제 금액</th>
+		                                <td class="productList__productPrice"><fmt:formatNumber pattern="#,###" value="${orderLists.orderProductDO.orderTotalPrice}"/>원</p>
+		                            </tr>
+		                           
+		                        </table>
                     		</div>
-                    		<button class="myPagePurchaseGroup__detail"><i class="fa-solid fa-heart"></i></button>
+                    		<form method="post" action="paymentDetail">
+                				<input type="hidden" id="orderDatetime" name="orderDatetime" value="${orderLists.orderProductDO.orderDatetime}">
+                                <button class="myPagePurchase__detail"><i class="fa-solid fa-heart"></i></button>
+                            </form>
                 		</div>
                 	</c:forEach>
             	</div>
