@@ -473,11 +473,26 @@ public class MemberController {
 	
 	// 구매자 회원가입후 메인으로 이동
 	@PostMapping("signupBuyer")
-	public String signupBuyer(@ModelAttribute BuyerDO buyer) throws Exception{
-
-		buyer.setBuyerImg("/coffee/images/userImginit.png");
-		buyerDAO.insertBuyer(buyer);
-		return "redirect:/main";
+	public String signupBuyer(@ModelAttribute BuyerDO buyer,@RequestParam("command") String command, Model model) throws Exception{
+		
+		if(!buyerDAO.checkBuyerId(buyer.getBuyerEmail()) && command.equals("idCheck")) {
+			String msg = "아이디가 중복되었습니다.";
+			model.addAttribute("idCheck", msg);
+			return "signupBuyer";
+		} 
+		else if(command.equals("signup")){
+			buyer.setBuyerImg("/coffee/images/userImginit.png");
+			buyerDAO.insertBuyer(buyer);
+			return "redirect:/main";
+			
+		}
+		else {
+			return "error";
+		}
+		
 	}
+	
+	
+	
 	
 }
