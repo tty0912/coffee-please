@@ -106,7 +106,7 @@
                 <div class="productList__sortSerch">
                     <div class="productList__sortDiv">
                         <form action="goProductList" method="GET" id="sorting" class="goProductList">
-	                        <div>
+	                        <div class="productList__sortSerchButtonDiv">
 		                        <button class="productList__sort productList__sortRecentButton clicked" name="sort" value="recent" type="submit">최신순</button>
 		                        <button class="productList__sort productList__sortMostLikedButton" name="sort" value="mostLiked" type="submit">인기순</button>
 		                        <button class="productList__sort productList__sortBestSellingButton" name="sort" value="bestSelling" type="submit">판매량순</button>

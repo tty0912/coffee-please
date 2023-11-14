@@ -35,7 +35,7 @@
  <!-- SellerModify -->
     <section id="signup__sellerModify" class="section">
         <div class="max-container">
-            <div class="signup">
+            <div class="modifySeller">
                 <div class="modify__form-div">
                     <h2 class="signup__title">Bean2B 비즈니스 회원 정보를 수정해주세요.</h2> 
                     <form id="modify__form" enctype="multipart/form-data" method="post" action="sellerModifyChange">
