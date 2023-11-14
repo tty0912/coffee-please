@@ -20,6 +20,7 @@
     <!-- Javascript -->
     <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
    	<script type="module" src="${pageContext.request.contextPath }/js/signupBuyer.js" defer></script>
+   	<script type="module" src="${pageContext.request.contextPath }/js/servicePopup.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>

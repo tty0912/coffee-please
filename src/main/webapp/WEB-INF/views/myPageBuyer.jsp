@@ -22,6 +22,7 @@
     <script type="module" src="${pageContext.request.contextPath }/js/active.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/like.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/servicePopup.js" defer></script>
     
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
@@ -73,7 +74,7 @@
             <div class="myPageNav">
                 <button id="myPageNav__likeButton" class="myPageNav__button active" >찜 내역</button>
                 <button id="myPageNav__purchaseButton" class="myPageNav__button">구매내역</button>
-                <button id="myPageNav__purchaseGroupButton" class="myPageNav__button">공동구매내역</button>
+                <button id="myPageNav__purchaseGroupButton servicePopup" class="myPageNav__button">공동구매내역</button>
             </div>
         </div>
     </section>

@@ -23,6 +23,7 @@
     <script type="module" src="${pageContext.request.contextPath }/js/popupSeller.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/likeDetail.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/loginNon.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/servicePopup.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>

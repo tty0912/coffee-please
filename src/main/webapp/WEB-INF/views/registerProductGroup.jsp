@@ -20,6 +20,7 @@
     <!-- Javascript -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script type="module" src="${pageContext.request.contextPath }/js/imgUpload.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/servicePopup.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
@@ -31,7 +32,7 @@
 <%@ include file = "/WEB-INF/views/headerNav.jsp" %>
 
  <!-- registerProductGroup -->
-   <section id="signup__buyerModify" class="section">
+   <section id="registerProductGroup" class="section">
         <div class="max-container">
             <div class="signup__buyerModify">
                 <div class="signup__form-div">
@@ -59,7 +60,7 @@
                             />
                         </label>
                         <label for="new-goalPrice" class="signup__label">
-                            <img src="${pageContext.request.contextPath}/images/sale.png" alt="" class="sale__img signup__icon">
+                            <img src="${pageContext.request.contextPath}/images/sale.png" alt="" class="bean__img signup__icon">
                             <input
                                 class="signup__input"
                                 type="text"

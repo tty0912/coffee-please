@@ -21,6 +21,7 @@
     <!-- Javascript -->
     <%-- <script type="module" src="${pageContext.request.contextPath }/js/productDetail.js" defer></script> --%>
     <script type="module" src="${pageContext.request.contextPath }/js/popupSeller.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/servicePopup.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>

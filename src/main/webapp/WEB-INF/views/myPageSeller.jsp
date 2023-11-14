@@ -21,6 +21,7 @@
     <!-- Javascript -->
     <script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/active.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/servicePopup.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
@@ -62,7 +63,7 @@
             <div class="myPageNav">
                 <button id="myPageNav__likeButton" class="myPageNav__button active" >등록한 상품</button>
                 <button id="myPageNav__purchaseButton" class="myPageNav__button">일반상품판매내역</button>
-                <button id="myPageNav__purchaseGroupButton" class="myPageNav__button">공동구매판매내역</button>
+                <button id="myPageNav__purchaseGroupButton servicePopup" class="myPageNav__button">공동구매판매내역</button>
             </div>
         </div>
     </section>
