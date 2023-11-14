@@ -17,14 +17,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/myPageStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
-    <!-- Javascript -->
-    <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
-<%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
-    
-<%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
-    <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
-     <%--<script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
-    <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script> --%>
 </head>
 <body>
 <%@ include file = "/WEB-INF/views/headerNav.jsp" %>

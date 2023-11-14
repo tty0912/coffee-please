@@ -9,6 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
+import model.member.BuyerDAO;
+import model.order.OrderProductDO;
+import model.product.BeansQty;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +25,13 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import model.cart.CartDAO;
 import model.cart.CartDTO;
+import model.member.BuyerDAO;
+import model.member.BuyerDO;
 import model.member.SellerDAO;
 import model.product.BeansDAO;
 import model.product.BeansDO;
+import model.product.BeansQty;
+import model.product.CartBeans;
 import model.product.LikeBeans;
 import model.service.ImgUpload;
 import model.service.LikeService;
@@ -53,6 +62,7 @@ import model.service.OrderService;
 public class ProductController {
 	
 	private BeansDO beans;
+	private BeansQty beansQty;
 
 	private final BeansDAO beansDAO = new BeansDAO();
 	private final SellerDAO sellerDAO = new SellerDAO();
@@ -60,6 +70,7 @@ public class ProductController {
 	private final CartDAO cartDAO = new CartDAO();
 	private final OrderService orderService = new OrderService();
 	private final LikeService likeService = new LikeService();
+	private final BuyerDAO buyerDAO = new BuyerDAO();
 	
 	public ProductController() {
 	}
@@ -136,6 +147,7 @@ public class ProductController {
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("currentPage", page);
         model.addAttribute("search", search);
+        model.addAttribute("categoryList", beansDAO.getAllCategory());
 
 
 
@@ -169,11 +181,13 @@ public class ProductController {
     ArrayList<BeansDO> pagedGroupBeansList = new ArrayList<>(groupBeansList.subList(
             Math.max(startRow - 1, 0), Math.min(endRow, totalRows))); 
 
+    model.addAttribute("categoryNum", categoryNum);
     model.addAttribute("sortOption", sort);
     model.addAttribute("groupBeansList", pagedGroupBeansList);
     model.addAttribute("totalPages", totalPages);
     model.addAttribute("currentPage", page);
     model.addAttribute("search", search);
+    model.addAttribute("categoryList", beansDAO.getAllCategory()); 
 
     return "productListGroup";
 }
@@ -181,7 +195,8 @@ public class ProductController {
 // 일반 상품 상세페이지로 이동
 	@GetMapping("/goListDetail")
 	public String goListDetail(@RequestParam("beansNum") int beansNum, Model model, HttpSession session) throws SQLException {
-
+		//System.out.println("번호: " + beansNum);
+		
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 		boolean b = likeService.checkLike(sessionBuyer, beansNum);
 
@@ -205,119 +220,135 @@ public class ProductController {
 	}
 
 // *  4) POST	|	/payment			->	상세 페이지에서 결제 누르면 바로이동 -> payment.jsp
-	//결제페이지로 이동
+	//장바구니에 담기
+
+	@GetMapping("/cartOrPayment")
+	public String goCartList(HttpSession session,
+	        Model model) throws SQLException {
+		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+		
+		long totalPrice = cartDAO.totalPrice(sessionBuyer);
+		
+		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
+		model.addAttribute("totalPrice", totalPrice);
+		model.addAttribute("cart", cartDAO.getCartList(sessionBuyer));
+	    return "cart";
+	}
+		
 	@PostMapping("/cartOrPayment")
-	 public String payment(CartDTO cartDTO,
+	public String payment(CartDTO cartDTO,
 	        HttpSession session,
 	        Model model) throws SQLException {
-		 System.out.println(cartDTO.toString());
-		 
+		 //System.out.println(cartDTO.toString());
+
 		BeansDO bean = beansDAO.getBean(cartDTO.getBeansNum());
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 		
-		// cart 추가
-		cartDAO.addItem(sessionBuyer, bean, cartDTO.getQty());	   
-	    return "productList";
+		// bean에 해당하는 상품이 cartDAO에 있는지 체크한다
+		if(cartDAO.checkItem(sessionBuyer, cartDTO.getBeansNum())) {
+			// 있다면 제거한다.
+			cartDAO.deleteItem(sessionBuyer, cartDTO.getBeansNum());
+		}
+		cartDAO.addItem(sessionBuyer, bean, cartDTO.getQty());
+		long totalPrice = cartDAO.totalPrice(sessionBuyer);
+		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
+		model.addAttribute("totalPrice", totalPrice);
+		model.addAttribute("cart", cartDAO.getCartList(sessionBuyer));
+	    return "cart";
 	 }
-	
-	/*
-	@PostMapping("/cartOrPayment")
-	 public String payment(@RequestBody String beansNum,
-			 @RequestBody String qty,
-	        HttpSession session,
-	        Model model) throws SQLException {
-	  System.out.println(Integer.parseInt(beansNum));
-	  System.out.println(Integer.parseInt(qty));
-	  
-	   BeansDO bean = beansDAO.getBean(Integer.parseInt(beansNum));
-	   String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
-	   cartDAO.addItem(sessionBuyer, bean, Integer.parseInt(qty));
 
-	    return "goProductList";
-	  
 
-	 }
-	 */
-	/*
-	@PostMapping("/cartOrPayment")
-	public String payment(@RequestParam("beansNum") String beansNum,
-						  @RequestParam("qty") String qty,
-						  @RequestParam("action") String action,
-						  HttpSession session,
-						  Model model) throws SQLException {
-		System.out.println(beansNum);
-		System.out.println(action);
-		System.out.println(qty);
-		if(action.equals("onePayment")){
-			BeansDO bean = beansDAO.getBean(Integer.parseInt(beansNum));
-			model.addAttribute(bean);
-			model.addAttribute(qty);
+	//하나 바로 결제
+	@PostMapping("/buyNow")
+	public String buyNow(CartDTO cartDTO, HttpSession session, Model model) throws SQLException {
 
-			return "payment";
-		}
-		else if (action.equals("cart")){
-
-			BeansDO bean = beansDAO.getBean(Integer.parseInt(beansNum));
-			String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
-			cartDAO.addItem(sessionBuyer, bean, Integer.parseInt(qty));
-			System.out.println("----------------------------");
-
-				return "goProductList";
-		}
-		else {
-			return "error";
-		}
+		BeansDO beansDO = beansDAO.getBean(cartDTO.getBeansNum());
+		
+		
+		model.addAttribute("qty", cartDTO.getQty());
+		model.addAttribute("beansDO", beansDO);
+		
+		
+		return "buyNow";
 	}
-	*/
+	
 
 
-	//즉시 결제
-	@PostMapping("/")
-	public String payment1(@RequestParam("beansNum") int beansNum,
-	 					  @RequestParam("qty") int qty,
-						  Model model, HttpSession session) throws SQLException {
+	@GetMapping("/deleteItem")
+	public String deleteItem (@RequestParam("beansNum") int beansNum, HttpSession session, Model model) {
 
+	    String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+	    //System.out.println("번호: " + beansNum);
+	    
+	    cartDAO.deleteItem(sessionBuyer, beansNum);
+
+	    model.addAttribute("totalPrice", cartDAO.totalPrice(sessionBuyer));
+	    model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
+	    model.addAttribute("cart", cartDAO.getCartList(sessionBuyer));
+	    return "cart";
+	}
+
+	@PostMapping("/paymentComplete")
+	public String paymentComplete(CartDTO cartDTO , HttpSession session, Model model) throws SQLException {
+		
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+		//System.out.println(cartDTO.toString());
+		OrderProductDO orderProductDO = orderService.onlyOnePayment(cartDTO.getBeansNum(), cartDTO.getQty(), sessionBuyer);
 
-		boolean b = orderService.onlyOnePayment(beansNum, qty, sessionBuyer);
 
-		if(b){
-			return "paymentComplete";
-		}
-		return null;
+		ArrayList<BeansQty> beanList = new ArrayList<>();
+
+		beansQty = new BeansQty();
+
+		beansQty.setBeansDO(beansDAO.getBean(cartDTO.getBeansNum()));
+		beansQty.setQty(cartDTO.getQty());
+
+		
+		beanList.add(beansQty);
+		orderProductDO.setBeforeOrderPoint(orderProductDO.getBeforeOrderPoint());
+
+		model.addAttribute("beansList", beanList);
+		model.addAttribute("orderList", orderProductDO);
+		
+		return "paymentComplete";
 	}
 
 	//장바구니 결제
-
-
-// *  5) POST	|	/paymentComplete	->	결제 완료시 -> paymentComplete.jsp
-
-
-// *  6) POST	|	/mainLogin			->	결제 완료 페이지에서 버튼 누르면 메인으로 이동(멤버 컨트롤러에 메서드 정의되어있음) -> mainLoginBuyer
-
-
-	//장바구니에 담기
-	@PostMapping("/addCart")
-	public String addCart(HttpSession session, 
-						 Model model,
-						 @RequestParam("beansNum") int beansNum,
-						 @RequestParam("qty") int qty) {
+	@GetMapping("/cartPayment")
+	public String cartPayment(HttpSession session, Model model) throws SQLException {
+		
 		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
 		
-		cartDAO.addItem(sessionBuyer, beans, qty);
+		cartDAO.getCartList(sessionBuyer);
 		
-		return "redirect:/cart";
-	}
+		OrderProductDO orderProductDO = orderService.cartPayment(sessionBuyer);
+		
+//	if(orderProductDO != null) {
+			model.addAttribute("orderList", orderProductDO);
+			model.addAttribute("beansList", cartDAO.getCartList(sessionBuyer));
 
+			return "paymentComplete";
+//		}
+		
+//		return 
+	}
+	
+	
 	// 장바구니로 이동
-	@PostMapping("/cart")
-	public String goCart(HttpSession session, Model model){
-		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
-		
-		model.addAttribute("cart", cartDAO.getCartList(sessionBuyer));
 
-		return "cart";
-	}
+//	@GetMapping("/cart")
+//	public String goCart(HttpSession session, Model model){
+//		String sessionBuyer = String.valueOf(session.getAttribute("buyerEmail"));
+//		
+//		ArrayList<CartBeans> cartList = cartDAO.getCartList(sessionBuyer);
+//		int totalPrice = cartDAO.totalPrice(sessionBuyer);
+//
+//		model.addAttribute("buyer", buyerDAO.getBuyer(sessionBuyer));
+//		model.addAttribute("cart", cartList);
+//		model.addAttribute("totalPrice", totalPrice);
+//
+//		return "cart";
+//	}
 
 // 상품등록(일반, 공동) 페이지로 이동
 	@GetMapping("/goRegisterProd")
@@ -337,18 +368,18 @@ public class ProductController {
 	// 
 
 
-// 일반 상품 등록
+	// 일반 상품 등록
 	@PostMapping("/registerProd")
 	public String resisterProduct(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
 
-		String directory = "C:/Users/H40/finalCoffee/coffee-please/src/main/webapp/registerData/sellerData/beans";
+		String directory = "C:\\Users\\은식\\Desktop/coffee-please/src/main/webapp/registerData/sellerData/beans";
 		int sizeLimit = 1024 * 1024 * 5;
 
 		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,
 				"UTF-8", new DefaultFileRenamePolicy());
 
 		int categoryNum = Integer.parseInt(multi.getParameter("categoryNum"));
-		System.out.println(categoryNum);
+		//System.out.println(categoryNum);
 
 		String action = multi.getParameter("action");
 		if (action != null && action.equals("register")) {
@@ -382,9 +413,6 @@ public class ProductController {
 		}
 		return "redirect:/mainLoginSeller";
 	}
-
-// *  11)POST	|	/registerProdGroup	->	공동구매 상품 등록 -> mainLoginSeller.jsp
-
 
 	//찜하기
 	@GetMapping("/like")
@@ -426,6 +454,60 @@ public class ProductController {
 		}
 	}
 
+	// 상품 정보 수정하기로 이동
+	@GetMapping("/productModify")
+	public String productModify(@RequestParam("beansNum") int beansNum, Model model, HttpSession session){
+		BeansDO beansDO= beansDAO.getBean(beansNum);
+		String categoryName = beansDAO.getCategoryName(beansDO.getCategoryNum());
+		
+		System.out.println("categoryName" + categoryName);
+		
+		model.addAttribute("bean", beansDO);
+		model.addAttribute("cname", categoryName);
+
+		return "productModify";
+	}
+	
+	// 상품 정보 수정
+	@GetMapping("/setStatus")
+	public String setStatus(HttpServletRequest request) {
+		
+		String command = request.getParameter("command");
+		int beansNum = Integer.parseInt(request.getParameter("beansNum"));
+		int status = Integer.parseInt(request.getParameter("statusNumber"));
+		
+		
+		if(command.equals("register")) {
+			if(status==0) {
+				beansDAO.beansRestore(beansNum);
+				
+			} else if(status==1) {
+				beansDAO.beansSoldout(beansNum);
+			}
+		}
+		else if(command.equals("cancel")) {
+			
+			return "redirect:/myPageSeller";
+		}
+		
+		return "redirect:/myPageSeller";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
 

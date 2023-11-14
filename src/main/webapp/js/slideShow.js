@@ -5,7 +5,7 @@ const slideCount = slideImg.length;
 const prev = document.querySelector('.prev'); 
 const next = document.querySelector('.next'); 
 const slideWidth = 700; 
-const slideMargin = 90; 
+const slideMargin = 100; 
 let slideShow = document.querySelector('#slideShow');
 
 slides.style.width = (slideWidth + slideMargin) * slideCount + 'px';

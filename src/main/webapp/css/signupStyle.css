@@ -214,7 +214,7 @@ button:focus {
 }
 .signup__description {
     font-size: 0.9rem;
-    margin: 5px 0px 40px 0px;
+    margin: 5px 0px 20px 0px;
     color: var(--color-light-gray);
 }
 .signup__form {
@@ -324,17 +324,32 @@ button:focus {
   
 
   /* sellerModify */
+  #signup__sellerModify {
+	  height: 800px;
+  }
+  #modify__form {
+    display: inline-grid;
+    margin: 1rem;
+}
   .signup__button-div {
     display: flex;
     gap: 3rem;
   }
   /* buyerModify */
 #signup__buyerModify {
-    height: 750px;
+    height: 800px;
+}
+.modify__form-div  {
+	padding: 2rem 1rem;
+    width: 500px;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
 }
 .signup__buyerModify {
     padding: 1rem;
     margin-top: 80px;
+   	margin-bottom: 80px;
 }
 .sources {
     display: flex;

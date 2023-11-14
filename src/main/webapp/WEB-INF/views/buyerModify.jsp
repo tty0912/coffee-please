@@ -18,7 +18,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
-<%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<script type="module" src="${pageContext.request.contextPath }/js/userImgUpload.js" defer></script> 
     
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
     <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
@@ -32,10 +33,10 @@
     <section id="signup__buyerModify" class="section">
         <div class="max-container">
             <div class="signup__buyerModify">
-                <div class="signup__form-div">
+                <div class="modify__form-div">
                     <h2 class="signup__title">Bean2B 구매자 회원 정보를 수정해주세요.</h2> 
                     <!-- 수정부분 form에서 method, action, input name속성 수정 -->
-                    <form id="signup__form" enctype="multipart/form-data" method="post" action="buyerModifyChange">
+                    <form id="modify__form" enctype="multipart/form-data" method="post" action="buyerModifyChange">
                         <label for="new-userId" class="signup__label">
                             <i class="fa-regular fa-envelope"></i>
                             <input
@@ -91,7 +92,12 @@
                                 placeholder="주소를 입력해주세요."
                             />
                         </label>
-                        <input type="file" class="fileInput" name="buyerImg"/>
+                        <div class="filebox">
+						    <input class="beanImg-name" value="대표이미지를 넣어주세요." placeholder="대표이미지를 넣어주세요.">
+						    <label for="beanImgFile">파일찾기</label> 
+						    <input type="file" class="fileInput" name="buyerImg" id="beanImgFile"/>
+						</div>
+                
                         <div class="signup__button-div">
                             <button class="signup__button"  type="submit" name="action" value="buyerModifyChange">수정</button>
                             <button class="signup__button"  type="submit" name="action" value="previousPage">취소</button>

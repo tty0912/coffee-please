@@ -2,6 +2,7 @@
 	import="java.util.*"
     	  %>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,28 +34,31 @@
     <section id="cart" class="section">
         <div class="max-container">
             <div class="cart">
-                <h2 class="signup__title">${buyerDO.buyerName}님의 구매 내역</h2>
-                <c:forEach items="${test}" var="test">
+                <h2 class="signup__title">${buyer.buyerName}님의 구매 내역</h2>
+                <c:set var="totalPrice" value="0"/>
+                <c:forEach items="${bean}" var="beans">
+                	<c:set var="totalPrice" value="${ beans.beansDO.beanPrice * beans.orderProductDetailDO.qty }" />
                 	<div class="paymentProduct">
-                    	<img class="cartProduct__img" src="${beansDO.beanImg}" alt="">
+                    	<img class="cartProduct__img" src="${beans.beansDO.beanImg}" alt="">
                     	<div class="cartProductInfo">
-                        	<p class="cartProductInfo__Name">${beansDO.beanName}</p>
+                        	<p class="cartProductInfo__Name">${beans.beansDO.beanName}</p>
                         	<div class="cartProductInfo__QtyDiv">
-                            	<button class="cartProductInfo__QtyButton"><i class="fa-solid fa-plus"></i></button>
-                            	<input type="text" class="cartProductInfo__QtyText" value="${beansDO.beanPrice}" />	
-                            	<button class="cartProductInfo__QtyButton"><i class="fa-solid fa-minus"></i></button>
+                            	<p class="cartProductInfo__QtyText">${beans.orderProductDetailDO.qty} 개</p>	
                         	</div>
-                        	<p class="cartProductInfo__price">${beansDO.beanPrice}원</p>
+                        	<p class="cartProductInfo__price"><fmt:formatNumber pattern="#,###" value="${beans.beansDO.beanPrice}"/>원</p>
                     	</div>
                 	</div>
                 </c:forEach>
 
                 <div class="paymentCompletePrice">
-                    <p class="cartTotalPriceText">결제 금액 : <p class="cartTotalPrice">${beansDO.beanPrice}</p></p>
-                    <p class="cartTotalPriceText">현재 잔액 : <p class="cartTotalPrice">${buyerDO.point}</p></p>
+                    <p class="cartTotalPriceText">결제 금액 : <p class="cartTotalPrice"><fmt:formatNumber pattern="#,###" value="${beforeOrderPoint.orderTotalPrice}"/>원</p></p>
+
+                    <p class="cartTotalPriceText">주문 후 잔액 : <p class="cartTotalPrice"><fmt:formatNumber pattern="#,###" value="${beforeOrderPoint.beforeOrderPoint}"/>원</p></p>
                 </div>
                 <div class="paymentCompletePrice">
+                <form class="paymentCompletePrice" method="get" action="goProductList">
                     <button class="cartPayment">확인</button>
+                </form>
                 </div>
             </div>
         </div>

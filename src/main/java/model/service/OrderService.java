@@ -23,13 +23,14 @@ public class OrderService {
 
 
     // 상품 즉시 구매
-    public boolean onlyOnePayment(int beansNum, int qty, String buyerEmail) throws SQLException {
+    public OrderProductDO onlyOnePayment(int beansNum, int qty, String buyerEmail) throws SQLException {
 
+        OrderProductDO orderProductDO = new OrderProductDO();
         BeansDO bean = beansDAO.getBean(beansNum);
         long totalPrice = 0;
 
         // 일반 상품 구매 시
-        if(bean.getDeadline().isEmpty()){
+        if(bean.getDeadline() == null){
             totalPrice = bean.getBeanPrice() * qty;
         }
         // 공동 구매 상품 구매시
@@ -37,41 +38,56 @@ public class OrderService {
             totalPrice = bean.getGoalPrice() * qty;
         }
         long buyerPoint = checkPoint(buyerEmail);
-
+        
         if(buyerPoint >= totalPrice){
-            movePoint(bean.getSellerEmail(), buyerEmail, totalPrice);
-
+        	orderProductDO.setBeforeOrderPoint(buyerPoint);
+        	orderProductDO.setOrderTotalPrice(totalPrice);
             insertOrderProductDAO(buyerPoint, totalPrice, buyerEmail);
             insertOrderProductDetailDAO(buyerEmail, beansNum, qty);
 
-            return true;
+            movePoint(bean.getSellerEmail(), buyerEmail, totalPrice);
+            beansDAO.updateBeanTotalSellCount(beansNum, qty);
+
+            return orderProductDO;
         }
-        else return false;
+        else return null;
     }
 
     //여러상품  결제
-    public boolean cartPayment(ArrayList<CartBeans> cartBeans, String email){
+    public OrderProductDO cartPayment(String email) throws SQLException{
 
-        long totalPrice = 0;
-
-        for(CartBeans c : cartBeans){
-            long l = (long) c.getCartDO().getQty() * c.getBeansDO().getBeanPrice();
-            totalPrice += l;
-        }
-        if(checkPoint(email)>=totalPrice){
+        long totalPrice= cartDAO.totalPrice(email);
+        
+        long buyerPoint = checkPoint(email);
+        OrderProductDO orderProductDO = new OrderProductDO();
+      
+        if(buyerPoint>=totalPrice){
+        	
+        	  insertOrderProductDAO(buyerPoint, totalPrice, email);
+         
+        
+        	ArrayList<CartBeans> cartBeans = cartDAO.getCartList(email);
+        	
             for(CartBeans c : cartBeans) {
                 BeansDO beansDO = c.getBeansDO();
                 CartDO cartDO = c.getCartDO();
-
-                cartDAO.deleteItem(email, beansDO);
+                insertOrderProductDetailDAO(email, beansDO.getBeansNum(), cartDO.getQty());
 
                 String sellerEmail = beansDAO.getBean(beansDO.getBeansNum()).getSellerEmail();
                 long price = (long) beansDO.getBeanPrice() * cartDO.getQty();
                 movePoint(sellerEmail, email, price);
+                beansDAO.updateBeanTotalSellCount(beansDO.getBeansNum(), cartDO.getQty());
+                                
             }
+	            orderProductDO.setBeforeOrderPoint(buyerPoint);
+	            orderProductDO.setOrderTotalPrice(totalPrice);
+	            cartDAO.clearCart(email);
+	            return orderProductDO;
+            
+            
             //잔액부족
-        } else return false;
-        return true;
+        }
+        return null;
     }
 
 

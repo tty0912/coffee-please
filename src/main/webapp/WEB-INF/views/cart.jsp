@@ -2,6 +2,7 @@
 	import="java.util.*"
     	  %>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +19,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
-    <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/cart.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
@@ -28,41 +29,36 @@
 </head>
 <body>
 <%@ include file = "/WEB-INF/views/headerNav.jsp" %>
-
-<<!-- Cart -->
+<!-- Cart -->
     <section id="cart" class="section">
         <div class="max-container">
             <div class="cart" id="cartList">
-                <h2 class="cartTitle">님의 장바구니</h2>
-                <c:forEach items="" var="cartDO" varStatus="index">
+                <h2 class="cartTitle">${buyer.nickname}님의 장바구니</h2>
+                <c:forEach items="${cart}" var="cartList" varStatus="index">
                 	<div class="cartProduct" id="checkBoxes">
-                    	<input type="checkbox" class="cartProduct__check" value="${cartDO.beanName}" checked />          
-                    	<img class="cartProduct__img" src="" alt="">
+                    	<img class="cartProduct__img" src="${cartList.beansDO.beanImg}" alt="">
                     	<div class="cartProductInfo">
-                        	<p class="cartProductInfo__Name">상품이름</p>
+                        	<p class="cartProductInfo__Name">${cartList.beansDO.beanName}</p>
                         	<div class="cartProductInfo__QtyDiv" id="qtyBtn">
-                            	<button class="cartProductInfo__plus cartProduct__check"><i class="fa-solid fa-plus"></i></button>
-                            	<button class="cartProductInfo__minus cartProduct__check"><i class="fa-solid fa-minus"></i></button>
-                            	<span class="qty cartProduct__check">1</span>개
+                            	<span class="qty cartProduct__check">${cartList.cartDO.qty}</span>개
                         	</div>
-                        	<p class="cartProductInfo__price" value="3000">3000원</p>
+                        	<p class="cartProductInfo__price">상품 가격 : ${cartList.beansDO.beanPrice}</p>
                     	</div>
-                    	<button class="cartProductInfo__delete"><i class="fa-solid fa-trash"></i></button>
+                        <input type="hidden" name="beansNum" class="trashNum" id="num" value="${cartList.beansDO.beansNum}" />
+                    	<button type="submit" class="cartProductInfo__delete" id="delete${index.count}" value="${cartList.beansDO.beansNum}" data-index="${index.count}" data-beans-num="${cartList.beansDO.beansNum}"><i class="fa-solid fa-trash"></i></button>
                 	</div>
                 </c:forEach>
 
                 <div class="cartPrice">
-                    <p class="cartTotalPriceText" id="totalPrice">합산 금액: </p>
-                    <p class="cartTotalPrice">120,000</p>
-                    <button class="cartPayment">결제</button>
+                    <p class="cartTotalPriceText">합산 금액: <span id="totalPrice">${totalPrice}</span>원</p>
+                    <form action="cartPayment">
+                    	<button class="cartPayment">결제</button>
+                    </form>
                 </div>
             </div>
         </div>
     </section>
-
-
-
-
+    
 <%@ include file = "/WEB-INF/views/footer.jsp" %>
 </body>
 </html>

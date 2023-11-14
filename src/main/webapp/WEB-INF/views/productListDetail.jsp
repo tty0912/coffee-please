@@ -2,6 +2,7 @@
 	import="java.util.*"
     	  %>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +19,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
-    <script type="module" src="${pageContext.request.contextPath }/js/productDetail.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/productDetail.js" defer></script> 
+    <script type="module" src="${pageContext.request.contextPath }/js/popupSeller.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/likeDetail.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
     
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
@@ -35,43 +38,78 @@
             <div class="productListDetail__top">
                 <div class="productListDetail__topLeft">
                     <img src="${productListDetail.beansDO.beanImg}" alt="" class="productListDetail__img">
-                    <div class="productListDetail__likeButton">
-                        <c:choose>
-                            <c:when test="${productListDetail.aBoolean == false}">
-                                <form method="get" action="like">
-                                    <input type="hidden" name="sort" value="detail">
-                                    <button name="beansNum" value="${productListDetail.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
-                                </form>
-                            </c:when>
-                            <c:when test="${productListDetail.aBoolean == true}">
-                                <form method="get" action="like">
-                                    <input type="hidden" name="sort" value="detail">
-                                    <button name="beansNum" value="${productListDetail.beansDO.beansNum}" class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
-                                </form>
-                            </c:when>
-                        </c:choose>
-
-                        <p class="mainBeanBest__productLikeCount">${productListDetail.beansDO.likeCount}</p>
-                    </div>
                 </div>
                     <div class="productListDetail__topRight">
-                        <p class="productListDetail__beanName">${ productListDetail.beansDO.beanName }</p>
-                        <p class="productListDetail__deliveryPrice">${ productListDetail.beansDO.beanPrice }원</p>
-                        <div class="cartProductInfo__QtyDiv">
-                            <button class="cartProductInfo__QtyButton"><i class="fa-solid fa-plus"></i></button>
-                            <label>
-                                <input type="number" name="qty" class="cartProductInfo__QtyText"/>
-                            </label>
-                            <button class="cartProductInfo__QtyButton"><i class="fa-solid fa-minus"></i></button>
-                        </div>
-                        <div class="productListDetail__button">
-                            <button class="productListDetail__cart" id="cart">장바구니</button>
-                            <button class="productListDetail__pay" id="onePayment">바로구매</button>
-                        </div>
-                    </div>
-                <form method="post" id="hiddenForm">
+
+                    	<h3 class="productListDetail__topTitle">상품정보</h3>
+	                    <table class="productListDetail__table">
+	                        <tr>
+	                            <th class="productListDetail__beanName">상품명 </th>
+	                            <td class="productListDetail__beanName">${ productListDetail.beansDO.beanName } </td>
+	                        </tr>
+	                        <tr>
+	                            <th class="productListDetail__deliveryPrice">가격 </th>
+	                            <td class="productListDetail__deliveryPrice"><fmt:formatNumber pattern="#,###" value="${productListDetail.beansDO.beanPrice}"/>원</td>
+	                        </tr>
+	                        
+	                        <tr>
+	                            <th class="productListDetail__deliveryPrice">판매자</th>
+	                            <td class="productListDetail__deliveryPrice">빈투비 </td>
+	                        </tr>
+	                            
+	                    </table>
+                		<div class="cartProductInfo__QtyDivButton">
+	                        <div class="cartProductInfo__QtyDiv">
+			                     <button class="cartProductInfo__QtyButton" id="increase"><i class="fa-solid fa-plus"></i></button>
+			                        <label>
+			                            <input type="number" name="qty" class="cartProductInfo__QtyText" id="quantityInput" value="1" min="1" max="999"/>
+		                            </label>
+			                     <button class="cartProductInfo__QtyButton" id="decrease"><i class="fa-solid fa-minus"></i></button>
+					        </div>
+	                        <div class="productListDetail__button">
+	                                <c:choose>
+				                        <c:when test="${not empty buyerEmail}">
+				                        	<button class="productListDetail__pay" id="buyNow">BUY NOW</button>
+				                            <div class="productListDetail__button-div">
+				                                <button class="productListDetail__cart" id="cartbuyer">CART</button>
+					                            <div class="productListDetailDetail__likeButton">
+					                                <c:choose>
+					                                    <c:when test="${productListDetail.aBoolean == false}">
+					                                        <form method="get" action="like">
+					                                            <input type="hidden" name="sort" value="detail">
+					                                            <button  name="beansNum" value="${productListDetail.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
+					                                        </form>
+					                                    </c:when>
+					                                    <c:when test="${productListDetail.aBoolean == true}">
+					                                        <form method="get" action="like">
+					                                            <input type="hidden" name="sort" value="detail">
+					                                            <button id="likeButton" name="beansNum"  value="${productListDetail.beansDO.beansNum}" class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+					                                        </form>
+					                                    </c:when>
+					                                </c:choose>
+					                                <p class="prodductListDetail__productLikeCount">${productListDetail.beansDO.likeCount}</p>
+					                            </div>
+				                            </div>
+				                        </c:when>
+				                        <c:when test="${not empty sellerEmail}">
+				                        	<button class="productListDetail__pay" id="buyNowSeller">BUY NOW</button>
+				                            <div class="productListDetail__button-div">
+				                                <button class="productListDetail__cart" id="cartSeller">CART</button>
+					                            <div class="productListDetailDetail__likeButton">
+					                                <button id="sellerLikeButton" name="beansNum" value="${productListDetail.beansDO.beansNum}" class="myPageLike__button"><i class="fa-regular fa-heart"></i></button>
+					                                <p class="prodductListDetail__productLikeCount">${productListDetail.beansDO.likeCount}</p>
+					                            </div>
+				                            </div>
+				                        </c:when>
+				                    </c:choose>
+	                            
+	                            
+	                        </div>
+	                    </div>
+                <form method="post" id="hiddenForm" action="/coffee/cartOrPayment">
                     <input type="hidden" id="beansNum" name="beansNum" value="${ productListDetail.beansDO.beansNum }">
-                    <input type="hidden" id="qty" name="qty">
+                    <input type="hidden" id="qty" name="qty" value=1>
+                   	<button id="submitBtn"></button>
                 </form>
 
             </div>
@@ -90,4 +128,3 @@
 <%@ include file = "/WEB-INF/views/footer.jsp" %>
 </body>
 </html>
-

@@ -19,10 +19,46 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
     <!-- Javascript -->
     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script>
-	<script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script>
-    <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
-     <%--<script type="module" src="${pageContext.request.contextPath }/js/myPage.js" defer></script>
-    <script type="module" src="${pageContext.request.contextPath }/js/main.js" defer></script> --%>
+    <script type="module" src="${pageContext.request.contextPath }/js/popup.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script>
+	<script type="module" src="${pageContext.request.contextPath }/js/category.js" defer></script>
+	<script type="module" src="${pageContext.request.contextPath }/js/bestBean.js" defer></script>
+    <script>
+    let loginResult = '${login}';
+    window.onload = function (){
+        let userId = document.querySelector('#userId');
+        let userPassword = document.querySelector('#userPassword');
+        let loginMsg = document.querySelector('#loginMsg');
+        let loginLabels = document.querySelectorAll('.login__label');
+        let loginIcons = document.querySelectorAll('.login__icon');
+        let msg = '';
+        loginMsg.innerHTML = '';
+        loginLabels.forEach(label => label.classList.remove('error'));
+        loginIcons.forEach(icon => icon.classList.remove('error'));
+        console.log('userId value:', userId.value);
+        console.log('userPassword value:', userPassword.value);
+        if (loginResult === 'fail1') {
+            msg = '<i class="fa-solid fa-triangle-exclamation"></i> 해당 아이디가 존재하지 않습니다.';
+            userId.value = '';
+            loginLabels[0].classList.add('error');
+            loginIcons[0].classList.add('error');
+            console.log('Error: 비밀번호 틀렸습니다.');
+            console.log(loginResult)
+        }
+        else if (loginResult === 'fail2') {
+                    msg = '<i class="fa-solid fa-triangle-exclamation"></i> 비밀번호 틀렸습니다.';
+                    userPassword.value = '';
+                    loginLabels[1].classList.add('error');
+                    loginIcons[1].classList.add('error');
+                    console.log('Error: 비밀번호 틀렸습니다.');
+                    console.log(loginResult)
+                }
+        if (msg !== '') {
+            loginMsg.innerHTML = msg;
+            loginResult = ''
+        }
+    }
+    </script>
 </head>
 <body>
 <%@ include file = "/WEB-INF/views/headerNav.jsp" %>
@@ -42,8 +78,11 @@
                     </div>
                 </div>
                 <div class="mainIntro__loginAll">
-                    <h2 class="mainIntro__loginTitle">Login</h2>
+                    
                     <div class="mainIntro__login">
+                    	<div class="userImgDiv">
+                            <img src="images/test1.jpg" alt="" class="userImg">
+                        </div>
                         <form id="loginForm" class="mainIntro__loginForm" method="post" action="mainLogin">
                             <div class="loginRadio">
                                 <input type="radio" name="user" value="buyer" checked/><label class="radioLabel">구매자</label>
@@ -72,35 +111,19 @@
                             </label>
                             <div class="mainIntro__loginFormButton">
                                 <button id="loginButton" class="mainIntro__loginButton" type="submit" name="action" value="login">로그인</button>
-                                <button class="mainIntro__loginButton" type="submit" name="action" value="signup">회원가입</button>
+                                <button class="mainIntro__loginButton " type="submit" name="action" value="signup">회원가입</button>
                             </div>
                         </form>
+                        <div class="loginErrorMsg" id="loginMsg"></div>
                     </div>
-                     <div class="loginErrorMsg" id="loginMsg"></div>
+                   
                 </div>
             </div>
         </div>
 
     </section>
-    <!-- Category 버튼 꾸미기?? -->
-
-    <section id="mainCategory" class="section">
-       <div class="max-container">
-        <h1 class="mainCategory__title">Category</h1>
-            	<div id="categoryList" class="mainCategory" >
-                    <c:forEach items="${categoryList}" var="categoryDO" >
-        			<div class="mainCategory__detail">
-        				<img alt="" class="mainCategory__detailImg" src="${categoryDO.categoryImg}" />
-        				<p class="mainCategory__detailTitle">${categoryDO.categoryName}</p>
-        			</div>
-        			</c:forEach>
-            	</div>
-        </div>
-        <button id="prevBtn"> <<<< </button>
-        <button id="nextBtn"> >>>> </button>
-    </section>
     <!-- Category -->
-    <%@ include file = "/WEB-INF/views/category.jsp" %>
+	<%@ include file = "/WEB-INF/views/category.jsp" %> 
     <!-- BeanBest -->
     <section id="mainBeanBest" class="section">
          <div class="max-container">
@@ -109,7 +132,15 @@
   				<c:forEach items="${bestBean}" var="beansDO" >
                     <div class="mainBeanBest__product">
                     	<img src="" alt="" class="beanBest__number">
-        				<img src="${beansDO.beanImg}"  alt="" class="mainBeanBest__productImg" >
+
+        				<img src="${beansDO.beanImg}"  alt="" class="mainBeanBest__productImg" id="${ beansDO.beansNum}" >
+                    	<form method="get" action="goListDetail">
+                			<input type="hidden" id="beansNum" name="beansNum" value="${beansDO.beansNum}" />
+                			<button>
+                			</button>
+                   		</form>
+        				<div class="productList__productTitle">${beansDO.beanName }</div>
+        				<div class="productList__productPrice">${beansDO.beanPrice}원</div>
         				<div class="likeButton">
                         	<button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
                         	<p class="mainBeanBest__productLikeCount">${beansDO.likeCount}</p>
@@ -120,15 +151,14 @@
             </div>
  	         <div class="mainBeanBest__button">
  	         	<h2 class="mainBeanBest__buttonTitle">더 많은 원두를 보려면?</h2>
- 	         	<form method="get" action="goProdcutList">
- 	         	    <button class="mainBeanBest__plusButton"><i class="fa-solid fa-angles-right"></i></button>	
- 	         	</form>
+ 	         	
+ 	         	    <button id="popupButton"  class="mainBeanBest__plusButton"><i class="fa-solid fa-angles-right"></i></button>	
+ 	 
 
             </div>
         </div>
     </section>
     
-
     
 <%@ include file = "/WEB-INF/views/footer.jsp" %>
 </body>

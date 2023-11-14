@@ -2,6 +2,7 @@
 	import="java.util.*"
     	  %>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,8 +30,8 @@
 <body>
 <%@ include file = "/WEB-INF/views/headerNav.jsp" %>
 
-<<!-- Cart -->
-    <section id="cart" class="section">
+<<!-- Payment -->
+    <section id="cart" >
         <div class="max-container">
             <div class="cart">
                 <h2 class="cartTitle">결제진행</h2>
@@ -44,14 +45,14 @@
                             	<input type="text" class="cartProductInfo__QtyText" value="${beansDO.beanPrice}" />	
                             	<button class="cartProductInfo__QtyButton"><i class="fa-solid fa-minus"></i></button>
                         	</div>
-                        	<p class="cartProductInfo__price">${beansDO.beanPrice}원</p>
+                        	<p class="cartProductInfo__price"><fmt:formatNumber pattern="#,###" value="${beansDO.beanPrice}"/>원</p>
                     	</div>
                 	</div>
                 </c:forEach>
 
                 <div class="paymentPrice">
                     <p class="cartTotalPriceText">합산 금액 :</p>
-                    <p class="cartTotalPrice">${beansDO.beanPrice}</p>
+                    <p class="cartTotalPrice"><fmt:formatNumber pattern="#,###" value="${beansDO.beanPrice}"/>원</p>
                 </div>
                 <div class="paymentPrice">
                     <button class="cartPayment">취소</button>
