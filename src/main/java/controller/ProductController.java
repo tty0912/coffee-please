@@ -17,6 +17,7 @@ import model.product.BeansQty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -28,6 +29,7 @@ import model.cart.CartDTO;
 import model.member.BuyerDAO;
 import model.member.BuyerDO;
 import model.member.SellerDAO;
+import model.member.SellerDO;
 import model.product.BeansDAO;
 import model.product.BeansDO;
 import model.product.BeansQty;
@@ -359,13 +361,13 @@ public class ProductController {
 
 // 상품등록(일반, 공동) 페이지로 이동
 	@GetMapping("/goRegisterProd")
-	public String resisterProduct(@RequestParam("action") String action) {
+	public String resisterProduct(@ModelAttribute SellerDO seller, @RequestParam("action") String action) {
 
 		if(action.equals("normal")) {
 			return "registerProduct";
 		}
 		else if(action.equals("group")) {
-			return "registerProductGroup";
+			return "redirect:/mainLoginSeller";
 		}
 		else {
 			return "error";

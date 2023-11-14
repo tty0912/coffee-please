@@ -125,6 +125,10 @@ button:focus {
     border: 0;
 }
 
-productListDetail__bottomImg {
+.productListDetail__bottomImg {
 	width: 800px;
+}
+
+#registerProductGroup {
+	height: 1000px;
 }

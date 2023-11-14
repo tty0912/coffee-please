@@ -10,7 +10,7 @@
                         <img class="header__logo__img" src="images/logoName.png" alt="logo" />
                     </a>
                 </div>
-                <li><a class="header__menu__item" href="${pageContext.request.contextPath}/goProductListGroup">GROUP</a></li>
+                <li><a class="header__menu__item servicePopup" >GROUP</a></li>
             </ul>
             <ul class="header__side">
             <c:choose>

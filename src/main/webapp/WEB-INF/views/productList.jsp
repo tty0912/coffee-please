@@ -22,6 +22,7 @@
     <script type="module" src="${pageContext.request.contextPath }/js/popupSeller2.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/like.js" defer></script>
     <script type="module" src="${pageContext.request.contextPath }/js/loginNon2.js" defer></script>
+    <script type="module" src="${pageContext.request.contextPath }/js/servicePopup.js" defer></script>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/slideShow.js" defer></script> --%>
 <%--     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script> --%>
     <%-- <script type="module" src="${pageContext.request.contextPath }/js/signup.js" defer></script> --%>
@@ -130,7 +131,10 @@
                 <c:choose>
                 <c:when test="${ bean.beansDO.statusNumber == 0 }">
                     <div id=${bean.beansDO.beansNum} class="productList__product" onclick="let that = this; prodDetail2Handler(that)">
-                    	<img class="productList__productImg" src="${bean.beansDO.beanImg}" alt="">
+                    	<div class="productList__productImgDiv">
+                    		<img class="productList__productImg" src="${bean.beansDO.beanImg}" alt="">
+                    	</div>
+                    	
                         <div class="productList__productText">
                             <table class="productList__table">
                                 <tr>
@@ -176,13 +180,13 @@
                                </c:when>
 	                           <c:when test="${not empty sellerEmail}">
 		                           	<div class="productList__likeButton">
-			                            <button id="sellerLikeButton" name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+			                            <button name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button sellerLikeButton"><i class="fa-regular fa-heart"></i></button>
 			                            <p class="product__productLikeCount">${bean.beansDO.likeCount}</p>
 			                        </div>
 		                        </c:when>
 		                        <c:when test="${empty buyerEmail and empty sellerEmail}">
 		                           	<div class="productList__likeButton">
-			                            <button id="NonLikeButton" name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+			                            <button name="beansNum" value="${bean.beansDO.beansNum}" class="myPageLike__button NonLikeButton"><i class="fa-regular fa-heart"></i></button>
 			                            <p class="product__productLikeCount">${bean.beansDO.likeCount}</p>
 			                        </div>
 		                        </c:when>

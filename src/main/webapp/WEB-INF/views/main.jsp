@@ -22,6 +22,8 @@
     <script type="module" src="${pageContext.request.contextPath }/js/login.js" defer></script>
 	<script type="module" src="${pageContext.request.contextPath }/js/category.js" defer></script>
 	<script type="module" src="${pageContext.request.contextPath }/js/bestBean.js" defer></script>
+	<script type="module" src="${pageContext.request.contextPath }/js/loginNon2.js" defer></script>
+	<script type="module" src="${pageContext.request.contextPath }/js/servicePopup.js" defer></script>
     <script>
     let loginResult = '${login}';
     window.onload = function (){
@@ -79,12 +81,12 @@
                 <div class="mainIntro__loginAll">
                     
                     <div class="mainIntro__login">
-                    <%--
+                   
                     	<div class="userImgDiv">
-                            <img src="images/test1.jpg" alt="" class="userImg">
+                            <img src="${pageContext.request.contextPath }/images/userImginit.png" alt="" class="userImg">
                         </div>
-                     --%>
-                        <form id="loginForm" class="mainIntro__loginForm" method="post" action="mainLogin">
+                        <div>
+                        	<form id="loginForm" class="mainIntro__loginForm" method="post" action="mainLogin">
                             <div class="loginRadio">
                                 <input type="radio" name="user" value="buyer" checked/><label class="radioLabel">구매자</label>
                                 <input type="radio" name="user" value="seller" /><label class="radioLabel">판매자</label>
@@ -116,6 +118,9 @@
                             </div>
                         </form>
                         <div class="loginErrorMsg" id="loginMsg"></div>
+                        </div>
+                    
+                        
                     </div>
                    
                 </div>
@@ -143,7 +148,7 @@
         				<p class="productList__productTitle"><span class="bestBean__span">상품명</span> ${beansDO.beanName }</p>
         				<p class="bestBean__productPrice"><span class="bestBean__span">가격</span> ${beansDO.beanPrice}원</p>
         				<div class="likeButton">
-                        	<button class="myPageLike__button"><i class="fa-solid fa-heart"></i></button>
+                        	<button class="myPageLike__button NonLikeButton"><i class="fa-regular fa-heart"></i></button>
                         	<p class="mainBeanBest__productLikeCount">${beansDO.likeCount}</p>
                     	</div>
                     </div>

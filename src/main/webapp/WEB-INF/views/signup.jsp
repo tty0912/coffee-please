@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/myPageStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/mainStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/css/cartStyle.css">
+    <!-- javaScript -->
+    <script type="module" src="${pageContext.request.contextPath }/js/servicePopup.js" defer></script>
 </head>
 <body>
 <%@ include file = "/WEB-INF/views/headerNav.jsp" %>
