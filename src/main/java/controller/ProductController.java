@@ -381,7 +381,7 @@ public class ProductController {
 	@PostMapping("/registerProd")
 	public String resisterProduct(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
 
-		String directory = "C:\\Users\\Jun\\Desktop\\finalProject/coffee-please/src/main/webapp/registerData/sellerData/beans";
+		String directory = "C:\\Users\\H40\\finalCoffee/coffee-please/src/main/webapp/registerData/sellerData/beans";
 		int sizeLimit = 1024 * 1024 * 5;
 
 		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,

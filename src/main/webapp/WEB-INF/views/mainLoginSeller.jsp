@@ -49,23 +49,27 @@
                 </div>
             </div>
             <div class="mainIntro__loginAll">
-                <div class="mainIntro__loginAfter">
-                    <div class="user">
-                        <!--       <img class="mainIntro__loginImg" src="${pageContext.request.contextPath }/images/userImginit.png" alt="">-->
-                        <img class="mainIntro__loginImg" src="${ seller.sellerImg}" alt="">
-                        <p class="mainIntro__loginId">${ seller.nickname }<span class="mainIntro__loginIdText">님</span></p>
+                <div class="mainIntro__login">
+                    <div class="userImgDiv">
+                        <img class="userImg" src="${seller.sellerImg}" alt="">
                     </div>
+
+
+
                     <div class="mainIntro__buyer">
-                        <p class="mainIntro__loginPoint"><fmt:formatNumber pattern="#,###" value="${seller.point}"/><span class="mainIntro__loginPointText"> point</span></p>
+                        <p class="mainIntro__loginId">${seller.nickname }<span class="mainIntro__loginIdText">님</span><span class="mainIntro__loginIdText"> 환영합니다.</span></p>
+                        <p class="mainIntro__loginPoint"><span class="mainIntro__loginPointText"> 현재 잔액 : </span><fmt:formatNumber pattern="#,###" value="${seller.point}"/> <span class="mainIntro__loginPointText"> point</span></p>
                         <div class="mainIntro__button">
                             <form method="Get" action="loginAfter">
-                                  <button class="mainIntro__AfterButton" type="submit" name="action" value="logout">로그아웃</button>
-                            	  <button class="mainIntro__AfterButton" type="submit" name="action" value="sellerModify">정보수정</button>
+                                <button class="mainIntro__AfterButton" type="submit" name="action" value="sellerModify">정보수정 <i class="fa-solid fa-gear"></i></button>
+                                <button class="mainIntro__AfterButton" type="submit" name="action" value="logout">로그아웃 <i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </section>

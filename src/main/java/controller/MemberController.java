@@ -325,7 +325,7 @@ public class MemberController {
 	@PostMapping("/buyerModifyChange")
 
 	public String buyerModifyChange(HttpServletRequest request, HttpSession session, Model model) throws IOException {
-		String directory = "C:\\Users\\Jun\\Desktop\\finalProject/coffee-please/src/main/webapp/registerData/buyerData/buyer";
+		String directory = "C:\\Users\\H40\\finalCoffee/coffee-please/src/main/webapp/registerData/buyerData/buyer";
 
 
 		int sizeLimit = 1024 * 1024 * 5;
@@ -398,8 +398,13 @@ public class MemberController {
 	@GetMapping("/sellerModify")
 	public String sellerModify(HttpSession session, Model model) {
 		String sessionSeller = String.valueOf(session.getAttribute("sellerEmail"));
-		model.addAttribute("seller", sellerDAO.getSeller(sessionSeller));
-		
+		SellerDO seller = sellerDAO.getSeller(sessionSeller);
+		model.addAttribute("seller", seller);
+		System.out.println(seller.getSellerEmail());
+		System.out.println(seller.getAddress());
+		System.out.println(seller.getNickname());
+		System.out.println(seller.getTel());
+
 		return "sellerModify";
 	}
 	
@@ -407,7 +412,7 @@ public class MemberController {
 	@PostMapping("/sellerModifyChange")
 	public String sellerModifyChange(HttpServletRequest request, HttpSession session, Model model) throws IOException {
 
-		String directory =  "C:\\Users\\Jun\\Desktop\\finalProject/coffee-please/src/main/webapp/registerData/sellerData/seller";
+		String directory =  "C:\\Users\\H40\\finalCoffee/coffee-please/src/main/webapp/registerData/sellerData/seller";
 
 		int sizeLimit = 1024 * 1024 * 5;
 		MultipartRequest multi = new MultipartRequest(request, directory, sizeLimit,

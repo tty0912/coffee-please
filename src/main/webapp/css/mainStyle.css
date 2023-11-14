@@ -521,20 +521,28 @@ input[type='radio']:checked {
 }
 
 .mainIntro__loginId {
-    color: var(--color-text);
+    color: var(--color-brown);
+    font-size: 20px;
+}
+.mainIntro__loginIdText {
+    color: var(--color-darkgreen);
+    font-size: 20px;
+}
+
+.mainIntro__loginPoint {
+    color: var(--color-red);
+    font-size: 20px;
+}
+.mainIntro__loginPointText {
+    color: var(--color-darkgreen);
+    font-size: 18px;
 }
 .mainIntro__buyer {
     margin-top: 5rem;
     display: grid;
-    gap: 4.7rem;
-}
-.mainIntro__loginPoint{
-    font-size: 1.2rem;
+
 }
 
-.mainIntro__loginPointText {
-    font-size: 1rem;
-}
 
 .mainIntro__button {
     display: flex;
@@ -543,7 +551,18 @@ input[type='radio']:checked {
 }
 
 .mainIntro__AfterButton {
-    font-size: 0.8rem;
+    font-size: 16px;
+    color: var(--color-white);
+    background-color: var(--color-light-gray);
+    border-radius: 10px;
+    padding: 6px 9px;
+    font-weight: bolder;
+}
+.mainIntro__AfterButton:hover {
+
+    color: var(--color-light-gray);
+    background-color: var(--color-white);
+
 }
 
 /* mainSeller */
@@ -644,7 +663,7 @@ input[type='radio']:checked {
 
 .productList__sort {
     color: var(--color-darkgreen);
-    font-size: 16.5px;
+    font-size: 15.2px;
 }
 
 .productList__sort:hover {
@@ -754,7 +773,7 @@ input[type='radio']:checked {
     font-size: 1rem;
     width: 100%;
     height: 100%;
-    background-color: white;
+
 }
 
 .product__productLikeCount {
